@@ -3,7 +3,7 @@
   "description": "apiato (Public API) Documentation",
   "title": "Welcome to apiato",
   "version": "1.0.0",
-  "url" : "http://api.apiato.test",
+  "url" : "http://api.asanpay.local",
   "template": {
   	"withCompare": true,
   	"withGenerator": true
