@@ -19,7 +19,8 @@ class SeedDeploymentData extends Seeder
      */
     public function run()
     {
-        // Create data for live deployment here
+      $this->call(BanksTableSeeder::class);
+      $this->call(PspsTableSeeder::class);
     }
 
 }
