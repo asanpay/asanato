@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Enum\WagePolicy;
-use App\Enum\WageBy;
+use App\Containers\Wallet\Enum\WagePolicy;
+use App\Containers\Wallet\Enum\WageBy;
 
 class CreateMerchantsTable extends Migration
 {

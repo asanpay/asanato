@@ -1,17 +1,12 @@
 <?php
 
-namespace App\Ship\Seeders;
+namespace App\Containers\Bank\Data\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Bank;
+use App\Containers\Bank\Models\Bank;
+use App\Ship\Parents\Seeders\Seeder;
 
 class BanksTableSeeder extends Seeder
 {
-  /**
-   * Run the database seeds.
-   *
-   * @return void
-   */
   public function run()
   {
     Bank::create([

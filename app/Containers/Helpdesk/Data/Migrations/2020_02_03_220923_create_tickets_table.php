@@ -3,8 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Enum\TicketStatus;
-use App\Enum\Platform;
+use App\Containers\Helpdesk\Enum\TicketStatus;
+use App\Containers\Helpdesk\Enum\Platform;
 
 class CreateTicketsTable extends Migration
 {

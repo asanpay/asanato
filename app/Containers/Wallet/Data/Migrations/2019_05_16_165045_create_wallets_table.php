@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Enum\WalletType;
-use App\Enum\WalletStatus;
+use App\Containers\Wallet\Enum\WalletType;
+use App\Containers\Wallet\Enum\WalletStatus;
 
 class CreateWalletsTable extends Migration
 {

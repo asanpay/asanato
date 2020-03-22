@@ -57,6 +57,7 @@ class ApiatoProvider extends AbstractMainProvider
         RoutesProvider::class, // exceptionally adding the Route Provider, unlike all other providers in the parents.
         ShipProvider::class, // the ShipProvider for the Ship third party packages.
         GeneratorsServiceProvider::class, // the code generator provider.
+
     ];
 
     /**

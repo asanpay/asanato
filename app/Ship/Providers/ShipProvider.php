@@ -3,6 +3,8 @@
 namespace App\Ship\Providers;
 
 use App\Ship\Parents\Providers\MainProvider;
+use Creativeorange\Gravatar\GravatarServiceProvider;
+use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 
 /**
  * Class ShipProvider
@@ -17,20 +19,25 @@ class ShipProvider extends MainProvider
      *
      * @var array
      */
-    public $serviceProviders = [];
+    public $serviceProviders = [
+        MediaLibraryServiceProvider::class,
+        GravatarServiceProvider::class,
+    ];
 
     /**
      * Register any Alias on the Ship layer (including third party packages).
      *
      * @var  array
      */
-    protected $aliases = [];
+    protected $aliases = [
+        'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
+    ];
 
 
     public function __construct()
     {
         parent::__construct(app());
-        
+
         if (class_exists('Barryvdh\Debugbar\ServiceProvider')) {
             $this->serviceProviders[] = \Barryvdh\Debugbar\ServiceProvider::class;
         }
@@ -67,5 +74,5 @@ class ShipProvider extends MainProvider
 
         parent::register();
     }
-    
+
 }

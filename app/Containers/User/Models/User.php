@@ -3,21 +3,20 @@
 namespace App\Containers\User\Models;
 
 use App\Containers\Authorization\Traits\AuthorizationTrait;
-use App\Containers\Payment\Contracts\ChargeableInterface;
-use App\Containers\Payment\Models\PaymentAccount;
-use App\Containers\Payment\Traits\ChargeableTrait;
+use App\Containers\Profile\Enum\UserVerificationType;
+use App\Containers\Profile\Enum\VerificationStatus;
+use App\Containers\Profile\Models\UserVerification;
 use App\Ship\Parents\Models\UserModel;
 use Illuminate\Notifications\Notifiable;
+use Tartan\Zaman\Facades\Zaman;
 
 /**
  * Class User.
  *
  * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
-class User extends UserModel implements ChargeableInterface
+class User extends UserModel
 {
-
-    use ChargeableTrait;
     use AuthorizationTrait;
     use Notifiable;
 
@@ -80,9 +79,237 @@ class User extends UserModel implements ChargeableInterface
         'remember_token',
     ];
 
-    public function paymentAccounts()
+    //relations ============================================================================================
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
     {
-        return $this->hasMany(PaymentAccount::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function merchants()
+    {
+        return $this->hasMany(Merchant::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function wallets()
+    {
+        return $this->hasMany(Wallet::class, 'user_id')
+            ->orderBy('id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bankAccounts()
+    {
+        return $this->hasMany(BankAccount::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function verifications()
+    {
+        return $this->hasMany(UserVerificationModel::class, 'user_id');
+    }
+
+    /**
+     * @param Media|null $media
+     *
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
+    public function registerMediaConversions(Media $media = null)
+    {
+        // Perform a resize on every collection
+        $this->addMediaConversion('avatar')
+            ->width(env('AVATAR_SIZE', 256))
+            ->height(env('AVATAR_SIZE', 256));
+    }
+
+    /**
+     * @param int $size
+     *
+     * @return string
+     */
+    public function getAvatar($size = 30): string
+    {
+        if (count($this->getMedia('avatar'))) {
+            return $this->getFirstMediaUrl('avatar');
+        }
+
+        if (isset($this->avatar_social) && !empty($this->avatar_social)) {
+            return $this->avatar_social;
+        }
+
+        if ($this->email == null) {
+            return '';
+        }
+
+        return Gravatar::get($this->email, ['size' => $size]);
+
+    }
+
+    public function getJBirthDateAttribute(): string
+    {
+        return english(Zaman::gToj($this->birth_date, 'yyyy/MM/dd'));
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getCreatedAtAttribute($value): string
+    {
+        return ($value);
+    }
+
+    public function getMobileAttribute($value): string
+    {
+        if (!empty($value)) {
+            return "0{$value}";
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getVerifications(): array
+    {
+        $r              = [];
+        $r['mobile']    = ['value' => $this->mobile, 'status' => $this->verification & UserVerificationType::MOBILE];
+        $r['email']     = ['value' => $this->email, 'status' => $this->verification & UserVerificationType::EMAIL];
+        $r['tel']       = ['value' => $this->tel, 'status' => $this->verification & UserVerificationType::TEL];
+        $r['residency'] = ['value'  => $this->residency,
+                           'status' => $this->verification & UserVerificationType::RESIDENCY,
+        ];
+        $r['identity']  = ['value'  => $this->identity,
+                           'status' => $this->verification & UserVerificationType::IDENTITY,
+        ];
+        $r['company']   = ['value' => $this->company, 'status' => $this->verification & UserVerificationType::COMPANY];
+
+        return $r;
+    }
+
+    /**
+     * @param int $type
+     *
+     * @return bool
+     */
+    public function isVerified(int $type): bool
+    {
+        return $this->verification & $type;
+    }
+
+
+    /**
+     * @param int $type
+     *
+     * @return bool
+     */
+    public function hasPendingVerification(int $type): bool
+    {
+        $pendingRequest = UserVerification::where('user_id', $this->id)
+            ->where('status', VerificationStatus::PENDING)
+            ->where('verification_type', $type)
+            ->first();
+        if ($pendingRequest != null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param int $type
+     *
+     * @return bool
+     */
+    public function verify(int $type): bool
+    {
+        if (!($this->verification & $type)) {
+            $this->verification += $type;
+
+            return $this->save();
+        }
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function fullVerified(): bool
+    {
+
+        return $this->verification & UserVerificationType::MOBILE &&
+            $this->verification & UserVerificationType::EMAIL &&
+            $this->verification & UserVerificationType::TEL &&
+            $this->verification & UserVerificationType::RESIDENCY &&
+            $this->verification & UserVerificationType::IDENTITY;
+    }
+
+    /**
+     * @param int $type
+     *
+     * @return string
+     * @throws Exception
+     */
+    public function getVerificationValue(int $type): string
+    {
+        switch ($type) {
+            case UserVerificationType::MOBILE:
+            {
+                return $this->mobile;
+            }
+            case UserVerificationType::EMAIL:
+            {
+                return $this->email;
+            }
+            case UserVerificationType::IDENTITY:
+            {
+                return $this->national_id;
+            }
+            default:
+            {
+                throw new Exception(sprintf('could not find user verification value for: %s', $type));
+            }
+        }
+    }
+
+    public function __call($method, $parameters)
+    {
+        if (preg_match('/^isVerified(.+)$/', $method, $matches)) {
+            $item = strtoupper($matches[1]);
+            $item = constant(UserVerificationType::class . '::' . $item);
+
+            return $this->isVerified($item);
+        }
+
+        return parent::__call($method, $parameters); // TODO: Change the autogenerated stub
     }
 
 }

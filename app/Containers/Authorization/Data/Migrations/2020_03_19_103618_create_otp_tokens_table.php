@@ -14,7 +14,7 @@ class CreateOtpTokensTable extends Migration
     public function up()
     {
         Schema::create('otp_tokens', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id');
             $table->string('code', 6);
             $table->unsignedBigInteger('user_id')->nullable()->index();
             $table->string('via', 64)->nullable()->comment('mobile, email, etc')->index();

@@ -1,10 +1,8 @@
 <?php
 
+namespace App\Containers\Helpdesk\Enum;
 
-namespace App\Enum;
-
-
-use App\Traits\CustomEnums;
+use App\Ship\Traits\CustomEnums;
 
 class TicketPriority
 {

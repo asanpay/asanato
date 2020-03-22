@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Ship\Seeders;
+namespace App\Containers\Bank\Data\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Psp;
+use App\Ship\Parents\Seeders\Seeder;
+use App\Containers\Bank\Models\Psp;
 
 class PspsTableSeeder extends Seeder
 {
