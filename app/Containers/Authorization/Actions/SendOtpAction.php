@@ -54,8 +54,9 @@ class SendOtpAction extends Action
                 }
             }
         } catch (\Exception $e) {
-            XLog::exception($e);
-
+            if (config('apiato.api.debug')) {
+                return [null, $e->getMessage()];
+            }
             return [null, __('auth.otp.opt_send_err')];
         }
     }
