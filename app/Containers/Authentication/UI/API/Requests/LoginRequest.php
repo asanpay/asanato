@@ -71,7 +71,8 @@ class LoginRequest extends Request
 
             $rules = array_merge($rules,
                 [
-                    $keyname => "required_without_all:{$allOtherLoginFields}|exists:users,{$key}|{$validators}",
+//                    $keyname => "required_without_all:{$allOtherLoginFields}|exists:users,{$key}|{$validators}",
+                    $keyname => "required|exists:users,{$key}|{$validators}",
                 ]);
         }
 

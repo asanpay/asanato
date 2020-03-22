@@ -6,12 +6,12 @@ return [
     |--------------------------------------------------------------------------
     | Email Confirmation
     |--------------------------------------------------------------------------
-    | 
-    | When set to true, the user must confirm his email before being able to 
+    |
+    | When set to true, the user must confirm his email before being able to
     | Login, after his registration.
-    | 
+    |
     */
-  
+
     'require_email_confirmation' => false,
 
     /*
@@ -25,6 +25,10 @@ return [
 
     'clients' => [
         'web' => [
+            'my' => [
+                'id' => env('CLIENT_WEB_MY_ID'),
+                'secret' => env('CLIENT_WEB_MY_SECRET'),
+            ],
             'admin' => [
                 'id' => env('CLIENT_WEB_ADMIN_ID'),
                 'secret' => env('CLIENT_WEB_ADMIN_SECRET'),
@@ -70,9 +74,9 @@ return [
         |
         */
         'allowed_login_attributes' => [
-            'email' => ['email'],
+            //'email' => ['email'],
             // 'name' => [],
-            // 'phone' => ['string', 'min:6', 'max:25'],
+            'mobile' => ['string', 'regex:'.config('regex.mobile_regex')],
         ],
     ],
 

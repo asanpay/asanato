@@ -1,7 +1,5 @@
 <?php
 
 return [
-
-    'welcome' => 'Welcome to Apiato',
-
+    'welcome' => 'Welcome to Asanpay',
 ];

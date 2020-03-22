@@ -14,16 +14,11 @@ return [
     */
 
     'supported_languages' => [
-        'ar',
+        'fa',
         'en' => [
             'en-GB',
             'en-US',
         ],
-        'zh' => [
-            'zh-CN'
-        ],
-        'es',
-        'fr',
     ],
 
 ];
