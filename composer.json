@@ -1,29 +1,16 @@
 {
-    "name": "apiato/apiato",
-    "description": "A flawless framework for building scalable and testable API-Centric Apps with PHP and Laravel.",
-    "homepage": "http://apiato.io/",
-    "support": {
-        "issues": "https://github.com/apiato/apiato/issues",
-        "source": "https://github.com/apiato/apiato"
-    },
+    "name": "asanpay/asanpay",
+    "description": "AsanPay Backend Layer",
+    "homepage": "http://asanpay.com/",
     "authors": [
         {
-            "name": "Mahmoud Zalt",
-            "email": "mahmoud@zalt.me"
+            "name": "Aboozar Ghaffari",
+            "email": "aboozar.ghf@gmail.com"
         }
     ],
     "keywords": [
-        "Apiato",
-        "API",
-        "Framework",
-        "API framework",
-        "API Starter",
-        "PHP API Starter",
-        "Laravel API",
-        "PHP",
-        "Hello API",
-        "Porto",
-        "Porto SAP"
+        "Asanpay",
+        "API"
     ],
     "license": "MIT",
     "type": "project",
