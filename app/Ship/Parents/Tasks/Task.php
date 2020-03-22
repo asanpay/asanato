@@ -11,5 +11,8 @@ use Apiato\Core\Abstracts\Tasks\Task as AbstractTask;
  */
 abstract class Task extends AbstractTask
 {
-
+    public function weAreOnProduction()
+    {
+        return app()->environment('production');
+    }
 }

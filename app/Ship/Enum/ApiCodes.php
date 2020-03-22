@@ -18,6 +18,7 @@ class ApiCodes
     const CODE_FORBIDDEN = 410;
     const TOO_MANY_REQUESTS = 429;
     const CODE_INTERNAL_ERROR = 500;
+    const CODE_UNKNOWN_ERROR = 999;
 
     const NOT_ENOUGH_WALLET_BALANCE = 1000;
 

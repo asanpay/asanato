@@ -25,13 +25,18 @@ trait ResponseTrait
     protected $metaData = [];
 
     /**
+     * @var int
+     */
+    protected $apiCode = 999;
+
+    /**
      * @param       $data
-     * @param null  $transformerName The transformer (e.g., Transformer::class or new Transformer()) to be applied
-     * @param array $includes additional resources to be included
-     * @param array $meta additional meta information to be applied
-     * @param null  $resourceKey the resource key to be set for the TOP LEVEL resource
+     * @param null $transformerName The transformer (e.g., Transformer::class or new Transformer()) to be applied
+     * @param array $includes       additional resources to be included
+     * @param array $meta           additional meta information to be applied
+     * @param null $resourceKey     the resource key to be set for the TOP LEVEL resource
      *
-     * @return array
+     * @return JsonResponse
      */
     public function transform(
         $data,
@@ -44,14 +49,13 @@ trait ResponseTrait
         if ($transformerName instanceof Transformer) {
             // check, if we have provided a respective TRANSFORMER class
             $transformer = $transformerName;
-        }
-        else {
+        } else {
             // of if we just passed the classname
             $transformer = new $transformerName;
         }
 
         // now, finally check, if the class is really a TRANSFORMER
-        if (! ($transformer instanceof Transformer)) {
+        if (!($transformer instanceof Transformer)) {
             throw new InvalidTransformerException();
         }
 
@@ -97,12 +101,12 @@ trait ResponseTrait
             $result = $fractal->toArray();
         }
 
-        return $result;
+        return $this->apocalypse($result, 200, [], []);
     }
 
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return  $this
      */
@@ -114,42 +118,68 @@ trait ResponseTrait
     }
 
     /**
+     * @param int $code
+     *
+     * @return  $this
+     */
+    public function apiCode(int $code)
+    {
+        $this->apiCode = $code;
+
+        return $this;
+    }
+
+    /**
      * @param       $message
-     * @param int   $status
+     * @param int $status
      * @param array $headers
-     * @param int   $options
+     * @param int $options
+     *
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function message(string $message, $status = 200, array $headers = [], $options = 0)
+    {
+        $message = ['message' => $message];
+        return $this->apocalypse($message, $status, $headers, $options);
+    }
+
+    /**
+     * @param       $message
+     * @param int $status
+     * @param array $headers
+     * @param int $options
      *
      * @return  \Illuminate\Http\JsonResponse
      */
     public function json($message, $status = 200, array $headers = [], $options = 0)
     {
-        return new JsonResponse($message, $status, $headers, $options);
+        return $this->apocalypse($message, $status, $headers, $options);
     }
 
     /**
-     * @param null  $message
-     * @param int   $status
+     * @param null $message
+     * @param int $status
      * @param array $headers
-     * @param int   $options
+     * @param int $options
      *
      * @return JsonResponse
      */
     public function created($message = null, $status = 201, array $headers = [], $options = 0)
     {
-        return new JsonResponse($message, $status, $headers, $options);
+        return $this->apocalypse($message, $status, $headers, $options);
     }
 
     /**
      * @param null  array or string $message
-     * @param int   $status
+     * @param int $status
      * @param array $headers
-     * @param int   $options
+     * @param int $options
      *
      * @return  \Illuminate\Http\JsonResponse
      */
     public function accepted($message = null, $status = 202, array $headers = [], $options = 0)
     {
-        return new JsonResponse($message, $status, $headers, $options);
+        return $this->apocalypse($message, $status, $headers, $options);
     }
 
     /**
@@ -217,13 +247,32 @@ trait ResponseTrait
 
         return $responseArray;
     }
-    
+
     /**
      * @return array
      */
-    protected function parseRequestedIncludes() : array
+    protected function parseRequestedIncludes(): array
     {
         return explode(',', Request::get('include'));
     }
 
+
+    protected function apocalypse(
+        array $message,
+        int $status,
+        array $headers = [],
+        $options = 0
+    ): JsonResponse {
+        if ($status < 300) {
+            $message ['message'] = $message ['message'] ?? "everything's ok";
+            $message['api_code'] = 0;
+        } else {
+            $message ['message'] = $message ['message'] ?? "something's wrong";
+            if (!isset($message['api_code']) && !is_null($this->apiCode)) {
+                $message['api_code'] = $this->apiCode;
+            }
+        }
+
+        return new JsonResponse($message, $status, $headers, $options);
+    }
 }

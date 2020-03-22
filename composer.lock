@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7692048a876a56a62e651eb05acea9b",
+    "content-hash": "69ada7e8ad3c66698fd0a118b07f3377",
     "packages": [
         {
             "name": "apiato/containers-installer",
@@ -9384,7 +9384,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2",
+        "php": "^7.4",
         "ext-curl": "*",
         "ext-gd": "*",
         "ext-intl": "*",

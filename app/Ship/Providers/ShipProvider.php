@@ -5,6 +5,7 @@ namespace App\Ship\Providers;
 use App\Ship\Parents\Providers\MainProvider;
 use Creativeorange\Gravatar\GravatarServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
+use Tartan\IranianSms\SmsServiceProvider;
 
 /**
  * Class ShipProvider
@@ -22,6 +23,7 @@ class ShipProvider extends MainProvider
     public $serviceProviders = [
         MediaLibraryServiceProvider::class,
         GravatarServiceProvider::class,
+        SmsServiceProvider::class,
     ];
 
     /**
@@ -30,7 +32,9 @@ class ShipProvider extends MainProvider
      * @var  array
      */
     protected $aliases = [
-        'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
+        'Gravatar' => \Creativeorange\Gravatar\Facades\Gravatar::class,
+        'XLog' => \Tartan\Log\Facades\XLog::class,
+        'IranianSms' => Tartan\IranianSms\Facades\IranianSms::class,
     ];
 
 

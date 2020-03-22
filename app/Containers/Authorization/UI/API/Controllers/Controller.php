@@ -3,6 +3,7 @@
 namespace App\Containers\Authorization\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Authorization\Data\Transporters\CreateOtpTokenTransporter;
 use App\Containers\Authorization\UI\API\Requests\AssignUserToRoleRequest;
 use App\Containers\Authorization\UI\API\Requests\AttachPermissionToRoleRequest;
 use App\Containers\Authorization\UI\API\Requests\CreateRoleRequest;
@@ -13,11 +14,13 @@ use App\Containers\Authorization\UI\API\Requests\FindRoleRequest;
 use App\Containers\Authorization\UI\API\Requests\GetAllPermissionsRequest;
 use App\Containers\Authorization\UI\API\Requests\GetAllRolesRequest;
 use App\Containers\Authorization\UI\API\Requests\RevokeUserFromRoleRequest;
+use App\Containers\Authorization\UI\API\Requests\SendOtpRequest;
 use App\Containers\Authorization\UI\API\Requests\SyncPermissionsOnRoleRequest;
 use App\Containers\Authorization\UI\API\Requests\SyncUserRolesRequest;
 use App\Containers\Authorization\UI\API\Transformers\PermissionTransformer;
 use App\Containers\Authorization\UI\API\Transformers\RoleTransformer;
 use App\Containers\User\UI\API\Transformers\UserTransformer;
+use App\Ship\Enum\ApiCodes;
 use App\Ship\Parents\Controllers\ApiController;
 use App\Ship\Transporters\DataTransporter;
 
@@ -173,4 +176,19 @@ class Controller extends ApiController
         return $this->transform($role, RoleTransformer::class);
     }
 
+    public function sendOtpToken(SendOtpRequest $request)
+    {
+        $t = new CreateOtpTokenTransporter(array_merge($request->all(),[
+            'ip' => $request->ip(),
+            'via' => $request->has('mobile') ? $request->has('mobile') : $request->has('email')
+        ]));
+
+        list ($message, $err) = Apiato::call('Authorization@SendOtpAction', [$t]);
+
+        if (empty($err)) {
+            return $this->message($message);
+        } else {
+            return $this->message($err, ApiCodes::TOO_MANY_REQUESTS);
+        }
+    }
 }
