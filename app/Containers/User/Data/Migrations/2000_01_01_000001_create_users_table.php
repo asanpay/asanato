@@ -58,7 +58,7 @@ class CreateUsersTable extends Migration
             $table->string('locked_reason')->nullable();
 
             // see UserVerifications class
-            $table->unsignedSmallInteger('verification')->default(0)->comment('bit value');
+            $table->unsignedSmallInteger('idproofs')->default(0)->comment('bit value');
 
             $table->rememberToken();
             $table->timestamps();

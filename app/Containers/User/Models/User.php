@@ -3,9 +3,9 @@
 namespace App\Containers\User\Models;
 
 use App\Containers\Authorization\Traits\AuthorizationTrait;
-use App\Containers\Profile\Enum\IdPoofType;
-use App\Containers\Profile\Enum\VerificationStatus;
-use App\Containers\Profile\Models\UserVerification;
+use App\Containers\IdentityProof\Enum\IdPoofType;
+use App\Containers\IdentityProof\Enum\IdProofStatus;
+use App\Containers\IdentityProof\Models\IdentityProof;
 use App\Ship\Parents\Models\UserModel;
 use Illuminate\Notifications\Notifiable;
 use Tartan\Zaman\Facades\Zaman;
@@ -52,7 +52,7 @@ class User extends UserModel
         'social_nickname',
         'confirmed',
         'referrer',
-        'register_ip'
+        'register_ip',
     ];
 
     protected $casts = [
@@ -128,9 +128,9 @@ class User extends UserModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function verifications()
+    public function idproofs()
     {
-        return $this->hasMany(UserVerificationModel::class, 'user_id');
+        return $this->hasMany(IdentityProof::class, 'user_id');
     }
 
     /**
@@ -194,19 +194,15 @@ class User extends UserModel
     /**
      * @return array
      */
-    public function getVerifications(): array
+    public function getIdProofs(): array
     {
         $r              = [];
-        $r['mobile']    = ['value' => $this->mobile, 'status' => $this->verification & IdPoofType::MOBILE];
-        $r['email']     = ['value' => $this->email, 'status' => $this->verification & IdPoofType::EMAIL];
-        $r['tel']       = ['value' => $this->tel, 'status' => $this->verification & IdPoofType::TEL];
-        $r['residency'] = ['value'  => $this->residency,
-                           'status' => $this->verification & IdPoofType::RESIDENCY,
-        ];
-        $r['identity']  = ['value'  => $this->identity,
-                           'status' => $this->verification & IdPoofType::IDENTITY,
-        ];
-        $r['company']   = ['value' => $this->company, 'status' => $this->verification & IdPoofType::COMPANY];
+        $r['mobile']    = ['value' => $this->mobile, 'status' => $this->idproofs & IdPoofType::MOBILE];
+        $r['email']     = ['value' => $this->email, 'status' => $this->idproofs & IdPoofType::EMAIL];
+        $r['tel']       = ['value' => $this->tel, 'status' => $this->idproofs & IdPoofType::TEL];
+        $r['residency'] = ['value' => $this->residency, 'status' => $this->idproofs & IdPoofType::RESIDENCY,];
+        $r['identity']  = ['value' => $this->identity, 'status' => $this->idproofs & IdPoofType::IDENTITY,];
+        $r['company']   = ['value' => $this->company, 'status' => $this->idproofs & IdPoofType::COMPANY];
 
         return $r;
     }
@@ -218,7 +214,7 @@ class User extends UserModel
      */
     public function isVerified(int $type): bool
     {
-        return $this->verification & $type;
+        return $this->idproofs & $type;
     }
 
 
@@ -227,11 +223,11 @@ class User extends UserModel
      *
      * @return bool
      */
-    public function hasPendingVerification(int $type): bool
+    public function hasPendingIdProofs(int $type): bool
     {
-        $pendingRequest = UserVerification::where('user_id', $this->id)
-            ->where('status', VerificationStatus::PENDING)
-            ->where('verification_type', $type)
+        $pendingRequest = IdentityProof::where('user_id', $this->id)
+            ->where('status', IdProofStatus::PENDING)
+            ->where('proof_type', $type)
             ->first();
         if ($pendingRequest != null) {
             return true;
@@ -247,8 +243,8 @@ class User extends UserModel
      */
     public function verify(int $type): bool
     {
-        if (!($this->verification & $type)) {
-            $this->verification += $type;
+        if (!($this->idproofs & $type)) {
+            $this->idproofs += $type;
 
             return $this->save();
         }
@@ -262,11 +258,11 @@ class User extends UserModel
     public function fullVerified(): bool
     {
 
-        return $this->verification & IdPoofType::MOBILE &&
-            $this->verification & IdPoofType::EMAIL &&
-            $this->verification & IdPoofType::TEL &&
-            $this->verification & IdPoofType::RESIDENCY &&
-            $this->verification & IdPoofType::IDENTITY;
+        return $this->idproofs & IdPoofType::MOBILE &&
+            $this->idproofs & IdPoofType::EMAIL &&
+            $this->idproofs & IdPoofType::TEL &&
+            $this->idproofs & IdPoofType::RESIDENCY &&
+            $this->idproofs & IdPoofType::IDENTITY;
     }
 
     /**
