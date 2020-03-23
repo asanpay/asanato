@@ -38,27 +38,9 @@ class User extends UserModel implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
-        'mobile',
-        'password',
-        'device',
-        'platform',
-        'gender',
-        'birth',
-        'social_provider',
-        'social_token',
-        'social_refresh_token',
-        'social_expires_in',
-        'social_token_secret',
-        'social_id',
-        'social_avatar',
-        'social_avatar_original',
-        'social_nickname',
-        'confirmed',
-        'referrer',
-        'register_ip',
     ];
+
+    protected $guarded = ['id', 'balance', 'idproofs'];
 
     protected $casts = [
         'is_client' => 'boolean',
