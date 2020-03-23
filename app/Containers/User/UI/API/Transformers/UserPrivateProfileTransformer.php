@@ -36,26 +36,18 @@ class UserPrivateProfileTransformer extends Transformer
     public function transform(User $user)
     {
         $response = [
-            'object'               => 'User',
-            'id'                   => $user->getHashedKey(),
-            'name'                 => $user->name,
-            'email'                => $user->email,
-            'confirmed'            => $user->confirmed,
-            'nickname'             => $user->nickname,
-            'gender'               => $user->gender,
-            'birth'                => $user->birth,
+            'object'     => 'User',
+            'id'         => $user->getHashedKey(),
+            'first_name' => $user->first_name,
+            'last_name'  => $user->last_name,
+            'email'      => $user->email,
+            'gender'     => $user->gender,
+            'avatar'     => $user->getAvatar(256),
 
-            'social_auth_provider' => $user->social_provider,
-            'social_id'            => $user->social_id,
-            'social_avatar'        => [
-                'avatar'   => $user->social_avatar,
-                'original' => $user->social_avatar_original,
-            ],
-
-            'created_at'           => $user->created_at,
-            'updated_at'           => $user->updated_at,
-            'readable_created_at'  => $user->created_at->diffForHumans(),
-            'readable_updated_at'  => $user->updated_at->diffForHumans(),
+            'created_at'          => $user->created_at,
+            'updated_at'          => $user->updated_at,
+            'readable_created_at' => $user->created_at->diffForHumans(),
+            'readable_updated_at' => $user->updated_at->diffForHumans(),
         ];
 
         $response = $this->ifAdmin([
