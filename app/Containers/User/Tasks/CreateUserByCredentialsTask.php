@@ -41,7 +41,7 @@ class CreateUserByCredentialsTask extends Task
                 'first_name'   => $t->first_name,
                 'last_name'    => $t->last_name,
                 'register_ip'  => $t->client_ip,
-                'register_via' => $t->register_via,
+                'register_via' => $t->device,
                 'referrer'     => $t->referrer,
             ]);
 
