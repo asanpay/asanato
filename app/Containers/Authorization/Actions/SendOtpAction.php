@@ -11,7 +11,6 @@ use App\Containers\Authorization\Models\OtpToken;
 use App\Ship\Enum\ApiCodes;
 use App\Ship\Jobs\SendSms;
 use App\Ship\Parents\Actions\Action;
-use Tartan\Log\Facades\XLog;
 
 class SendOtpAction extends Action
 {
@@ -33,17 +32,17 @@ class SendOtpAction extends Action
                 case OtpReason::SIGN_UP:
                 {
                     // normalize phone number
-                    $mobile = mobilify($data->mobile);
+                    $data->via = mobilify($data->mobile);
 
-                    list ($eligible, $err) = $this->isEligibleToRequestOtpByMobile($mobile, OtpDriver::SMS);
+                    list ($eligible, $err) = $this->isEligibleToRequestOtpByMobile($data->via, OtpDriver::SMS);
+
                     if ($eligible === true) {
-                        $data->via = mobilify($data->mobile);
 
                         $otpToken = Apiato::call('Authorization@CreateOtpTokenTask', [$data]);
 
-                        $this->sendBySms($mobile, $otpToken->code);
+                        $this->sendBySms($data->via, $otpToken->code);
 
-                        return [__('auth.otp.sms_otp_sent', ['mobile' => $mobile]), null];
+                        return [__('auth.otp.sms_otp_sent', ['mobile' => $data->via]), null];
                     } else {
                         return [null, $err];
                     }
@@ -54,8 +53,8 @@ class SendOtpAction extends Action
                 }
             }
         } catch (\Exception $e) {
-            if (config('apiato.api.debug')) {
-                return [null, $e->getMessage()];
+            if ($this->weAreOnApiDebug()) {
+                return [null, $e->getTraceAsString()];
             }
             return [null, __('auth.otp.opt_send_err')];
         }

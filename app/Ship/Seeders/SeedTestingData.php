@@ -2,6 +2,7 @@
 
 namespace App\Ship\Seeders;
 
+use App\Containers\Authentication\Data\Seeders\TestOauthClientSeeder;
 use App\Ship\Parents\Seeders\Seeder;
 
 /**
@@ -19,7 +20,7 @@ class SeedTestingData extends Seeder
      */
     public function run()
     {
-        // Create Testing data for live tests
+        $this->call(TestOauthClientSeeder::class);
     }
 
 }

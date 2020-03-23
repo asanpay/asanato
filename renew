@@ -1,0 +1,43 @@
+#!/bin/bash
+
+usage() { echo "Usage: $0 [-composer <yes|no>]" 1>&2; exit 1; }
+
+while getopts ":s:p:" o; do
+    case "${o}" in
+        composer)
+            composer=${OPTARG}
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ -z "${composer}" ]; then
+    composer="no"
+fi
+
+composer clear-cache
+composer dump
+
+php artisan migrate:reset
+php artisan migrate:fresh
+
+php artisan clear-compiled
+php artisan auth:clear-resets
+php artisan cache:clear
+php artisan config:clear
+php artisan permission:cache-reset
+php artisan route:clear
+php artisan view:clear
+
+php artisan passport:keys
+php artisan apiato:seed-deploy
+php artisan apiato:seed-test
+
+if [ $composer == "yes" ]
+then
+    echo "running composer update"
+    composer update -vvv
+fi

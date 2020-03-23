@@ -9,6 +9,10 @@ use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
+/**
+ * Class CreateOtpTokenTask
+ * @package App\Containers\Authorization\Tasks
+ */
 class CreateOtpTokenTask extends Task
 {
 

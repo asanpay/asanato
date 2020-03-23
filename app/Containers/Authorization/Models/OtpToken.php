@@ -14,10 +14,11 @@ class OtpToken extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public static function getLatestUnusedFor(string $mobile, string $driver = 'SMS')
+    public static function getLatestUnusedOtp(string $mobile, string $reason, string $driver = 'SMS')
     {
         return self::where('via', $mobile)
             ->where('used', false)
+            ->where('reason', $reason)
             ->where('driver', $driver)
             ->orderBy('id', 'DESC')
             ->first();

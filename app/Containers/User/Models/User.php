@@ -35,6 +35,7 @@ class User extends UserModel
     protected $fillable = [
         'name',
         'email',
+        'mobile',
         'password',
         'device',
         'platform',
@@ -50,7 +51,8 @@ class User extends UserModel
         'social_avatar_original',
         'social_nickname',
         'confirmed',
-        'is_client',
+        'referrer',
+        'register_ip'
     ];
 
     protected $casts = [

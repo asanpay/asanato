@@ -39,7 +39,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar_social', 255)->nullable();
             $table->string('register_via', 30)->default('WEB');
             $table->string('register_ip',15);
-            $table->string('referer',40)->nullable();
+            $table->string('referrer',40)->nullable();
 
 
             $table->text('notes')->nullable();

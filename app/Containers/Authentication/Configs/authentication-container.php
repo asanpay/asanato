@@ -35,6 +35,10 @@ return [
             ],
         ],
         'mobile' => [
+            'my' => [
+                'id' => env('CLIENT_MOBILE_MY_ID'),
+                'secret' => env('CLIENT_MOBILE_MY_SECRET'),
+            ],
             'admin' => [
                 'id' => env('CLIENT_MOBILE_ADMIN_ID'),
                 'secret' => env('CLIENT_MOBILE_ADMIN_SECRET'),

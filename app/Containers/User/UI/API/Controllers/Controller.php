@@ -3,6 +3,7 @@
 namespace App\Containers\User\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\User\Data\Transporters\UserSignUpTransporter;
 use App\Containers\User\UI\API\Requests\CreateAdminRequest;
 use App\Containers\User\UI\API\Requests\DeleteUserRequest;
 use App\Containers\User\UI\API\Requests\FindUserByIdRequest;
@@ -12,8 +13,10 @@ use App\Containers\User\UI\API\Requests\GetAuthenticatedUserRequest;
 use App\Containers\User\UI\API\Requests\RegisterUserRequest;
 use App\Containers\User\UI\API\Requests\ResetPasswordRequest;
 use App\Containers\User\UI\API\Requests\UpdateUserRequest;
+use App\Containers\User\UI\API\Requests\UserSignUpRequest;
 use App\Containers\User\UI\API\Transformers\UserPrivateProfileTransformer;
 use App\Containers\User\UI\API\Transformers\UserTransformer;
+use App\Ship\Enum\ApiCodes;
 use App\Ship\Parents\Controllers\ApiController;
 use App\Ship\Transporters\DataTransporter;
 
@@ -157,4 +160,17 @@ class Controller extends ApiController
         return $this->noContent(202);
     }
 
+    public function signUp(UserSignUpRequest $request)
+    {
+        $t = new UserSignUpTransporter($request);
+        $t->client_id = request('client_ip', $request->ip());
+
+        list ($result, $err) = Apiato::call('User@UserSignUpAction', [$t]);
+
+        if (empty($err)) {
+            return $this->json($result['response_content'])->withCookie($result['refresh_cookie']);
+        } else {
+            return $this->apiCode($result)->message($err, ApiCodes::UNPROCESSABLE_ENTITY);
+        }
+    }
 }

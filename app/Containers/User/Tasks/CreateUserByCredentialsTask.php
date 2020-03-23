@@ -2,7 +2,9 @@
 
 namespace App\Containers\User\Tasks;
 
+use App\Containers\Profile\Enum\UserVerificationType;
 use App\Containers\User\Data\Repositories\UserRepository;
+use App\Containers\User\Data\Transporters\UserSignUpTransporter;
 use App\Containers\User\Models\User;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
@@ -10,9 +12,8 @@ use Exception;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Class CreateUserByCredentialsTask.
- *
- * @author Mahmoud Zalt <mahmoud@zalt.me>
+ * Class CreateUserByCredentialsTask
+ * @package App\Containers\User\Tasks
  */
 class CreateUserByCredentialsTask extends Task
 {
@@ -25,37 +26,29 @@ class CreateUserByCredentialsTask extends Task
     }
 
     /**
-     * @param bool        $isClient
-     * @param string      $email
-     * @param string      $password
-     * @param string|null $name
-     * @param string|null $gender
-     * @param string|null $birth
+     * @param UserSignUpTransporter $t
      *
-     * @return  mixed
-     * @throws  CreateResourceFailedException
+     * @return User
      */
-    public function run(
-        bool $isClient = true,
-        string $email,
-        string $password,
-        string $name = null,
-        string $gender = null,
-        string $birth = null
-    ): User {
-
+    public function run(UserSignUpTransporter $t): User
+    {
         try {
             // create new user
             $user = $this->repository->create([
-                'password'  => Hash::make($password),
-                'email'     => $email,
-                'name'      => $name,
-                'gender'    => $gender,
-                'birth'     => $birth,
-                'is_client' => $isClient,
+                'password'     => Hash::make($t->password),
+                'mobile'       => $t->mobile,
+                'first_name'   => $t->first_name,
+                'last_name'    => $t->last_name,
+                'register_ip'  => $t->client_ip,
+                'register_via' => $t->register_via,
+                'referrer'     => $t->referrer,
             ]);
 
+            if ($t->should_verify_mobile == true) {
+                $user->verify(UserVerificationType::MOBILE);
+            }
         } catch (Exception $e) {
+dd($e->getMessage());
             throw (new CreateResourceFailedException())->debug($e);
         }
 

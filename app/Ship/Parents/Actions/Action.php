@@ -11,10 +11,13 @@ use Apiato\Core\Abstracts\Actions\Action as AbstractAction;
  */
 abstract class Action extends AbstractAction
 {
-    public function weAreOnProduction()
+    public function weAreOnProduction(): bool
     {
         return app()->environment('production');
     }
 
-
+    public function weAreOnApiDebug(): bool
+    {
+        return config('apiato.api.debug', false);
+    }
 }
