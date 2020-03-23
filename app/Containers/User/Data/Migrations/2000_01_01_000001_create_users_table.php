@@ -41,7 +41,6 @@ class CreateUsersTable extends Migration
             $table->string('register_ip',15);
             $table->string('referrer',40)->nullable();
 
-
             $table->text('notes')->nullable();
 
             // residency
