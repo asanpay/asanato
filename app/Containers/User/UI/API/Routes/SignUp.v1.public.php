@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @apiGroup           Users
+ * @apiGroup           Authentication
  * @apiName            UserSignUp
  * @api                {post} /v1/signup SignUp
  * @apiDescription     Create client users.
