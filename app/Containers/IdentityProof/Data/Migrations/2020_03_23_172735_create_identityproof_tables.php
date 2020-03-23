@@ -12,7 +12,7 @@ class CreateIdentityproofTables extends Migration
      */
     public function up()
     {
-        Schema::create('identityproofs', function (Blueprint $table) {
+        Schema::create('identity_proofs', function (Blueprint $table) {
 
             $table->increments('id');
             $table->integer('user_id')->unsigned();
@@ -39,6 +39,6 @@ class CreateIdentityproofTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('identityproofs');
+        Schema::dropIfExists('identity_proofs');
     }
 }
