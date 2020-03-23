@@ -1,6 +1,6 @@
 <?php
 /**
- * @apiGroup           OAuth2
+ * @apiGroup           Authentication
  * @apiName            Logout
  * @api                {DELETE} /v1/signout SignOut
  * @apiDescription     SignOut. (Revoking Access Token)
