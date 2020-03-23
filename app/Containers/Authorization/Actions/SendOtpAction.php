@@ -34,6 +34,12 @@ class SendOtpAction extends Action
                     // normalize phone number
                     $data->via = mobilify($data->mobile);
 
+                    // check for existing mobile
+                    $existUser = Apiato::call('User@FindUserByMobileTask', [$data->via]);
+                    if ($existUser) {
+                        return ['null', __('auth.signup.dup_conf_mobile')];
+                    }
+
                     list ($eligible, $err) = $this->isEligibleToRequestOtpByMobile($data->via, OtpDriver::SMS);
 
                     if ($eligible === true) {
