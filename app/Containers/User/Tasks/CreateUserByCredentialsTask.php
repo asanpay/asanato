@@ -2,7 +2,7 @@
 
 namespace App\Containers\User\Tasks;
 
-use App\Containers\Profile\Enum\IdPoofType;
+use App\Containers\IdentityProof\Enum\IdPoofType;
 use App\Containers\User\Data\Repositories\UserRepository;
 use App\Containers\User\Data\Transporters\UserSignUpTransporter;
 use App\Containers\User\Models\User;
