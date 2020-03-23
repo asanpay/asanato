@@ -28,7 +28,7 @@ trait DocsGeneratorTrait
      */
     private function getAppUrl()
     {
-        return Config::get('app.url');
+        return Config::get('apiato.api.url');
     }
 
     /**
