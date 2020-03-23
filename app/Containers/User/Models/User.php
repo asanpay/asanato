@@ -7,18 +7,23 @@ use App\Containers\IdentityProof\Enum\IdPoofType;
 use App\Containers\IdentityProof\Enum\IdProofStatus;
 use App\Containers\IdentityProof\Models\IdentityProof;
 use App\Ship\Parents\Models\UserModel;
+use Creativeorange\Gravatar\Facades\Gravatar;
 use Illuminate\Notifications\Notifiable;
 use Tartan\Zaman\Facades\Zaman;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * Class User.
  *
  * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
-class User extends UserModel
+class User extends UserModel implements HasMedia
 {
     use AuthorizationTrait;
     use Notifiable;
+    use InteractsWithMedia;
 
     /**
      * The database table used by the model.
@@ -138,7 +143,7 @@ class User extends UserModel
      *
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
-    public function registerMediaConversions(Media $media = null)
+    public function registerMediaConversions(Media $media = null): void
     {
         // Perform a resize on every collection
         $this->addMediaConversion('avatar')
