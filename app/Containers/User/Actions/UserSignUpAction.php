@@ -66,7 +66,7 @@ class UserSignUpAction extends Action
         } catch (\Exception $e) {
             DB::rollBack();
             if ($this->weAreOnApiDebug()) {
-                $m = $e->getMessage();
+                throw $e;
             } else {
                 $m = __('app.unknown_err');
             }

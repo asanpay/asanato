@@ -54,7 +54,7 @@ class SendOtpAction extends Action
             }
         } catch (\Exception $e) {
             if ($this->weAreOnApiDebug()) {
-                return [null, $e->getTraceAsString()];
+                throw $e;
             }
             return [null, __('auth.otp.opt_send_err')];
         }
