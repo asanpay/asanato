@@ -1,9 +1,9 @@
 {
-  "name": "asanpay",
-  "description": "apiato (Private API) Documentation",
+  "name": "Asanpay",
+  "description": "Asanpay (Private API) Documentation",
   "title": "Welcome to Asanpay",
   "version": "1.0.0",
-  "url" : "http://api.asanpay.local",
+  "url" : "https://api.asanpay.com",
   "template": {
   	"withCompare": true,
   	"withGenerator": true

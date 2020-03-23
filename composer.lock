@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "69ada7e8ad3c66698fd0a118b07f3377",
+    "content-hash": "ef0690cf6b29ac55f72bb54afeb3bc2c",
     "packages": [
         {
             "name": "apiato/containers-installer",
@@ -3470,16 +3470,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.25",
+            "version": "2.0.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "c18159618ed7cd7ff721ac1a8fec7860a475d2f0"
+                "reference": "09655fcc1f8bab65727be036b28f6f20311c126c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/c18159618ed7cd7ff721ac1a8fec7860a475d2f0",
-                "reference": "c18159618ed7cd7ff721ac1a8fec7860a475d2f0",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/09655fcc1f8bab65727be036b28f6f20311c126c",
+                "reference": "09655fcc1f8bab65727be036b28f6f20311c126c",
                 "shasum": ""
             },
             "require": {
@@ -3558,7 +3558,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2020-02-25T04:16:50+00:00"
+            "time": "2020-03-13T04:15:39+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -6244,28 +6244,26 @@
         },
         {
             "name": "tartan/laravel-iranian-sms",
-            "version": "v1.2.7",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iamtartan/laravel-iranian-sms.git",
-                "reference": "38041191fc54dc9ca721bafad332a0969e22a05e"
+                "reference": "cf59bb0fbf8a0212a7f729c0a089027b0f55364b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iamtartan/laravel-iranian-sms/zipball/38041191fc54dc9ca721bafad332a0969e22a05e",
-                "reference": "38041191fc54dc9ca721bafad332a0969e22a05e",
+                "url": "https://api.github.com/repos/iamtartan/laravel-iranian-sms/zipball/cf59bb0fbf8a0212a7f729c0a089027b0f55364b",
+                "reference": "cf59bb0fbf8a0212a7f729c0a089027b0f55364b",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
+                "ext-json": "*",
                 "ext-soap": "*",
                 "ghasedak/php": "dev-master",
                 "illuminate/support": ">=5.0.0",
                 "kavenegar/php": "*",
                 "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
             },
             "type": "laravel-component",
             "autoload": {
@@ -6281,10 +6279,6 @@
                 {
                     "name": "Aboozar Ghaffari <Tartan>",
                     "email": "iamtartan@gmail.com"
-                },
-                {
-                    "name": "Sina Miandashti",
-                    "email": "miandashti@gmail.com"
                 }
             ],
             "description": "Laravel 5.x sms handler for working with most iranian sms operators",
@@ -6298,7 +6292,7 @@
                 "mehr-afraz",
                 "sms"
             ],
-            "time": "2020-02-16T14:47:11+00:00"
+            "time": "2020-03-23T10:42:33+00:00"
         },
         {
             "name": "tartan/laravel-jalali-date",
@@ -9379,6 +9373,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "asanpay/shaparak": 20,
+        "tartan/laravel-iranian-sms": 20,
         "optimus/heimdal": 20
     },
     "prefer-stable": true,

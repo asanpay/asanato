@@ -7,7 +7,7 @@
  * @api                {PATCH} /v0/banks/:id Update Bank
  * @apiDescription     Update Bank
  *
- * @apiVersion         0.0.0
+ * @apiVersion         1.0.0
  * @apiPermission      none
  *
  * @apiParam           {String}  parameters here..

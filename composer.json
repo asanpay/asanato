@@ -37,7 +37,7 @@
         "spatie/laravel-referer": "^1.6",
         "spatie/regex": "^1.4",
         "tartan/laravel-custom-validator": "^5.0",
-        "tartan/laravel-iranian-sms": "^1.2",
+        "tartan/laravel-iranian-sms": "dev-master",
         "tartan/laravel-jalali-date": "^6.0",
         "tartan/laravel-xlog": "^1.2",
         "wikimedia/composer-merge-plugin": "^1.3.1"
