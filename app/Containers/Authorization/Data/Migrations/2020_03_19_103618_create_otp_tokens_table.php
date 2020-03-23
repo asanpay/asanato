@@ -22,7 +22,7 @@ class CreateOtpTokensTable extends Migration
             $table->string('reason', 20)->nullable();
             $table->boolean('used')->default(false);
             $table->unsignedInteger('ttl')->default(300)->comment('in seconds');
-            $table->integer('ip')->comment('requester ip');
+            $table->unsignedInteger('ip')->comment('requester ip');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
