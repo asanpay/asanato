@@ -13,9 +13,8 @@ use Request;
 
 /**
  * Class ResponseTrait
- *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
- */
+ **/
+
 trait ResponseTrait
 {
 
@@ -101,7 +100,7 @@ trait ResponseTrait
             $result = $fractal->toArray();
         }
 
-        return $this->apocalypse($result, 200, [], []);
+        return $this->apocalypse($result, 200);
     }
 
 
@@ -272,7 +271,6 @@ trait ResponseTrait
                 $message['api_code'] = $this->apiCode;
             }
         }
-
         return new JsonResponse($message, $status, $headers, $options);
     }
 }

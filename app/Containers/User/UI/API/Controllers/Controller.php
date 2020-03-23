@@ -29,18 +29,6 @@ class Controller extends ApiController
 {
 
     /**
-     * @param \App\Containers\User\UI\API\Requests\RegisterUserRequest $request
-     *
-     * @return  mixed
-     */
-    public function registerUser(RegisterUserRequest $request)
-    {
-        $user = Apiato::call('User@RegisterUserAction', [new DataTransporter($request)]);
-
-        return $this->transform($user, UserTransformer::class);
-    }
-
-    /**
      * @param \App\Containers\User\UI\API\Requests\CreateAdminRequest $request
      *
      * @return  mixed

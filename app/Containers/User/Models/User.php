@@ -182,11 +182,6 @@ class User extends UserModel
         return "{$this->first_name} {$this->last_name}";
     }
 
-    public function getCreatedAtAttribute($value): string
-    {
-        return ($value);
-    }
-
     public function getMobileAttribute($value): string
     {
         if (!empty($value)) {

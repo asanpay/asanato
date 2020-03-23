@@ -2,17 +2,16 @@
 
 /**
  * @apiGroup           Otp
- * @apiName            send OTP token to user mobile/email/app/...
+ * @apiName            send OTP token
  * @api                {post} /v1/otp send ot token
- * @apiDescription
+ * @apiDescription     send  OTP token to user mobile/email/app/...
  *
  * @apiVersion         1.0.0
  *
- * @apiParam           {string} reason The reason of otp token signup,transfer-money,mobile-verify,reset-pass... (see authorization-config.php)
+ * @apiParam           {string} reason The reason of otp token signup,transfer-money,mobile-verify,reset-pass...
  * @apiParam           {string} mobile mobile number of the user
  * @apiParam           {string} email email address of the user
  *
- * @apiUse             UserAuthorization
  *
  * @apiSuccessExample  {json}       Success-Response:
  * HTTP/1.1 200 OK
