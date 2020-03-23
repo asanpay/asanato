@@ -3,7 +3,7 @@
 /**
  * @apiGroup           Users
  * @apiName            UserSignUp
- * @api                {post} /v1/signup Create Users
+ * @api                {post} /v1/signup SignUp
  * @apiDescription     Create client users.
  *
  * @apiVersion         1.0.0
