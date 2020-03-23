@@ -4,7 +4,7 @@
  * @apiGroup           Transaction
  * @apiName            getAllTransactions
  *
- * @api                {GET} /v1/transactions Endpoint title here..
+ * @api                {GET} /v1/transactions getAllTransactions
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

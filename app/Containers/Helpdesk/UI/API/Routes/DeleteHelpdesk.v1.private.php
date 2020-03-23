@@ -4,7 +4,7 @@
  * @apiGroup           Helpdesk
  * @apiName            deleteHelpdesk
  *
- * @api                {DELETE} /v1/helpdesks/:id Endpoint title here..
+ * @api                {DELETE} /v1/helpdesks/:id Delete Helpdesk
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

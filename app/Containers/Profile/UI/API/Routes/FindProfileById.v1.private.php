@@ -4,7 +4,7 @@
  * @apiGroup           Profile
  * @apiName            findProfileById
  *
- * @api                {GET} /v1/profiles/:id Endpoint title here..
+ * @api                {GET} /v1/profiles/:id findProfileById
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

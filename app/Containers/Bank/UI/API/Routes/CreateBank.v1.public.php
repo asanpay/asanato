@@ -2,12 +2,12 @@
 
 /**
  * @apiGroup           Bank
- * @apiName            findBankById
+ * @apiName            createBank
  *
- * @api                {GET} /v0/banks/:id Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {POST} /v0/banks Create Bank
+ * @apiDescription     Create Bank
  *
- * @apiVersion         0.0.0
+ * @apiVersion         1.0.0
  * @apiPermission      none
  *
  * @apiParam           {String}  parameters here..
@@ -20,9 +20,9 @@
  */
 
 /** @var Route $router */
-$router->get('banks/{id}', [
-    'as' => 'api_bank_find_bank_by_id',
-    'uses'  => 'Controller@findBankById',
+$router->post('banks', [
+    'as' => 'api_bank_create_bank',
+    'uses'  => 'Controller@createBank',
     'middleware' => [
       'auth:api',
     ],

@@ -4,7 +4,7 @@
  * @apiGroup           Wallet
  * @apiName            createWallet
  *
- * @api                {POST} /v1/wallets Endpoint title here..
+ * @api                {POST} /v1/wallets createWallet
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

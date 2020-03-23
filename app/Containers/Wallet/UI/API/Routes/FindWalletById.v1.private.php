@@ -4,7 +4,7 @@
  * @apiGroup           Wallet
  * @apiName            findWalletById
  *
- * @api                {GET} /v1/wallets/:id Endpoint title here..
+ * @api                {GET} /v1/wallets/:id findWalletById
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

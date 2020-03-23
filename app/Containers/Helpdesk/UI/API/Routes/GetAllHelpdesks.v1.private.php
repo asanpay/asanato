@@ -4,7 +4,7 @@
  * @apiGroup           Helpdesk
  * @apiName            getAllHelpdesks
  *
- * @api                {GET} /v1/helpdesks Endpoint title here..
+ * @api                {GET} /v1/helpdesks getAllHelpdesks
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

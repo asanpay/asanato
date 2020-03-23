@@ -4,7 +4,7 @@
  * @apiGroup           Helpdesk
  * @apiName            updateHelpdesk
  *
- * @api                {PATCH} /v1/helpdesks/:id Endpoint title here..
+ * @api                {PATCH} /v1/helpdesks/:id updateHelpdesk
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

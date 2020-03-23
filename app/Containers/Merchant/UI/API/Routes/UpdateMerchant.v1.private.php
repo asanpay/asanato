@@ -4,7 +4,7 @@
  * @apiGroup           Merchant
  * @apiName            updateMerchant
  *
- * @api                {PATCH} /v1/merchants/:id Endpoint title here..
+ * @api                {PATCH} /v1/merchants/:id updateMerchant
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

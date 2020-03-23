@@ -2,10 +2,10 @@
 
 /**
  * @apiGroup           Bank
- * @apiName            getAllBanks
+ * @apiName            updateBank
  *
- * @api                {GET} /v0/banks Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {PATCH} /v0/banks/:id Update Bank
+ * @apiDescription     Update Bank
  *
  * @apiVersion         0.0.0
  * @apiPermission      none
@@ -20,9 +20,9 @@
  */
 
 /** @var Route $router */
-$router->get('banks', [
-    'as' => 'api_bank_get_all_banks',
-    'uses'  => 'Controller@getAllBanks',
+$router->patch('banks/{id}', [
+    'as' => 'api_bank_update_bank',
+    'uses'  => 'Controller@updateBank',
     'middleware' => [
       'auth:api',
     ],

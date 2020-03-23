@@ -4,7 +4,7 @@
  * @apiGroup           Profile
  * @apiName            createProfile
  *
- * @api                {POST} /v1/profiles Endpoint title here..
+ * @api                {POST} /v1/profiles createProfile
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

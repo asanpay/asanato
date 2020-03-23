@@ -4,7 +4,7 @@
  * @apiGroup           Merchant
  * @apiName            getAllMerchants
  *
- * @api                {GET} /v1/merchants Endpoint title here..
+ * @api                {GET} /v1/merchants getAllMerchants
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

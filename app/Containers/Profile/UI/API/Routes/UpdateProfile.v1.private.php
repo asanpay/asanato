@@ -4,7 +4,7 @@
  * @apiGroup           Profile
  * @apiName            updateProfile
  *
- * @api                {PATCH} /v1/profiles/:id Endpoint title here..
+ * @api                {PATCH} /v1/profiles/:id updateProfile
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

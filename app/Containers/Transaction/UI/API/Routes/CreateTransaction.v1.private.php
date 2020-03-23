@@ -4,7 +4,7 @@
  * @apiGroup           Transaction
  * @apiName            createTransaction
  *
- * @api                {POST} /v1/transactions Endpoint title here..
+ * @api                {POST} /v1/transactions createTransaction
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

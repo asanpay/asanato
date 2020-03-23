@@ -4,7 +4,7 @@
  * @apiGroup           Merchant
  * @apiName            createMerchant
  *
- * @api                {POST} /v1/merchants Endpoint title here..
+ * @api                {POST} /v1/merchants Create Merchant
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

@@ -4,7 +4,7 @@
  * @apiGroup           Merchant
  * @apiName            deleteMerchant
  *
- * @api                {DELETE} /v1/merchants/:id Endpoint title here..
+ * @api                {DELETE} /v1/merchants/:id Delete Merchant
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

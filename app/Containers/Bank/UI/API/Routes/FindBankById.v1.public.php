@@ -2,12 +2,12 @@
 
 /**
  * @apiGroup           Bank
- * @apiName            deleteBank
+ * @apiName            findBankById
  *
- * @api                {DELETE} /v0/banks/:id Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {GET} /v0/banks/:id findBankById
+ * @apiDescription     FindBankById
  *
- * @apiVersion         0.0.0
+ * @apiVersion         1.0.0
  * @apiPermission      none
  *
  * @apiParam           {String}  parameters here..
@@ -20,9 +20,9 @@
  */
 
 /** @var Route $router */
-$router->delete('banks/{id}', [
-    'as' => 'api_bank_delete_bank',
-    'uses'  => 'Controller@deleteBank',
+$router->get('banks/{id}', [
+    'as' => 'api_bank_find_bank_by_id',
+    'uses'  => 'Controller@findBankById',
     'middleware' => [
       'auth:api',
     ],

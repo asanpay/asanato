@@ -4,7 +4,7 @@
  * @apiGroup           Profile
  * @apiName            deleteProfile
  *
- * @api                {DELETE} /v1/profiles/:id Endpoint title here..
+ * @api                {DELETE} /v1/profiles/:id deleteProfile
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

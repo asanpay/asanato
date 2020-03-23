@@ -4,7 +4,7 @@
  * @apiGroup           Wallet
  * @apiName            deleteWallet
  *
- * @api                {DELETE} /v1/wallets/:id Endpoint title here..
+ * @api                {DELETE} /v1/wallets/:id deleteWallet
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

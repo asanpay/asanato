@@ -4,7 +4,7 @@
  * @apiGroup           Helpdesk
  * @apiName            createHelpdesk
  *
- * @api                {POST} /v1/helpdesks Endpoint title here..
+ * @api                {POST} /v1/helpdesks Create Helpdesk
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

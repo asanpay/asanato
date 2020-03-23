@@ -4,7 +4,7 @@
  * @apiGroup           Transaction
  * @apiName            updateTransaction
  *
- * @api                {PATCH} /v1/transactions/:id Endpoint title here..
+ * @api                {PATCH} /v1/transactions/:id updateTransaction
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

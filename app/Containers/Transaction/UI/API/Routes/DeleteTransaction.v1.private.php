@@ -4,7 +4,7 @@
  * @apiGroup           Transaction
  * @apiName            deleteTransaction
  *
- * @api                {DELETE} /v1/transactions/:id Endpoint title here..
+ * @api                {DELETE} /v1/transactions/:id deleteTransaction
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0

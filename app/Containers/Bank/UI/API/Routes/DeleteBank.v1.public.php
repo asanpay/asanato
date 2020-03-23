@@ -2,12 +2,12 @@
 
 /**
  * @apiGroup           Bank
- * @apiName            updateBank
+ * @apiName            deleteBank
  *
- * @api                {PATCH} /v0/banks/:id Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {DELETE} /v0/banks/:id Delete Bank
+ * @apiDescription     Delete Bank
  *
- * @apiVersion         0.0.0
+ * @apiVersion         1.0.0
  * @apiPermission      none
  *
  * @apiParam           {String}  parameters here..
@@ -20,9 +20,9 @@
  */
 
 /** @var Route $router */
-$router->patch('banks/{id}', [
-    'as' => 'api_bank_update_bank',
-    'uses'  => 'Controller@updateBank',
+$router->delete('banks/{id}', [
+    'as' => 'api_bank_delete_bank',
+    'uses'  => 'Controller@deleteBank',
     'middleware' => [
       'auth:api',
     ],

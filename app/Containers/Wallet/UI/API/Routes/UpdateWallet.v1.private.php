@@ -4,7 +4,7 @@
  * @apiGroup           Wallet
  * @apiName            updateWallet
  *
- * @api                {PATCH} /v1/wallets/:id Endpoint title here..
+ * @api                {PATCH} /v1/wallets/:id updateWallet
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0
