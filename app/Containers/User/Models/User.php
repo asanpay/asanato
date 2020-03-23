@@ -3,7 +3,7 @@
 namespace App\Containers\User\Models;
 
 use App\Containers\Authorization\Traits\AuthorizationTrait;
-use App\Containers\Profile\Enum\UserVerificationType;
+use App\Containers\Profile\Enum\IdPoofType;
 use App\Containers\Profile\Enum\VerificationStatus;
 use App\Containers\Profile\Models\UserVerification;
 use App\Ship\Parents\Models\UserModel;
@@ -197,16 +197,16 @@ class User extends UserModel
     public function getVerifications(): array
     {
         $r              = [];
-        $r['mobile']    = ['value' => $this->mobile, 'status' => $this->verification & UserVerificationType::MOBILE];
-        $r['email']     = ['value' => $this->email, 'status' => $this->verification & UserVerificationType::EMAIL];
-        $r['tel']       = ['value' => $this->tel, 'status' => $this->verification & UserVerificationType::TEL];
+        $r['mobile']    = ['value' => $this->mobile, 'status' => $this->verification & IdPoofType::MOBILE];
+        $r['email']     = ['value' => $this->email, 'status' => $this->verification & IdPoofType::EMAIL];
+        $r['tel']       = ['value' => $this->tel, 'status' => $this->verification & IdPoofType::TEL];
         $r['residency'] = ['value'  => $this->residency,
-                           'status' => $this->verification & UserVerificationType::RESIDENCY,
+                           'status' => $this->verification & IdPoofType::RESIDENCY,
         ];
         $r['identity']  = ['value'  => $this->identity,
-                           'status' => $this->verification & UserVerificationType::IDENTITY,
+                           'status' => $this->verification & IdPoofType::IDENTITY,
         ];
-        $r['company']   = ['value' => $this->company, 'status' => $this->verification & UserVerificationType::COMPANY];
+        $r['company']   = ['value' => $this->company, 'status' => $this->verification & IdPoofType::COMPANY];
 
         return $r;
     }
@@ -262,11 +262,11 @@ class User extends UserModel
     public function fullVerified(): bool
     {
 
-        return $this->verification & UserVerificationType::MOBILE &&
-            $this->verification & UserVerificationType::EMAIL &&
-            $this->verification & UserVerificationType::TEL &&
-            $this->verification & UserVerificationType::RESIDENCY &&
-            $this->verification & UserVerificationType::IDENTITY;
+        return $this->verification & IdPoofType::MOBILE &&
+            $this->verification & IdPoofType::EMAIL &&
+            $this->verification & IdPoofType::TEL &&
+            $this->verification & IdPoofType::RESIDENCY &&
+            $this->verification & IdPoofType::IDENTITY;
     }
 
     /**
@@ -278,15 +278,15 @@ class User extends UserModel
     public function getVerificationValue(int $type): string
     {
         switch ($type) {
-            case UserVerificationType::MOBILE:
+            case IdPoofType::MOBILE:
             {
                 return $this->mobile;
             }
-            case UserVerificationType::EMAIL:
+            case IdPoofType::EMAIL:
             {
                 return $this->email;
             }
-            case UserVerificationType::IDENTITY:
+            case IdPoofType::IDENTITY:
             {
                 return $this->national_id;
             }
@@ -301,7 +301,7 @@ class User extends UserModel
     {
         if (preg_match('/^isVerified(.+)$/', $method, $matches)) {
             $item = strtoupper($matches[1]);
-            $item = constant(UserVerificationType::class . '::' . $item);
+            $item = constant(IdPoofType::class . '::' . $item);
 
             return $this->isVerified($item);
         }

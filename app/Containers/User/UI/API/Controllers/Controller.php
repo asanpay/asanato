@@ -151,7 +151,6 @@ class Controller extends ApiController
     public function signUp(UserSignUpRequest $request)
     {
         $t = new UserSignUpTransporter($request);
-        $t->client_id = request('client_ip', $request->ip());
 
         list ($result, $err) = Apiato::call('User@UserSignUpAction', [$t]);
 

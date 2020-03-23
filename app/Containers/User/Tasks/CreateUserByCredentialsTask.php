@@ -2,7 +2,7 @@
 
 namespace App\Containers\User\Tasks;
 
-use App\Containers\Profile\Enum\UserVerificationType;
+use App\Containers\Profile\Enum\IdPoofType;
 use App\Containers\User\Data\Repositories\UserRepository;
 use App\Containers\User\Data\Transporters\UserSignUpTransporter;
 use App\Containers\User\Models\User;
@@ -45,7 +45,7 @@ class CreateUserByCredentialsTask extends Task
             ]);
 
             if ($t->should_verify_mobile == true) {
-                $user->verify(UserVerificationType::MOBILE);
+                $user->verify(IdPoofType::MOBILE);
             }
         } catch (Exception $e) {
 dd($e->getMessage());

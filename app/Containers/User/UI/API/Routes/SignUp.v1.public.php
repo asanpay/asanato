@@ -14,6 +14,8 @@
  * @apiParam           {String}  password
  * @apiParam           {String}  first_name
  * @apiParam           {String}  last_name
+ * @apiParam           {String}  client_ip (optional)
+ * @apiParam           {String}  device (WEB,ANDROID,IPHONE)
  *
  */
 

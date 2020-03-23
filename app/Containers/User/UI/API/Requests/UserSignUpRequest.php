@@ -49,7 +49,17 @@ class UserSignUpRequest extends Request
             'last_name'  => 'required|string|min:2',
             'mobile'     => 'required|regex:' . config('regex.mobile_regex'),
             'password'   => 'required|string|min:8',
+            'client_ip'  => 'ip'
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge(
+            [
+                'client_ip' => request('client_ip', request()->ip()),
+            ]
+        );
     }
 
     /**
