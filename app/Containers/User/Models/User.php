@@ -128,7 +128,7 @@ class User extends UserModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function idproofs()
+    public function identityProofs()
     {
         return $this->hasMany(IdentityProof::class, 'user_id');
     }

@@ -33,6 +33,7 @@ class CreateUserByCredentialsTask extends Task
     public function run(UserSignUpTransporter $t): User
     {
         try {
+
             // create new user
             $user = $this->repository->create([
                 'password'     => Hash::make($t->password),
@@ -48,7 +49,7 @@ class CreateUserByCredentialsTask extends Task
                 $user->verify(IdPoofType::MOBILE);
             }
         } catch (Exception $e) {
-dd($e->getMessage());
+
             throw (new CreateResourceFailedException())->debug($e);
         }
 
