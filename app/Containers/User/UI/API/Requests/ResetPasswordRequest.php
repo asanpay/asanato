@@ -15,8 +15,6 @@ class ResetPasswordRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => '',
-        'roles'       => '',
     ];
 
     /**
@@ -35,9 +33,7 @@ class ResetPasswordRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-         'token',
-         'email',
-         'password',
+
     ];
 
     /**
@@ -46,10 +42,19 @@ class ResetPasswordRequest extends Request
     public function rules()
     {
         return [
-            'token' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'password' => 'required|min:6|max:255',
+            'token'    => 'required|max:4',
+            'mobile'   => 'required|regex:' . config('regex.mobile_regex'),
+            'password' => 'required|string|confirmed|min:6|max:40',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge(
+            [
+                'mobile' => $this->get('mobile') ? mobilify($this->get('mobile')) : $this->get('mobile'),
+            ]
+        );
     }
 
     /**

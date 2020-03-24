@@ -18,6 +18,7 @@ class SendOtpAction extends Action
      * @param CreateOtpTokenTransporter $data
      *
      * @return array
+     * @throws \Exception
      */
     public function run(CreateOtpTokenTransporter $data): array
     {
@@ -42,6 +43,21 @@ class SendOtpAction extends Action
 
                     list ($eligible, $err) = $this->isEligibleToRequestOtpByMobile($data->via, OtpDriver::SMS);
 
+                    if ($eligible === true) {
+
+                        $otpToken = Apiato::call('Authorization@CreateOtpTokenTask', [$data]);
+
+                        $this->sendBySms($data->via, $otpToken->code);
+
+                        return [__('auth.otp.sms_otp_sent', ['mobile' => $data->via]), null];
+                    } else {
+                        return [null, $err];
+                    }
+                }
+                case OtpReason::REST_PASS: {
+                    $data->via = mobilify($data->mobile);
+
+                    list ($eligible, $err) = $this->isEligibleToRequestOtpByMobile($data->via, OtpDriver::SMS);
                     if ($eligible === true) {
 
                         $otpToken = Apiato::call('Authorization@CreateOtpTokenTask', [$data]);

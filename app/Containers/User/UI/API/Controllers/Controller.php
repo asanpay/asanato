@@ -131,23 +131,20 @@ class Controller extends ApiController
      */
     public function resetPassword(ResetPasswordRequest $request)
     {
-        Apiato::call('User@ResetPasswordAction', [new DataTransporter($request)]);
+        list ($msg, $err) = Apiato::call('User@ResetPasswordAction', [new DataTransporter($request)]);
+
+        if (!empty($err)) {
+            return $this->message($err, ApiCodes::CODE_INTERNAL_ERROR);
+        }
 
         return $this->noContent(204);
     }
 
     /**
-     * @param \App\Containers\User\UI\API\Requests\ForgotPasswordRequest $request
+     * @param UserSignUpRequest $request
      *
-     * @return  \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function forgotPassword(ForgotPasswordRequest $request)
-    {
-        Apiato::call('User@ForgotPasswordAction', [new DataTransporter($request)]);
-
-        return $this->noContent(202);
-    }
-
     public function signUp(UserSignUpRequest $request)
     {
         $t = new UserSignUpTransporter($request);
