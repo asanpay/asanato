@@ -38,7 +38,7 @@ class UserSignUpAction extends Action
             ]);
 
 
-            if (is_null($otpToken) || ($t->code !== intval($otpToken->code))) {
+            if (is_null($otpToken) || ($t->token !== intval($otpToken->token))) {
                 // invalid OTP token notifications
                 return [ApiCodes::CODE_INVALID_OTP, __('auth.invalid_otp')];
             } else {

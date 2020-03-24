@@ -12,7 +12,7 @@ class UserSignUpTransporter extends Transporter
     protected $schema = [
         'type'       => 'object',
         'properties' => [
-            'code',
+            'token',
             'mobile',
             'first_name',
             'last_name',
@@ -23,7 +23,7 @@ class UserSignUpTransporter extends Transporter
             'should_verify_mobile',
         ],
         'required'   => [
-            'code',
+            'token',
             'mobile',
             'first_name',
             'last_name',

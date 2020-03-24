@@ -44,7 +44,7 @@ class UserSignUpRequest extends Request
     public function rules()
     {
         return [
-            'code'       => 'required|digits:4',
+            'token'      => 'required|digits:4',
             'first_name' => 'required|string|min:2',
             'last_name'  => 'required|string|min:2',
             'mobile'     => 'required|regex:' . config('regex.mobile_regex'),
