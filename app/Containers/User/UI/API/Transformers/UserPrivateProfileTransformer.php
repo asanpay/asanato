@@ -52,9 +52,9 @@ class UserPrivateProfileTransformer extends Transformer
             'company'      => $user->company,
             'financial_is' => $user->financial_id,
             'group'        => $user->group,
-            'idproofs'     => $user->idproofs,
             'locked'       => $user->locked,
             'lock_reason'  => $user->lock_reason,
+            'idproofs'     => $user->getIdProofs(),
             'meta'         => json_decode($user->meta, JSON_UNESCAPED_UNICODE),
 
             'birth_date'          => $user->birth_date,
