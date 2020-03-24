@@ -39,13 +39,17 @@ class SendOtpRequest extends Request
      */
     public function rules()
     {
-        $byMobile = Config::get('authorization-container.otp.by_mobile');
-        $byEmail  = Config::get('authorization-container.otp.by_email');
+        $brokers = Config::get('authorization-container.otp.brokers');
+
+        $all     = [];
+        foreach ($brokers as $broker => $reasons) {
+            $all[] = $reasons;
+        }
 
         return [
-            'reason' => 'required|in:' . $byEmail . ',' . $byMobile,
-            'mobile' => 'regex:' . config('regex.mobile_regex') . '|required_if:' . $byMobile,
-            'email'  => 'email|required_if:reason,' . $byEmail,
+            'reason' => 'required|in:' . implode(',', $all),
+            'mobile' => 'regex:' . config('regex.mobile_regex') . '|required_if:reason,' . $brokers['mobile'],
+            'email'  => 'email|required_if:reason,' . $brokers['email'],
         ];
     }
 

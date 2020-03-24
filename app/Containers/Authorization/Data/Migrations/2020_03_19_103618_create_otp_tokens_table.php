@@ -15,13 +15,13 @@ class CreateOtpTokensTable extends Migration
     {
         Schema::create('otp_tokens', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code', 6);
+            $table->string('token', 6);
             $table->unsignedBigInteger('user_id')->nullable()->index();
-            $table->string('via', 64)->nullable()->comment('mobile, email, etc')->index();
-            $table->string('driver', 20);
+            $table->string('to', 64)->nullable()->comment('user mobile, email, etc')->index();
+            $table->string('broker', 20);
             $table->string('reason', 20)->nullable();
             $table->boolean('used')->default(false);
-            $table->unsignedInteger('ttl')->default(300)->comment('in seconds');
+            $table->unsignedInteger('expired_at');
             $table->unsignedBigInteger('ip')->comment('requester ip');
             $table->timestamps();
 

@@ -3,7 +3,7 @@
 namespace App\Containers\User\Actions;
 
 use Apiato\Core\Foundation\Facades\Apiato;
-use App\Containers\Authorization\Enum\OtpDriver;
+use App\Containers\Authorization\Enum\OtpBroker;
 use App\Containers\Authorization\Enum\OtpReason;
 use App\Containers\Authorization\Models\OtpToken;
 use App\Ship\Exceptions\InternalErrorException;
@@ -30,19 +30,26 @@ class ResetPasswordAction extends Action
     public function run(DataTransporter $data): array
     {
         try {
-            $latestToken = OtpToken::getLatestUnusedOtp($data->mobile, OtpReason::REST_PASS, OtpDriver::SMS);
+            $latestToken = Apiato::call('Authorization@GetLatestUnusedOtpTask', [
+                $data->mobile,
+                OtpReason::REST_PASS,
+                OtpBroker::MOBILE
+            ]);
+
 
             if (!$latestToken) {
                 return [null, __('auth.otp_not_found')];
             }
 
-            if ($data->token != $latestToken->code) {
+            if ($data->token != $latestToken->token) {
                 return [null, __('auth.invalid_otp')];
             }
 
             $user = Apiato::call('User@FindUserByMobileTask', [$data->mobile]);
 
             Apiato::call('User@UpdateUserTask', [['password' => bcrypt($data->password)], $user->id]);
+
+            $latestToken->markAsUsed();
 
             return [__('auth.password_updated'), null];
 

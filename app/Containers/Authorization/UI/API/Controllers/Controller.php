@@ -27,7 +27,6 @@ use App\Ship\Transporters\DataTransporter;
 /**
  * Class Controller.
  *
- * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class Controller extends ApiController
 {
@@ -180,7 +179,7 @@ class Controller extends ApiController
     {
         $t = new CreateOtpTokenTransporter(array_merge($request->all(),[
             'ip' => $request->ip(),
-            'via' => $request->has('mobile') ? $request->has('mobile') : $request->has('email')
+            'to' => $request->has('mobile') ? $request->has('mobile') : $request->has('email')
         ]));
 
         list ($message, $err) = Apiato::call('Authorization@SendOtpAction', [$t]);

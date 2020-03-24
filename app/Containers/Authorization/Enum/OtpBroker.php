@@ -6,10 +6,10 @@ namespace App\Containers\Authorization\Enum;
 
 use App\Ship\Traits\CustomEnums;
 
-class OtpDriver
+class OtpBroker
 {
     use CustomEnums;
 
-    const SMS   = 'SMS';
-    const EMAIL = 'EMAIL';
+    const MOBILE = 'mobile';
+    const EMAIL  = 'email';
 }

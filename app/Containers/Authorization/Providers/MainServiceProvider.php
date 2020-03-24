@@ -2,6 +2,8 @@
 
 namespace App\Containers\Authorization\Providers;
 
+use App\Containers\Authorization\Models\OtpToken;
+use App\Containers\Authorization\Services\OtpBrokerManager;
 use App\Ship\Parents\Providers\MainProvider;
 use Spatie\Permission\PermissionServiceProvider;
 
@@ -10,7 +12,6 @@ use Spatie\Permission\PermissionServiceProvider;
  *
  * The Main Service Provider of this container, it will be automatically registered in the framework.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
  */
 class MainServiceProvider extends MainProvider
 {
@@ -34,4 +35,24 @@ class MainServiceProvider extends MainProvider
 
     ];
 
+    public function register()
+    {
+       $this->registerOtpBroker();
+    }
+
+    protected function registerOtpBroker()
+    {
+        $this->app->singleton('otp.manager', function ($app) {
+            return new OtpBrokerManager($app);
+        });
+
+        $this->app->bind('otp.model', function ($app) {
+            return new OtpToken();
+        });
+    }
+
+    public function provides()
+    {
+        return ['otp.manager', 'otp.model'];
+    }
 }

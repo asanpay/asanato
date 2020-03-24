@@ -3,7 +3,7 @@
 namespace App\Containers\User\Actions;
 
 use App\Containers\Authentication\Data\Transporters\ProxyApiLoginTransporter;
-use App\Containers\Authorization\Enum\OtpDriver;
+use App\Containers\Authorization\Enum\OtpBroker;
 use App\Containers\Authorization\Enum\OtpReason;
 use App\Containers\User\Data\Transporters\UserSignUpTransporter;
 use App\Ship\Enum\ApiCodes;
@@ -34,7 +34,7 @@ class UserSignUpAction extends Action
             $otpToken = Apiato::call('Authorization@GetLatestUnusedOtpTask', [
                 $t->mobile,
                 OtpReason::SIGN_UP,
-                OtpDriver::SMS
+                OtpBroker::MOBILE
             ]);
 
 

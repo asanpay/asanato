@@ -11,11 +11,17 @@ return [
     |
     */
     'otp' =>
-    [
-        'by_mobile' => 'signup,transfer-money,mobile-verify,reset-pass',
-        'by_email' => 'email-verify',
-        'daily_limit' => 5,
-        'time_gap' => 120, //seconds
-        'ip_limit' => 10, // in 48 hours
-    ]
+        [
+            'brokers'              => [
+                'mobile' => 'signup,transfer-money,mobile-verify,reset-pass',
+                'email'  => 'email-verify',
+            ],
+            'ip_check'             => true,
+            'ip_limit_hours'       => 48,
+            'ip_limit_count'       => 10, // in 48 hours
+            'throttle_limit_hours' => 24,
+            'throttle_limit_count' => 5,
+            'throttle_gap_seconds' => 120, //seconds
+            'ttl'                  => '+10 minutes',
+        ],
 ];
