@@ -21,36 +21,73 @@
  *
  * @apiSuccessExample  {json}       Success-Response:
  *   HTTP/1.1 200 OK
- * {
- *     "data": {
- *         "object": "User",
- *         "id": "qnwmkv5704blag6r",
- *         "name": null,
- *         "email": "foo@bar.com",
- *         "confirmed": null,
- *         "nickname": null,
- *         "gender": "MALE",
- *         "birth": null,
- *         "social_auth_provider": null,
- *         "social_id": null,
- *         "social_avatar": {
- *             "avatar": null,
- *             "original": null
- *         },
- *         "created_at": "2020-03-26T20:08:00.000000Z",
- *         "updated_at": "2020-03-26T22:25:50.000000Z",
- *         "readable_created_at": "2 hours ago",
- *         "readable_updated_at": "28 minutes ago"
- *     },
- *     "meta": {
- *         "include": [
- *         "roles"
- *     ],
- *         "custom": []
- *     },
- *     "message": "everything's ok",
- *     "api_code": 0
- * }
+{
+    "data": {
+    "object": "User",
+        "id": "qnwmkv5704blag6r",
+        "type": "PERSONAL",
+        "gender": "MALE",
+        "first_name": "fname",
+        "last_name": "lname",
+        "tel": "02188276525",
+        "mobile": "09123236908",
+        "email": "foo@bar.com",
+        "address": "karaj - bahar st",
+        "zip": "1234567892",
+        "avatar": "https://www.gravatar.com/avatar/f3ada405ce890b6f8204094deb12d8a8.jpg?s=256&d=mm&r=g",
+        "national_id": 3801245144,
+        "company": null,
+        "financial_is": null,
+        "group": "NORMAL",
+        "locked": false,
+        "lock_reason": null,
+        "idproofs": {
+        "mobile": {
+            "value": "09123236908",
+                "status": 1
+            },
+            "email": {
+            "value": "foo@bar.com",
+                "status": 0
+            },
+            "tel": {
+            "value": "02188276525",
+                "status": 0
+            },
+            "residency": {
+            "value": null,
+                "status": 0
+            },
+            "identity": {
+            "value": null,
+                "status": 0
+            },
+            "company": {
+            "value": null,
+                "status": 0
+            }
+        },
+        "meta": {
+        "telegram_id": "a6oozar"
+        },
+        "birth_date": "1981-09-21",
+        "created_at": "2020-03-26T20:08:00.000000Z",
+        "updated_at": "2020-03-26T22:25:50.000000Z",
+        "j_birth_date": "1360/06/30",
+        "j_created_at": "1399/01/08",
+        "readable_created_at": "2 hours ago",
+        "readable_updated_at": "35 minutes ago"
+    },
+    "meta": {
+    "include": [
+        "roles"
+    ],
+        "custom": []
+    },
+    "message": "everything's ok",
+    "api_code": 0
+}
+
  *
  * @apiErrorExample  {json}       Error-Response:
  *   {

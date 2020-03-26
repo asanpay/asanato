@@ -53,7 +53,7 @@ class Controller extends ApiController
         if (!empty($err)) {
             return $this->message($err, ApiCodes::CODE_INTERNAL_ERROR);
         } else {
-            return $this->transform($user, UserTransformer::class);
+            return $this->transform($user, UserPrivateProfileTransformer::class);
         }
     }
 
