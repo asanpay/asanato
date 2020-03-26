@@ -48,12 +48,12 @@ class Controller extends ApiController
      */
     public function updateUser(UpdateUserRequest $request)
     {
-        list($msg, $err) = Apiato::call('User@UpdateUserAction', [new UserUpdateProfileTransporter($request)]);
+        list($user, $err) = Apiato::call('User@UpdateUserAction', [new UserUpdateProfileTransporter($request)]);
 
         if (!empty($err)) {
             return $this->message($err, ApiCodes::CODE_INTERNAL_ERROR);
         } else {
-            return $this->message($msg);
+            return $this->transform($user, UserTransformer::class);
         }
     }
 

@@ -59,9 +59,9 @@ class UpdateUserAction extends Action
         // remove null values and their keys
         $userData = array_filter($userData);
 
-        Apiato::call('User@UpdateUserTask', [$userData, $data->id]);
+        $user = Apiato::call('User@UpdateUserTask', [$userData, $data->id]);
 
-        return [__('app.save_success'), null];
+        return [$user, null];
 
     }
 }
