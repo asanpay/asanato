@@ -3,10 +3,12 @@
 namespace App\Containers\Authorization\Services;
 
 use App\Containers\Authorization\Enum\OtpBroker;
+use App\Containers\Authorization\Mails\EmailProofRequested;
 use App\Containers\Authorization\Models\OtpToken;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Exceptions\InternalErrorException;
 use App\Ship\Jobs\SendSms;
+use Illuminate\Support\Facades\Mail;
 
 class OtpBrokerManager
 {
@@ -71,6 +73,10 @@ class OtpBrokerManager
             {
                 return $this->sendBySms($otpToken);
             }
+            case OtpBroker::EMAIL:
+            {
+                return $this->sendByEMail($otpToken);
+            }
         }
     }
 
@@ -86,6 +92,13 @@ class OtpBrokerManager
         dispatch((new SendSms($otpToken->to, $message, $ttl))->onQueue('high'));
 
         return [__('auth.otp.sms_otp_sent', ['mobile' => $otpToken->to]), null];
+    }
+
+    private function sendByEmail($otpToken): array
+    {
+        Mail::to($otpToken->to)->queue(new EmailProofRequested($otpToken));
+
+        return [__('auth.otp.email_otp_sent', ['email' => $otpToken->to]), null];
     }
 
     /**

@@ -19,7 +19,6 @@ class SendOtpAction extends Action
     public function run(CreateOtpTokenTransporter $data): array
     {
         try {
-
             switch ($data->reason) {
                 case OtpReason::SIGN_UP:
                 {
@@ -31,10 +30,7 @@ class SendOtpAction extends Action
                     if ($existUser) {
                         return ['null', __('auth.signup.dup_conf_mobile')];
                     }
-
-                    // send otp
-                    return app('otp.manager')->sendOtp($data->to, $data->reason, $data->ip);
-
+                    break;
                 }
                 case OtpReason::REST_PASS: {
                     $data->to = mobilify($data->mobile);
@@ -43,15 +39,25 @@ class SendOtpAction extends Action
                     if (!$existUser) {
                         return ['null', __('auth.user_not_found')];
                     }
+                    break;
+                }
+                case OtpReason::EMAIL_VERIFY: {
+                    $data->to = strtolower($data->email);
 
-                    // send otp
-                    return app('otp.manager')->sendOtp($data->to, $data->reason, $data->ip);
+                    $existUser = Apiato::call('User@FindUserByEmailTask', [$data->to]);
+                    if (!$existUser) {
+                        return ['null', __('auth.user_not_found')];
+                    }
+                    break;
                 }
                 default:
                 {
                     return [null, "could not detect OTP reason: {$data->reason}"];
                 }
             }
+
+            // send otp
+            return app('otp.manager')->sendOtp($data->to, $data->reason, $data->ip);
         } catch (\Exception $e) {
             if ($this->weAreOnApiDebug()) {
                 throw $e;
