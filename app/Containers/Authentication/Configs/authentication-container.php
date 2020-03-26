@@ -48,6 +48,10 @@ return [
         // add your other clients here
     ],
 
+    'scopes' => [
+        'my' => 'my-panel',
+        'admin' => 'admin-panel'
+    ],
 
     'login' => [
         /*

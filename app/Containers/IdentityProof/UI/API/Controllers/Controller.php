@@ -8,6 +8,7 @@ use App\Containers\IdentityProof\UI\API\Requests\GetAllIdentityProofsRequest;
 use App\Containers\IdentityProof\UI\API\Requests\FindIdentityProofByIdRequest;
 use App\Containers\IdentityProof\UI\API\Requests\UpdateIdentityProofRequest;
 use App\Containers\IdentityProof\UI\API\Transformers\IdentityProofTransformer;
+use App\Containers\User\UI\API\Requests\GetAuthenticatedUserRequest;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;
 
@@ -71,5 +72,13 @@ class Controller extends ApiController
         Apiato::call('IdentityProof@DeleteIdentityProofAction', [$request]);
 
         return $this->noContent();
+    }
+
+
+    public function getAuthenticatedUserIdProofs(GetAuthenticatedUserRequest $request)
+    {
+        $user = Apiato::call('User@GetAuthenticatedUserAction');
+
+        return $this->json(['data' => $user->getIdProofs()]);
     }
 }

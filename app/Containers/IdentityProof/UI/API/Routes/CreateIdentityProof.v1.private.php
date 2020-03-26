@@ -21,7 +21,7 @@
 
 /** @var Route $router */
 $router->post('identity-proofs', [
-    'as' => 'api_identityproof_create_identity_proof',
+    'as' => 'api_id_proof_create_identity_proof',
     'uses'  => 'Controller@createIdentityProof',
     'middleware' => [
       'auth:api',

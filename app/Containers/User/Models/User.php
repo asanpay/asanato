@@ -285,6 +285,14 @@ class User extends UserModel implements HasMedia
             {
                 return $this->national_id;
             }
+            case IdPoofType::RESIDENCY:
+            {
+                return $this->address;
+            }
+            case IdPoofType::TEL:
+            {
+                return $this->tel;
+            }
             default:
             {
                 throw new Exception(sprintf('could not find user id proof value for: %s', $type));

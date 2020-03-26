@@ -157,11 +157,4 @@ class Controller extends ApiController
             return $this->apiCode($result)->message($err, ApiCodes::UNPROCESSABLE_ENTITY);
         }
     }
-
-    public function getAuthenticatedUserIdProofs(GetAuthenticatedUserRequest $request)
-    {
-        $user = Apiato::call('User@GetAuthenticatedUserAction');
-
-        return $this->json(['data' => $user->getIdProofs()]);
-    }
 }

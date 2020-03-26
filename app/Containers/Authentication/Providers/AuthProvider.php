@@ -69,5 +69,10 @@ class AuthProvider extends ParentAuthProvider
         Passport::tokensExpireIn(Carbon::now()->addMinutes(Config::get('apiato.api.expires-in')));
 
         Passport::refreshTokensExpireIn(Carbon::now()->addMinutes(Config::get('apiato.api.refresh-expires-in')));
+
+        Passport::tokensCan([
+            'my-panel' => 'My panel access',
+            'admin-panel' => 'Admin panel access',
+        ]);
     }
 }
