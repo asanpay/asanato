@@ -48,6 +48,11 @@ class SendOtpAction extends Action
                     if (!$existUser) {
                         return ['null', __('auth.user_not_found')];
                     }
+
+                    if ($existUser->isProvedEmail()) {
+                        return ['null', __('auth.otp.user_email_already_proofed')];
+                    }
+
                     break;
                 }
                 default:

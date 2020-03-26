@@ -8,7 +8,7 @@
  *
  * @apiVersion         1.0.0
  *
- * @apiParam           {string} reason The reason of otp token signup,transfer-money,mobile-verify,reset-pass...
+ * @apiParam           {string} reason The reason of otp token signup,transfer-money,mobile-verify,reset-pass,mobile-verify,...
  * @apiParam           {string} mobile mobile number of the user
  * @apiParam           {string} email email address of the user
  *

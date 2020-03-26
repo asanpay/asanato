@@ -13,7 +13,7 @@ return [
     'otp' =>
         [
             'brokers'              => [
-                'mobile' => 'signup,transfer-money,mobile-verify,reset-pass',
+                'mobile' => 'signup,transfer-money,mobile-verify,reset-pass,mobile-verify',
                 'email'  => 'email-verify',
             ],
             'ip_check'             => true,
