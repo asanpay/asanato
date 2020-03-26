@@ -50,7 +50,7 @@ class UserPrivateProfileTransformer extends Transformer
             'avatar'       => $user->getAvatar(256),
             'national_id'  => $user->national_id,
             'company'      => $user->company,
-            'financial_is' => $user->financial_id,
+            'financial_id' => $user->financial_id,
             'group'        => $user->group,
             'locked'       => $user->locked,
             'lock_reason'  => $user->lock_reason,
