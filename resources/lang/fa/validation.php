@@ -118,6 +118,11 @@ return [
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
+    'strength' => 'The password :attribute is too weak and must contain one or more uppercase, lowercase, numeric, and special character (!@#$%^&*).',
+    'iran_billing_id' => 'The billing Id `:attribute` is not a valid Billing Id.',
+    'shetab_card' => 'The card number `:attribute` is not a valid Shetab card number.',
+    'iran_national_id' => 'The national id `:attribute` is not a valid Iran nationa Id.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

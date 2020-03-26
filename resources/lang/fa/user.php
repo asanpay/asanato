@@ -8,4 +8,5 @@ return [
         'personal' => 'حقیقی',
         'legal' => 'حقوقی',
     ],
+    'change_type_impossible' => 'امکان تغییر نوع حساب وجود ندارد.'
 ];

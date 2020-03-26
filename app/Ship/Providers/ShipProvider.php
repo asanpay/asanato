@@ -4,6 +4,7 @@ namespace App\Ship\Providers;
 
 use App\Ship\Parents\Providers\MainProvider;
 use Creativeorange\Gravatar\GravatarServiceProvider;
+use Illuminate\Support\Facades\Validator;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Tartan\IranianSms\SmsServiceProvider;
 
@@ -59,7 +60,11 @@ class ShipProvider extends MainProvider
     {
         // ...
         parent::boot();
-        // ...
+
+        Validator::extend('strength', 'Tartan\Validators\CustomValidator@validateStrength');
+        Validator::extend('iran_billing_id', 'Tartan\Validators\CustomValidator@validateIranBillingId');
+        Validator::extend('iran_shetab_card', 'Tartan\Validators\CustomValidator@validateShetabCard');
+        Validator::extend('iran_national_id', 'Tartan\Validators\CustomValidator@validateNationalId');
     }
 
     /**

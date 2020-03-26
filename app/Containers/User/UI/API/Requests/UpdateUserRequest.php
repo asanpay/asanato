@@ -2,12 +2,12 @@
 
 namespace App\Containers\User\UI\API\Requests;
 
+use App\Containers\User\Enum\UserGender;
+use App\Containers\User\Enum\UserType;
 use App\Ship\Parents\Requests\Request;
 
 /**
  * Class UpdateUserRequest.
- *
- * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class UpdateUserRequest extends Request
 {
@@ -47,11 +47,32 @@ class UpdateUserRequest extends Request
     public function rules()
     {
         return [
-            'email'    => 'email|unique:users,email',
-            'id'       => 'required|exists:users,id',
-            'password' => 'min:6|max:40',
-            'name'     => 'min:2|max:50',
+            'type'         => 'required|string|in:' . implode(',', [UserType::PERSONAL, UserType::LEGAL]),
+            'company'      => 'required_if:type,' . UserType::LEGAL . '|string',
+            'financial_id' => 'required_if:type,' . UserType::LEGAL . '|digits:14',
+            'gender'       => 'required|in:' . implode(',', UserGender::toArray()),
+            'first_name'   => 'required|string|min:2',
+            'last_name'    => 'required|string|min:2',
+            'national_id'  => 'required|iran_national_id',
+            'email'        => 'required|email',
+            'mobile'       => 'required|regex:' . config('regex.mobile_regex'),
+            'tel'          => 'required|regex:' . config('regex.tel_regex'),
+            'birth_date'   => 'required',
+            'zip'          => 'digits:10',
+            'address'      => 'required|string|min:10',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge(
+            [
+                'mobile' => $this->get('mobile') ? mobilify($this->get('mobile')) : null,
+                'email'  => strtolower($this->get('email')),
+                'tel'    => strtolower($this->get('tel')),
+                'zip'    => strtolower($this->get('zip')),
+            ]
+        );
     }
 
     /**
