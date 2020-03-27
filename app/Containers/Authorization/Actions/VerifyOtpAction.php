@@ -7,6 +7,8 @@ use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\Authorization\Enum\OtpBroker;
 use App\Containers\Authorization\Enum\OtpReason;
 use App\Containers\Authorization\Exceptions\OtpTokenNotFoundException;
+use App\Containers\IdentityProof\Enum\IdPoofType;
+use App\Containers\User\Exceptions\UserNotFoundException;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Transporters\DataTransporter;
 
@@ -44,6 +46,13 @@ class VerifyOtpAction extends Action
         ]);
 
         if ($existToken && $existToken->token == $data->token) {
+            $user = Apiato::call('User@FindUserByMobileTask', [$data->to]);
+
+            if (!$user) {
+                throw new UserNotFoundException();
+            }
+
+            $user->verify(IdPoofType::EMAIL);
             $existToken->markAsUsed();
 
             return [true, null];
