@@ -10,8 +10,9 @@
  * @apiVersion         1.0.0
  * @apiPermission      none
  *
- * @apiParam           {int}  id proof type
- * @apiParam           {files}  doc file to upload only image and pdf accepted
+ * @apiParam           {string} id hashed id of the user
+ * @apiParam           {int}    type proof type
+ * @apiParam           {files}  doc file to upload (only image and pdf accepted)
  *
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK
