@@ -46,7 +46,7 @@ class VerifyOtpAction extends Action
         ]);
 
         if ($existToken && $existToken->token == $data->token) {
-            $user = Apiato::call('User@FindUserByMobileTask', [$data->to]);
+            $user = Apiato::call('User@FindUserByEmailTask', [$data->to]);
 
             if (!$user) {
                 throw new UserNotFoundException();
