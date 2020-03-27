@@ -270,7 +270,7 @@ class User extends UserModel implements HasMedia
      * @return string
      * @throws Exception
      */
-    public function getProofValue(int $type): string
+    public function getProofValue(int $type): ?string
     {
         switch ($type) {
             case IdPoofType::MOBILE:
