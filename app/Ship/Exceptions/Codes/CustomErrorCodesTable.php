@@ -26,4 +26,12 @@ class CustomErrorCodesTable extends ErrorCodesTable
      *
      */
 
+    const OTP_USER_NOT_FOUND = [
+        'code' => 100000,
+    ];
+
+    const OTP_TOKEN_NOT_FOUND = [
+        'code' => 100001,
+    ];
+
 }

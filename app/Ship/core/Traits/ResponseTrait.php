@@ -264,11 +264,11 @@ trait ResponseTrait
     ): JsonResponse {
         if ($status < 300) {
             $message ['message'] = $message ['message'] ?? "everything's ok";
-            $message['api_code'] = 0;
+            $message['code'] = 0;
         } else {
             $message ['message'] = $message ['message'] ?? "something's wrong";
-            if (!isset($message['api_code']) && !is_null($this->apiCode)) {
-                $message['api_code'] = $this->apiCode;
+            if (!isset($message['code']) && !is_null($this->apiCode)) {
+                $message['code'] = $this->apiCode;
             }
         }
         return new JsonResponse($message, $status, $headers, $options);

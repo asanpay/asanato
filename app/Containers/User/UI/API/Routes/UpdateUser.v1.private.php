@@ -85,14 +85,14 @@
         "custom": []
     },
     "message": "everything's ok",
-    "api_code": 0
+    "code": 0
 }
 
  *
  * @apiErrorExample  {json}       Error-Response:
  *   {
  *      "message":"nok",
- *      "api_code":401
+ *      "code":401
  *   }
  */
 

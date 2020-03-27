@@ -6,6 +6,7 @@ namespace App\Containers\Authorization\Actions;
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\Authorization\Data\Transporters\CreateOtpTokenTransporter;
 use App\Containers\Authorization\Enum\OtpReason;
+use App\Containers\User\Exceptions\UserNotFoundException;
 use App\Ship\Parents\Actions\Action;
 
 class SendOtpAction extends Action
@@ -37,7 +38,7 @@ class SendOtpAction extends Action
 
                     $existUser = Apiato::call('User@FindUserByMobileTask', [$data->to]);
                     if (!$existUser) {
-                        return ['null', __('auth.user_not_found')];
+                        throw new UserNotFoundException();
                     }
                     break;
                 }
@@ -46,7 +47,7 @@ class SendOtpAction extends Action
 
                     $existUser = Apiato::call('User@FindUserByEmailTask', [$data->to]);
                     if (!$existUser) {
-                        return ['null', __('auth.user_not_found')];
+                        throw new UserNotFoundException();
                     }
 
                     if ($existUser->isProvedEmail()) {
