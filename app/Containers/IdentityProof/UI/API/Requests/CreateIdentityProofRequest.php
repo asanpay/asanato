@@ -2,6 +2,7 @@
 
 namespace App\Containers\IdentityProof\UI\API\Requests;
 
+use App\Containers\IdentityProof\Enum\IdPoofType;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -33,7 +34,7 @@ class CreateIdentityProofRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'id',
     ];
 
     /**
@@ -43,7 +44,7 @@ class CreateIdentityProofRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'id',
     ];
 
     /**
@@ -52,8 +53,10 @@ class CreateIdentityProofRequest extends Request
     public function rules()
     {
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'id' => 'required|numeric|exists:users',
+            'type'   => 'required|in:' . implode(',', IdPoofType::toArray()),
+            'files'   => 'required|array|min:1',
+            'files.*' => 'mimes:jpg,jpeg,png,bmp,tiff,pdf|max:1024',
         ];
     }
 
@@ -63,7 +66,7 @@ class CreateIdentityProofRequest extends Request
     public function authorize()
     {
         return $this->check([
-            'hasAccess',
+            'hasAccess|isOwner',
         ]);
     }
 }

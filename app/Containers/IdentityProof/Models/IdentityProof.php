@@ -5,9 +5,13 @@ namespace App\Containers\IdentityProof\Models;
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Models\Model;
 use Illuminate\Support\Facades\Auth;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class IdentityProof extends Model
+class IdentityProof extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     protected $fillable = [
         'proof_type',
         'code',

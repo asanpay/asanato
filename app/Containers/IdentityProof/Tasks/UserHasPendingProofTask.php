@@ -3,13 +3,12 @@
 namespace App\Containers\IdentityProof\Tasks;
 
 use App\Containers\IdentityProof\Data\Repositories\IdentityProofRepository;
-use App\Containers\IdentityProof\Enum\IdProofStatus;
 use App\Containers\User\Models\User;
-use App\Ship\Exceptions\CreateResourceFailedException;
+use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class CreateIdentityProofTask extends Task
+class UserHasPendingProofTask extends Task
 {
 
     protected $repository;
@@ -19,12 +18,13 @@ class CreateIdentityProofTask extends Task
         $this->repository = $repository;
     }
 
-    public function run(User $user, int $type, $status = IdProofStatus::PENDING)
+    public function run(User $user, string $type)
     {
         try {
-            return $this->repository->addProof($user, $type, $status);
-        } catch (Exception $exception) {
-            throw new CreateResourceFailedException();
+            return $this->repository->hasPendingProof($user, $type);
+        }
+        catch (Exception $exception) {
+            throw new NotFoundException();
         }
     }
 }

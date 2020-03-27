@@ -25,9 +25,13 @@ class Controller extends ApiController
      */
     public function createIdentityProof(CreateIdentityProofRequest $request)
     {
-        $identityproof = Apiato::call('IdentityProof@CreateIdentityProofAction', [$request]);
+        list($msg, $err) = Apiato::call('IdentityProof@CreateIdentityProofAction', [$request]);
 
-        return $this->created($this->transform($identityproof, IdentityProofTransformer::class));
+        if (!empty($err)) {
+            return $this->message($err, 422);
+        } else {
+            return $this->message($msg, 201);
+        }
     }
 
     /**
