@@ -3,7 +3,7 @@
 /**
  * @apiGroup           Otp
  * @apiName            send OTP token
- * @api                {post} /v1/otp send ot token
+ * @api                {post} /v1/otp send token
  * @apiDescription     send  OTP token to user mobile/email/app/...
  *
  * @apiVersion         1.0.0

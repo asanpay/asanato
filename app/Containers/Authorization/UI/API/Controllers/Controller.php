@@ -17,6 +17,7 @@ use App\Containers\Authorization\UI\API\Requests\RevokeUserFromRoleRequest;
 use App\Containers\Authorization\UI\API\Requests\SendOtpRequest;
 use App\Containers\Authorization\UI\API\Requests\SyncPermissionsOnRoleRequest;
 use App\Containers\Authorization\UI\API\Requests\SyncUserRolesRequest;
+use App\Containers\Authorization\UI\API\Requests\VerifyOtpRequest;
 use App\Containers\Authorization\UI\API\Transformers\PermissionTransformer;
 use App\Containers\Authorization\UI\API\Transformers\RoleTransformer;
 use App\Containers\User\UI\API\Transformers\UserTransformer;
@@ -188,6 +189,17 @@ class Controller extends ApiController
             return $this->message($message);
         } else {
             return $this->message($err, ApiCodes::TOO_MANY_REQUESTS);
+        }
+    }
+
+    public function verifyOtpToken(VerifyOtpRequest $request)
+    {
+        list ($_, $err) = Apiato::call('Authorization@VerifyOtpAction', [new DataTransporter($request)]);
+
+        if (empty($err)) {
+            return $this->noContent();
+        } else {
+            return $this->message($err);
         }
     }
 }

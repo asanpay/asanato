@@ -3,11 +3,8 @@
 namespace App\Containers\Authorization\Tasks;
 
 use App\Containers\Authorization\Data\Repositories\OtpTokenRepository;
-use App\Containers\Authorization\Data\Transporters\CreateOtpTokenTransporter;
 use App\Containers\Authorization\Models\OtpToken;
-use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
-use Exception;
 
 /**
  * Class GetLatestUnusedOtpTask
@@ -23,13 +20,13 @@ class GetLatestUnusedOtpTask extends Task
         $this->repository = $repository;
     }
 
-    public function run(string $mobile, string $reason, string $driver): ?OtpToken
+    public function run(string $to, string $reason, string $broker): ?OtpToken
     {
         // same code if previous is unused (in case of SMS delays send same code)
         return $this->repository->makeModel()->getLatestUnusedOtp(
-            mobilify($mobile),
+            $to,
             $reason,
-            $driver
+            $broker
         );
     }
 }

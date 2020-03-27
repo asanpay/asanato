@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Containers\User\UI\API\Requests;
+namespace App\Containers\Authorization\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
+use Illuminate\Support\Facades\Config;
 
 /**
- * Class UserSignupRequest
- * @package App\Containers\User\UI\API\Requests
+ * Class VerifyOtpRequest.
  */
-class UserSignUpRequest extends Request
+class VerifyOtpRequest extends Request
 {
 
     /**
@@ -17,6 +17,8 @@ class UserSignUpRequest extends Request
      * @var  array
      */
     protected $access = [
+        'roles'       => '',
+        'permissions' => 'manage-roles',
     ];
 
     /**
@@ -25,7 +27,6 @@ class UserSignUpRequest extends Request
      * @var  array
      */
     protected $decode = [
-
     ];
 
     /**
@@ -35,7 +36,6 @@ class UserSignUpRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-
     ];
 
     /**
@@ -43,13 +43,18 @@ class UserSignUpRequest extends Request
      */
     public function rules()
     {
+        $brokers = Config::get('authorization-container.otp.brokers');
+
+        $all = [];
+        foreach ($brokers as $broker => $reasons) {
+            $all[] = $reasons;
+        }
+
         return [
-            'token'      => 'required|digits:4',
-            'first_name' => 'required|string|min:2',
-            'last_name'  => 'required|string|min:2',
-            'mobile'     => 'required|regex:' . config('regex.mobile_regex'),
-            'password'   => 'required|string|min:8',
-            'client_ip'  => 'ip'
+            'reason' => 'required|in:' . implode(',', $all),
+            'mobile' => 'nullable|regex:' . config('regex.mobile_regex') . '|required_if:reason,' . $brokers['mobile'],
+            'email'  => 'nullable|email|required_if:reason,' . $brokers['email'],
+            'token'  => 'required|digits:4',
         ];
     }
 
@@ -57,9 +62,8 @@ class UserSignUpRequest extends Request
     {
         $this->merge(
             [
-                'client_ip' => request('client_ip', $this->getClientIp()),
-                'mobile'    => $this->get('mobile') ? mobilify($this->get('mobile')) : $this->get('mobile'),
-                'email'    => $this->get('email') ? strtolower($this->get('email')) : $this->get('email'),
+                'mobile' => $this->get('mobile') ? mobilify($this->get('mobile')) : $this->get('mobile'),
+                'email'  => $this->get('email') ? strtolower($this->get('email')) : $this->get('email'),
             ]
         );
     }

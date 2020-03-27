@@ -57,7 +57,7 @@ if (!function_exists('money')) {
     }
 }
 
-function is_mobile(String $sting): bool
+function is_mobile(string $sting): bool
 {
     if (!preg_match(config('regex.mobile_regex'), $sting)) {
         return false;
@@ -66,7 +66,7 @@ function is_mobile(String $sting): bool
     return true;
 }
 
-function mobilify(String $mobile, string $prefix = ''): string
+function mobilify(string $mobile, string $prefix = ''): string
 {
     return $prefix . substr($mobile, -10);
 }
