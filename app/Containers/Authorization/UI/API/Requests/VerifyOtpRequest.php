@@ -18,7 +18,7 @@ class VerifyOtpRequest extends Request
      */
     protected $access = [
         'roles'       => '',
-        'permissions' => 'manage-roles',
+        'permissions' => '',
     ];
 
     /**
