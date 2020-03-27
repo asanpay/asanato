@@ -55,8 +55,7 @@ class CreateIdentityProofRequest extends Request
         return [
             'id' => 'required|numeric|exists:users',
             'type'   => 'required|in:' . implode(',', IdPoofType::toArray()),
-            'files'   => 'required|array|min:1',
-            'files.*' => 'mimes:jpg,jpeg,png,bmp,tiff,pdf|max:1024',
+            'file'   => 'required|mimes:jpg,jpeg,png,bmp,tiff,pdf|max:1024',
         ];
     }
 
