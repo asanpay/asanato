@@ -8,7 +8,7 @@ use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class UserHasPendingProofTask extends Task
+class UserGetPendingProofTask extends Task
 {
 
     protected $repository;
@@ -21,7 +21,7 @@ class UserHasPendingProofTask extends Task
     public function run(User $user, string $type)
     {
         try {
-            return $this->repository->hasPendingProof($user, $type);
+            return $this->repository->getPendingProof($user, $type);
         }
         catch (Exception $exception) {
             throw new NotFoundException();

@@ -11,7 +11,7 @@
  * @apiPermission      none
  *
  * @apiParam           {int}  id proof type
- * @apiParam           {files[]}  array of files to upload
+ * @apiParam           {files}  doc file to upload only image and pdf accepted
  *
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK

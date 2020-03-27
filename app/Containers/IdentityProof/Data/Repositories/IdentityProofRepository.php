@@ -40,23 +40,6 @@ class IdentityProofRepository extends Repository
             'status'     => $status,
         ];
 
-        return $this->create($data);
-    }
-
-    /**
-     * @param User $user
-     *
-     * @return mixed
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
-     */
-    public function getProof(User $user, int $type): IdentityProof
-    {
-        return $this->makeModel()
-            ->where('user_id', $user->id)
-            ->where('proof_type', $type)
-            ->whereIn('status', [IdProofStatus::PENDING, IdProofStatus::CONFIRMED])
-            ->orderBy('id', 'desc')
-            ->first();
     }
 
     /**
@@ -66,16 +49,14 @@ class IdentityProofRepository extends Repository
      * @return bool
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
-    public function hasPendingProof(User $user, int $type): bool
+    public function getPendingProof(User $user, int $type): IdentityProof
     {
-        $count = $this->makeModel()
+        return $this->makeModel()
             ->where('user_id', $user->id)
             ->where('proof_type', $type)
             ->where('value', $user->getProofValue($type))
             ->where('status', IdProofStatus::PENDING)
             ->orderBy('id', 'desc')
-            ->count();
-
-        return boolval($count);
+            ->first();
     }
 }

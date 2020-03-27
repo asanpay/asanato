@@ -21,7 +21,7 @@ class CreateIdentityProofAction extends Action
 
         $user = Apiato::call('User@FindUserByIdTask', [$request->getInputByKey('id')]);
 
-        $idProof = Apiato::call('IdentityProof@UserHasPendingProofTask', [$user, $request->input('type')]);
+        $idProof = Apiato::call('IdentityProof@UserGetPendingProofTask', [$user, $request->input('type')]);
 
         if (is_null($idProof)) {
             $idProof = Apiato::call('IdentityProof@CreateIdentityProofTask', [$user, $request->input('type')]);
