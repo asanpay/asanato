@@ -23,9 +23,9 @@ class CreateIdentityProofAction extends Action
 
         $pendingIdProof = Apiato::call('IdentityProof@UserHasPendingProofTask', [$user, $request->input('type')]);
 
-        if ($pendingIdProof) {
-            return [null, __('auth.proof.you_have_pending_idproof')];
-        }
+//        if ($pendingIdProof) {
+//            return [null, __('auth.proof.you_have_pending_idproof')];
+//        }
 
         $idProof = Apiato::call('IdentityProof@CreateIdentityProofTask', [$user, $request->input('type')]);
 
@@ -34,6 +34,7 @@ class CreateIdentityProofAction extends Action
             $extension = strtolower($file->getClientOriginalExtension());
             $fileName = Str::uuid();
             $idProof->addMedia($file)
+                ->preservingOriginal()
                 ->setFileName($fileName.'.'.$extension)
                 ->toMediaCollection('user_idprooof_'.$request->get('type'));
         }
