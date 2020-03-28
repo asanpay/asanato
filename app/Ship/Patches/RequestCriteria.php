@@ -30,7 +30,7 @@ class RequestCriteria implements CriteriaInterface
             foreach ($criteria as $index => $cond) {
                 list ($field, $val) = explode(':', $cond);
                 if ($field == 'proof_type') {
-                    $val              = IdPoofType::value($val);
+                    $val              = IdPoofType::value(strtoupper($val));
                     $criteria[$index] = $field . ':' . $val;
                     break;
                 }
