@@ -3,6 +3,7 @@
 namespace App\Ship\Providers;
 
 use App\Ship\Parents\Providers\MainProvider;
+use App\Ship\Patches\RequestCriteria;
 use Creativeorange\Gravatar\GravatarServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
@@ -60,6 +61,10 @@ class ShipProvider extends MainProvider
     {
         // ...
         parent::boot();
+
+        $this->app->bind('RequestCriteria', function ($app) {
+            return new RequestCriteria($app->make(\Illuminate\Http\Request::class));
+        });
 
         Validator::extend('strength', 'Tartan\Validators\CustomValidator@validateStrength');
         Validator::extend('iran_billing_id', 'Tartan\Validators\CustomValidator@validateIranBillingId');
