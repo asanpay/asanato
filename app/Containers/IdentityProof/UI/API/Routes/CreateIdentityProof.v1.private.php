@@ -4,7 +4,7 @@
  * @apiGroup           IdentityProof
  * @apiName            createIdentityProof
  *
- * @api                {POST} /v1/user/{id}/identity-proofs create an IDProof
+ * @api                {POST} /v1/users/{id}/identity-proofs create an IDProof
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0
