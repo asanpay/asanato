@@ -2,6 +2,7 @@
 
 namespace App\Containers\IdentityProof\Actions;
 
+use App\Containers\IdentityProof\Enum\IdPoofType;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
@@ -11,20 +12,18 @@ class CreateIdentityProofAction extends Action
 {
     public function run(Request $request): array
     {
-        $data = $request->sanitizeInput([
-            // add your request data here
-        ]);
+        $type = IdPoofType::value($request->type);
 
-        if ($this->getUser()->isProved($request->get('type'))) {
+        if ($this->getUser()->isProved($type)) {
             return ['null', __('auth.type_proved_before')];
         }
 
         $user = Apiato::call('User@FindUserByIdTask', [$request->getInputByKey('id')]);
 
-        $idProof = Apiato::call('IdentityProof@UserGetPendingProofTask', [$user, $request->input('type')]);
+        $idProof = Apiato::call('IdentityProof@UserGetPendingProofTask', [$user, $type]);
 
         if (is_null($idProof)) {
-            $idProof = Apiato::call('IdentityProof@CreateIdentityProofTask', [$user, $request->input('type')]);
+            $idProof = Apiato::call('IdentityProof@CreateIdentityProofTask', [$user, $type]);
         }
 
         $file = $request->file('file');
@@ -33,7 +32,7 @@ class CreateIdentityProofAction extends Action
         $idProof->addMedia($file)
             ->preservingOriginal()
             ->setFileName($fileName.'.'.$extension)
-            ->toMediaCollection('user_idproof_'.$request->get('type'));
+            ->toMediaCollection('user_idproof_'.$type);
 
         return [__('app.req_saved_succ'), null];
     }

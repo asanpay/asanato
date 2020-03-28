@@ -54,9 +54,18 @@ class CreateIdentityProofRequest extends Request
     {
         return [
             'id' => 'required|numeric|exists:users',
-            'type'   => 'required|in:' . implode(',', IdPoofType::toArray()),
+            'type'   => 'required|in:' . implode(',', IdPoofType::getConstants()),
             'file'   => 'required|mimes:jpg,jpeg,png,bmp,tiff,pdf|max:1024',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge(
+            [
+                'type' => $this->get('type') ? strtoupper($this->get('type')) : $this->get('type'),
+            ]
+        );
     }
 
     /**

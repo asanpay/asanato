@@ -19,7 +19,7 @@ trait CustomEnums
         return static::$singleton[$class];
     }
 
-    public function __construct()
+    private function __construct()
     {
         $class = get_called_class();
         // Gets consts
@@ -97,6 +97,16 @@ trait CustomEnums
         }
 
         return $list;
+    }
+
+    public static function value(string $constant)
+    {
+        foreach (self::singelton()->consts as $name => $val) {
+            if ($name == $constant) {
+                return $val;
+            }
+        }
+        throw new \Exception("constant {$constant} not found!");
     }
 
     /**
