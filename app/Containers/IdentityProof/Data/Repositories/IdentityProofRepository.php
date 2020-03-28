@@ -40,6 +40,7 @@ class IdentityProofRepository extends Repository
             'status'     => $status,
         ];
 
+        return $this->create($data);
     }
 
     /**
