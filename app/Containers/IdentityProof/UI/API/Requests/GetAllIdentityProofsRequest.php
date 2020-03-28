@@ -3,6 +3,7 @@
 namespace App\Containers\IdentityProof\UI\API\Requests;
 
 use App\Containers\IdentityProof\Enum\IdPoofType;
+use App\Containers\IdentityProof\Enum\IdProofStatus;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -52,17 +53,33 @@ class GetAllIdentityProofsRequest extends Request
      */
     public function rules()
     {
+        dd($this->all());
         return [
-            'id'   => 'required|numeric|exists:users',
-            'type' => 'required|in:' . implode(',', IdPoofType::toArray()),
+            'id' => 'required|numeric|exists:users',
+            //            'proof_type' => 'required|in:' . implode(',', IdPoofType::toArray()),
+            //            'status' => 'required|in:' . implode(',', IdProofStatus::toArray()),
         ];
     }
 
     public function prepareForValidation()
     {
+        $search = $this->get('search');
+        if (!empty($search)) {
+            $criteria = explode(';', $search);
+            foreach ($criteria as $index => $cond) {
+                list ($field, $val) = explode(':', $cond);
+                if ($field == 'proof_type') {
+                    $val              = IdPoofType::value($val);
+                    $criteria[$index] = $field . ':' . $val;
+                    break;
+                }
+            }
+            $search = implode(';', $criteria);
+        }
+
         $this->merge(
             [
-                'type' => $this->get('type') ? IdPoofType::value(strtoupper($this->get('type'))) : $this->get('type'),
+                'search' => $search
             ]
         );
     }

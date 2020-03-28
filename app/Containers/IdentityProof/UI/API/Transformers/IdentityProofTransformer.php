@@ -30,7 +30,7 @@ class IdentityProofTransformer extends Transformer
     public function transform(IdentityProof $entity)
     {
         $response = [
-            'object' => 'IdentityProof',
+            'type' => $entity->proof_type,
             'id' => $entity->getHashedKey(),
             'created_at' => $entity->created_at,
             'readable_created_at'  => $entity->created_at->diffForHumans(),
