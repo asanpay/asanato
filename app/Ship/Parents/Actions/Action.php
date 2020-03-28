@@ -4,6 +4,7 @@ namespace App\Ship\Parents\Actions;
 
 use Apiato\Core\Abstracts\Actions\Action as AbstractAction;
 use Illuminate\Support\Facades\Auth;
+use Prettus\Repository\Criteria\RequestCriteria;
 
 /**
  * Class Action.
