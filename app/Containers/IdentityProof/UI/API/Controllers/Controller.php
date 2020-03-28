@@ -53,7 +53,7 @@ class Controller extends ApiController
     {
         $identityproofs = Apiato::call('IdentityProof@GetAllIdentityProofsAction', [$request]);
 
-        return $this->transform($identityproofs, IdentityProofTransformer::class);
+        return $this->transform($identityproofs, IdentityProofTransformer::class, ['media']);
     }
 
     /**

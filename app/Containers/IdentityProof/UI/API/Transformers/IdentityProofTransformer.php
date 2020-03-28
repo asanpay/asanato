@@ -4,6 +4,7 @@ namespace App\Containers\IdentityProof\UI\API\Transformers;
 
 use App\Containers\IdentityProof\Models\IdentityProof;
 use App\Ship\Parents\Transformers\Transformer;
+use App\Ship\Transformers\MediaTransformer;
 
 class IdentityProofTransformer extends Transformer
 {
@@ -18,7 +19,7 @@ class IdentityProofTransformer extends Transformer
      * @var  array
      */
     protected $availableIncludes = [
-
+        'media'
     ];
 
     /**
@@ -32,15 +33,18 @@ class IdentityProofTransformer extends Transformer
             'object' => 'IdentityProof',
             'id' => $entity->getHashedKey(),
             'created_at' => $entity->created_at,
-            'updated_at' => $entity->updated_at,
-
+            'readable_created_at'  => $entity->created_at->diffForHumans(),
         ];
 
         $response = $this->ifAdmin([
             'real_id'    => $entity->id,
-            // 'deleted_at' => $entity->deleted_at,
         ], $response);
 
         return $response;
+    }
+
+    public function includeMedia(IdentityProof $entity)
+    {
+        return $this->collection($entity->getMedia('user_idproof_'.$entity->proof_type), new MediaTransformer(), 'media');
     }
 }

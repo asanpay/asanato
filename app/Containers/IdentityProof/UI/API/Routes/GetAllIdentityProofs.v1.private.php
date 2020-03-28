@@ -4,7 +4,7 @@
  * @apiGroup           IdentityProof
  * @apiName            getAllIdentityProofs
  *
- * @api                {GET} /v1/identity-proofs Endpoint title here..
+ * @api                {GET} /v1/users/{id}/identity-proofs Get User ID Proofs
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0
@@ -20,7 +20,7 @@
  */
 
 /** @var Route $router */
-$router->get('identity-proofs', [
+$router->get('users/{id}/identity-proofs', [
     'as' => 'api_identityproof_get_all_identity_proofs',
     'uses'  => 'Controller@getAllIdentityProofs',
     'middleware' => [

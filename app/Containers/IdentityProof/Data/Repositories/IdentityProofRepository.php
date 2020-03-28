@@ -2,7 +2,6 @@
 
 namespace App\Containers\IdentityProof\Data\Repositories;
 
-use App\Containers\IdentityProof\Enum\IdPoofType;
 use App\Containers\IdentityProof\Enum\IdProofStatus;
 use App\Containers\IdentityProof\Models\IdentityProof;
 use App\Containers\User\Models\User;
@@ -19,7 +18,8 @@ class IdentityProofRepository extends Repository
      */
     protected $fieldSearchable = [
         'id' => '=',
-        // ...
+        'proof_type' => '=',
+        'status' => '=',
     ];
 
     /**
