@@ -53,7 +53,6 @@ class GetAllIdentityProofsRequest extends Request
      */
     public function rules()
     {
-        dd($this->all());
         return [
             'id' => 'required|numeric|exists:users',
             //            'proof_type' => 'required|in:' . implode(',', IdPoofType::toArray()),
