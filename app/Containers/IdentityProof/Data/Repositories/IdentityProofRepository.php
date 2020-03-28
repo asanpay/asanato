@@ -49,7 +49,7 @@ class IdentityProofRepository extends Repository
      * @return bool
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
-    public function getPendingProof(User $user, int $type): IdentityProof
+    public function getPendingProof(User $user, int $type): ?IdentityProof
     {
         return $this->makeModel()
             ->where('user_id', $user->id)
