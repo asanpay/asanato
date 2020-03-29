@@ -32,7 +32,7 @@ class IdentityProofTransformer extends Transformer
     {
         $response = [
             'type' => $entity->proof_type,
-            'readable_type' => IdPoofType::getLabel('$entity->proof_type'),
+            'readable_type' => IdPoofType::getLabel($entity->proof_type),
             'id' => $entity->getHashedKey(),
             'reject_reason' => $entity->reject_reason,
             'created_at' => $entity->created_at,
