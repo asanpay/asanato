@@ -293,6 +293,10 @@ class User extends UserModel implements HasMedia
             {
                 return $this->tel;
             }
+            case IdPoofType::COMPANY:
+            {
+                return $this->financial_id;
+            }
             default:
             {
                 throw new Exception(sprintf('could not find user id proof value for: %s', $type));
