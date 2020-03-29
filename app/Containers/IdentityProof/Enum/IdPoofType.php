@@ -19,12 +19,12 @@ class IdPoofType
     function translations()
     {
         return [
-            self::EMAIL       => trans('proof.type.' . self::EMAIL),
-            self::MOBILE      => trans('proof.type.' . self::MOBILE),
-            self::TEL         => trans('proof.type.' . self::TEL),
-            self::RESIDENCY   => trans('proof.type.' . self::RESIDENCY),
-            self::IDENTITY    => trans('proof.type.' . self::IDENTITY),
-            self::COMPANY     => trans('proof.type.' . self::COMPANY),
+            self::EMAIL       => trans('auth.proof.type.' . self::EMAIL),
+            self::MOBILE      => trans('auth.proof.type.' . self::MOBILE),
+            self::TEL         => trans('auth.proof.type.' . self::TEL),
+            self::RESIDENCY   => trans('auth.proof.type.' . self::RESIDENCY),
+            self::IDENTITY    => trans('auth.proof.type.' . self::IDENTITY),
+            self::COMPANY     => trans('auth.proof.type.' . self::COMPANY),
         ];
     }
 }

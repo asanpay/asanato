@@ -64,7 +64,7 @@ class GetUserIdentityProofsRequest extends Request
     {
         $this->merge(
             [
-                'type' => $this->has('type') ? IdPoofType::value($this->get('type')) : '',
+                'type' => $this->has('type') ? IdPoofType::value($this->get('type')) : $this->has('type'),
                 'status' => strtoupper($this->get('status', '')),
             ]
         );
