@@ -16,11 +16,7 @@ class IdentityProofRepository extends Repository
     /**
      * @var array
      */
-    protected $fieldSearchable = [
-        'id' => '=',
-        'proof_type' => '=',
-        'status' => '=',
-    ];
+    protected $fieldSearchable = [];
 
     /**
      * @param User $user

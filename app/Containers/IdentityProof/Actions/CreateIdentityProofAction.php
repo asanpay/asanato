@@ -15,7 +15,7 @@ class CreateIdentityProofAction extends Action
         $type = IdPoofType::value($request->type);
 
         if ($this->getUser()->isProved($type)) {
-            return ['null', __('auth.type_proved_before')];
+            return ['null', __('auth.proof.type_proved_before')];
         }
 
         $user = Apiato::call('User@FindUserByIdTask', [$request->getInputByKey('id')]);
@@ -23,6 +23,9 @@ class CreateIdentityProofAction extends Action
         $idProof = Apiato::call('IdentityProof@UserGetPendingProofTask', [$user, $type]);
 
         if (is_null($idProof)) {
+            if (empty($user->getProofValue($type))) {
+                return [null, __('auth.proof.proof_data_is_empty')];
+            }
             $idProof = Apiato::call('IdentityProof@CreateIdentityProofTask', [$user, $type]);
         }
 

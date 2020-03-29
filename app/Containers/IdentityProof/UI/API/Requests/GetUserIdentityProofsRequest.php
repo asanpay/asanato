@@ -3,12 +3,13 @@
 namespace App\Containers\IdentityProof\UI\API\Requests;
 
 use App\Containers\IdentityProof\Enum\IdPoofType;
+use App\Containers\IdentityProof\Enum\IdProofStatus;
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class CreateIdentityProofRequest.
+ * Class GetAllIdentityProofsRequest.
  */
-class CreateIdentityProofRequest extends Request
+class GetUserIdentityProofsRequest extends Request
 {
 
     /**
@@ -24,7 +25,7 @@ class CreateIdentityProofRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => 'update-users',
+        'permissions' => 'read-users',
         'roles'       => '',
     ];
 
@@ -53,9 +54,9 @@ class CreateIdentityProofRequest extends Request
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:users',
-            'type'   => 'required|in:' . implode(',', IdPoofType::getConstants()),
-            'file'   => 'required|mimes:jpg,jpeg,png,bmp,tiff,pdf|max:1024',
+            'id' => 'nullable|numeric|exists:users',
+            'type' => 'nullable|in:' . implode(',', IdPoofType::toArray()),
+            'status' => 'nullable|in:' . implode(',', IdProofStatus::toArray()),
         ];
     }
 
@@ -63,7 +64,8 @@ class CreateIdentityProofRequest extends Request
     {
         $this->merge(
             [
-                'type' => $this->get('type') ? strtoupper($this->get('type')) : $this->get('type'),
+                'type' => $this->has('type') ? IdPoofType::value($this->get('type')) : '',
+                'status' => strtoupper($this->get('status', '')),
             ]
         );
     }

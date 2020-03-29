@@ -25,7 +25,7 @@ class GetAllIdentityProofsRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => '',
+        'permissions' => 'read-users',
         'roles'       => '',
     ];
 
@@ -35,7 +35,6 @@ class GetAllIdentityProofsRequest extends Request
      * @var  array
      */
     protected $decode = [
-        'id',
     ];
 
     /**
@@ -45,7 +44,6 @@ class GetAllIdentityProofsRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        'id',
     ];
 
     /**
@@ -54,31 +52,18 @@ class GetAllIdentityProofsRequest extends Request
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:users',
-            //            'proof_type' => 'required|in:' . implode(',', IdPoofType::toArray()),
-            //            'status' => 'required|in:' . implode(',', IdProofStatus::toArray()),
+            'user_id' => 'nullable|numeric|exists:users',
+            'type' => 'nullable|in:' . implode(',', IdPoofType::toArray()),
+            'status' => 'nullable|in:' . implode(',', IdProofStatus::toArray()),
         ];
     }
 
     public function prepareForValidation()
     {
-        $search = $this->get('search');
-        if (!empty($search)) {
-            $criteria = explode(';', $search);
-            foreach ($criteria as $index => $cond) {
-                list ($field, $val) = explode(':', $cond);
-                if ($field == 'proof_type') {
-                    $val              = IdPoofType::value($val);
-                    $criteria[$index] = $field . ':' . $val;
-                    break;
-                }
-            }
-            $search = implode(';', $criteria);
-        }
-
         $this->merge(
             [
-                'search' => $search
+                'type' => $this->has('type') ? IdPoofType::value($this->get('type')) : '',
+                'status' => strtoupper($this->get('status', '')),
             ]
         );
     }
@@ -89,7 +74,7 @@ class GetAllIdentityProofsRequest extends Request
     public function authorize()
     {
         return $this->check([
-            'hasAccess|isOwner',
+            'hasAccess',
         ]);
     }
 }

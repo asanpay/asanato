@@ -2,15 +2,18 @@
 
 namespace App\Containers\IdentityProof\UI\API\Controllers;
 
+use App\Containers\IdentityProof\Data\Transporters\SearchInIdProofsTransporter;
 use App\Containers\IdentityProof\UI\API\Requests\CreateIdentityProofRequest;
 use App\Containers\IdentityProof\UI\API\Requests\DeleteIdentityProofRequest;
 use App\Containers\IdentityProof\UI\API\Requests\GetAllIdentityProofsRequest;
 use App\Containers\IdentityProof\UI\API\Requests\FindIdentityProofByIdRequest;
+use App\Containers\IdentityProof\UI\API\Requests\GetUserIdentityProofsRequest;
 use App\Containers\IdentityProof\UI\API\Requests\UpdateIdentityProofRequest;
 use App\Containers\IdentityProof\UI\API\Transformers\IdentityProofTransformer;
 use App\Containers\User\UI\API\Requests\GetAuthenticatedUserRequest;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class Controller
@@ -36,7 +39,7 @@ class Controller extends ApiController
 
     /**
      * @param FindIdentityProofByIdRequest $request
-     * @return array
+     * @return JsonResponse
      */
     public function findIdentityProofById(FindIdentityProofByIdRequest $request)
     {
@@ -47,18 +50,28 @@ class Controller extends ApiController
 
     /**
      * @param GetAllIdentityProofsRequest $request
-     * @return array
+     * @return JsonResponse
      */
     public function getAllIdentityProofs(GetAllIdentityProofsRequest $request)
     {
-        $identityproofs = Apiato::call('IdentityProof@GetAllIdentityProofsAction', [$request]);
+        $identityproofs = Apiato::call('IdentityProof@GetAllIdentityProofsAction', [new SearchInIdProofsTransporter($request)]);
+
+        return $this->transform($identityproofs, IdentityProofTransformer::class, ['media']);
+    }
+
+    public function getUserIdentityProofs(GetUserIdentityProofsRequest $request)
+    {
+        $dto = new SearchInIdProofsTransporter($request);
+        $dto->user_id = $dto->id;
+
+        $identityproofs = Apiato::call('IdentityProof@GetAllIdentityProofsAction', [$dto]);
 
         return $this->transform($identityproofs, IdentityProofTransformer::class, ['media']);
     }
 
     /**
      * @param UpdateIdentityProofRequest $request
-     * @return array
+     * @return JsonResponse
      */
     public function updateIdentityProof(UpdateIdentityProofRequest $request)
     {

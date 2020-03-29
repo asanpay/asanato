@@ -62,10 +62,6 @@ class ShipProvider extends MainProvider
         // ...
         parent::boot();
 
-        $this->app->bind('RequestCriteria', function ($app) {
-            return new RequestCriteria($app->make(\Illuminate\Http\Request::class));
-        });
-
         Validator::extend('strength', 'Tartan\Validators\CustomValidator@validateStrength');
         Validator::extend('iran_billing_id', 'Tartan\Validators\CustomValidator@validateIranBillingId');
         Validator::extend('iran_shetab_card', 'Tartan\Validators\CustomValidator@validateShetabCard');

@@ -106,7 +106,7 @@ trait CustomEnums
                 return $val;
             }
         }
-        throw new \Exception("constant {$constant} not found!");
+        throw new \Exception("enum value for `{$constant}` not found at ". substr(strrchr(__CLASS__, "\\"), 1));
     }
 
     /**
