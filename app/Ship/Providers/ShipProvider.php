@@ -3,7 +3,6 @@
 namespace App\Ship\Providers;
 
 use App\Ship\Parents\Providers\MainProvider;
-use App\Ship\Patches\RequestCriteria;
 use Creativeorange\Gravatar\GravatarServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
@@ -26,6 +25,7 @@ class ShipProvider extends MainProvider
         MediaLibraryServiceProvider::class,
         GravatarServiceProvider::class,
         SmsServiceProvider::class,
+        \Tartan\Log\XLogServiceProvider::class,
     ];
 
     /**
@@ -61,6 +61,11 @@ class ShipProvider extends MainProvider
     {
         // ...
         parent::boot();
+
+        Validator::extend('integer', function ($attribute, $value, $parameters, $validator) {
+            $value = $value + 1 - 1;
+            return is_int($value);
+        });
 
         Validator::extend('strength', 'Tartan\Validators\CustomValidator@validateStrength');
         Validator::extend('iran_billing_id', 'Tartan\Validators\CustomValidator@validateIranBillingId');
