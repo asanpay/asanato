@@ -72,7 +72,7 @@ class RequestPaymentTokenAction extends Action
 
             // payer mobile --------------------------------------------------------------------------------------------
             $validator = Validator::make($parameters, [
-                'mobile' => 'nullable|regex:/' . config('regex.mobile_regex') . '/',
+                'mobile' => 'nullable|regex:' . config('regex.mobile_regex'),
             ]);
 
             if ($validator->fails()) {

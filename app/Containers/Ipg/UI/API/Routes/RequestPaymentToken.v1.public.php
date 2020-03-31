@@ -9,15 +9,16 @@
  * @apiVersion         1.0.0
  * @apiPermission      none
  *
- * @apiParam           {int} amount
- * @apiParam           {int} invoice_id
+ * @apiParam           {string}  merchant
+ * @apiParam           {int}     amount
+ * @apiParam           {int}     invoice_id
  * @apiParam           {String}  callback_url
- * @apiParam           {String}  name
- * @apiParam           {String}  mobile
- * @apiParam           {String}  email
- * @apiParam           {String}  description
- * @apiParam           {int}  direct use direct payment gateway (bypass asanpay)
- * @apiParam           {int}  refund
+ * @apiParam           {String}  name payer name (optional)
+ * @apiParam           {String}  mobile payer mobile (optional)
+ * @apiParam           {String}  email payer email (optional)
+ * @apiParam           {String}  description transaction description (optional)
+ * @apiParam           {int}     direct use direct payment gateway (bypass asanpay) (optional)
+ * @apiParam           {int}     refund not implemented yet (optional)
  *
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK

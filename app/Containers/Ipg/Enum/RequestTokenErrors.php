@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Containers\Ipg\Enum;
-
 
 use App\Ship\Traits\CustomEnums;
 

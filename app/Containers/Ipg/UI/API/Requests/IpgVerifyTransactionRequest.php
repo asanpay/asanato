@@ -6,9 +6,9 @@ use App\Ship\Parents\Requests\Request;
 use Tartan\Log\Facades\XLog;
 
 /**
- * Class IpgRequestTokenRequest.
+ * Class IpgVerifyTransactionRequest.
  */
-class IpgRequestTokenRequest extends Request
+class IpgVerifyTransactionRequest extends Request
 {
     protected $access = [];
     /**
