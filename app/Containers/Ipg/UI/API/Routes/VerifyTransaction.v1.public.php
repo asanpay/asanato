@@ -22,6 +22,6 @@
 
 /** @var Route $router */
 $router->post('ipg/verify', [
-    'as' => 'api_ipg_request_pay_token',
+    'as' => 'api_ipg_verify_transaction',
     'uses'  => 'Controller@verifyTransaction'
 ]);
