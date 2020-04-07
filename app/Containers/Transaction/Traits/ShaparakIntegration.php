@@ -13,7 +13,7 @@ trait ShaparakIntegration
      */
     public function getCallbackUrl(): string
     {
-        return route('payment.callback', [
+        return route('web_ipg_transaction_callback', [
             'psp'     => $this->psp->slug,
             'gateway' => $this->gateway_id,
             'token'   => $this->token,

@@ -30,5 +30,6 @@
 /** @var Route $router */
 $router->post('ipg/request-token', [
     'as' => 'api_ipg_request_pay_token',
-    'uses'  => 'Controller@requestPaymentToken'
+    'uses'  => 'Controller@requestPaymentToken',
+    'domain' => 'ipg.'. parse_url(\Config::get('app.url'))['host'],
 ]);

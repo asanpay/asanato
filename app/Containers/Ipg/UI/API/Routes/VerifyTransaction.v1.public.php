@@ -23,5 +23,6 @@
 /** @var Route $router */
 $router->post('ipg/verify', [
     'as' => 'api_ipg_verify_transaction',
-    'uses'  => 'Controller@verifyTransaction'
+    'uses'  => 'Controller@verifyTransaction',
+    'domain' => 'ipg.'. parse_url(\Config::get('app.url'))['host'],
 ]);

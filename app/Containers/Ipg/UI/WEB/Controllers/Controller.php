@@ -2,6 +2,7 @@
 
 namespace App\Containers\Ipg\UI\WEB\Controllers;
 
+use App\Containers\Ipg\UI\WEB\Requests\IpgTransactionCallbackRequest;
 use App\Ship\Parents\Controllers\WebController;
 use Apiato\Core\Foundation\Facades\Apiato;
 
@@ -13,14 +14,13 @@ use Apiato\Core\Foundation\Facades\Apiato;
 class Controller extends WebController
 {
     /**
-     * Show all entities
-     *
-     * @param GetAllIpgsRequest $request
+     * @param string $psp
+     * @param string $gateway
+     * @param string $token
+     * @param IpgTransactionCallbackRequest $request
      */
-    public function index(GetAllIpgsRequest $request)
+    public function transactionCallback(string $psp, string $gateway, string $token, IpgTransactionCallbackRequest $request)
     {
-        $ipgs = Apiato::call('Ipg@GetAllIpgsAction', [$request]);
-
-        // ..
+        return Apiato::call('Ipg@TransactionCallbackAction', [$psp, $gateway, $token, $request]);
     }
 }
