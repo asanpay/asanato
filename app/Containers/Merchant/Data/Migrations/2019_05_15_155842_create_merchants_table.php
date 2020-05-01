@@ -29,6 +29,7 @@ class CreateMerchantsTable extends Migration
             $table->unsignedInteger('wage_max')->default(40000)->comment('Rial');
 
             $table->string('name', 64)->comment('Merchant`s name to show on gateway page');
+            $table->string('logo')->nullable();
             $table->string('domain', 255)->comment('Merchant`s main domain');
 
             $table->string('ip_access')->nullable()->comment('comma separated ip addresses');

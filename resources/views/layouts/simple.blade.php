@@ -1,71 +1,69 @@
 <!DOCTYPE html>
-<html lang="fa">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>@lang('app.name') | @yield('title')</title>
-	<link rel="stylesheet" href="{{asset('css/app.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('css/simple.css')}}">
-</head>
+<html lang="{{app()->getLocale()}}" dir="{{isRtl() ? 'rtl' : 'ltr'}}">
 
-<body class="my-login-page">
-	<section class="h-100">
-		<div class="container h-100">
-			<div class="row justify-content-md-center h-100">
-				<div class="card-wrapper">
-					<div class="brand">
-						<img src="{{asset('images/logo.png')}}" alt="logo">
-					</div>
-					<div class="card fat">
-						<div class="card-body">
-							<h4 class="card-title">Login</h4>
-							<form method="POST" class="my-login-validation" novalidate="">
-								<div class="form-group">
-									<label for="email">E-Mail Address</label>
-									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
-									<div class="invalid-feedback">
-										Email is invalid
-									</div>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="description" content="">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>@lang('app.name') | @yield('title')</title>
+
+		<link rel="shortcut icon" href="{{asset('images/favicon.ico')}}">
+		<link rel="stylesheet" type="text/css" href="{{mix('css/app.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('css/simple.css')}}">
+        @stack('css')
+        @if(isRtl())
+            <link href="{{mix('css/global-rtl.css')}}" rel="stylesheet" type="text/css" />
+        @endif
+	</head>
+
+	<body class="lang-{{app()->getLocale()}} simple-page">
+        <div id="app">
+			<div>
+				<div class="bUGfWD">
+					<div class="hPKwDv">
+						<div class="hBJwoB">
+							<div class="iSOsrm dqkfnO"></div>
+							<div class="cEmDkZ">
+								<div>
+									<header class="sc-jAaTju jZPEGD">
+										<div class="bqVmWV">
+                                            <span class="aQXGv" role="presentation">
+                                            <img style="width: 190px" src="{{asset('images/logo-light.svg')}}" />
+                                           </span>
+                                        </div>
+									</header>
+
+									<section class="lbaSgD" role="main">
+										@yield('content')
+									</section>
+									<div class="hqyKhj">
+                                        <a id="security-reset-password-continue" href="{{config('app.url')}}/login">
+                                            <span>{{__('auth.back_to_site')}}</span>
+                                        </a>
+                                    </div>
 								</div>
 
-								<div class="form-group">
-									<label for="password">Password
-										<a href="forgot.html" class="float-right">
-											Forgot Password?
-										</a>
-									</label>
-									<input id="password" type="password" class="form-control" name="password" required data-eye>
-								    <div class="invalid-feedback">
-								    	Password is required
-							    	</div>
-								</div>
-
-								<div class="form-group">
-									<div class="custom-checkbox custom-control">
-										<input type="checkbox" name="remember" id="remember" class="custom-control-input">
-										<label for="remember" class="custom-control-label">Remember Me</label>
-									</div>
-								</div>
-
-								<div class="form-group m-0">
-									<button type="submit" class="btn btn-info btn-block">
-										Login
-									</button>
-								</div>
-								<div class="mt-4 text-center">
-									Don't have an account? <a href="register.html">Create One</a>
-								</div>
-							</form>
+								<footer class="liGdGQ">
+									<div class="bqVmWV">
+                                        <span class="jOoCmA" role="presentation">
+                                            <img style="width: 190px" src="{{asset('images/logo-grey.svg')}}" />
+                                        </span>
+                                    </div>
+                                    <span id="footer_copyright">
+                                        {!! __('app.copyright') !!}
+                                    </span>
+                                </footer>
+							</div>
 						</div>
-					</div>
-					<div class="footer">
-						Copyright © 2017 — Your Company
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
+    	<script src="{{asset('js/app.js')}}"></script>
+        @stack('js')
+	</body>
 
-	<script src="{{asset('js/app.js')}}"></script>
-</body>
 </html>

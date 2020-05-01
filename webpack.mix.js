@@ -14,4 +14,22 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
 
+/*
+ |--------------------------------------------------------------------------
+ | Global Asset handling
+ |--------------------------------------------------------------------------
+ */
+mix.copyDirectory ('resources/assets/vendors/vazir-font/fonts/', 'public/fonts/vazir') // copy vazir font
+
+mix.styles ([
+    'resources/assets/vendors/vazir-font/css/vazir-font.css',
+    'resources/assets/css/bootstrap-rtl.css',
+    'resources/assets/css/rtl-patch.css',
+    'resources/assets/css/vue-simple-spinner.css',
+], 'public/css/global-rtl.css')
+
+if (mix.config.inProduction) {
+    mix.version ()
+}
+
 mix.copy ('resources/themes/simple/simple.css', 'public/css/')

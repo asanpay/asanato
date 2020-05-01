@@ -16,7 +16,7 @@
                         </div>
                         <hr>
                         <p class="mb-0">
-                            <a href="{{route('my.wallets.index')}}">@lang('global.BackToAccount')</a>
+                            <a href="#">@lang('global.BackToAccount')</a>
                         </p>
                     </div>
                 @else
@@ -34,7 +34,7 @@
                                 </p>
                                 <hr>
                                 <p class="mb-0">
-                                    <a href="{{route('my.wallets.index')}}">@lang('global.BackToAccount')</a>
+                                    <a href="#">@lang('global.BackToAccount')</a>
                                 </p>
                             </div>
                         </div>

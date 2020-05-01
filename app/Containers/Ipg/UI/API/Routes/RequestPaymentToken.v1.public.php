@@ -4,7 +4,7 @@
  * @apiGroup           IPG
  * @apiName            requestPaymentToken
  *
- * @api                {POST} /v1/ipg/request-token request a payment request token
+ * @api                {POST} /v1/request-token request a payment request token
  *
  * @apiVersion         1.0.0
  * @apiPermission      none
@@ -28,7 +28,7 @@
  */
 
 /** @var Route $router */
-$router->post('ipg/request-token', [
+$router->post('request-token', [
     'as' => 'api_ipg_request_pay_token',
     'uses'  => 'Controller@requestPaymentToken',
     'domain' => 'ipg.'. parse_url(\Config::get('app.url'))['host'],

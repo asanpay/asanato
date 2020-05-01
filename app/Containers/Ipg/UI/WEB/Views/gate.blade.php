@@ -1,7 +1,9 @@
-@extends('themes.flatron.mainbox')
+@extends('layouts.simple')
+
 @section('title')
     @lang('ipg.pay_transaction')
 @endsection
+
 @section('content')
 <div class="section-body mt-3">
     <div class="container-fluid">
@@ -18,7 +20,7 @@
                         </div>
                         <hr>
                         <p class="mb-0">
-                            <a href="{{route('my.wallets.index')}}">@lang('global.BackToAccount')</a>
+                            <a href="#">@lang('global.BackToAccount')</a>
                         </p>
                     </div>
 
@@ -29,16 +31,15 @@
                         </div>
                         <hr>
                         <p class="mb-0">
-                            <a href="{{route('my.wallets.index')}}">@lang('global.BackToAccount')</a>
+                            <a href="#">@lang('global.BackToAccount')</a>
                         </p>
                     </div>
                 @else
 
-                    <div class="card mw-360">
                         <div class="card-body text-center ribbon">
                             <div class="ribbon-box orange ltr">#{{$transaction->id}}</div>
                             @if(isset($merchant) && is_object($merchant))
-                                <img class="rounded-circle img-thumbnail w100" src="{{$merchant->logo}}" alt="">
+                                <img class="rounded-circle img-thumbnail w100" src="{{$merchant->logo ?? '/images/favicon.png'}}" alt="">
                                 <h6 class="mt-3 mb-1">{{$merchant->name}}</h6>
                                 <span><a href="{{$merchant->domain}}" rel="nofollow" target="_blank">{{$merchant->domain}}</a></span>
                                 <br />
@@ -50,7 +51,6 @@
                                 {!! $form ?? '' !!}
                             </div>
                         </div>
-                    </div>
 
                 @endif
             </div>

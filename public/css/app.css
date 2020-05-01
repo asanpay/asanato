@@ -72,7 +72,7 @@ body {
   line-height: 1.6;
   color: #212529;
   text-align: left;
-  background-color: #dddce1;
+  background-color: #ffffff;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -512,7 +512,7 @@ mark,
 
 .img-thumbnail {
   padding: 0.25rem;
-  background-color: #dddce1;
+  background-color: #ffffff;
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
   max-width: 100%;
@@ -4265,15 +4265,15 @@ input[type=button].btn-block {
 }
 
 .custom-range:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #dddce1, 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
 }
 
 .custom-range:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #dddce1, 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
 }
 
 .custom-range:focus::-ms-thumb {
-  box-shadow: 0 0 0 1px #dddce1, 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
 }
 
 .custom-range::-moz-focus-outer {
@@ -4479,8 +4479,8 @@ input[type=button].btn-block {
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   color: #495057;
-  background-color: #dddce1;
-  border-color: #dee2e6 #dee2e6 #dddce1;
+  background-color: #ffffff;
+  border-color: #dee2e6 #dee2e6 #ffffff;
 }
 
 .nav-tabs .dropdown-menu {
@@ -11566,17 +11566,17 @@ input[type=color].form-control:disabled {
 
 .was-validated .custom-range:valid:focus::-webkit-slider-thumb,
 .custom-range.is-valid:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #dddce1, 0 0 0 0.2rem #bcf0d2;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 0.2rem #bcf0d2;
 }
 
 .was-validated .custom-range:valid:focus::-moz-range-thumb,
 .custom-range.is-valid:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #dddce1, 0 0 0 0.2rem #bcf0d2;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 0.2rem #bcf0d2;
 }
 
 .was-validated .custom-range:valid:focus::-ms-thumb,
 .custom-range.is-valid:focus::-ms-thumb {
-  box-shadow: 0 0 0 1px #dddce1, 0 0 0 0.2rem #bcf0d2;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 0.2rem #bcf0d2;
 }
 
 .was-validated .custom-range:valid::-webkit-slider-thumb,
@@ -11655,17 +11655,17 @@ input[type=color].form-control:disabled {
 
 .was-validated .custom-range:invalid:focus::-webkit-slider-thumb,
 .custom-range.is-invalid:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #dddce1, 0 0 0 0.2rem #fbdedb;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 0.2rem #fbdedb;
 }
 
 .was-validated .custom-range:invalid:focus::-moz-range-thumb,
 .custom-range.is-invalid:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #dddce1, 0 0 0 0.2rem #fbdedb;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 0.2rem #fbdedb;
 }
 
 .was-validated .custom-range:invalid:focus::-ms-thumb,
 .custom-range.is-invalid:focus::-ms-thumb {
-  box-shadow: 0 0 0 1px #dddce1, 0 0 0 0.2rem #fbdedb;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 0.2rem #fbdedb;
 }
 
 .was-validated .custom-range:invalid::-webkit-slider-thumb,
@@ -12588,7 +12588,7 @@ input[type=color].form-control:disabled {
   .table.b-table > tbody > tr > .table-b-table-default,
   .table.b-table > tfoot > tr > .table-b-table-default {
     color: #212529;
-    background-color: #dddce1;
+    background-color: #ffffff;
   }
 
   .table.b-table.table-dark > thead > tr > .bg-b-table-default,

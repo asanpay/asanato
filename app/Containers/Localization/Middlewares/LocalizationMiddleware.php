@@ -86,7 +86,6 @@ class LocalizationMiddleware extends Middleware
                 $language_iterator[] = $base[0];
             }
         }
-
         // we have not found any language that is supported
         throw new UnsupportedLanguageException();
     }

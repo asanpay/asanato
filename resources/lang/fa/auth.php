@@ -12,6 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'back_to_site' => 'بازگشت به سایت',
     'failed' => 'اطلاعات ورود شما در سیستم ما موجود نیست!',
     'throttle' => 'تعداد تلاشهای ورود ناموفق شما بیش از حد مجاز بوده. تا :minutes دقیقه دیگر امکان ورود برای شما وجود ندارد.',
     'otp_not_found' => 'کد شناسایی وارد شده موجود نیست. لطفا دوباره درخواست کد بدهید',

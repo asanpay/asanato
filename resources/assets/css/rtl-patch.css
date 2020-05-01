@@ -1,0 +1,84 @@
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-family: Vazir, Yekan, Tahoma, Arial;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    font-family: Vazir, Yekan, Tahoma, Arial;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    font-family: Vazir, Yekan, Tahoma, Arial;
+}
+:-moz-placeholder { /* Firefox 18- */
+    font-family: Vazir, Yekan, Tahoma, Arial;
+}
+
+.ltr {
+    direction: ltr;
+    text-align:left;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.ltr-soft {
+    direction: ltr;
+}
+
+.ltr-align-right {
+    direction: ltr;
+    text-align:right;
+}
+
+.persian-number, input.persian-number{
+    font-family: Vazir, Yekan, Tahoma, Arial !important;
+}
+
+.rtl {
+    direction: rtl;
+    font-family: Vazir, Yekan, Tahoma, Arial;
+}
+
+.rtl-force {
+    direction: rtl;
+    text-align: right;
+    font-family: Vazir, Yekan, Tahoma, Arial;
+}
+
+.money {
+    direction: ltr;
+}
+i.center-icon{
+    display: inline-block;
+    padding-top: 7px;
+}
+
+input[type=password], input[type=email], input[type=number], input[type=tel], input[name=captcha], input.mobile_no, input.phone_no{
+    direction: ltr;
+    text-align: left;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+input[type=number].no-spinner::-webkit-inner-spin-button,
+input[type=number].no-spinner::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.modal-backdrop {
+    opacity: .5;
+}
+
+.btn i{
+    vertical-align: middle;
+}
+
+.modal-header .close {
+    padding: 1rem 1rem;
+    margin: -1rem auto -1rem -1rem;
+}
+
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.modal {
+    z-index: 1072;
+}

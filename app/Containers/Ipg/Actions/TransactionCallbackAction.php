@@ -45,7 +45,7 @@ class TransactionCallbackAction extends Action
 
                 // validate required route parameters
                 if ($validator->fails()) {
-                    return view('ipg::callback')->withErrors([__('Code N1 - Transaction not found')]);
+                    return view('ipg::callback')->withErrors([__('ipg.callback_err.tr_not_found_cod1')]);
                 }
 
                 // find the transaction by token
@@ -53,12 +53,12 @@ class TransactionCallbackAction extends Action
 
                 // transaction not found
                 if (!$transaction) {
-                    return view('ipg::callback')->withErrors([__('Code N2 - Transaction not found')]);
+                    return view('ipg::callback')->withErrors([__('ipg.callback_err.tr_not_found_cod2')]);
                 }
 
                 // basic check for equal PSP
                 if ($transaction->psp->slug != $psp) {
-                    return view('ipg::callback')->withErrors([__('Code N3 - Transaction not found')]);
+                    return view('ipg::callback')->withErrors([__('ipg.callback_err.tr_not_found_cod3')]);
                 }
 
                 // patch `shaparak mode` into gateway properties that fetched from gateway row

@@ -6,6 +6,7 @@ use App\Containers\Wallet\UI\API\Requests\CreateWalletRequest;
 use App\Containers\Wallet\UI\API\Requests\DeleteWalletRequest;
 use App\Containers\Wallet\UI\API\Requests\GetAllWalletsRequest;
 use App\Containers\Wallet\UI\API\Requests\FindWalletByIdRequest;
+use App\Containers\Wallet\UI\API\Requests\GetUserWalletsRequest;
 use App\Containers\Wallet\UI\API\Requests\UpdateWalletRequest;
 use App\Containers\Wallet\UI\API\Transformers\WalletTransformer;
 use App\Ship\Parents\Controllers\ApiController;
@@ -71,5 +72,16 @@ class Controller extends ApiController
         Apiato::call('Wallet@DeleteWalletAction', [$request]);
 
         return $this->noContent();
+    }
+
+    /**
+     * @param GetUserWalletsRequest $request
+     * @return array
+     */
+    public function getUserWallets(GetUserWalletsRequest $request)
+    {
+        $wallets = Apiato::call('Wallet@GetUserWalletsAction', [$request]);
+
+        return $this->transform($wallets, WalletTransformer::class);
     }
 }
