@@ -6,7 +6,6 @@ use App\Containers\Merchant\Models\Merchant;
 use App\Containers\Transaction\Models\Transaction;
 use App\Containers\Wallet\Enum\WalletType;
 use App\Ship\Parents\Models\Model;
-use Tartan\Zaman\Facades\Zaman;
 
 class Wallet extends Model
 {
@@ -51,16 +50,6 @@ class Wallet extends Model
     return $this->hasMany(Transaction::class, 'wallet_id', 'id');
   }
 
-  public function getCreatedAtAttribute($value)
-  {
-    return Zaman::gToj(strtotime($value));
-  }
-
-  public function getUpdatedAtAttribute($value)
-  {
-    return Zaman::gToj(strtotime($value));
-  }
-
   public function getTransferLimitAttribute($value): int
   {
     $limit = config('finance.limit.transfer.max');
@@ -74,14 +63,14 @@ class Wallet extends Model
     return $this->balance - $this->locked_balance;
   }
 
-  public function getTransactionsProfitWallet()
+  public function getTransactionsProfitWallet(): self
   {
     return $this->where('belongs_to_app', true)
       ->where('type', WalletType::TRANSACTION_PROFIT)
       ->firstOrFail();
   }
 
-  public static function getCreateWalletProfitWallet()
+  public static function getCreateWalletProfitWallet(): self
   {
     return self::where('belongs_to_app', true)
       ->where('type', WalletType::WALLET_COST_PROFIT)
