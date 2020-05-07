@@ -25,6 +25,7 @@ class UserPermissionsSeeder_1 extends Seeder
         Apiato::call('Authorization@CreatePermissionTask', ['update-users', 'Update a User.']);
         Apiato::call('Authorization@CreatePermissionTask', ['delete-users', 'Delete a User.']);
         Apiato::call('Authorization@CreatePermissionTask', ['refresh-users', 'Refresh User data.']);
+        Apiato::call('Authorization@CreatePermissionTask', ['create-wallet', 'Create Wallet for everyone.']);
 
         // ...
 

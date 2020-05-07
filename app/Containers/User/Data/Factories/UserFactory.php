@@ -1,22 +1,21 @@
 <?php
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
+use App\Containers\User\Enum\UserGender;
 
-$factory->define(App\Containers\User\Models\User::class, function (Faker\Generator $faker) {
+$factory->define(\App\Containers\User\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'name'           => $faker->name,
-        'email'          => $faker->unique()->safeEmail,
-        'password'       => $password ? : $password = Hash::make('testing-password'),
-        'remember_token' => Str::random(10),
-        'is_client'      => false,
-    ];
-});
-
-$factory->state(App\Containers\User\Models\User::class, 'client', function (Faker\Generator $faker) {
-    return [
-        'is_client' => true,
+        'first_name'   => $faker->firstName,
+        'last_name'    => $faker->lastName,
+        'group'        => \App\Containers\User\Enum\UserGroup::NORMAL,
+        'type'         => \App\Containers\User\Enum\UserType::PERSONAL,
+        'register_via' => 'site',
+        'email'        => $faker->unique()->safeEmail,
+        'mobile'       => '912' . mt_rand(1111111, 9999999),
+        'gender'       => $faker->randomElement([UserGender::MALE, UserGender::FEMALE]),
+        'password'     => bcrypt('secret78'),
+        'meta'         => json_encode(['telegram_id' => $faker->word]),
+        'register_ip'  => $faker->ipv4,
     ];
 });
