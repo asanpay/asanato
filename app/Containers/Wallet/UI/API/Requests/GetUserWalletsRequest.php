@@ -23,7 +23,7 @@ class GetUserWalletsRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => '',
+        'permissions' => 'read-wallets',
         'roles'       => '',
     ];
 

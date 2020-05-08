@@ -38,7 +38,7 @@ class WalletTransformer extends Transformer
             'balance'        => $entity->getBalance(),
             'transfer_limit' => $entity->transfer_limit,
             'default'        => $entity->default,
-            'r_created_at'   => persian(Zaman::moment(strtotime($entity->created_at))),
+//            'rel_created_at' => persian(Zaman::moment(strtotime($entity->created_at))),
             'j_created_at'   => Zaman::gToj($entity->created_at),
             'created_at'     => $entity->created_at,
             'updated_at'     => $entity->updated_at,
@@ -46,7 +46,7 @@ class WalletTransformer extends Transformer
 
         $response = $this->ifAdmin([
             'real_id' => $entity->id,
-            // 'deleted_at' => $entity->deleted_at,
+            'deleted_at' => $entity->deleted_at,
         ], $response);
 
         return $response;

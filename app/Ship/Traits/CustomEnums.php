@@ -86,6 +86,14 @@ trait CustomEnums
     }
 
     /**
+     * @return string
+     */
+    public static function commaSeparated()
+    {
+        return implode(',', self::toArray());
+    }
+
+    /**
      * Gets only variables
      * @return array
      */

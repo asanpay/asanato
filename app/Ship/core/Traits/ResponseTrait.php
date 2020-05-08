@@ -42,7 +42,8 @@ trait ResponseTrait
         $transformerName = null,
         array $includes = [],
         array $meta = [],
-        $resourceKey = null
+        $resourceKey = null,
+        int $statusCode = 200
     ) {
         // first, we need to create the transformer
         if ($transformerName instanceof Transformer) {
@@ -100,7 +101,7 @@ trait ResponseTrait
             $result = $fractal->toArray();
         }
 
-        return $this->apocalypse($result, 200);
+        return $this->apocalypse($result, $statusCode);
     }
 
 

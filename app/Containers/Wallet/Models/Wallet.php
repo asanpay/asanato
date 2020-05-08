@@ -70,7 +70,7 @@ class Wallet extends Model
       ->firstOrFail();
   }
 
-  public static function getCreateWalletProfitWallet(): self
+  public function getCreateWalletProfitWallet(): self
   {
     return self::where('belongs_to_app', true)
       ->where('type', WalletType::WALLET_COST_PROFIT)

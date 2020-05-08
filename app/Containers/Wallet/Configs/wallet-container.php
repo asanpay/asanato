@@ -10,5 +10,10 @@ return [
     |
     |
     */
+    'wages' => [
+        'wallet' => [
+            'create' => 10000,
+        ],
+    ],
 
 ];

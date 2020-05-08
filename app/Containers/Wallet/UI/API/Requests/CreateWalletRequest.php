@@ -2,6 +2,7 @@
 
 namespace App\Containers\Wallet\UI\API\Requests;
 
+use App\Containers\Wallet\Enum\WalletType;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -33,7 +34,7 @@ class CreateWalletRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'payer_wallet_id',
     ];
 
     /**
@@ -52,8 +53,9 @@ class CreateWalletRequest extends Request
     public function rules()
     {
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'name'            => 'required|string|min:1|max:64',
+            'default'         => 'nullable|boolean',
+            'payer_wallet_id' => 'nullable|numeric|exists:wallets,id',
         ];
     }
 

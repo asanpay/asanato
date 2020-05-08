@@ -49,8 +49,16 @@ class UserSignUpAction extends Action
             // mark user mobile as verified because of OTP
             $t->should_verify_mobile = true;
 
-            Apiato::call('User@CreateUserByCredentialsTask', [$t]);
+            $createdUser = Apiato::call('User@CreateUserByCredentialsTask', [$t]);
 
+            // create user's first wallet and make it default
+            Apiato::call('Wallet@CreateWalletTask', [
+                'user_id' => $createdUser->id,
+                'name' => __('wallet::wallet.default'),
+                'default' => true,
+            ]);
+
+            // try to login the new user just after the registration
             $oauthClientInfo  = Apiato::call('Authentication@GetOauthClientForDeviceTask', [$t->device]);
 
             $dataTransporter = new ProxyApiLoginTransporter(

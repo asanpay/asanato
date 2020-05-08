@@ -152,3 +152,10 @@ function transaction_flag()
 {
     return config('app.abrv', 'AP') . random_string(2, 'upper');
 }
+
+function xd()
+{
+    $p = array_merge(func_get_args(), ['random' => mt_rand(1,100)]);
+    var_dump($p);
+    exit;
+}

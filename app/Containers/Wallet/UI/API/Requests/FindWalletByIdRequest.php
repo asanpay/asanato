@@ -33,7 +33,7 @@ class FindWalletByIdRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+         'id',
     ];
 
     /**
@@ -43,7 +43,7 @@ class FindWalletByIdRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+         'id',
     ];
 
     /**
@@ -52,7 +52,7 @@ class FindWalletByIdRequest extends Request
     public function rules()
     {
         return [
-            // 'id' => 'required',
+             'id' => 'required',
             // '{user-input}' => 'required|max:255',
         ];
     }

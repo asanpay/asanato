@@ -3,6 +3,7 @@
 namespace App\Ship\Seeders;
 
 use App\Containers\Authentication\Data\Seeders\TestOauthClientSeeder;
+use App\Containers\User\Data\Seeders\TestUsersTableSeeder;
 use App\Ship\Parents\Seeders\Seeder;
 
 /**
@@ -21,6 +22,7 @@ class SeedTestingData extends Seeder
     public function run()
     {
         $this->call(TestOauthClientSeeder::class);
+        $this->call(TestUsersTableSeeder::class);
     }
 
 }

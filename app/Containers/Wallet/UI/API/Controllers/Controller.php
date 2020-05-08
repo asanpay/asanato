@@ -27,7 +27,7 @@ class Controller extends ApiController
     {
         $wallet = Apiato::call('Wallet@CreateWalletAction', [$request]);
 
-        return $this->created($this->transform($wallet, WalletTransformer::class));
+        return $this->transform($wallet, WalletTransformer::class, [], [], null, 201);
     }
 
     /**

@@ -34,4 +34,19 @@ class CustomErrorCodesTable extends ErrorCodesTable
         'code' => 100001,
     ];
 
+    const PAYER_WALLET_NOT_FOUND = [
+        'code' => 100002
+    ];
+
+    const INSUFFICIENT_WALLET_BALANCE = [
+        'code' => 100003
+    ];
+
+    const INVALID_TRANSFER_AMOUNT = [
+        'code' => 100004
+    ];
+
+    const WALLET_TRANSFER_FAILED = [
+        'code' => 100005
+    ];
 }
