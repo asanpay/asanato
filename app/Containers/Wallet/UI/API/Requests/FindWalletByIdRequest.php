@@ -23,7 +23,7 @@ class FindWalletByIdRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => '',
+        'permissions' => 'read-wallet',
         'roles'       => '',
     ];
 
@@ -52,8 +52,7 @@ class FindWalletByIdRequest extends Request
     public function rules()
     {
         return [
-             'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'id' => 'required|numeric|exists:wallet',
         ];
     }
 
@@ -63,7 +62,7 @@ class FindWalletByIdRequest extends Request
     public function authorize()
     {
         return $this->check([
-            'hasAccess',
+            'hasAccess|isOwner',
         ]);
     }
 }

@@ -7,8 +7,6 @@ use App\Ship\Parents\Seeders\Seeder;
 
 /**
  * Class AuthorizationPermissionsSeeder_1
- *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class AuthorizationPermissionsSeeder_1 extends Seeder
 {
@@ -27,8 +25,10 @@ class AuthorizationPermissionsSeeder_1 extends Seeder
 
         Apiato::call('Authorization@CreatePermissionTask', ['read-users', 'Read user data']);
         Apiato::call('Authorization@CreatePermissionTask', ['update-users', 'Update user profile']);
+        Apiato::call('Authorization@CreatePermissionTask', ['delete-wallet', 'Delete user wallet']);
+        Apiato::call('Authorization@CreatePermissionTask', ['read-all-wallets', 'Read all wallets']);
+        Apiato::call('Authorization@CreatePermissionTask', ['update-all-wallets', 'Read all wallets']);
 
         // ...
-
     }
 }

@@ -5,18 +5,15 @@
  * @apiName            deleteWallet
  *
  * @api                {DELETE} /v1/wallets/:id deleteWallet
- * @apiDescription     Endpoint description here..
+ * @apiDescription     Delete Wallet
  *
  * @apiVersion         1.0.0
  * @apiPermission      none
  *
- * @apiParam           {String}  parameters here..
+ * @apiParam           {String}  id Encrypted wallet ID
  *
  * @apiSuccessExample  {json}  Success-Response:
- * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
-}
+ * HTTP/1.1 204 OK
  */
 
 /** @var Route $router */

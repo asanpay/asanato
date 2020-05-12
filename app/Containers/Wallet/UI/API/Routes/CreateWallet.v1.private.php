@@ -12,7 +12,7 @@
  *
  * @apiParam           {String}  name
  * @apiParam           {Boolean}  default
- * @apiParam           {String}  payer_wallet_id
+ * @apiParam           {String}  payer_wallet_id The wallet that should pay the wage
  *
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK

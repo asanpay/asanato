@@ -5,10 +5,10 @@
  * @apiName            updateWallet
  *
  * @api                {PATCH} /v1/wallets/:id updateWallet
- * @apiDescription     Endpoint description here..
+ * @apiDescription     Update wallet information
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      read-all-wallets
  *
  * @apiParam           {String}  parameters here..
  *

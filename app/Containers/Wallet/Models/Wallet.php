@@ -42,6 +42,7 @@ class Wallet extends Model
 
   public function merchants()
   {
+      $this->dateFormat;
     return $this->belongsToMany(Merchant::class, 'merchant_wallet');
   }
 

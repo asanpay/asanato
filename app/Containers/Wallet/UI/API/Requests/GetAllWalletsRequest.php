@@ -23,7 +23,7 @@ class GetAllWalletsRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => 'read-wallets',
+        'permissions' => 'read-all-wallets',
         'roles'       => '',
     ];
 
@@ -33,7 +33,7 @@ class GetAllWalletsRequest extends Request
      * @var  array
      */
     protected $decode = [
-         'id',
+//         'id',
     ];
 
     /**
@@ -43,7 +43,7 @@ class GetAllWalletsRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-         'id',
+//         'id',
     ];
 
     /**
@@ -52,7 +52,7 @@ class GetAllWalletsRequest extends Request
     public function rules()
     {
         return [
-             'id' => 'required',
+//             'id' => 'required',
         ];
     }
 
@@ -62,7 +62,7 @@ class GetAllWalletsRequest extends Request
     public function authorize()
     {
         return $this->check([
-            'hasAccess|isOwner',
+            'hasAccess',
         ]);
     }
 }

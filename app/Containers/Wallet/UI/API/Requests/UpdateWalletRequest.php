@@ -23,7 +23,7 @@ class UpdateWalletRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => '',
+        'permissions' => 'update-all-wallets',
         'roles'       => '',
     ];
 
@@ -63,7 +63,7 @@ class UpdateWalletRequest extends Request
     public function authorize()
     {
         return $this->check([
-            'hasAccess',
+            'hasAccess|isOwner',
         ]);
     }
 }
