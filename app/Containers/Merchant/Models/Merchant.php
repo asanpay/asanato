@@ -133,13 +133,4 @@ class Merchant extends Model implements HasMedia
             ->height(env('LOGO_SIZE', 256))
             ->sharpen(10);
     }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return Zaman::gToj(strtotime($value));
-    }
-    public function getUpdatedAtAttribute($value)
-    {
-        return Zaman::gToj(strtotime($value));
-    }
 }
