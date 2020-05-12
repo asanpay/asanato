@@ -8,6 +8,7 @@ use App\Containers\Wallet\Models\Wallet;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
+use Tartan\Log\Facades\XLog;
 
 class CreateWalletTask extends Task
 {
@@ -36,6 +37,7 @@ class CreateWalletTask extends Task
             return $wallet;
         }
         catch (Exception $exception) {
+            XLog::exception($exception);
             throw new CreateResourceFailedException();
         }
     }
