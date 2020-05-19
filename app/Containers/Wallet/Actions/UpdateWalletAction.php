@@ -11,7 +11,8 @@ class UpdateWalletAction extends Action
     public function run(Request $request)
     {
         $data = $request->sanitizeInput([
-            // add your request data here
+            'name',
+            'default'
         ]);
 
         $wallet = Apiato::call('Wallet@UpdateWalletTask', [$request->id, $data]);
