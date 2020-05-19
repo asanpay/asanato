@@ -2,9 +2,9 @@
 
 /**
  * @apiGroup           Wallet
- * @apiName            createWallet
+ * @apiName            CreateWallet
  *
- * @api                {POST} /v1/wallets createWallet
+ * @api                {POST} /v1/wallets CreateWallet
  * @apiDescription     Create a user wallet
  *
  * @apiVersion         1.0.0

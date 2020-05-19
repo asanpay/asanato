@@ -2,15 +2,15 @@
 
 /**
  * @apiGroup           Wallet
- * @apiName            updateWallet
+ * @apiName            UpdateWallet
  *
- * @api                {PATCH} /v1/wallets/:id updateWallet
- * @apiDescription     Update wallet information
+ * @api                {PATCH} /v1/wallets/:id UpdateWallet
+ * @apiDescription     Update wallet data
  *
  * @apiVersion         1.0.0
- * @apiPermission      read-wallet
+ * @apiPermission      update-wallet
  *
- * @apiParam           {String}  parameters here..
+ * @apiParam           {String} id  hashed wallet id
  *
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK

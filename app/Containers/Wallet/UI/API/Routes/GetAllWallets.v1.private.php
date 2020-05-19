@@ -2,13 +2,13 @@
 
 /**
  * @apiGroup           Wallet
- * @apiName            getAllWallets
+ * @apiName            GetAllWallets
  *
- * @api                {GET} /v1/wallets getAllWallets
- * @apiDescription     Endpoint description here..
+ * @api                {GET} /v1/wallets GetAllWallets
+ * @apiDescription     Get all wallets
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      read-wallet
  *
  * @apiParam           {String}  parameters here..
  *

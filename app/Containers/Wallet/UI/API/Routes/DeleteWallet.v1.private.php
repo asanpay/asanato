@@ -2,7 +2,7 @@
 
 /**
  * @apiGroup           Wallet
- * @apiName            deleteWallet
+ * @apiName            DeleteWallet
  *
  * @api                {DELETE} /v1/wallets/:id deleteWallet
  * @apiDescription     Delete a non-default Wallet

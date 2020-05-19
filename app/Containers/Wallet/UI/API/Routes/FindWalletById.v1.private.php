@@ -2,15 +2,15 @@
 
 /**
  * @apiGroup           Wallet
- * @apiName            findWalletById
+ * @apiName            FindWalletById
  *
- * @api                {GET} /v1/wallets/:id findWalletById
- * @apiDescription     Create USER wallet
+ * @api                {GET} /v1/wallets/:id FindWalletById
+ * @apiDescription     Read a wallet
  *
  * @apiVersion         1.0.0
  * @apiPermission      none
  *
- * @apiParam           {String}  id
+ * @apiParam           {String}  id hashed wallet id
  *
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK
