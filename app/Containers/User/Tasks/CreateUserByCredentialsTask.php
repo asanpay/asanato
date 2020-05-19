@@ -49,7 +49,6 @@ class CreateUserByCredentialsTask extends Task
                 $user->verify(IdPoofType::MOBILE);
             }
         } catch (Exception $e) {
-
             throw (new CreateResourceFailedException())->debug($e);
         }
 

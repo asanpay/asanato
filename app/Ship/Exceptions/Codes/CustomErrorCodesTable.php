@@ -49,4 +49,12 @@ class CustomErrorCodesTable extends ErrorCodesTable
     const WALLET_TRANSFER_FAILED = [
         'code' => 100005
     ];
+
+    const WALLET_DELETE_FAILED = [
+        'code' => 100006
+    ];
+
+    const WALLET_NOT_FOUND = [
+        'code' => 100008
+    ];
 }

@@ -4,7 +4,7 @@
  * @apiGroup           Authentication
  * @apiName            Controller
  *
- * @api                {POST} /v1/clients/web/my/signin SignIn (My Proxy)
+ * @api                {POST} /v1/clients/web/my/signin SignIn (My Panel Proxy)
  * @apiDescription     Endpoint login proxy for my panel
  *
  * @apiVersion         1.0.0

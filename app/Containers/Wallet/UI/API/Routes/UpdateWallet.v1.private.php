@@ -8,7 +8,7 @@
  * @apiDescription     Update wallet information
  *
  * @apiVersion         1.0.0
- * @apiPermission      read-all-wallets
+ * @apiPermission      read-wallet
  *
  * @apiParam           {String}  parameters here..
  *

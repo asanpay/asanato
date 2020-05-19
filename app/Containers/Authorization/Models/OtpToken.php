@@ -30,4 +30,12 @@ class OtpToken extends Model
 
         return $this->save();
     }
+
+    public function verify(int $token): bool
+    {
+      if (env('BYPASS_OTP') == true) {
+            return true;
+        }
+        return intval($this->token) === intval($token);
+    }
 }

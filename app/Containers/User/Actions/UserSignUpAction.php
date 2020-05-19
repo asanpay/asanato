@@ -31,19 +31,19 @@ class UserSignUpAction extends Action
             DB::beginTransaction();
 
             // find used latest OTP
-            $otpToken = Apiato::call('Authorization@GetLatestUnusedOtpTask', [
+            $otpTokenRow = Apiato::call('Authorization@GetLatestUnusedOtpTask', [
                 $t->mobile,
                 OtpReason::SIGN_UP,
                 OtpBroker::MOBILE
             ]);
 
 
-            if (is_null($otpToken) || ($t->token !== intval($otpToken->token))) {
+            if (is_null($otpTokenRow) || $otpTokenRow->verify($t->token) !== true) {
                 // invalid OTP token notifications
                 return [ApiCodes::CODE_INVALID_OTP, __('auth.invalid_otp')];
             } else {
                 // flag OTP token as used
-                $otpToken->markAsUsed();
+                $otpTokenRow->markAsUsed();
             }
 
             // mark user mobile as verified because of OTP

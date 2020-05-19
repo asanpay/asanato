@@ -3,7 +3,7 @@
 /**
  * @apiGroup           OAuth2
  * @apiName            ClientAdminWebAppRefreshProxy
- * @api                {post} /v1/clients/web/admin/refresh Refresh
+ * @api                {post} /v1/clients/web/admin/refresh Refresh for staff
  * @apiDescription     If `refresh_token` is not provided the w'll try to get it from the http cookie.
  *
  * @apiVersion         1.0.0

@@ -42,6 +42,7 @@ class CreateWalletAction extends Action
 
         try {
             DB::beginTransaction();
+
             $wallet = Apiato::call('Wallet@CreateWalletTask', [$data]);
 
             if ($createWageRequired && !is_null($payerWalletId)) {

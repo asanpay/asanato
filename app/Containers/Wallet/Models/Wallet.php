@@ -6,75 +6,92 @@ use App\Containers\Merchant\Models\Merchant;
 use App\Containers\Transaction\Models\Transaction;
 use App\Containers\Wallet\Enum\WalletType;
 use App\Ship\Parents\Models\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Wallet extends Model
 {
-  protected $fillable = [
-    'user_id',
-    'status',
-    'share',
-    'type',
-    'name',
-    'default',
-  ];
+    protected $table = 'wallets';
 
-  protected $attributes = [
+    use SoftDeletes;
 
-  ];
+    protected $fillable = [
+        'user_id',
+        'status',
+        'share',
+        'type',
+        'name',
+        'default',
+    ];
 
-  protected $hidden = [
+    protected $attributes = [
 
-  ];
+    ];
 
-  protected $casts = [
+    protected $hidden = [
 
-  ];
+    ];
 
-  protected $dates = [
-    'created_at',
-    'updated_at',
-  ];
+    protected $casts = [
 
-  /**
-   * A resource key to be used by the the JSON API Serializer responses.
-   */
-  protected $resourceKey = 'wallets';
+    ];
 
-  public function merchants()
-  {
-      $this->dateFormat;
-    return $this->belongsToMany(Merchant::class, 'merchant_wallet');
-  }
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
 
-  public function transactions()
-  {
-    return $this->hasMany(Transaction::class, 'wallet_id', 'id');
-  }
+    /**
+     * A resource key to be used by the the JSON API Serializer responses.
+     */
+    protected $resourceKey = 'wallets';
 
-  public function getTransferLimitAttribute($value): int
-  {
-    $limit = config('finance.limit.transfer.max');
-    $limit = max($limit, intval($value));
+    public function merchants()
+    {
+        $this->dateFormat;
 
-    return $limit;
-  }
+        return $this->belongsToMany(Merchant::class, 'merchant_wallet');
+    }
 
-  public function getBalance()
-  {
-    return $this->balance - $this->locked_balance;
-  }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'wallet_id', 'id');
+    }
 
-  public function getTransactionsProfitWallet(): self
-  {
-    return $this->where('belongs_to_app', true)
-      ->where('type', WalletType::TRANSACTION_PROFIT)
-      ->firstOrFail();
-  }
+    public function getTransferLimitAttribute($value): int
+    {
+        $limit = config('finance.limit.transfer.max');
+        $limit = max($limit, intval($value));
 
-  public function getCreateWalletProfitWallet(): self
-  {
-    return self::where('belongs_to_app', true)
-      ->where('type', WalletType::WALLET_COST_PROFIT)
-      ->firstOrFail();
-  }
+        return $limit;
+    }
+
+    public function getBalance(): int
+    {
+        return $this->balance - $this->locked_balance;
+    }
+
+    public function hasBalance(): bool
+    {
+        // this should support positive and negative balance
+        return $this->getBalance() !== 0;
+    }
+
+    public function isDefault(): bool
+    {
+        return boolval($this->default) === true;
+    }
+
+    public function getTransactionsProfitWallet(): self
+    {
+        return $this->where('belongs_to_app', true)
+            ->where('type', WalletType::TRANSACTION_PROFIT)
+            ->firstOrFail();
+    }
+
+    public function getCreateWalletProfitWallet(): self
+    {
+        return self::where('belongs_to_app', true)
+            ->where('type', WalletType::WALLET_COST_PROFIT)
+            ->firstOrFail();
+    }
 }

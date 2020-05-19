@@ -52,7 +52,7 @@ class FindWalletByIdRequest extends Request
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:wallet',
+            'id' => 'required|numeric|exists:wallets',
         ];
     }
 

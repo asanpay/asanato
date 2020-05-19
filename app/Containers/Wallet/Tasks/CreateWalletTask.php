@@ -8,6 +8,7 @@ use App\Containers\Wallet\Models\Wallet;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Tartan\Log\Facades\XLog;
 
 class CreateWalletTask extends Task
@@ -29,15 +30,15 @@ class CreateWalletTask extends Task
 
             // remove default flag from all other user wallets
             if ($makeDefault === true) {
-                $this->repository->update(['default' => false], $data['user_id']);
+                DB::update('update wallets set "default" = false where user_id = ?', [$data['user_id']]);
             }
 
             $wallet = $this->repository->create($data);
 
             return $wallet;
         }
-        catch (Exception $exception) {
-            XLog::exception($exception);
+        catch (Exception $e) {
+            XLog::exception($e);
             throw new CreateResourceFailedException();
         }
     }

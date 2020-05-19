@@ -2,6 +2,7 @@
 
 namespace App\Containers\Wallet\UI\API\Requests;
 
+use Apiato\Core\Foundation\Facades\Apiato;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -33,7 +34,7 @@ class DeleteWalletRequest extends Request
      * @var  array
      */
     protected $decode = [
-         'id',
+        'id',
     ];
 
     /**
@@ -43,7 +44,7 @@ class DeleteWalletRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-         'id',
+        'id',
     ];
 
     /**
@@ -52,7 +53,7 @@ class DeleteWalletRequest extends Request
     public function rules()
     {
         return [
-             'id' => 'required|numeric|exists:wallet',
+            'id' => 'required|numeric|exists:wallets',
         ];
     }
 
@@ -64,5 +65,11 @@ class DeleteWalletRequest extends Request
         return $this->check([
             'hasAccess|isOwner',
         ]);
+    }
+
+    public function isOwner()
+    {
+        $wallet = Apiato::call('Wallet@FindWalletByIdTask', [$this->id]);
+        return $wallet && ($wallet->user_id == $this->user()->id);
     }
 }

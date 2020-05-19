@@ -5,10 +5,10 @@
  * @apiName            deleteWallet
  *
  * @api                {DELETE} /v1/wallets/:id deleteWallet
- * @apiDescription     Delete Wallet
+ * @apiDescription     Delete a non-default Wallet
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      delete-wallet
  *
  * @apiParam           {String}  id Encrypted wallet ID
  *

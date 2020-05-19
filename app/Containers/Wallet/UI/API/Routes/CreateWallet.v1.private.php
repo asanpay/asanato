@@ -5,7 +5,7 @@
  * @apiName            createWallet
  *
  * @api                {POST} /v1/wallets createWallet
- * @apiDescription     Endpoint description here..
+ * @apiDescription     Create a user wallet
  *
  * @apiVersion         1.0.0
  * @apiPermission      none

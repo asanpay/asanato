@@ -25,10 +25,10 @@ class AuthorizationPermissionsSeeder_1 extends Seeder
 
         Apiato::call('Authorization@CreatePermissionTask', ['read-users', 'Read user data']);
         Apiato::call('Authorization@CreatePermissionTask', ['update-users', 'Update user profile']);
-        Apiato::call('Authorization@CreatePermissionTask', ['delete-wallet', 'Delete user wallet']);
-        Apiato::call('Authorization@CreatePermissionTask', ['read-all-wallets', 'Read all wallets']);
-        Apiato::call('Authorization@CreatePermissionTask', ['update-all-wallets', 'Read all wallets']);
 
-        // ...
+        Apiato::call('Authorization@CreatePermissionTask', ['read-wallet', 'Read all wallets']);
+        Apiato::call('Authorization@CreatePermissionTask', ['update-wallet', 'Read all wallets']);
+        Apiato::call('Authorization@CreatePermissionTask', ['delete-wallet', 'Delete user wallet']);
+
     }
 }
