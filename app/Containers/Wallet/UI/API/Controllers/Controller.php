@@ -11,6 +11,7 @@ use App\Containers\Wallet\UI\API\Requests\UpdateWalletRequest;
 use App\Containers\Wallet\UI\API\Transformers\WalletTransformer;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;
+use Spatie\Fractal\Fractal;
 
 /**
  * Class Controller
@@ -21,17 +22,29 @@ class Controller extends ApiController
 {
     /**
      * @param CreateWalletRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function createWallet(CreateWalletRequest $request)
     {
-        $wallet = Apiato::call('Wallet@CreateWalletAction', [$request]);
+        $wallet            = Apiato::call('Wallet@CreateWalletAction', [$request]);
+        $transformedWallet = Fractal::create($wallet, WalletTransformer::class);
+        $data              = [
+            'wallet' => $transformedWallet->toArray()['data'],
+        ];
 
-        return $this->transform($wallet, WalletTransformer::class, [], [], null, 201);
+        if ($request->payer_wallet_id) {
+            $payerWallet           = Apiato::call('Wallet@FindWalletByIdTask', [$request->payer_wallet_id]);
+            $transformedWallet     = Fractal::create($payerWallet, WalletTransformer::class);
+            $data ['payer_wallet'] = $transformedWallet->toArray()['data'];
+        }
+
+        return $this->apocalypse(['data' => $data], 201);
     }
 
     /**
      * @param FindWalletByIdRequest $request
+     *
      * @return array
      */
     public function findWalletById(FindWalletByIdRequest $request)
@@ -43,6 +56,7 @@ class Controller extends ApiController
 
     /**
      * @param GetAllWalletsRequest $request
+     *
      * @return array
      */
     public function getAllWallets(GetAllWalletsRequest $request)
@@ -54,6 +68,7 @@ class Controller extends ApiController
 
     /**
      * @param UpdateWalletRequest $request
+     *
      * @return array
      */
     public function updateWallet(UpdateWalletRequest $request)
@@ -65,6 +80,7 @@ class Controller extends ApiController
 
     /**
      * @param DeleteWalletRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function deleteWallet(DeleteWalletRequest $request)
@@ -76,6 +92,7 @@ class Controller extends ApiController
 
     /**
      * @param GetUserWalletsRequest $request
+     *
      * @return array
      */
     public function getUserWallets(GetUserWalletsRequest $request)

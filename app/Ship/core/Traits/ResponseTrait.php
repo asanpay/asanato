@@ -35,7 +35,7 @@ trait ResponseTrait
      * @param array $meta           additional meta information to be applied
      * @param null $resourceKey     the resource key to be set for the TOP LEVEL resource
      *
-     * @return JsonResponse
+     * @return mixed
      */
     public function transform(
         $data,
