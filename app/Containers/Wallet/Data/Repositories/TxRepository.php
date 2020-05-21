@@ -7,7 +7,7 @@ use App\Ship\Parents\Repositories\Repository;
 /**
  * Class WalletRepository
  */
-class WalletTransactionRepository extends Repository
+class TxRepository extends Repository
 {
 
     /**

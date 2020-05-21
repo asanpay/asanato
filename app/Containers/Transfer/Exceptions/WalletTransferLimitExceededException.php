@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Containers\Wallet\Exceptions;
+namespace App\Containers\Transfer\Exceptions;
 
 use App\Ship\Exceptions\Codes\CustomErrorCodesTable;
 use App\Ship\Parents\Exceptions\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class InsufficientWalletBalanceException extends Exception
+class WalletTransferLimitExceededException extends Exception
 {
-    public $httpStatusCode = Response::HTTP_PAYMENT_REQUIRED;
+    public $httpStatusCode = Response::HTTP_UNPROCESSABLE_ENTITY;
 
-    public $message = 'The wallet balance is not enough';
+    public $message = 'Wallet transfer limit exceeded';
 
     public function useErrorCode()
     {

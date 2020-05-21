@@ -1,6 +1,7 @@
 <?php
 namespace App\Containers\Wallet\Data\Seeders;
 
+use App\Containers\Wallet\Enum\WalletStatus;
 use App\Containers\Wallet\Enum\WalletType;
 use App\Containers\Wallet\Models\Wallet;
 use App\Containers\User\Models\User;
@@ -31,6 +32,20 @@ class WalletsTableSeeder extends Seeder
             'name'        => 'WALLET_B',
             'type'        => WalletType::USER,
         ]);
+
+        $w->balance = 10000;
+        $w->save();
+
+        Wallet::create([
+            'user_id'     => $user->id,
+            'name'        => 'WALLET_LOCKED',
+            'type'        => WalletType::USER,
+            'status'      => WalletStatus::LOCKED
+        ]);
+
+        $w->balance = 500000;
+        $w->save();
+
 
         // SYSTEM wallets ------------------------------
         Wallet::create([

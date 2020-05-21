@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Wallet\Exceptions;
+namespace App\Containers\Transfer\Exceptions;
 
 use App\Ship\Exceptions\Codes\CustomErrorCodesTable;
 use App\Ship\Parents\Exceptions\Exception;

@@ -57,10 +57,15 @@ class Wallet extends Model
         return $this->hasMany(Transaction::class, 'wallet_id', 'id');
     }
 
+    public function txs()
+    {
+        return $this->hasMany(Tx::class, 'wallet_id', 'id');
+    }
+
     public function getTransferLimitAttribute($value): int
     {
         $limit = config('finance.limit.transfer.max');
-        $limit = max($limit, intval($value));
+        $limit = currency(max($limit, intval($value)));
 
         return $limit;
     }
@@ -79,6 +84,11 @@ class Wallet extends Model
     public function isDefault(): bool
     {
         return boolval($this->default) === true;
+    }
+
+    public function belongsToUser(int $userId): bool
+    {
+        return intval($this->user_id) === $userId;
     }
 
     public function getTransactionsProfitWallet(): self

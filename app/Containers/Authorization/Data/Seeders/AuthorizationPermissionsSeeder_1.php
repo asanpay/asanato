@@ -31,5 +31,7 @@ class AuthorizationPermissionsSeeder_1 extends Seeder
         Apiato::call('Authorization@CreatePermissionTask', ['update-wallet', 'Read all wallets']);
         Apiato::call('Authorization@CreatePermissionTask', ['delete-wallet', 'Delete user wallet']);
 
+        Apiato::call('Authorization@CreatePermissionTask', ['transfer-between-other-wallets', 'Transfer money between others wallets']);
+
     }
 }

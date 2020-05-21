@@ -57,4 +57,8 @@ class CustomErrorCodesTable extends ErrorCodesTable
     const WALLET_NOT_FOUND = [
         'code' => 100008
     ];
+
+    const WALLET_OWNERSHIP_FAILED = [
+        'code' => 100100
+    ];
 }

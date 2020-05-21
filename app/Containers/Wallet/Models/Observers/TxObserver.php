@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Containers\Wallet\Models\Observers;
+
+
+use App\Containers\Wallet\Models\Tx;
+use App\Ship\Traits\Jalali;
+
+class TxObserver
+{
+    use Jalali;
+
+    public function creating(Tx $tx)
+    {
+        // before create ::
+        if (empty($tx->j_created_at)) {
+            $tx->j_created_at =  static::jalaliTimestamp();
+        }
+    }
+
+}

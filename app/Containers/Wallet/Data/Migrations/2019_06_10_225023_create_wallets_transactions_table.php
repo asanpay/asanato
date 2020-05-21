@@ -17,7 +17,7 @@ class CreateWalletsTransactionsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('wallet_id');
 
-            $table->unsignedSmallInteger('type'); // based on WalletTransactionType::class
+            $table->unsignedSmallInteger('type'); // based on TxType::class
 
             $table->unsignedBigInteger('transaction_id')->nullable(); // transaction/withdraw/transfer document ID
             $table->unsignedBigInteger('double_id')->nullable();
@@ -33,7 +33,7 @@ class CreateWalletsTransactionsTable extends Migration
 
             $table->jsonb('meta')->default('{}');
             $table->unsignedBigInteger('j_created_at')->nullable();
-            $table->timestamps();
+            $table->dateTimeTz('created_at');
         });
 
         Schema::table('wallets_transactions', function ($table) {

@@ -5,16 +5,18 @@ namespace App\Models;
 namespace App\Containers\Wallet\Models;
 
 use App\Containers\Transaction\Models\Transaction;
-use App\Containers\Wallet\Enum\WalletTransactionType;
+use App\Containers\Wallet\Enum\TxType;
 use App\Ship\Parents\Models\Model;
 
-class WalletTransaction extends Model
+class Tx extends Model
 {
     protected $table = 'wallets_transactions';
 
     protected $guarded = [
-        'balance'
+        'balance',
     ];
+
+    const UPDATED_AT = null;
 
     public function wallet()
     {
@@ -25,7 +27,7 @@ class WalletTransaction extends Model
     {
         switch ($this->type)
         {
-            case WalletTransactionType::MERCHANT: {
+            case TxType::MERCHANT: {
                 return $this->belongsTo(Transaction::class, 'transaction_id');
             }
             default: {

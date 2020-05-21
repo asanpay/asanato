@@ -2,8 +2,8 @@
 
 namespace App\Containers\Wallet\Actions;
 
-use App\Containers\Wallet\Enum\WalletTransactionType;
-use App\Containers\Wallet\Exceptions\InsufficientWalletBalanceException;
+use App\Containers\Wallet\Enum\TxType;
+use App\Containers\Transfer\Exceptions\InsufficientWalletBalanceException;
 use App\Containers\Wallet\Exceptions\PayerWalletNotDefinedException;
 use App\Containers\Wallet\Models\Wallet;
 use App\Ship\Parents\Actions\Action;
@@ -58,11 +58,11 @@ class CreateWalletAction extends Action
 
                     $walletConstProfitWallet = Apiato::call('Wallet@GetCreateWalletProfitWalletTask');
 
-                    Apiato::call('Wallet@WalletToWalletTransferTask', [
+                    Apiato::call('Transfer@WalletToWalletTransferTask', [
                         $payerWallet->id,
                         $walletConstProfitWallet->id,
                         $createWalletWage,
-                        WalletTransactionType::WALLET_COST,
+                        TxType::WALLET_COST,
                         ['createdWalletId' => $wallet->id]
                     ]);
                 }

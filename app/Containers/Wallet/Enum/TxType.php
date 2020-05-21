@@ -4,7 +4,7 @@ namespace App\Containers\Wallet\Enum;
 
 use App\Ship\Traits\CustomEnums;
 
-class WalletTransactionType
+class TxType
 {
     use CustomEnums;
 

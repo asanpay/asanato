@@ -57,6 +57,13 @@ if (!function_exists('money')) {
     }
 }
 
+if (!function_exists('currency')) {
+    function currency($amount): int
+    {
+        return intval($amount);
+    }
+}
+
 function is_mobile(string $sting): bool
 {
     if (!preg_match(config('regex.mobile_regex'), $sting)) {
