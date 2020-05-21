@@ -36,4 +36,10 @@ class Tx extends Model
         }
     }
 
+    public function getTrackingIdAttribute($value): int
+    {
+        return date('y') .
+            str_pad(date('z'), 3, "0", STR_PAD_LEFT) .
+            strrev($this->id);
+    }
 }

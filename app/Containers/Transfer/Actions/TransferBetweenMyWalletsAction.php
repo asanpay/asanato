@@ -22,6 +22,7 @@ class TransferBetweenMyWalletsAction extends Action
             'dst_wallet_id',
             'amount',
             'description',
+            'client_ip',
         ]);
 
         // check source wallet ownership
@@ -52,7 +53,11 @@ class TransferBetweenMyWalletsAction extends Action
             $dstWallet->id,
             $data['amount'],
             TxType::TRANSFER,
-            ['description' => $data['description']]
+            // TX meta
+            [
+                'description' => $data['description'],
+                'ip'          => $data['client_ip'],
+            ],
         ]);
 
         return $tx;

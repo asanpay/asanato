@@ -49,7 +49,7 @@ class UserSignUpRequest extends Request
             'last_name'  => 'required|string|min:2',
             'mobile'     => 'required|regex:' . config('regex.mobile_regex'),
             'password'   => 'required|string|min:8',
-            'client_ip'  => 'ip'
+            'client_ip'  => 'ip',
         ];
     }
 

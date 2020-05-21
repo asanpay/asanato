@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Containers\Wallet\Enum\WalletType;
-use App\Containers\Wallet\Enum\WalletStatus;
 
 class CreateWalletsTable extends Migration
 {
@@ -21,7 +20,7 @@ class CreateWalletsTable extends Migration
             $table->unsignedInteger('user_id')->comment('user ID that wallet belongs to');
 
             $table->enum('type', WalletType::toArray());
-            $table->enum('status', WalletStatus::toArray())->default(WalletStatus::ACTIVE);
+            $table->boolean('locked')->default(false);
             $table->boolean('belongs_to_app')->default('false')
                 ->comment('whether wallet belongs to the application or not');
 

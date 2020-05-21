@@ -29,7 +29,6 @@ class WalletToWalletTransferTask extends Task
      * @param int $amount
      * @param int $reason
      * @param array $meta
-     * @param bool $forced
      *
      * @return bool
      * @throws InvalidTransferAmountException
@@ -39,8 +38,7 @@ class WalletToWalletTransferTask extends Task
         int $destinationWallet,
         int $amount,
         int $reason,
-        array $meta = [],
-        bool $forced = false
+        array $meta = []
     ): Tx {
         if ($amount <= 0) {
             throw new InvalidTransferAmountException();
@@ -50,7 +48,7 @@ class WalletToWalletTransferTask extends Task
 
         $tx = null;
 
-        DB::transaction(function () use ($sourceWallet, $destinationWallet, $amount, $reason, $forced, $meta, &$tx) {
+        DB::transaction(function () use ($sourceWallet, $destinationWallet, $amount, $reason, $meta, &$tx) {
 
             $meta = $this->prepareExtraFor($reason, $meta);
 
@@ -58,11 +56,8 @@ class WalletToWalletTransferTask extends Task
             $source = DB::table('wallets')
                 ->where('id', $sourceWallet);
 
-
-            // prevent transfer amount bigger than current effective wallet balance from source wallet
-            if ($forced !== true) {
-                $source->whereRaw("balance - locked_balance >= {$amount}");
-            }
+            // prevent from spending more than wallet balance
+            $source->whereRaw("balance - locked_balance >= {$amount}");
 
             $updatedRow = $source->update(['balance' => DB::raw("balance - {$amount}")]);
 

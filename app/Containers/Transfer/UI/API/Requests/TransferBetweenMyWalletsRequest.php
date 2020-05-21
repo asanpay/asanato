@@ -24,7 +24,7 @@ class TransferBetweenMyWalletsRequest extends Request
      */
     public function rules()
     {
-        $userId = intval($this->user()->id);
+        $userId              = intval($this->user()->id);
         $walletToWalletLimit = currency(config('transfer-container.limit.wallet_to_wallet'));
 
         return [
@@ -32,6 +32,16 @@ class TransferBetweenMyWalletsRequest extends Request
             'description'   => 'nullable|string|max:64',
             'src_wallet_id' => "required|different:dst_wallet_id|exists:wallets,id,user_id,{$userId}",
             'dst_wallet_id' => "required|different:src_wallet_id|exists:wallets,id,user_id,{$userId}",
+            'client_ip'     => 'ip',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge(
+            [
+                'client_ip' => request('client_ip', $this->getClientIp()),
+            ]
+        );
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 use Request;
+use Tartan\Log\Facades\XLog;
 
 /**
  * Class ResponseTrait
@@ -272,6 +273,10 @@ trait ResponseTrait
                 $message['code'] = $this->apiCode;
             }
         }
+
+        // add XLog track id to all responses
+        $message[XLog::getTrackIdKey()] = resolve(XLog::getTrackIdKey());
+
         return new JsonResponse($message, $status, $headers, $options);
     }
 }

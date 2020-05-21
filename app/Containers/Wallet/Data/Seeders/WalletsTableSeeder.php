@@ -24,26 +24,36 @@ class WalletsTableSeeder extends Seeder
             'type'        => WalletType::USER,
             'default'     => true
         ]);
-        $w->balance = 1000000;
+        $w->balance = 10000000;
         $w->save();
 
-        Wallet::create([
+        $w = Wallet::create([
             'user_id'     => $user->id,
             'name'        => 'WALLET_B',
             'type'        => WalletType::USER,
         ]);
 
-        $w->balance = 10000;
+        $w->balance = 100000;
         $w->save();
 
-        Wallet::create([
+        $w = Wallet::create([
             'user_id'     => $user->id,
             'name'        => 'WALLET_LOCKED',
             'type'        => WalletType::USER,
-            'status'      => WalletStatus::LOCKED
+            'locked'      => true
         ]);
 
-        $w->balance = 500000;
+        $w->balance = 5000000;
+        $w->save();
+
+        $w = Wallet::create([
+            'user_id'     => $user->id,
+            'name'        => 'WALLET_LOCKED_BAL',
+            'type'        => WalletType::USER,
+        ]);
+
+        $w->balance = 1500000;
+        $w->locked_balance = 1000000;
         $w->save();
 
 

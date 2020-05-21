@@ -2,7 +2,7 @@
 
 namespace App\Containers\Wallet\UI\API\Transformers;
 
-use App\Containers\Wallet\Models\Wallet;
+use App\Containers\Wallet\Models\Tx;
 use App\Ship\Parents\Transformers\Transformer;
 use Tartan\Zaman\Facades\Zaman;
 
@@ -27,13 +27,17 @@ class TxTransformer extends Transformer
      *
      * @return array
      */
-    public function transform(Wallet $entity)
+    public function transform(Tx $entity)
     {
+        $meta = json_decode($entity->meta);
+
         $response = [
             'object'         => 'Tx',
             'id'             => $entity->getHashedKey(),
-            'j_created_at'   => Zaman::gToj($entity->created_at),
+            'client_ip'      => $meta->ip ?? 'unknown',
+            'j_created_at'   => $entity->j_created_at,
             'created_at'     => $entity->created_at,
+            'tracking_id'    => $entity->tracking_id,
         ];
 
         $response = $this->ifAdmin([
