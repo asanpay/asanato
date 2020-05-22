@@ -23,7 +23,8 @@ class VerifyOtpAction extends Action
     public function run(DataTransporter $data): array
     {
         switch ($data->reason) {
-            case OtpReason::REST_PASS:
+            case OtpReason::RESET_PASS:
+            case OtpReason::TRANSFER_MONEY:
             {
                 $data->to = mobilify($data->mobile);
                 break;

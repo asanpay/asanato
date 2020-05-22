@@ -58,7 +58,11 @@ class CustomErrorCodesTable extends ErrorCodesTable
         'code' => 100008
     ];
 
+    const WALLET_IS_LOCKED = [
+        'code' => 100009
+    ];
+
     const WALLET_OWNERSHIP_FAILED = [
-        'code' => 100100
+        'code' => 100010
     ];
 }

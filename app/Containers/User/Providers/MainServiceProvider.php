@@ -2,6 +2,8 @@
 
 namespace App\Containers\User\Providers;
 
+use App\Containers\User\Models\Observers\UserObserver;
+use App\Containers\User\Models\User;
 use App\Ship\Parents\Providers\MainProvider;
 
 /**
@@ -9,7 +11,6 @@ use App\Ship\Parents\Providers\MainProvider;
  *
  * The Main Service Provider of this container, it will be automatically registered in the framework.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
  */
 class MainServiceProvider extends MainProvider
 {
@@ -42,5 +43,13 @@ class MainServiceProvider extends MainProvider
 
         // do your binding here..
         // $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+    }
+
+
+    public function boot()
+    {
+        // observers
+        User::observe(UserObserver::class);
+        parent::boot();
     }
 }

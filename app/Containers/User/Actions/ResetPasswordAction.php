@@ -32,7 +32,7 @@ class ResetPasswordAction extends Action
         try {
             $latestToken = Apiato::call('Authorization@GetLatestUnusedOtpTask', [
                 $data->mobile,
-                OtpReason::REST_PASS,
+                OtpReason::RESET_PASS,
                 OtpBroker::MOBILE
             ]);
 

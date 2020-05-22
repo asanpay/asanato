@@ -33,7 +33,7 @@ class SendOtpAction extends Action
                     }
                     break;
                 }
-                case OtpReason::REST_PASS: {
+                case OtpReason::RESET_PASS: {
                     $data->to = mobilify($data->mobile);
 
                     $existUser = Apiato::call('User@FindUserByMobileTask', [$data->to]);

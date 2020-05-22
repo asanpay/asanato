@@ -21,7 +21,7 @@
  */
 
 $router->patch('otp', [
-    'as' => 'api_authorization_confirm_otp',
+    'as' => 'api_autz_confirm_otp',
     'uses'       => 'Controller@verifyOtpToken',
     'middleware' => [
         'auth:api',

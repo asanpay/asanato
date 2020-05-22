@@ -12,7 +12,7 @@ use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
 
-class TransferBetweenMyWalletsAction extends Action
+class TransferBetweenOthersWalletsAction extends Action
 {
     public function run(Request $request): Tx
     {
@@ -24,6 +24,7 @@ class TransferBetweenMyWalletsAction extends Action
             'amount',
             'description',
             'client_ip',
+            'token',
         ]);
 
         // check source wallet ownership

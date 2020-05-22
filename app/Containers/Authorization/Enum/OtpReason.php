@@ -14,5 +14,5 @@ class OtpReason
     const TRANSFER_MONEY = 'transfer-money';
     const MOBILE_VERIFY  = 'mobile-verify';
     const EMAIL_VERIFY   = 'email-verify';
-    const REST_PASS      = 'reset-pass';
+    const RESET_PASS      = 'reset-pass';
 }

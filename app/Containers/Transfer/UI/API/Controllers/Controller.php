@@ -25,4 +25,16 @@ class Controller extends ApiController
 
         return $this->transform($tx, TxTransformer::class);
     }
+
+    /**
+     * @param TransferBetweenMyWalletsRequest $request
+     *
+     * @return array
+     */
+    public function transferBetweenWallets(TransferBetweenWalletsRequest $request)
+    {
+        $tx = Apiato::call('Transfer@TransferBetweenWalletsAction', [$request]);
+
+        return $this->transform($tx, TxTransformer::class);
+    }
 }
