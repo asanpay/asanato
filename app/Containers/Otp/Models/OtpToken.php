@@ -33,9 +33,13 @@ class OtpToken extends Model
 
     public function verify(int $token): bool
     {
-      if (env('BYPASS_OTP') == true) {
+        if (config('otp-container.bypath') == true) {
             return true;
         }
+        if ($this->used !== false) {
+            return false;
+        }
+
         return intval($this->token) === intval($token);
     }
 }

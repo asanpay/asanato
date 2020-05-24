@@ -6,7 +6,7 @@ use App\Containers\Otp\Data\Repositories\OtpTokenRepository;
 use App\Ship\Parents\Tasks\Task;
 
 
-class IsIpEligibleToRequestOtp extends Task
+class IsIpEligibleToRequestOtpTask extends Task
 {
     protected $repository;
 

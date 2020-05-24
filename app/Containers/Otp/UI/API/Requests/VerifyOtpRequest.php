@@ -43,7 +43,7 @@ class VerifyOtpRequest extends Request
      */
     public function rules()
     {
-        $brokers = Config::get('otp-container.otp.brokers');
+        $brokers = Config::get('otp-container.brokers');
 
         $all = [];
         foreach ($brokers as $broker => $reasons) {

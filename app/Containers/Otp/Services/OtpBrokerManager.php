@@ -4,9 +4,9 @@ namespace App\Containers\Otp\Services;
 
 use App\Containers\Otp\Enum\OtpBroker;
 use App\Containers\Authorization\Mails\EmailProofRequested;
+use App\Containers\Otp\Exceptions\InvalidOTPReasonException;
 use App\Containers\Otp\Models\OtpToken;
 use App\Ship\Exceptions\CreateResourceFailedException;
-use App\Ship\Exceptions\InternalErrorException;
 use App\Ship\Jobs\SendSms;
 use Illuminate\Support\Facades\Mail;
 
@@ -114,7 +114,7 @@ class OtpBrokerManager
             }
         }
 
-        throw new InternalErrorException("could not detect OTP broker for reason {$reason}");
+        throw new InvalidOTPReasonException();
     }
 
     private function loadConfig(): void
@@ -179,7 +179,7 @@ class OtpBrokerManager
             $token->to         = $to;
             $token->broker     = $broker;
             $token->token      = $code;
-            $token->expired_at = strtotime($this->config['ttl']);
+            $token->expired_at = +strtotime($this->config['ttl']);
             $token->reason     = $reason;
             $token->ip         = $clientIp ? ip2long($clientIp) : 0;
             $token->save();

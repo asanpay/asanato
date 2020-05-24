@@ -4,11 +4,7 @@
 namespace App\Containers\Otp\Actions;
 
 use Apiato\Core\Foundation\Facades\Apiato;
-use App\Containers\Otp\Enum\OtpBroker;
 use App\Containers\Otp\Enum\OtpReason;
-use App\Containers\Otp\Exceptions\OtpTokenNotFoundException;
-use App\Containers\IdentityProof\Enum\IdPoofType;
-use App\Containers\User\Exceptions\UserNotFoundException;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Transporters\DataTransporter;
 
@@ -20,10 +16,11 @@ class VerifyOtpAction extends Action
      * @return array
      * @throws \Exception
      */
-    public function run(DataTransporter $data): array
+    public function run(DataTransporter $data, $markTokenAsUsed = true): array
     {
         switch ($data->reason) {
             case OtpReason::RESET_PASS:
+            case OtpReason::SIGN_UP:
             case OtpReason::TRANSFER_MONEY:
             {
                 $data->to = mobilify($data->mobile);
@@ -36,29 +33,29 @@ class VerifyOtpAction extends Action
             }
             default:
             {
-                return [null, "could not detect OTP reason: {$data->reason}"];
+                return [false, "could not detect OTP reason: {$data->reason}"];
             }
         }
 
-        $existToken = Apiato::call('Otp@GetLatestUnusedOtpTask', [
+        $broker = Apiato::call('Otp@GetOtpBrokerByReasonTask', [$data->reason]);
+
+        // find used latest OTP
+        $otpTokenRow = Apiato::call('Authorization@GetLatestUnusedOtpTask', [
             $data->to,
-            $data->reason,
-            OtpBroker::EMAIL,
+            OtpReason::SIGN_UP,
+            $broker,
         ]);
 
-        if ($existToken && $existToken->token == $data->token) {
-            $user = Apiato::call('User@FindUserByEmailTask', [$data->to]);
-
-            if (!$user) {
-                throw new UserNotFoundException();
+        if (is_null($otpTokenRow) || $otpTokenRow->verify($data->token) !== true) {
+            // invalid OTP token notifications
+            return [false, __('auth.invalid_otp')];
+        } else {
+            // flag OTP token as used
+            if ($markTokenAsUsed) {
+                $otpTokenRow->markAsUsed();
             }
 
-            $user->verify(IdPoofType::EMAIL);
-            $existToken->markAsUsed();
-
             return [true, null];
-        } else {
-            throw new OtpTokenNotFoundException();
         }
     }
 }

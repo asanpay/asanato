@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Containers\Authorization\Exceptions;
+namespace App\Containers\Otp\Exceptions;
 
 use App\Ship\Exceptions\Codes\CustomErrorCodesTable;
 use App\Ship\Parents\Exceptions\Exception;

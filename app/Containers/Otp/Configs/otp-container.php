@@ -11,7 +11,7 @@ return [
     |
     */
     'brokers'              => [
-        'mobile' => 'signup,transfer-money,mobile-verify,reset-pass,mobile-verify',
+        'mobile' => 'signup,transfer-money,mobile-verify,reset-pass',
         'email'  => 'email-verify',
     ],
     'ip_check'             => true,
@@ -21,4 +21,5 @@ return [
     'throttle_limit_count' => 5,
     'throttle_gap_seconds' => 120, //seconds
     'ttl'                  => '+10 minutes',
+    'bypath'               => env('BYPASS_OTP', false)
 ];

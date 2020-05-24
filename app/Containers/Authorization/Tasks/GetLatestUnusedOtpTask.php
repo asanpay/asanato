@@ -2,8 +2,8 @@
 
 namespace App\Containers\Authorization\Tasks;
 
-use App\Containers\Authorization\Data\Repositories\OtpTokenRepository;
-use App\Containers\Authorization\Models\OtpToken;
+use App\Containers\Otp\Data\Repositories\OtpTokenRepository;
+use App\Containers\Otp\Models\OtpToken;
 use App\Ship\Parents\Tasks\Task;
 
 /**

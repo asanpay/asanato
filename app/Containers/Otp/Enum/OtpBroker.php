@@ -12,4 +12,5 @@ class OtpBroker
 
     const MOBILE = 'mobile';
     const EMAIL  = 'email';
+    const GOOGLE_AUTH  = 'google_auth';
 }

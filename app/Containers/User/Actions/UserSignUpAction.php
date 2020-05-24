@@ -3,12 +3,14 @@
 namespace App\Containers\User\Actions;
 
 use App\Containers\Authentication\Data\Transporters\ProxyApiLoginTransporter;
-use App\Containers\Authorization\Enum\OtpBroker;
-use App\Containers\Authorization\Enum\OtpReason;
+use App\Containers\Otp\Enum\OtpBroker;
+use App\Containers\Otp\Enum\OtpReason;
+use App\Containers\Otp\Exceptions\OtpTokenNotFoundException;
 use App\Containers\User\Data\Transporters\UserSignUpTransporter;
 use App\Ship\Enum\ApiCodes;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Ship\Transporters\DataTransporter;
 use Illuminate\Support\Facades\DB;
 
 class UserSignUpAction extends Action
@@ -20,7 +22,7 @@ class UserSignUpAction extends Action
         if ($existingUserWithMobileNumber) {
             return [ApiCodes::CODE_DUPLICATE, __('auth.signup.dup_conf_mobile')];
         } else {
-           return $this->registerUser($t);
+            return $this->registerUser($t);
         }
     }
 
@@ -30,20 +32,11 @@ class UserSignUpAction extends Action
         try {
             DB::beginTransaction();
 
-            // find used latest OTP
-            $otpTokenRow = Apiato::call('Authorization@GetLatestUnusedOtpTask', [
-                $t->mobile,
-                OtpReason::SIGN_UP,
-                OtpBroker::MOBILE
-            ]);
+            $t->reason = OtpReason::SIGN_UP;
+            list($status, $message) = Apiato::call('Otp@VerifyOtpAction', [new DataTransporter($t)]);
 
-
-            if (is_null($otpTokenRow) || $otpTokenRow->verify($t->token) !== true) {
-                // invalid OTP token notifications
-                return [ApiCodes::CODE_INVALID_OTP, __('auth.invalid_otp')];
-            } else {
-                // flag OTP token as used
-                $otpTokenRow->markAsUsed();
+            if ($status !== true) {
+                throw new OtpTokenNotFoundException($message);
             }
 
             // mark user mobile as verified because of OTP
@@ -52,14 +45,16 @@ class UserSignUpAction extends Action
             $createdUser = Apiato::call('User@CreateUserByCredentialsTask', [$t]);
 
             // create user's first wallet and make it default
-            Apiato::call('Wallet@CreateWalletTask', [[
-                'user_id' => $createdUser->id,
-                'name' => __('wallet::wallet.default'),
-                'default' => true,
-            ]]);
+            Apiato::call('Wallet@CreateWalletTask', [
+                [
+                    'user_id' => $createdUser->id,
+                    'name'    => __('wallet::wallet.default'),
+                    'default' => true,
+                ],
+            ]);
 
             // try to login the new user just after the registration
-            $oauthClientInfo  = Apiato::call('Authentication@GetOauthClientForDeviceTask', [$t->device]);
+            $oauthClientInfo = Apiato::call('Authentication@GetOauthClientForDeviceTask', [$t->device]);
 
             $dataTransporter = new ProxyApiLoginTransporter(
                 array_merge($t->toArray(), $oauthClientInfo)
