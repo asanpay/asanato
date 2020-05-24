@@ -74,7 +74,7 @@ return [
      *
      * Supports imagemagick, svg and eps
      */
-    'qrcode_image_backend' => \PragmaRX\Google2FALaravel\Support\Constants::QRCODE_IMAGE_BACKEND_SVG,
+    'qrcode_image_backend' => \PragmaRX\Google2FALaravel\Support\Constants::QRCODE_IMAGE_BACKEND_IMAGEMAGICK,
 
     'key' => [
         'size' => 28,

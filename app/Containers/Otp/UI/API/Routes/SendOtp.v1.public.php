@@ -22,5 +22,5 @@
 
 $router->post('otp', [
     'as'   => 'api_autz_send_otp',
-    'uses' => 'Controller@sendOtpToken',
+    'uses' => 'Controller@CreateOtp',
 ]);

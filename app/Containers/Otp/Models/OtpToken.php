@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Authorization\Models;
+namespace App\Containers\Otp\Models;
 
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Models\Model;

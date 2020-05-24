@@ -17,6 +17,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Exception;
+use Google2FA;
 
 /**
  * Class User.
@@ -302,6 +303,15 @@ class User extends UserModel implements HasMedia
                 throw new Exception(sprintf('could not find user id proof value for: %s', $type));
             }
         }
+    }
+
+    public function getInlineQrCode()
+    {
+        return Google2FA::getQRCodeInline(
+            config('app.company'),
+            $this->mobile,
+            $this->{config('google2fa.otp_secret_column')}
+        );
     }
 
     public function __call($method, $parameters)

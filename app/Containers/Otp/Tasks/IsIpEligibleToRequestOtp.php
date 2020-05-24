@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Authorization\Tasks;
+namespace App\Containers\Otp\Tasks;
 
-use App\Containers\Authorization\Data\Repositories\OtpTokenRepository;
+use App\Containers\Otp\Data\Repositories\OtpTokenRepository;
 use App\Ship\Parents\Tasks\Task;
 
 
@@ -18,7 +18,7 @@ class IsIpEligibleToRequestOtp extends Task
     public function run($clientIp):array
     {
         // bypass ip check on non-production env
-        if ($this->weAreOnProduction()) {
+        if ($this->weAreOnProduction() != true) {
             return [true, null];
         }
 
@@ -29,7 +29,7 @@ class IsIpEligibleToRequestOtp extends Task
             ->where('used', false)
             ->whereRaw("created_at >= NOW() - INTERVAL '48 HOURS'")
             ->count();
-        if ($totalUnusedCount > config('authorization-container.otp.ip_limit', 10)) {
+        if ($totalUnusedCount > config('otp-container.otp.ip_limit', 10)) {
             return [null, __('auth.otp.ip_limit_exceeded')];
         } else {
             return [true, null];

@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Containers\Authorization\Actions;
+namespace App\Containers\Otp\Actions;
 
 use Apiato\Core\Foundation\Facades\Apiato;
-use App\Containers\Authorization\Enum\OtpBroker;
-use App\Containers\Authorization\Enum\OtpReason;
-use App\Containers\Authorization\Exceptions\OtpTokenNotFoundException;
+use App\Containers\Otp\Enum\OtpBroker;
+use App\Containers\Otp\Enum\OtpReason;
+use App\Containers\Otp\Exceptions\OtpTokenNotFoundException;
 use App\Containers\IdentityProof\Enum\IdPoofType;
 use App\Containers\User\Exceptions\UserNotFoundException;
 use App\Ship\Parents\Actions\Action;
@@ -40,7 +40,7 @@ class VerifyOtpAction extends Action
             }
         }
 
-        $existToken = Apiato::call('Authorization@GetLatestUnusedOtpTask', [
+        $existToken = Apiato::call('Otp@GetLatestUnusedOtpTask', [
             $data->to,
             $data->reason,
             OtpBroker::EMAIL,

@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'apiato'),
+    'name' => env('APP_NAME', 'asanpay'),
+    'company' => 'asanpay',
 
     /*
     |--------------------------------------------------------------------------

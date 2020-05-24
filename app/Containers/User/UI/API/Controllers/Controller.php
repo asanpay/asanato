@@ -3,6 +3,7 @@
 namespace App\Containers\User\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\IdentityProof\Exceptions\UserMobileNotProvedException;
 use App\Containers\User\Data\Transporters\UserSignUpTransporter;
 use App\Containers\User\Data\Transporters\UserUpdateProfileTransporter;
 use App\Containers\User\UI\API\Requests\CreateAdminRequest;
@@ -16,6 +17,7 @@ use App\Containers\User\UI\API\Requests\ResetPasswordRequest;
 use App\Containers\User\UI\API\Requests\UpdateUserRequest;
 use App\Containers\User\UI\API\Requests\UserSignUpRequest;
 use App\Containers\User\UI\API\Transformers\UserPrivateProfileTransformer;
+use App\Containers\User\UI\API\Transformers\UserQrCodeTransformer;
 use App\Containers\User\UI\API\Transformers\UserTransformer;
 use App\Ship\Enum\ApiCodes;
 use App\Ship\Parents\Controllers\ApiController;
@@ -161,5 +163,22 @@ class Controller extends ApiController
         } else {
             return $this->apiCode($result)->message($err, ApiCodes::UNPROCESSABLE_ENTITY);
         }
+    }
+
+    /**
+     * @param GetAuthenticatedUserRequest $request
+     *
+     * @return mixed
+     */
+    public function getQrCode(GetAuthenticatedUserRequest $request)
+    {
+        $user = Apiato::call('User@GetAuthenticatedUserAction');
+
+        if ($user->isProvedMobile() !== true) {
+            // just users with proved mobile could get QrCode
+            throw new UserMobileNotProvedException();
+        }
+
+        return $this->transform($user, UserQrCodeTransformer::class);
     }
 }

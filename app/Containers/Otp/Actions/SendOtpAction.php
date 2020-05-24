@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Containers\Authorization\Actions;
+namespace App\Containers\Otp\Actions;
 
 use Apiato\Core\Foundation\Facades\Apiato;
-use App\Containers\Authorization\Data\Transporters\CreateOtpTokenTransporter;
-use App\Containers\Authorization\Enum\OtpReason;
+use App\Containers\Otp\Data\Transporters\CreateOtpTokenTransporter;
+use App\Containers\Otp\Enum\OtpReason;
 use App\Containers\User\Exceptions\UserNotFoundException;
 use App\Ship\Parents\Actions\Action;
 

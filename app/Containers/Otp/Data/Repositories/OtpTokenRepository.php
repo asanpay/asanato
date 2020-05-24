@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Authorization\Data\Repositories;
+namespace App\Containers\Otp\Data\Repositories;
 
 use App\Ship\Parents\Repositories\Repository;
 
@@ -12,7 +12,7 @@ class OtpTokenRepository extends Repository
      *
      * @var  string
      */
-    protected $container = 'Authorization';
+    protected $container = 'Otp';
 
     /**
      * @var array

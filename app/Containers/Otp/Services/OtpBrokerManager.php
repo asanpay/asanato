@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Containers\Authorization\Services;
+namespace App\Containers\Otp\Services;
 
-use App\Containers\Authorization\Enum\OtpBroker;
+use App\Containers\Otp\Enum\OtpBroker;
 use App\Containers\Authorization\Mails\EmailProofRequested;
-use App\Containers\Authorization\Models\OtpToken;
+use App\Containers\Otp\Models\OtpToken;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Exceptions\InternalErrorException;
 use App\Ship\Jobs\SendSms;
@@ -119,7 +119,7 @@ class OtpBrokerManager
 
     private function loadConfig(): void
     {
-        $this->config = $this->app['config']['authorization-container']['otp'];
+        $this->config = $this->app['config']['otp-container'];
     }
 
     private function ipCheck(string $clientIp): array

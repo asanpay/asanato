@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Containers\Authorization\Enum;
+namespace App\Containers\Otp\Enum;
 
 
 use App\Ship\Traits\CustomEnums;
