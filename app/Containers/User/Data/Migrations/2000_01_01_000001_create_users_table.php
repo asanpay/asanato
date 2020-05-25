@@ -55,7 +55,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 64);
             $table->boolean('locked')->default(false);
             $table->string('locked_reason')->nullable();
-            $table->string('google2fa_secret', 32);
+            $table->string('google2fa_secret', 32)->nullable();
 
             // see UserVerifications class
             $table->unsignedSmallInteger('idproofs')->default(0)->comment('bit value');

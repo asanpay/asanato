@@ -65,4 +65,8 @@ class CustomErrorCodesTable extends ErrorCodesTable
     const WALLET_OWNERSHIP_FAILED = [
         'code' => 100010
     ];
+
+    const INVALID_OTP = [
+        'code' => 100011
+    ];
 }

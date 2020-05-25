@@ -3,7 +3,8 @@
 namespace App\Containers\Authorization\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
-use App\Containers\Otp\Data\Transporters\CreateOtpTokenTransporter;
+use App\Containers\Authorization\UI\API\Requests\SetUserGoogleAuthRequest;
+use App\Containers\IdentityProof\Exceptions\UserMobileNotProvedException;
 use App\Containers\Authorization\UI\API\Requests\AssignUserToRoleRequest;
 use App\Containers\Authorization\UI\API\Requests\AttachPermissionToRoleRequest;
 use App\Containers\Authorization\UI\API\Requests\CreateRoleRequest;
@@ -18,9 +19,11 @@ use App\Containers\Authorization\UI\API\Requests\SyncPermissionsOnRoleRequest;
 use App\Containers\Authorization\UI\API\Requests\SyncUserRolesRequest;
 use App\Containers\Authorization\UI\API\Transformers\PermissionTransformer;
 use App\Containers\Authorization\UI\API\Transformers\RoleTransformer;
+use App\Containers\User\UI\API\Requests\GetAuthenticatedUserRequest;
+use App\Containers\User\UI\API\Transformers\UserQrCodeTransformer;
 use App\Containers\User\UI\API\Transformers\UserTransformer;
-use App\Ship\Enum\ApiCodes;
 use App\Ship\Parents\Controllers\ApiController;
+use Illuminate\Http\Request;
 use App\Ship\Transporters\DataTransporter;
 
 /**
@@ -172,5 +175,36 @@ class Controller extends ApiController
         $role = Apiato::call('Authorization@CreateRoleAction', [new DataTransporter($request)]);
 
         return $this->transform($role, RoleTransformer::class);
+    }
+
+    public function getTempGoogleAuth(Request $request)
+    {
+        $data = Apiato::call('Authorization@GetTempGoogleAuthDataAction', [$request->user()]);
+
+        return $this->apocalypse(['data' => $data], 200);
+    }
+
+    public function setUserGoogleAuth(SetUserGoogleAuthRequest $request)
+    {
+        $data = Apiato::call('Authorization@SetUserGoogleAuthAction', [$request->user(), $request->token]);
+
+        return $this->noContent();
+    }
+
+    /**
+     * @param GetAuthenticatedUserRequest $request
+     *
+     * @return mixed
+     */
+    public function getGoogleAuthQrCode(GetAuthenticatedUserRequest $request)
+    {
+        $user = Apiato::call('User@GetAuthenticatedUserAction');
+
+        if ($user->isProvedMobile() !== true) {
+            // just users with proved mobile could get QrCode
+            throw new UserMobileNotProvedException();
+        }
+
+        return $this->transform($user, UserQrCodeTransformer::class);
     }
 }

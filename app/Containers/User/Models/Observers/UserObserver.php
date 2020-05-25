@@ -11,12 +11,12 @@ class UserObserver
     public function creating(User $user)
     {
         // before create ::
-        if (empty($user->google2fa_secret)) {
-            $user->google2fa_secret =  Google2FA::generateSecretKey(
-                config('google2fa.key.size', 32),
-                config('google2fa.key.prefix', '')
-            );
-        }
+//        if (empty($user->google2fa_secret)) {
+//            $user->google2fa_secret =  Google2FA::generateSecretKey(
+//                config('google2fa.key.size', 32),
+//                config('google2fa.key.prefix', '')
+//            );
+//        }
     }
 
 }

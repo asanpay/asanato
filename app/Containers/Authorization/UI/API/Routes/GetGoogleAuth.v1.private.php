@@ -1,16 +1,14 @@
 <?php
 
 /**
- * @apiGroup           Users
+ * @apiGroup           Security
  * @apiName            getAuthQrCode
  *
- * @api                {GET} /v1/user/qr-code get Google Authenticator Qr Code
+ * @api                {GET} /v1/security/google-auth get Google Authenticator Qr Code
  * @apiDescription     Get user account Qr Code for Google Authenticator
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
- *
- * @apiUse             UserSuccessSingleResponse
+ * @apiPermission      Authenticated User
  *
  *
 {
@@ -29,9 +27,9 @@
 }
 */
 
-$router->get('user/qr-code', [
+$router->get('security/google-auth', [
     'as' => 'api_user_get_qr_code',
-    'uses'  => 'Controller@getQrCode',
+    'uses'  => 'Controller@getGoogleAuthQrCode',
     'middleware' => [
       'auth:api',
     ],
