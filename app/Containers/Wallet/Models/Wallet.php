@@ -72,7 +72,7 @@ class Wallet extends Model
 
     public function getBalance(): int
     {
-        return $this->balance - $this->locked_balance;
+        return intval($this->balance - $this->locked_balance);
     }
 
     public function hasBalance(): bool

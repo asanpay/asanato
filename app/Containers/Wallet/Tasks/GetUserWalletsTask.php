@@ -19,6 +19,8 @@ class GetUserWalletsTask extends Task
     public function run($user)
     {
         $this->repository->pushCriteria(new ThisUserCriteria($user->id));
+        $this->repository->orderBy('default', 'DESC')
+            ->orderBy('id');
         $wallets =  $this->repository->paginate();
 
         return $wallets;

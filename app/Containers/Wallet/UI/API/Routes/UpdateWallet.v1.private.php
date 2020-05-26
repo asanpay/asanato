@@ -15,9 +15,29 @@
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK
 {
-  // Insert the response of the request here...
+    "data": {
+    "object": "Wallet",
+        "id": "vmg6q36wmk4w8kzr",
+        "name": "foobarbaz",
+        "raw_balance": 10000000,
+        "locked_balance": 0,
+        "balance": 10000000,
+        "transfer_limit": 1000000,
+        "default": true,
+        "j_created_at": "۱۳۹۹/۰۳/۰۷ ۰:۴۵:۳۰",
+        "created_at": "2020-05-27 00:45:30",
+        "updated_at": "2020-05-27 00:46:00"
+    },
+    "meta": {
+    "include": [],
+        "custom": []
+    },
+    "message": "everything's ok",
+    "code": 0,
+    "xTrackId": "1741fdb6d2"
 }
  */
+
 
 /** @var Route $router */
 $router->patch('wallets/{id}', [

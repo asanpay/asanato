@@ -33,7 +33,7 @@ class CreateWalletsTable extends Migration
 
             $table->boolean('default')->default(false);
 
-            $table->timestampsTz();
+            $table->timestamps();
             $table->softDeletes();
         });
 
