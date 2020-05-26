@@ -40,11 +40,12 @@ class SetUserGoogleAuthAction extends Action
             if (Google2FA::verifyKey($secret, $token)) {
                 if ($user->setGoogleAuthSecret($secret)) {
                     Cache::forget($tempGoogleAuthCacheKey);
+
                     return true;
                 } else {
                     throw new InternalErrorException('could not save user google auth secret');
                 }
-            } else  {
+            } else {
                 throw new InvalidOtpException();
             }
         } else {

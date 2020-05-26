@@ -178,13 +178,23 @@ class Controller extends ApiController
         return $this->transform($role, RoleTransformer::class);
     }
 
-    public function getTempGoogleAuth(Request $request)
+    /**
+     * @param GetAuthenticatedUserRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTempGoogleAuth(GetAuthenticatedUserRequest $request)
     {
         $data = Apiato::call('Authorization@GetTempGoogleAuthDataAction', [$request->user()]);
 
         return $this->apocalypse(['data' => $data], 200);
     }
 
+    /**
+     * @param SetUserGoogleAuthRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function setUserGoogleAuth(SetUserGoogleAuthRequest $request)
     {
         $data = Apiato::call('Authorization@SetUserGoogleAuthAction', [$request->user(), $request->token]);
