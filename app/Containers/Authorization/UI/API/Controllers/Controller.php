@@ -3,6 +3,7 @@
 namespace App\Containers\Authorization\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Authorization\Exceptions\GoogleAuthNotSetBeforeException;
 use App\Containers\Authorization\UI\API\Requests\SetUserGoogleAuthRequest;
 use App\Containers\IdentityProof\Exceptions\UserMobileNotProvedException;
 use App\Containers\Authorization\UI\API\Requests\AssignUserToRoleRequest;
@@ -198,11 +199,15 @@ class Controller extends ApiController
      */
     public function getGoogleAuthQrCode(GetAuthenticatedUserRequest $request)
     {
-        $user = Apiato::call('User@GetAuthenticatedUserAction');
+        $user = $request->user();
 
         if ($user->isProvedMobile() !== true) {
             // just users with proved mobile could get QrCode
             throw new UserMobileNotProvedException();
+        }
+
+        if (empty($user->getGoogleAuthSecret())) {
+            throw new GoogleAuthNotSetBeforeException();
         }
 
         return $this->transform($user, UserQrCodeTransformer::class);

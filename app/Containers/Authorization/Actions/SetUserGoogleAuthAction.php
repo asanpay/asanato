@@ -8,6 +8,7 @@ use App\Containers\IdentityProof\Exceptions\UserMobileNotProvedException;
 use App\Containers\Otp\Exceptions\InvalidOtpException;
 use App\Containers\User\Models\User;
 use App\Exception;
+use App\Ship\Exceptions\InternalErrorException;
 use App\Ship\Parents\Actions\Action;
 use Google2FA;
 use Illuminate\Support\Facades\Cache;
@@ -19,7 +20,7 @@ class SetUserGoogleAuthAction extends Action
 {
 
     /**
-     * @return  array
+     * @return bool
      */
     public function run(User $user, string $token): bool
     {
@@ -37,7 +38,12 @@ class SetUserGoogleAuthAction extends Action
         if (Cache::has($tempGoogleAuthCacheKey)) {
             $secret = Cache::get($tempGoogleAuthCacheKey);
             if (Google2FA::verifyKey($secret, $token)) {
-                return $user->setGoogleAuthSecret($secret);
+                if ($user->setGoogleAuthSecret($secret)) {
+                    Cache::forget($tempGoogleAuthCacheKey);
+                    return true;
+                } else {
+                    throw new InternalErrorException('could not save user google auth secret');
+                }
             } else  {
                 throw new InvalidOtpException();
             }
