@@ -36,7 +36,9 @@ class TransferToOthersWalletsAction extends Action
         try {
             DB::beginTransaction();
 
-            if (strlen($request->token == 4)) {
+            if (strlen($request->token) === 6) {
+                $status = Apiato::call('Otp@VerifyGoogleAuthCodeTask', [$request->user(), $request->token]);
+            } else  if (strlen($request->token) === 4){
                 list($status, $message) = Apiato::call('Otp@VerifyOtpAction', [
                     new DataTransporter([
                         'reason' => OtpReason::TRANSFER_MONEY,
@@ -44,8 +46,7 @@ class TransferToOthersWalletsAction extends Action
                     ]),
                 ]);
             } else {
-                $status = Google2FA::verifyKey($request->user()->{config('google2fa.otp_secret_column')},
-                    $request->token);
+                throw new InvalidOtpException();
             }
 
             if ($status !== true) {
