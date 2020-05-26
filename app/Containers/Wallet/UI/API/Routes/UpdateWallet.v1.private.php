@@ -11,6 +11,8 @@
  * @apiPermission      update-wallet
  *
  * @apiParam           {String} id  hashed wallet id
+ * @apiParam           {String} name  wallet name
+ * @apiParam           {Boolean} default  make wallet the default wallet
  *
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK
