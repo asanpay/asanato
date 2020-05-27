@@ -2,10 +2,8 @@
 
 namespace App\Containers\Authorization\Mails;
 
-use App\Containers\Authorization\Models\OtpToken;
-use App\Containers\User\Models\User;
+use App\Containers\Otp\Models\OtpToken;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -14,7 +12,7 @@ class EmailProofRequested extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * @var  \App\Containers\Authorization\Models\OtpToken
+     * @var  \App\Containers\Otp\Models\OtpToken
      */
     protected $otpToken;
 
