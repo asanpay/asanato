@@ -36,21 +36,9 @@ class TransferToOtherUserAction extends Action
         try {
             DB::beginTransaction();
 
-            // verify token
-            if (strlen($request->token) === 6) {
-                $status = Apiato::call('Otp@VerifyGoogleAuthCodeTask', [$request->user(), $request->token]);
-            } else  if (strlen($request->token) === 4){
-                list($status, $message) = Apiato::call('Otp@VerifyOtpAction', [
-                    new DataTransporter([
-                        'reason' => OtpReason::TRANSFER_MONEY,
-                        'mobile' => $request->user()->mobile,
-                    ]),
-                ]);
-            } else {
-                throw new InvalidOtpException();
-            }
+            $otpValidity = Apiato::call('Otp@VerifyOtpAction', [$request->user(), $request->token, OtpReason::TRANSFER_MONEY]);
 
-            if ($status !== true) {
+            if ($otpValidity !== true) {
                 throw new InvalidOtpException();
             }
 

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Config;
 /**
  * Class VerifyOtpRequest.
  */
-class VerifyOtpRequest extends Request
+class VerifyGuestOtpRequest extends Request
 {
 
     /**
@@ -24,8 +24,10 @@ class VerifyOtpRequest extends Request
         }
 
         return [
-            'token'  => 'required|digits_between:4,6',
-            'reason' => 'nullable|in:' . implode(',', $all),
+            'reason' => 'required|in:'.implode(',', $all),
+            'mobile' => 'nullable|regex:'.config('regex.mobile_regex').'|required_if:reason,'.$brokers['mobile'],
+            'email'  => 'nullable|email|required_if:reason,'.$brokers['email'],
+            'token'  => 'required|digits:4',
         ];
     }
 
@@ -33,7 +35,8 @@ class VerifyOtpRequest extends Request
     {
         $this->merge(
             [
-                'token' => english($this->get('token')),
+                'mobile' => $this->get('mobile') ? mobilify($this->get('mobile')) : $this->get('mobile'),
+                'email'  => $this->get('email') ? strtolower($this->get('email')) : $this->get('email'),
             ]
         );
     }

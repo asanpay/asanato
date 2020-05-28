@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Authorization\Exceptions;
+namespace App\Containers\Otp\Exceptions;
 
 use App\Ship\Parents\Exceptions\Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class GoogleAuthNotSetBeforeException extends Exception
 {
-    public $httpStatusCode = Response::HTTP_CONFLICT;
+    public $httpStatusCode = Response::HTTP_UNPROCESSABLE_ENTITY;
 
     public $message = "User's Google auth has not been set before";
 }

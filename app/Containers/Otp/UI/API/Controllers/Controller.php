@@ -2,10 +2,15 @@
 
 namespace App\Containers\Otp\UI\API\Controllers;
 
+use App\Containers\Otp\Exceptions\GoogleAuthNotSetBeforeException;
+use App\Containers\IdentityProof\Exceptions\UserMobileNotProvedException;
 use App\Containers\Otp\Data\Transporters\CreateOtpTokenTransporter;
 use App\Containers\Otp\UI\API\Requests\CreateOtpRequest;
+use App\Containers\Otp\UI\API\Requests\SetUserGoogleAuthRequest;
+use App\Containers\Otp\UI\API\Requests\VerifyGuestOtpRequest;
 use App\Containers\Otp\UI\API\Requests\VerifyOtpRequest;
-use App\Containers\Otp\UI\API\Transformers\OtpTransformer;
+use App\Containers\User\UI\API\Requests\GetAuthenticatedUserRequest;
+use App\Containers\User\UI\API\Transformers\UserQrCodeTransformer;
 use App\Ship\Enum\ApiCodes;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;
@@ -24,9 +29,9 @@ class Controller extends ApiController
      */
     public function createOtp(CreateOtpRequest $request)
     {
-        $t = new CreateOtpTokenTransporter(array_merge($request->all(),[
+        $t = new CreateOtpTokenTransporter(array_merge($request->all(), [
             'ip' => $request->ip(),
-            'to' => $request->has('mobile') ? $request->has('mobile') : $request->has('email')
+            'to' => $request->has('mobile') ? $request->has('mobile') : $request->has('email'),
         ]));
 
         list ($message, $err) = Apiato::call('Otp@SendOtpAction', [$t]);
@@ -39,58 +44,77 @@ class Controller extends ApiController
     }
 
     /**
-     * @param FindOtpByIdRequest $request
-     * @return array
-     */
-    public function findOtpById(FindOtpByIdRequest $request)
-    {
-        $otp = Apiato::call('Otp@FindOtpByIdAction', [$request]);
-
-        return $this->transform($otp, OtpTransformer::class);
-    }
-
-    /**
-     * @param GetAllOtpsRequest $request
-     * @return array
-     */
-    public function getAllOtps(GetAllOtpsRequest $request)
-    {
-        $otps = Apiato::call('Otp@GetAllOtpsAction', [$request]);
-
-        return $this->transform($otps, OtpTransformer::class);
-    }
-
-    /**
-     * @param UpdateOtpRequest $request
-     * @return array
-     */
-    public function updateOtp(UpdateOtpRequest $request)
-    {
-        $otp = Apiato::call('Otp@UpdateOtpAction', [$request]);
-
-        return $this->transform($otp, OtpTransformer::class);
-    }
-
-    /**
-     * @param DeleteOtpRequest $request
+     * @param VerifyGuestOtpRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteOtp(DeleteOtpRequest $request)
+    public function verifyGuestOtpToken(VerifyGuestOtpRequest $request)
     {
-        Apiato::call('Otp@DeleteOtpAction', [$request]);
+        $validity = Apiato::call('Otp@VerifyGuestOtpAction', [new DataTransporter($request)]);
+
+        if ($validity) {
+            return $this->noContent();
+        } else {
+            return $this->message(__('auth.invalid_otp'));
+        }
+    }
+
+    /**
+     * @param VerifyOtpRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function verifyOtpToken(VerifyOtpRequest $request)
+    {
+        $validity = Apiato::call('Otp@VerifyOtpAction', [$request->user(), $request->token, $request->reason]);
+
+        if ($validity) {
+            return $this->noContent();
+        } else {
+            return $this->message(__('auth.invalid_otp'));
+        }
+    }
+
+    /**
+     * @param GetAuthenticatedUserRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTempGoogleAuth(GetAuthenticatedUserRequest $request)
+    {
+        $data = Apiato::call('Otp@GetTempGoogleAuthDataAction', [$request->user()]);
+
+        return $this->apocalypse(['data' => $data], 200);
+    }
+
+    /**
+     * @param SetUserGoogleAuthRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function setUserGoogleAuth(SetUserGoogleAuthRequest $request)
+    {
+        $data = Apiato::call('Otp@SetUserGoogleAuthAction', [$request->user(), $request->token]);
 
         return $this->noContent();
     }
 
-
-    public function verifyOtpToken(VerifyOtpRequest $request)
+    /**
+     * @param GetAuthenticatedUserRequest $request
+     *
+     * @return mixed
+     */
+    public function getGoogleAuthQrCode(GetAuthenticatedUserRequest $request)
     {
-        list ($_, $err) = Apiato::call('Otp@VerifyOtpAction', [new DataTransporter($request)]);
+        $user = $request->user();
 
-        if (empty($err)) {
-            return $this->noContent();
-        } else {
-            return $this->message($err);
+        if ($user->isProvedMobile() !== true) {
+            // just users with proved mobile could get QrCode
+            throw new UserMobileNotProvedException();
         }
+
+        if (empty($user->getGoogleAuthSecret())) {
+            throw new GoogleAuthNotSetBeforeException();
+        }
+
+        return $this->transform($user, UserQrCodeTransformer::class);
     }
 }

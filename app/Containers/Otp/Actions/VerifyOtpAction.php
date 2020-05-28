@@ -4,58 +4,33 @@
 namespace App\Containers\Otp\Actions;
 
 use Apiato\Core\Foundation\Facades\Apiato;
-use App\Containers\Otp\Enum\OtpReason;
+use App\Containers\User\Models\User;
 use App\Ship\Parents\Actions\Action;
-use App\Ship\Transporters\DataTransporter;
 
 class VerifyOtpAction extends Action
 {
     /**
-     * @param DataTransporter $data
-     *
-     * @param bool $markTokenAsUsed
-     * @return array
+     * @param User $user
+     * @param int $token
+     * @param string $reason
+     * @return bool
      */
-    public function run(DataTransporter $data, $markTokenAsUsed = true): array
+    public function run(User $user, int $token, string $reason): bool
     {
-        switch ($data->reason) {
-            case OtpReason::RESET_PASS:
-            case OtpReason::SIGN_UP:
-            case OtpReason::TRANSFER_MONEY:
-            {
-                $data->to = mobilify($data->mobile);
-                break;
-            }
-            case OtpReason::EMAIL_VERIFY:
-            {
-                $data->to = strtolower($data->email);
-                break;
-            }
-            default:
-            {
-                return [false, "could not detect OTP reason: {$data->reason}"];
-            }
-        }
-
-        $broker = Apiato::call('Otp@GetOtpBrokerByReasonTask', [$data->reason]);
-
-        // find used latest OTP
-        $otpTokenRow = Apiato::call('Authorization@GetLatestUnusedOtpTask', [
-            $data->to,
-            OtpReason::SIGN_UP,
-            $broker,
-        ]);
-
-        if (is_null($otpTokenRow) || $otpTokenRow->verify($data->token) !== true) {
-            // invalid OTP token notifications
-            return [false, __('auth.invalid_otp')];
+        // verify token
+        if (strlen($token) == 6) {
+            // code is in Google Auth token format -- No reason required
+            $status = Apiato::call('Otp@VerifyGoogleAuthCodeTask', [$user, $token]);
         } else {
-            // flag OTP token as used
-            if ($markTokenAsUsed) {
-                $otpTokenRow->markAsUsed();
+            if (strlen($token) == 4) {
+                // SMS/Email token format
+                $status = Apiato::call('Otp@VerifyOtpCodeTask', [$user, $token, $reason]);
+            } else {
+                // unknown otp format
+                return false;
             }
-
-            return [true, null];
         }
+
+        return $status;
     }
 }

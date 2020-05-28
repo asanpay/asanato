@@ -3,16 +3,12 @@
 namespace App\Containers\User\Actions;
 
 use Apiato\Core\Foundation\Facades\Apiato;
-use App\Containers\Authorization\Enum\OtpBroker;
-use App\Containers\Authorization\Enum\OtpReason;
-use App\Containers\Authorization\Models\OtpToken;
+use App\Containers\Otp\Enum\OtpBroker;
+use App\Containers\Otp\Enum\OtpReason;
 use App\Ship\Exceptions\InternalErrorException;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Exceptions\Exception;
 use App\Ship\Transporters\DataTransporter;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 
 /**
  * Class ResetPasswordAction
@@ -30,7 +26,7 @@ class ResetPasswordAction extends Action
     public function run(DataTransporter $data): array
     {
         try {
-            $latestToken = Apiato::call('Authorization@GetLatestUnusedOtpTask', [
+            $latestToken = Apiato::call('Otp@GetLatestUnusedOtpTask', [
                 $data->mobile,
                 OtpReason::RESET_PASS,
                 OtpBroker::MOBILE

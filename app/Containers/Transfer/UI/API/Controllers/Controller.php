@@ -4,6 +4,7 @@ namespace App\Containers\Transfer\UI\API\Controllers;
 
 use App\Containers\Transfer\UI\API\Requests\TransferBetweenMyWalletsRequest;
 use App\Containers\Transfer\UI\API\Requests\TransferToOthersWalletsRequest;
+use App\Containers\Transfer\UI\API\Requests\TransferToOtherUserRequest;
 use App\Containers\Wallet\UI\API\Transformers\TxTransformer;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;

@@ -177,49 +177,4 @@ class Controller extends ApiController
 
         return $this->transform($role, RoleTransformer::class);
     }
-
-    /**
-     * @param GetAuthenticatedUserRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getTempGoogleAuth(GetAuthenticatedUserRequest $request)
-    {
-        $data = Apiato::call('Authorization@GetTempGoogleAuthDataAction', [$request->user()]);
-
-        return $this->apocalypse(['data' => $data], 200);
-    }
-
-    /**
-     * @param SetUserGoogleAuthRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function setUserGoogleAuth(SetUserGoogleAuthRequest $request)
-    {
-        $data = Apiato::call('Authorization@SetUserGoogleAuthAction', [$request->user(), $request->token]);
-
-        return $this->noContent();
-    }
-
-    /**
-     * @param GetAuthenticatedUserRequest $request
-     *
-     * @return mixed
-     */
-    public function getGoogleAuthQrCode(GetAuthenticatedUserRequest $request)
-    {
-        $user = $request->user();
-
-        if ($user->isProvedMobile() !== true) {
-            // just users with proved mobile could get QrCode
-            throw new UserMobileNotProvedException();
-        }
-
-        if (empty($user->getGoogleAuthSecret())) {
-            throw new GoogleAuthNotSetBeforeException();
-        }
-
-        return $this->transform($user, UserQrCodeTransformer::class);
-    }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Containers\Authorization\Actions;
+namespace App\Containers\Otp\Actions;
 
-use Apiato\Core\Foundation\Facades\Apiato;
-use App\Containers\Authorization\Exceptions\GoogleAuthSetBeforeException;
+
+use App\Containers\Otp\Exceptions\GoogleAuthSetBeforeException;
 use App\Containers\IdentityProof\Exceptions\UserMobileNotProvedException;
 use App\Containers\Otp\Exceptions\InvalidOtpException;
 use App\Containers\User\Models\User;
@@ -20,6 +20,8 @@ class SetUserGoogleAuthAction extends Action
 {
 
     /**
+     * @param User $user
+     * @param string $token
      * @return bool
      */
     public function run(User $user, string $token): bool

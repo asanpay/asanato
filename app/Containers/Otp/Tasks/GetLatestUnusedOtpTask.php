@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Authorization\Tasks;
+namespace App\Containers\Otp\Tasks;
 
 use App\Containers\Otp\Data\Repositories\OtpTokenRepository;
 use App\Containers\Otp\Models\OtpToken;

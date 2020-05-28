@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Containers\Authorization\Actions;
+namespace App\Containers\Otp\Actions;
 
 use Apiato\Core\Foundation\Facades\Apiato;
-use App\Containers\Authorization\Exceptions\GoogleAuthSetBeforeException;
+use App\Containers\Otp\Exceptions\GoogleAuthSetBeforeException;
 use App\Containers\IdentityProof\Exceptions\UserMobileNotProvedException;
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Actions\Action;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Authorization\UI\API\Requests;
+namespace App\Containers\Otp\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
@@ -15,7 +15,7 @@ class SetUserGoogleAuthRequest extends Request
     public function rules()
     {
         return [
-            'token' => 'required|numeric|min:100000'
+            'token' => 'required|digits:6'
         ];
     }
 }
