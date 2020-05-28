@@ -5,15 +5,18 @@ namespace App\Containers\User\UI\API\Controllers;
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\User\Data\Transporters\UserSignUpTransporter;
 use App\Containers\User\Data\Transporters\UserUpdateProfileTransporter;
+use App\Containers\User\Exceptions\UserNotFoundException;
 use App\Containers\User\UI\API\Requests\CreateAdminRequest;
 use App\Containers\User\UI\API\Requests\DeleteUserRequest;
 use App\Containers\User\UI\API\Requests\FindUserByIdRequest;
+use App\Containers\User\UI\API\Requests\FindUserRequest;
 use App\Containers\User\UI\API\Requests\ForgotPasswordRequest;
 use App\Containers\User\UI\API\Requests\GetAllUsersRequest;
 use App\Containers\User\UI\API\Requests\GetAuthenticatedUserRequest;
 use App\Containers\User\UI\API\Requests\ResetPasswordRequest;
 use App\Containers\User\UI\API\Requests\UpdateUserRequest;
 use App\Containers\User\UI\API\Requests\UserSignUpRequest;
+use App\Containers\User\UI\API\Transformers\UserMinimalTransformer;
 use App\Containers\User\UI\API\Transformers\UserPrivateProfileTransformer;
 use App\Containers\User\UI\API\Transformers\UserTransformer;
 use App\Ship\Enum\ApiCodes;
@@ -157,6 +160,22 @@ class Controller extends ApiController
             return $this->json($result['response_content'])->withCookie($result['refresh_cookie']);
         } else {
             return $this->apiCode($result)->message($err, ApiCodes::UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    /**
+     * @param \App\Containers\User\UI\API\Requests\FindUserByIdRequest $request
+     *
+     * @return  mixed
+     */
+    public function findUser(FindUserRequest $request)
+    {
+        $user = Apiato::call('User@FindUserAction', [$request->keyword]);
+
+        if ($user) {
+            return $this->transform($user, UserMinimalTransformer::class);
+        } else {
+            throw new UserNotFoundException();
         }
     }
 }

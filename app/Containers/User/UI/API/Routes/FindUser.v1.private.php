@@ -8,13 +8,14 @@
  *
  * @apiVersion         1.0.0
  * @apiPermission      Authenticated User
+ * @apiParam           {String}  keyword users mobile or email
  *
  * @apiUse             UserSuccessSingleResponse
  */
 
-$router->get('users/{id}', [
-    'as' => 'api_user_find_user_by_id',
-    'uses'       => 'Controller@findUserById',
+$router->get('users/find', [
+    'as' => 'api_user_find_user',
+    'uses'       => 'Controller@findUser',
     'middleware' => [
         'auth:api',
     ],
