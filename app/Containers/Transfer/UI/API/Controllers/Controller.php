@@ -38,4 +38,16 @@ class Controller extends ApiController
 
         return $this->transform($tx, TxTransformer::class);
     }
+
+    /**
+     * @param TransferToOtherUserRequest $request
+     *
+     * @return array
+     */
+    public function transferToOtherUSer(TransferToOtherUserRequest $request)
+    {
+        $tx = Apiato::call('Transfer@TransferToOtherUserAction', [$request]);
+
+        return $this->transform($tx, TxTransformer::class);
+    }
 }

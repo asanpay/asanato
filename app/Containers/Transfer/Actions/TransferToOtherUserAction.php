@@ -18,7 +18,7 @@ use Google2FA;
 use Illuminate\Support\Facades\DB;
 use Tartan\Log\Facades\XLog;
 
-class TransferToOthersWalletsAction extends Action
+class TransferToOtherUserAction extends Action
 {
     public function run(Request $request): Tx
     {
@@ -26,7 +26,7 @@ class TransferToOthersWalletsAction extends Action
 
         $data = $request->sanitizeInput([
             'src_wallet_id',
-            'dst_wallet_id',
+            'dst_user_id',
             'amount',
             'description',
             'client_ip',
@@ -36,6 +36,7 @@ class TransferToOthersWalletsAction extends Action
         try {
             DB::beginTransaction();
 
+            // verify token
             if (strlen($request->token) === 6) {
                 $status = Apiato::call('Otp@VerifyGoogleAuthCodeTask', [$request->user(), $request->token]);
             } else  if (strlen($request->token) === 4){
@@ -75,7 +76,7 @@ class TransferToOthersWalletsAction extends Action
             }
 
             // destination wallet
-            $dstWallet = Apiato::call('Wallet@FindWalletByIdTask', [$data['dst_wallet_id']]);
+            $dstWallet = Apiato::call('Wallet@FindUserDefaultWalletTask', [$data['dst_user_id']]);
 
             // create both debtor/creditor transactions
             $tx = Apiato::call('Transfer@WalletToWalletTransferTask', [

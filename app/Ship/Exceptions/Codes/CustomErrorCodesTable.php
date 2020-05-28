@@ -69,4 +69,8 @@ class CustomErrorCodesTable extends ErrorCodesTable
     const INVALID_OTP = [
         'code' => 100011
     ];
+
+    const USER_IS_LOCKED = [
+        'code' => 100012
+    ];
 }

@@ -5,9 +5,10 @@ namespace App\Containers\Transfer\UI\API\Requests;
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class TransferBetweenMyWalletsRequest.
+ * Class TransferToOtherUserRequest
+ * @package App\Containers\Transfer\UI\API\Requests
  */
-class TransferBetweenMyWalletsRequest extends Request
+class TransferToOtherUserRequest extends Request
 {
     /**
      * Id's that needs decoding before applying the validation rules.
@@ -16,7 +17,7 @@ class TransferBetweenMyWalletsRequest extends Request
      */
     protected $decode = [
         'src_wallet_id',
-        'dst_wallet_id',
+        'dst_user_id',
     ];
 
     /**
@@ -31,8 +32,9 @@ class TransferBetweenMyWalletsRequest extends Request
             'amount'        => "required|numeric|min:$walletToWalletLimit",
             'description'   => 'nullable|string|max:64',
             'src_wallet_id' => "required|different:dst_wallet_id|exists:wallets,id,user_id,{$userId}",
-            'dst_wallet_id' => "required|different:src_wallet_id|exists:wallets,id,user_id,{$userId}",
+            'dst_user_id'   => "required|exists:users,id,locked,false|not_in:{$userId}",
             'client_ip'     => 'required|ip',
+            'token'         => "required|numeric|min:1000"
         ];
     }
 

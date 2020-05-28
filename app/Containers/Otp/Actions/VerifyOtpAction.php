@@ -13,8 +13,8 @@ class VerifyOtpAction extends Action
     /**
      * @param DataTransporter $data
      *
+     * @param bool $markTokenAsUsed
      * @return array
-     * @throws \Exception
      */
     public function run(DataTransporter $data, $markTokenAsUsed = true): array
     {

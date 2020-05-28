@@ -32,7 +32,7 @@ class TransferToOthersWalletsRequest extends Request
             'description'   => 'nullable|string|max:64',
             'src_wallet_id' => "required|different:dst_wallet_id|exists:wallets,id,user_id,{$userId}",
             'dst_wallet_id' => "required|different:src_wallet_id|exists:wallets,id,user_id,{$userId}",
-            'client_ip'     => 'ip',
+            'client_ip'     => 'required|ip',
             'token'         => "required|numeric|min:1000"
         ];
     }
