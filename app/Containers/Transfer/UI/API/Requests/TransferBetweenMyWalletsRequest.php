@@ -40,6 +40,7 @@ class TransferBetweenMyWalletsRequest extends Request
     {
         $this->merge(
             [
+                'amount'    => english($this->getInputByKey('amount')),
                 'client_ip' => request('client_ip', $this->getClientIp()),
             ]
         );
