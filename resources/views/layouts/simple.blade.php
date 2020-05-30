@@ -31,7 +31,9 @@
 									<header class="sc-jAaTju jZPEGD">
 										<div class="bqVmWV">
                                             <span class="aQXGv" role="presentation">
-                                            <img style="width: 190px" src="{{asset('images/logo-light.svg')}}" />
+                                                <a href="{{url('/')}}" alt="@lang('app.name')">
+                                                    <img style="width: 190px" src="{{asset('images/logo/logo.svg')}}" />
+                                                </a>
                                            </span>
                                         </div>
 									</header>
@@ -49,7 +51,9 @@
 								<footer class="liGdGQ">
 									<div class="bqVmWV">
                                         <span class="jOoCmA" role="presentation">
-                                            <img style="width: 190px" src="{{asset('images/logo-grey.svg')}}" />
+                                            <a href="{{url('/')}}" alt="@lang('app.name')">
+                                                <img style="width: 190px" src="{{asset('images/logo/logo-grayscale.svg')}}" />
+                                            </a>
                                         </span>
                                     </div>
                                     <span id="footer_copyright">

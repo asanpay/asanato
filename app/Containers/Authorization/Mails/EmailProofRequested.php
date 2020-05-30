@@ -11,9 +11,6 @@ class EmailProofRequested extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * @var  \App\Containers\Otp\Models\OtpToken
-     */
     protected $otpToken;
 
 

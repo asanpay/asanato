@@ -274,12 +274,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 
 .iSOsrm {
-    background-image: url(/images/credit-card-shopping-left.svg), url(/images/credit-card-shopping-right.svg);
-    background-attachment: fixed, fixed;
-    background-size: 386px, 386px;
-    background-repeat: no-repeat, no-repeat;
-    background-position: left bottom, right bottom;
-    opacity: 0.25;
+    background-image: url(/images/logo/icon-extra-gray.svg);
+    background-attachment: fixed;
+    background-size: 386px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    opacity: 0.8;
 }
 
  .dqkfnO {
@@ -341,7 +341,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .jlqDSL {
     height: 116px;
     margin-bottom: 12px;
-    background: url(https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.117/static/media/security-wall.6485fb0a.svg) center center no-repeat;
+    background: url(/images/guard.svg) center center no-repeat;
     transition: visibility 400ms ease 0s;
 }
 
@@ -392,7 +392,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     margin-top: 10px;
 }
 
+.w128 {
+    width:128px
+}
 
+.tx-id {
+    font-weight: bold;
+    color: #0065FF;
+}
+
+.text-red {
+    color: #f04651; !important;
+}
 @-moz-document url-prefix() {
     img {
         font-size: 0
@@ -405,5 +416,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 @media (max-width: 1200px) {
     .iSOsrm {
         background-size: calc(((100vw - 400px) / 2) - 32px), calc(((100vw - 400px) / 2) - 32px), cover;
+    }
+}
+
+@media (max-width: 704px) {
+    .lbaSgD {
+        box-shadow: none;
+        width: 320px;
+        padding: 0px 8px;
+        background: transparent;
+    }
+
+    .hqyKhj, .liGdGQ {
+        width: 320px;
     }
 }

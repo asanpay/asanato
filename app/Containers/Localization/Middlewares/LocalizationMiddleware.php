@@ -103,9 +103,9 @@ class LocalizationMiddleware extends Middleware
          */
         $language = Config::get('app.locale');
 
-        if ($request->hasHeader('Accept-Language')) {
-            $language = $request->header('Accept-Language');
-        }
+//        if ($request->hasHeader('Accept-Language')) {
+//            $language = $request->header('Accept-Language');
+//        }
 
         return $language;
     }

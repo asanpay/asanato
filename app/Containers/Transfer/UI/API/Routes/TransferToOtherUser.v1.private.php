@@ -2,15 +2,15 @@
 
 /**
  * @apiGroup           Transfer
- * @apiName            TransferBetweenWallets
+ * @apiName            TransferToOtherUser
  *
- * @api                {POST} /v1/transfer/others-wallets TransferBetweenWallets
- * @apiDescription     Transfer Between Wallets
+ * @api                {POST} /v1/transfer/others TransferToOtherUser
+ * @apiDescription     Transfer to other user
  *
  * @apiVersion         1.0.0
  *
  * @apiParam           {String}  src_wallet_id source wallet id
- * @apiParam           {String}  dst_wallet_id destination wallet id
+ * @apiParam           {String}  dst_user_id destination user id
  * @apiParam           {Int}     amount Transfer amount in Rial
  * @apiParam           {String}  description (optional) transaction description
  * @apiParam           {string}  token OTP token

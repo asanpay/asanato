@@ -45,7 +45,7 @@ class Controller extends ApiController
      *
      * @return array
      */
-    public function transferToOtherUSer(TransferToOtherUserRequest $request)
+    public function transferToOtherUser(TransferToOtherUserRequest $request)
     {
         $tx = Apiato::call('Transfer@TransferToOtherUserAction', [$request]);
 

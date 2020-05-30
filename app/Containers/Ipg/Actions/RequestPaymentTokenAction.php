@@ -229,9 +229,10 @@ class RequestPaymentTokenAction extends Action
             return response()->json([
                 'code'        => 0,
                 'token'       => $t->token,
-                'date'        => $t->created_at->toDateTimeString(),
+                'date'        => $t->created_at,
                 'jalali_date' => $t->j_created_at,
                 'x_track_id'  => resolve('xTrackId'),
+                'gate_url'    => route('web_ipg_gateway', ['token' => $t->token]),
             ], 201);
 
         } catch (Exception $e) {
