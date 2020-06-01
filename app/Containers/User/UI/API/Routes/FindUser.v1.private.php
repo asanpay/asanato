@@ -2,9 +2,9 @@
 
 /**
  * @apiGroup           Users
- * @apiName            findUserById
- * @api                {get} /v1/users/find Find User
- * @apiDescription     Find a user by its ID
+ * @apiName            findUserByMobileOrEmail
+ * @api                {get} /v1/users/find Find User by Email/Mobile
+ * @apiDescription     Find a user by his/her mobile or email
  *
  * @apiVersion         1.0.0
  * @apiPermission      Authenticated User
