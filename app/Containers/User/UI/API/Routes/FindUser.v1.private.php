@@ -3,7 +3,7 @@
 /**
  * @apiGroup           Users
  * @apiName            findUserById
- * @api                {get} /v1/users/:id Find User
+ * @api                {get} /v1/users/find Find User
  * @apiDescription     Find a user by its ID
  *
  * @apiVersion         1.0.0
