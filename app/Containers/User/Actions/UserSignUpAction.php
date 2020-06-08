@@ -33,7 +33,7 @@ class UserSignUpAction extends Action
             DB::beginTransaction();
 
             $t->reason = OtpReason::SIGN_UP;
-            list($status, $message) = Apiato::call('Otp@VerifyOtpAction', [new DataTransporter($t)]);
+            list($status, $message) = Apiato::call('Otp@VerifyGuestOtpAction', [new DataTransporter($t)]);
 
             if ($status !== true) {
                 throw new OtpTokenNotFoundException($message);
