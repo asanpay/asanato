@@ -20,9 +20,9 @@ class VerifyOtpCodeTask extends Task
         $otpBroker = Apiato::call('Otp@GetOtpBrokerByReasonTask', [$reason]);
 
         if ($otpBroker == OtpBroker::EMAIL) {
-            $via = $user->email;
+            $via = emailify($user->email);
         } else {
-            $via = $user->mobile;
+            $via = mobilify($user->mobile);
         }
         // find used latest OTP
         $otpTokenRow = Apiato::call('Otp@GetLatestUnusedOtpTask', [

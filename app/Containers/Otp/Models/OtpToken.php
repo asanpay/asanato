@@ -14,7 +14,7 @@ class OtpToken extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public static function getLatestUnusedOtp(string $mobile, string $reason, string $broker = 'mobile')
+    public function getLatestUnusedOtp(string $mobile, string $reason, string $broker = 'mobile')
     {
         return self::where('to', $mobile)
             ->where('used', false)
