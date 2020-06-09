@@ -33,10 +33,10 @@ class UserSignUpAction extends Action
             DB::beginTransaction();
 
             $t->reason = OtpReason::SIGN_UP;
-            list($status, $message) = Apiato::call('Otp@VerifyGuestOtpAction', [new DataTransporter($t)]);
+            $status = Apiato::call('Otp@VerifyGuestOtpAction', [new DataTransporter($t)]);
 
             if ($status !== true) {
-                throw new OtpTokenNotFoundException($message);
+                throw new OtpTokenNotFoundException();
             }
 
             // mark user mobile as verified because of OTP
