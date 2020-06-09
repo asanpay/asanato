@@ -31,7 +31,7 @@ class TransferToOtherUserRequest extends Request
         return [
             'amount'        => "required|numeric|min:$walletToWalletLimit",
             'description'   => 'nullable|string|max:64',
-            'src_wallet_id' => "required|different:dst_wallet_id|exists:wallets,id,user_id,{$userId}",
+            'src_wallet_id' => "required|exists:wallets,id,user_id,{$userId}",
             'dst_user_id'   => "required|exists:users,id,locked,false|not_in:{$userId}",
             'client_ip'     => 'required|ip',
             'token'         => "required|numeric|min:1000"
