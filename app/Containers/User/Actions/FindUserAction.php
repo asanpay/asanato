@@ -17,7 +17,7 @@ class FindUserAction extends Action
     {
         $keyword = strtolower($keyword);
 
-        if (preg_match('/^0?9\d{9}$/', $keyword)) {
+        if (preg_match(config('regex.mobile_regex'), $keyword)) {
             $keyword = mobilify($keyword);
             return Apiato::call('User@FindUserByMobileTask', [$keyword]);
         } else if (filter_var($keyword, FILTER_VALIDATE_EMAIL)) {

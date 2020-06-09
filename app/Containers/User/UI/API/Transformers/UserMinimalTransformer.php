@@ -37,12 +37,14 @@ class UserMinimalTransformer extends Transformer
             'object' => 'User',
             'id'     => $user->getHashedKey(),
             'name'   => $user->full_name,
-            'email'  => $user->email,
-            'mobile' => $user->mobile,
-
             'avatar' => $user->getAvatar(128),
         ];
 
+        if (preg_match(config('regex.mobile_regex'), request()->keyword)) {
+            $response ['mobile'] =  $user->mobile;
+        } else {
+            $response ['email'] =  $user->email;
+        }
         return $response;
     }
 }
