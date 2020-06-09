@@ -27,7 +27,7 @@ class FindUserDefaultWalletTask extends Task
             if (empty($wallet)) {
                 throw new NotFoundException();
             }
-            return $wallet;
+            return $wallet->first();
         } catch (Exception $exception) {
             throw new NotFoundException();
         }
