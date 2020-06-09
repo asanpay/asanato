@@ -18,7 +18,7 @@ class CreateTransactionTables extends Migration
             // transaction owner
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('merchant_id')->nullable()->comment('uses for merchant transaction');
-            $table->unsignedBigInteger('wallet_id')->nullable()->comment('uses for wallet charge transaction');
+            $table->unsignedBigInteger('wallet_id')->nullable()->comment('uses for wallet topup transaction');
 
             //request parameters
             $table->unsignedBigInteger('amount')->comment('amount that merchant requested to gateway');

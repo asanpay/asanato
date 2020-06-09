@@ -3,8 +3,7 @@
 namespace App\Containers\Transaction\Models\Observers;
 
 use App\Containers\Transaction\Enum\TransactionStatus;
-//use App\Events\TransactionAccomplished;
-use App\Ship\Models\Serial;
+use App\Containers\Transaction\Events\Events\TransactionAccomplished;
 use App\Containers\Transaction\Models\Transaction;
 use App\Ship\Traits\Jalali;
 use Illuminate\Support\Facades\DB;

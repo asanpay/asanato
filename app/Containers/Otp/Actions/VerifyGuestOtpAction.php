@@ -52,7 +52,6 @@ class VerifyGuestOtpAction extends Action
         } else {
             // flag OTP token as used
             $otpTokenRow->markAsUsed();
-
             return true;
         }
     }

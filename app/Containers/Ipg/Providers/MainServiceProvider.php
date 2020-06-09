@@ -18,7 +18,7 @@ class MainServiceProvider extends MainProvider
      * @var array
      */
     public $serviceProviders = [
-        // InternalServiceProviderExample::class,
+        \Asanpay\Shaparak\ShaparakServiceProvider::class,
     ];
 
     /**
@@ -27,7 +27,7 @@ class MainServiceProvider extends MainProvider
      * @var  array
      */
     public $aliases = [
-        // 'Foo' => Bar::class,
+        'Shaparak' => \Asanpay\Shaparak\Facades\Shaparak::class,
     ];
 
     /**

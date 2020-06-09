@@ -4,7 +4,6 @@ namespace App\Containers\User\Actions;
 
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\User\Models\User;
-use App\Containers\User\UI\API\Requests\FindUserRequest;
 use App\Ship\Parents\Actions\Action;
 
 /**
@@ -15,6 +14,7 @@ class FindUserAction extends Action
 
     public function run(string $keyword): ?User
     {
+        //@todo prevent throttle to fetching all user data
         $keyword = strtolower($keyword);
 
         if (preg_match(config('regex.mobile_regex'), $keyword)) {

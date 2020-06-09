@@ -5,10 +5,12 @@ namespace App\Containers\Ipg\Actions;
 
 use App\Containers\Ipg\Enum\RequestTokenErrors;
 use App\Containers\Ipg\UI\API\Requests\IpgRequestTokenRequest;
+use App\Containers\Transaction\Enum\TransactionType;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class RequestPaymentTokenAction extends Action
 {
@@ -185,6 +187,7 @@ class RequestPaymentTokenAction extends Action
 
             $calculatedAmounts = $m->calculatePayable($request->input('amount'));
 
+            // check amount validity
             if ($calculatedAmounts->payable_amount < $minimumPayableAmount) {
                 return response()->json([
                     'code'       => RequestTokenErrors::LOWER_AMOUNT_AFTER_WAGE,
@@ -200,6 +203,7 @@ class RequestPaymentTokenAction extends Action
             }
 
             $data  = [
+                'type'           => TransactionType::MERCHANT,
                 'user_id'        => $m->user_id,
                 'merchant_id'    => $m->id,
                 'amount'         => $request->input('amount'),
@@ -209,8 +213,8 @@ class RequestPaymentTokenAction extends Action
                 'invoice_number' => trim($request->input('invoice_id')),
                 'description'    => trim($request->input('description')),
                 'payer_name'     => trim($request->input('name')),
-                'payer_email'    => trim(strtolower($request->input('email'))),
-                'payer_mobile'   => trim($request->input('mobile')),
+                'payer_email'    => emailify($request->input('email')),
+                'payer_mobile'   => mobilify($request->input('mobile'), '0'),
             ];
             $jsonb = [
                 // extra

@@ -13,10 +13,11 @@ use Asanpay\Shaparak\Facades\Shaparak;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Tartan\Log\Facades\XLog;
+use App\Exception;
 
 class TransactionCallbackAction extends Action
 {
-    public function run(string $psp, string $gateway, string $token, IpgTransactionCallbackRequest $request)
+    public function run(string $token, IpgTransactionCallbackRequest $request)
     {
         $paidSuccessfully = false;
 
@@ -25,22 +26,12 @@ class TransactionCallbackAction extends Action
 
                 $validator = Validator::make([
                     'token'   => $token,
-                    'psp'     => $psp,
-                    'gateway' => $gateway,
                 ], [
                     'token'   => [
                         'required',
                         'alpha_dash',
                         'regex:' . config('regex.token_regex'),
-                    ],
-                    'psp'     => [
-                        'required',
-                        'alpha_dash',
-                    ],
-                    'gateway' => [
-                        'required',
-                        'regex:' . config('regex.gateway_regex'),
-                    ],
+                    ]
                 ]);
 
                 // validate required route parameters
@@ -56,10 +47,9 @@ class TransactionCallbackAction extends Action
                     return view('ipg::callback')->withErrors([__('ipg.callback_err.tr_not_found_cod2')]);
                 }
 
-                // basic check for equal PSP
-                if ($transaction->psp->slug != $psp) {
-                    return view('ipg::callback')->withErrors([__('ipg.callback_err.tr_not_found_cod3')]);
-                }
+                // get PSP that transaction paid by
+                $psp = $transaction->psp->slug;
+                $gateway = $transaction->gateway_id;
 
                 // patch `shaparak mode` into gateway properties that fetched from gateway row
                 $gatewayProperties = $transaction->gateway->getRealtimeProperties(['mode' => config('shaparak.mode')]);
@@ -88,7 +78,7 @@ class TransactionCallbackAction extends Action
                     // extract PSP gateway`s reference Id from the posted callback parameters
                     $referenceId = $shaparak->getGatewayReferenceId();
 
-                    $doubleSpending = Apiato::cal('Transaction@TransactionHasDoubleSpendingTask', [$transaction, $referenceId, $request]);
+                    $doubleSpending = Apiato::call('Transaction@TransactionHasDoubleSpendingTask', [$transaction, $referenceId, $request]);
 
                     if ($doubleSpending) {
                         Session::flash('alert-danger', trans('ipg.double_spending'));
@@ -208,10 +198,13 @@ class TransactionCallbackAction extends Action
                 if ($transaction->type = TransactionType::WALLET_TOPUP) {
                     // if transaction was wallet topup transaction then verification is not required and
                     // we should accomplish it immediately after verification
+
+                    // check if transaction is ready for accomplishment or not
                     if ($transaction->isReadyAccomplish()) {
-                        // check if transaction is ready for accomplishment or not
                         if ($transaction->setAccomplished() == false) {
                             throw new Exception('Could not accomplish transaction');
+                        } else {
+
                         }
                     } else {
                         throw new Exception('The transaction is not ready for accomplishment process!');

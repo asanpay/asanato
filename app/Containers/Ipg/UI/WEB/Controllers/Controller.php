@@ -35,8 +35,8 @@ class Controller extends WebController
      *
      * @return
      */
-    public function transactionCallback(string $psp, string $gateway, string $token, IpgTransactionCallbackRequest $request)
+    public function transactionCallback(string $token, IpgTransactionCallbackRequest $request)
     {
-        return Apiato::call('Ipg@TransactionCallbackAction', [$psp, $gateway, $token, $request]);
+        return Apiato::call('Ipg@TransactionCallbackAction', [$token, $request]);
     }
 }

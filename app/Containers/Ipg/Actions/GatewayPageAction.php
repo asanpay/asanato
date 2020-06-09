@@ -82,7 +82,7 @@ class GatewayPageAction extends Action
                 }
             }
             if (!isset($form)) {
-                XLog::error('gateway form in empty');
+                XLog::error('goto gateway form is empty');
                 Session::flash('alert-danger', $e->getMessage());
             }
         } catch (\Exception $e) {

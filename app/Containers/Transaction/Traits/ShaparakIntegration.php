@@ -3,7 +3,7 @@
 
 namespace App\Containers\Transaction\Traits;
 
-use App\Enum\TransactionStatus;
+use App\Containers\Transaction\Enum\TransactionStatus;
 
 trait ShaparakIntegration
 {
@@ -14,8 +14,6 @@ trait ShaparakIntegration
     public function getCallbackUrl(): string
     {
         return route('web_ipg_transaction_callback', [
-            'psp'     => $this->psp->slug,
-            'gateway' => $this->gateway_id,
             'token'   => $this->token,
         ]);
     }

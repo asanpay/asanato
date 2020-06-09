@@ -75,7 +75,12 @@ function is_mobile(string $sting): bool
 
 function mobilify(string $mobile, string $prefix = ''): string
 {
-    return $prefix . substr($mobile, -10);
+    return $prefix . substr(trim($mobile), -10);
+}
+
+function emailify(string $email): string
+{
+    return strtolower(trim($email));
 }
 
 if (!function_exists('fix_persian_num')) {

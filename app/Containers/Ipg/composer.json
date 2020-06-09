@@ -2,5 +2,6 @@
   "name": "apiato/ipg",
   "description": "Ipg Container for asanpay.",
   "require": {
+      "asanpay/shaparak": "dev-master"
   }
 }

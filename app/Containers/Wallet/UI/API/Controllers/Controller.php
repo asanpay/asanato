@@ -7,10 +7,13 @@ use App\Containers\Wallet\UI\API\Requests\DeleteWalletRequest;
 use App\Containers\Wallet\UI\API\Requests\GetAllWalletsRequest;
 use App\Containers\Wallet\UI\API\Requests\FindWalletByIdRequest;
 use App\Containers\Wallet\UI\API\Requests\GetUserWalletsRequest;
+use App\Containers\Wallet\UI\API\Requests\TopUpWalletRequest;
 use App\Containers\Wallet\UI\API\Requests\UpdateWalletRequest;
+use App\Containers\Wallet\UI\API\Transformers\TxTransformer;
 use App\Containers\Wallet\UI\API\Transformers\WalletTransformer;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;
+use Illuminate\Http\JsonResponse;
 use Spatie\Fractal\Fractal;
 
 /**
@@ -100,5 +103,17 @@ class Controller extends ApiController
         $wallets = Apiato::call('Wallet@GetUserWalletsAction', [$request]);
 
         return $this->transform($wallets, WalletTransformer::class);
+    }
+
+    /**
+     * @param TopUpWalletRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function topUpWallet(TopUpWalletRequest $request)
+    {
+        $transaction = Apiato::call('Wallet@GetTopUpWalletPaymentTokenAction', [$request]);
+
+        return $this->apocalypse($transaction, 201);
     }
 }

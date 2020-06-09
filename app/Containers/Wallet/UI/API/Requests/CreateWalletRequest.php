@@ -2,7 +2,6 @@
 
 namespace App\Containers\Wallet\UI\API\Requests;
 
-use App\Containers\Wallet\Enum\WalletType;
 use App\Ship\Parents\Requests\Request;
 
 /**
