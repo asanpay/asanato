@@ -54,7 +54,7 @@ class Controller extends ApiController
         if ($validity) {
             return $this->noContent();
         } else {
-            return $this->message(__('auth.invalid_otp'));
+            return $this->message(__('auth.invalid_otp'), 400);
         }
     }
 
@@ -69,7 +69,7 @@ class Controller extends ApiController
         if ($validity) {
             return $this->noContent();
         } else {
-            return $this->message(__('auth.invalid_otp'));
+            return $this->message(__('auth.invalid_otp'), 400);
         }
     }
 
