@@ -2,10 +2,10 @@
 
 /**
  * @apiGroup           Security
- * @apiName            getAuthQrCode
+ * @apiName            getPermanentAuthQrCode
  *
- * @api                {GET} /v1/security/google-auth get Google Authenticator Qr Code
- * @apiDescription     Get user account Qr Code for Google Authenticator
+ * @api                {GET} /v1/security/google-auth get Google Authenticator permanent Qr Code
+ * @apiDescription     Get user account permanent Qr Code for Google Authenticator
  *
  * @apiVersion         1.0.0
  * @apiPermission      Authenticated User
