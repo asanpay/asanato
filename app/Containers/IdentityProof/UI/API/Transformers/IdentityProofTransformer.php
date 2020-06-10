@@ -39,7 +39,7 @@ class IdentityProofTransformer extends Transformer
             'status'              => $entity->status,
             'readable_status'     => IdProofStatus::getLabel($entity->status),
             'created_at'          => $entity->created_at,
-            'readable_created_at' => $entity->created_at->diffForHumans(),
+            'readable_created_at' => $entity->created_at,
         ];
 
         $response = $this->ifAdmin([
