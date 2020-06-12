@@ -4,6 +4,8 @@
 namespace App\Containers\Otp\Actions;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\IdentityProof\Enum\IdPoofType;
+use App\Containers\Otp\Enum\OtpReason;
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Actions\Action;
 
@@ -27,7 +29,18 @@ class VerifyOtpAction extends Action
                 $status = Apiato::call('Otp@VerifyOtpCodeTask', [$user, $token, $reason]);
             } else {
                 // unknown otp format
-                return false;
+                $status = false;
+            }
+        }
+
+        //@todo move following part to a TASK
+        if ($status === true) {
+            switch ($reason) {
+                case OtpReason::EMAIL_VERIFY:
+                {
+                    $user->verify(IdPoofType::EMAIL);
+                    break;
+                }
             }
         }
 
