@@ -55,7 +55,7 @@ class UserPrivateProfileTransformer extends Transformer
             'locked'       => $user->locked,
             'lock_reason'  => $user->lock_reason,
             'idproofs'     => $user->getIdProofs(),
-            'meta'         => json_decode($user->meta, JSON_UNESCAPED_UNICODE),
+            'meta'         => $user->meta,
 
             'birth_date'          => $user->birth_date,
             'created_at'          => $user->created_at,

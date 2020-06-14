@@ -29,7 +29,7 @@ class TxTransformer extends Transformer
      */
     public function transform(Tx $entity)
     {
-        $meta = json_decode($entity->meta);
+        $meta = $entity->meta;
 
         $response = [
             'object'         => 'Tx',

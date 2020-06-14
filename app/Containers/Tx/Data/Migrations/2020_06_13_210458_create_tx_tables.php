@@ -1,29 +1,25 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateWalletsTransactionsTable extends Migration
+class CreateTxTables extends Migration
 {
+
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('wallets_transactions', function (Blueprint $table) {
+        Schema::create('txes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('wallet_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->unsignedSmallInteger('type'); // based on TxType::class
 
             $table->unsignedBigInteger('transaction_id')->nullable(); // transaction/withdraw/transfer document ID
             $table->unsignedBigInteger('double_id')->nullable();
-
-            $table->unsignedBigInteger('raw_amount')->default(0)->comment('transaction raw amount');
-            $table->unsignedBigInteger('user_share')->default(0)->comment('user share of the transaction');
 
             $table->unsignedBigInteger('creditor')->default(0); // plus
             $table->unsignedBigInteger('debtor')->default(0); // minus
@@ -31,17 +27,21 @@ class CreateWalletsTransactionsTable extends Migration
             $table->bigInteger('profit')->default(0); // plus or minus benefits of AsanPay
             $table->BigInteger('balance')->nullable(); //signed +/- باقیمانده
 
+            $table->string('ip_address');
+
             $table->jsonb('meta')->default('{}');
             $table->unsignedBigInteger('j_created_at')->nullable();
             $table->dateTimeTz('created_at');
         });
 
-        Schema::table('wallets_transactions', function ($table) {
+        Schema::table('txes', function ($table) {
             $table->foreign('wallet_id', 'transaction_wallet')->references('id')->on('wallets');
         });
 
         // add GAP between gateway wallets and user wallets
-        $query = 'ALTER SEQUENCE wallets_transactions_id_seq RESTART WITH 1000000;';
+        $query = 'ALTER SEQUENCE txes_id_seq RESTART WITH 1000000;';
+        \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
+        $query = 'ALTER TABLE txes ALTER COLUMN ip_address type inet USING ip_address::inet;';
         \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
     }
 
@@ -52,10 +52,10 @@ class CreateWalletsTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('wallets_transactions', function ($table) {
+        Schema::table('txes', function ($table) {
             $table->dropForeign('transaction_wallet');
         });
 
-        Schema::dropIfExists('wallets_transactions');
+        Schema::dropIfExists('txes');
     }
 }

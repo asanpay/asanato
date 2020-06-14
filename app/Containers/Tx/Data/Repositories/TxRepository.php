@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Containers\Wallet\Data\Repositories;
+namespace App\Containers\Tx\Data\Repositories;
 
 use App\Ship\Parents\Repositories\Repository;
 
 /**
- * Class WalletRepository
+ * Class TxRepository
  */
 class TxRepository extends Repository
 {

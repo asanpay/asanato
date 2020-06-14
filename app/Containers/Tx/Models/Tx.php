@@ -1,20 +1,46 @@
 <?php
 
-namespace App\Models;
-
-namespace App\Containers\Wallet\Models;
+namespace App\Containers\Tx\Models;
 
 use App\Containers\Transaction\Models\Transaction;
-use App\Containers\Wallet\Enum\TxType;
+use App\Containers\Tx\Enum\TxType;
+use App\Containers\Wallet\Models\Wallet;
 use App\Ship\Parents\Models\Model;
+use App\Exception;
 
 class Tx extends Model
 {
-    protected $table = 'wallets_transactions';
+    protected $table = 'txes';
 
     protected $guarded = [
         'balance',
     ];
+
+    protected $fillable = [
+
+    ];
+
+    protected $attributes = [
+
+    ];
+
+    protected $hidden = [
+
+    ];
+
+    protected $casts = [
+        'meta' => 'json'
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
+     * A resource key to be used by the the JSON API Serializer responses.
+     */
+    protected $resourceKey = 'txes';
 
     const UPDATED_AT = null;
 

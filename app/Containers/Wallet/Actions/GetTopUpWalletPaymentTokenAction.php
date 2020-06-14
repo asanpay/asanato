@@ -31,20 +31,19 @@ class GetTopUpWalletPaymentTokenAction extends Action
             'type'           => TransactionType::WALLET_TOPUP,
             'user_id'        => $user->id,
             'wallet_id'      => $request->getInputByKey('wallet_id'),
-            'amount'         => $request->input('amount'),
-            'payable_amount' => $request->input('amount'),
-            'merchant_share' => $request->input('amount'),
+            'amount'         => currency($request->input('amount')),
+            'payable_amount' => currency($request->input('amount')),
+            'merchant_share' => currency($request->input('amount')),
             'callback_url'   => $request->input('callback_url', $this->getInternalCallbackUrl($request->input('is_mobile_app'))),
             'invoice_number' => trim($request->input('invoice_id')),
             'description'    => trim($request->input('description')),
             'payer_name'     => $user->full_name,
             'payer_email'    => emailify($user->email),
             'payer_mobile'   => mobilify($user->mobile, '0'),
+            'ip_address'     => $request->getClientIp(),
         ];
 
-        $jsonb = [];
-
-        $t = Apiato::call('Transaction@CreateTransactionTask', [$data, $jsonb]);
+        $t = Apiato::call('Transaction@CreateTransactionTask', [$data]);
 
         return [
             'code'        => 0,

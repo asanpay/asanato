@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Wallet\Enum;
+namespace App\Containers\Tx\Enum;
 
 use App\Ship\Traits\CustomEnums;
 
@@ -16,4 +16,7 @@ class TxType
     const SMS_COST    = 6;
     const REFUND      = 7;
     const WALLET_COST = 8;
+    const SYSTEM      = 9;
+    const PROFIT      = 10;
+
 }

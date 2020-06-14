@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Containers\Wallet\Tasks;
+namespace App\Containers\Tx\Tasks;
 
-use App\Containers\Wallet\Data\Repositories\TxRepository;
-use App\Containers\Wallet\Models\Tx;
+use App\Containers\Tx\Data\Repositories\TxRepository;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
@@ -19,15 +18,15 @@ class CreateTxTask extends Task
         $this->repository = $repository;
     }
 
-    public function run(array $data): Tx
+    public function run(array $data)
     {
-        try {
-            $tx = $this->repository->create($data);
+        XLog::debug('creating TX by', $data);
 
-            return $tx;
+        try {
+            return $this->repository->create($data);
         }
-        catch (Exception $e) {
-            XLog::exception($e);
+        catch (Exception $exception) {
+            XLog::exceotion($exception);
             throw new CreateResourceFailedException();
         }
     }

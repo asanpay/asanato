@@ -14,6 +14,9 @@ trait JsonbField
      */
     public function getJsonb(string $fieldName = 'meta', $assoc = true): array
     {
+        if (is_array($this->{$fieldName})) {
+            return $this->{$fieldName};
+        }
         return json_decode($this->{$fieldName}, $assoc);
     }
 
@@ -39,7 +42,7 @@ trait JsonbField
      */
     public function setJsonb(array $arr = [], bool $save = true, string $fieldName = 'meta'): bool
     {
-        $this->{$fieldName} = json_encode($arr, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+        $this->{$fieldName} = $arr;
         if ($save) {
             return $this->save();
         }
@@ -57,10 +60,10 @@ trait JsonbField
      */
     public function addToJsonb(string $key, $value, bool $save = true, string $fieldName = 'meta'): bool
     {
-        $json = json_decode($this->{$fieldName}, true);
+        $json = $this->getJsonb($fieldName, true);
         $json[$key] = $value;
 
-        $this->{$fieldName} = json_encode($json, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+        $this->{$fieldName} = $json;
         if ($save) {
             return $this->save();
         }

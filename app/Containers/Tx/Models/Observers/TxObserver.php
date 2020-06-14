@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Containers\Wallet\Models\Observers;
+namespace App\Containers\Tx\Models\Observers;
 
 
-use App\Containers\Wallet\Models\Tx;
+use App\Containers\Tx\Models\Tx;
 use App\Ship\Traits\Jalali;
 
 class TxObserver

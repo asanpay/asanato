@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Containers\Wallet\Providers;
+namespace App\Containers\Tx\Providers;
 
-use App\Containers\Wallet\Models\Observers\TxObserver;
-use App\Containers\Wallet\Models\Tx;
+use App\Containers\Tx\Models\Observers\TxObserver;
+use App\Containers\Tx\Models\Tx;
 use App\Ship\Parents\Providers\MainProvider;
 
 /**
@@ -41,5 +41,12 @@ class MainServiceProvider extends MainProvider
 
         // $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         // ...
+    }
+
+    public function boot()
+    {
+        // observers
+        Tx::observe(TxObserver::class);
+        parent::boot();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Containers\Wallet\Models;
 
 use App\Containers\Merchant\Models\Merchant;
 use App\Containers\Transaction\Models\Transaction;
+use App\Containers\Tx\Models\Tx;
 use App\Containers\Wallet\Enum\WalletType;
 use App\Ship\Parents\Models\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -57,7 +58,7 @@ class Wallet extends Model
         return $this->hasMany(Transaction::class, 'wallet_id', 'id');
     }
 
-    public function txs()
+    public function txes()
     {
         return $this->hasMany(Tx::class, 'wallet_id', 'id');
     }
@@ -94,14 +95,14 @@ class Wallet extends Model
     public function getTransactionsProfitWallet(): self
     {
         return $this->where('belongs_to_app', true)
-            ->where('type', WalletType::TRANSACTION_PROFIT)
+            ->where('type', WalletType::PROFIT)
             ->firstOrFail();
     }
 
     public function getCreateWalletProfitWallet(): self
     {
         return self::where('belongs_to_app', true)
-            ->where('type', WalletType::WALLET_COST_PROFIT)
+            ->where('type', WalletType::PROFIT)
             ->firstOrFail();
     }
 }

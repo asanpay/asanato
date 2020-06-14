@@ -16,12 +16,16 @@ use App\Ship\Traits\JsonbField;
 use App\Containers\Transaction\Traits\ShaparakIntegration;
 use Asanpay\Shaparak\Contracts\Transaction as TransactionInterface;
 
-class Transaction extends Model  implements TransactionInterface
+class Transaction extends Model implements TransactionInterface
 {
     use JsonbField, Jalali, ShaparakIntegration;
 
     protected $fillable = [
 
+    ];
+
+    protected $guarded = [
+        'id'
     ];
 
     protected $attributes = [
@@ -34,6 +38,7 @@ class Transaction extends Model  implements TransactionInterface
 
     protected $casts = [
         'gateway_callback_params' => 'json',
+        'meta' => 'json',
     ];
 
     protected $dates = [
@@ -95,6 +100,11 @@ class Transaction extends Model  implements TransactionInterface
     public function getJAccomplishedAtAttribute($value)
     {
         return is_null($value) ? null : self::formatJalali($value, 'yyyy/MM/dd HH:mm:ss');
+    }
+
+    public function getBenefitAttribute(): int
+    {
+        return currency($this->payable_amount - $this->merchant_share);
     }
 
     public function tagify()

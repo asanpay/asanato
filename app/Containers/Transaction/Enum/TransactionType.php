@@ -8,6 +8,6 @@ class TransactionType
 {
     use CustomEnums;
 
-    const MERCHANT     = '1';
-    const WALLET_TOPUP = '2';
+    const MERCHANT     = 1;
+    const WALLET_TOPUP = 2;
 }

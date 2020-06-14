@@ -195,21 +195,8 @@ class TransactionCallbackAction extends Action
                     }
                 }
 
-                if ($transaction->type = TransactionType::WALLET_TOPUP) {
-                    // if transaction was wallet topup transaction then verification is not required and
-                    // we should accomplish it immediately after verification
 
-                    // check if transaction is ready for accomplishment or not
-                    if ($transaction->isReadyAccomplish()) {
-                        if ($transaction->setAccomplished() == false) {
-                            throw new Exception('Could not accomplish transaction');
-                        } else {
-
-                        }
-                    } else {
-                        throw new Exception('The transaction is not ready for accomplishment process!');
-                    }
-                }
+                Apiato::call('Ipg@ProcessAccomplishedPspTransactionSubAction', [$transaction]);
 
                 // settle end ------------------------------------------------------------------------------------
                 XLog::info("invoice status change to $transaction->status after settlement",

@@ -52,6 +52,7 @@ class CreateTransactionTables extends Migration
             $table->unsignedSmallInteger('process')->default(\App\Containers\Transaction\Enum\TransactionProcess::NONE);
 
             $table->jsonb('meta')->default('{}');
+            $table->string('ip_address');
 
             $table->unsignedInteger('day_of_year')->comment('created at which the day of the year');
             $table->timestamps();
@@ -65,6 +66,9 @@ class CreateTransactionTables extends Migration
 
         // add GAP between gateway wallets and user wallets
         $query = 'ALTER SEQUENCE transactions_id_seq RESTART WITH 1000000;';
+        \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
+
+        $query = 'ALTER TABLE transactions ALTER COLUMN ip_address type inet USING ip_address::inet;';
         \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
     }
 

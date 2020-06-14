@@ -25,7 +25,7 @@ class TransactionObserver
         // before save ::
         if (!isset($transaction->j_created_at) || empty($transaction->j_created_at)) {
             $transaction->j_created_at =  static::jalaliTimestamp();
-            $transaction->day_of_year  = Zaman::gToj('now', 'F', 'en');
+            $transaction->day_of_year  = Zaman::gToj('now', 'D', 'en');
         }
         if (!isset($transaction->flag) || empty($transaction->flag)) {
             $transaction->flag = transaction_flag();

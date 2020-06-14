@@ -19,7 +19,7 @@ class CreateTransactionTask extends Task
         $this->transaction = $transaction;
     }
 
-    public function run(array $data, array $jsonb)
+    public function run(array $data)
     {
         try {
             if (empty($data['merchant_id']) && empty($data['wallet_id'])) {
@@ -44,23 +44,8 @@ class CreateTransactionTask extends Task
                 }
             }
 
-            $t                 = $this->transaction;
-            $t->type           = $transactionType;
-            $t->user_id        = $data['user_id'];
-            $t->merchant_id    = $data['merchant_id'] ?? null;
-            $t->wallet_id      = $data['wallet_id'] ?? null;
-            $t->amount         = currency($data['amount']);
-            $t->payable_amount = $data['payable_amount'];
-            $t->merchant_share = $data['merchant_share'];
-            $t->callback_url   = $data['callback_url'];
-            $t->invoice_number = $data['invoice_number'];
-            $t->description    = $data['description'];
-            $t->payer_name     = $data['payer_name'];
-            $t->payer_email    = $data['payer_email'];
-            $t->payer_mobile   = $data['payer_mobile'];
-
-            // add json
-            $t->setJsonb($jsonb, false);
+            $t = $this->transaction;
+            $t->fill($data);
 
             $t->save();
 

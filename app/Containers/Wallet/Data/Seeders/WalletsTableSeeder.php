@@ -78,7 +78,7 @@ class WalletsTableSeeder extends Seeder
             'id'      => 3,
             'user_id' => 1,
             'name'    => 'SYSTEM_TRANSACTION_PROFIT',
-            'type'    => WalletType::TRANSACTION_PROFIT,
+            'type'    => WalletType::PROFIT,
             'belongs_to_app' => true
         ]);
 
@@ -86,7 +86,7 @@ class WalletsTableSeeder extends Seeder
             'id'      => 4,
             'user_id' => 1,
             'name'    => 'SYSTEM_TRANSFER_PROFIT',
-            'type'    => WalletType::TRANSFER_PROFIT,
+            'type'    => WalletType::PROFIT,
             'belongs_to_app' => true
         ]);
 
@@ -94,7 +94,7 @@ class WalletsTableSeeder extends Seeder
             'id'      => 5,
             'user_id' => 1,
             'name'    => 'SYSTEM_WALLET_COST_PROFIT',
-            'type'    => WalletType::WALLET_COST_PROFIT,
+            'type'    => WalletType::PROFIT,
             'belongs_to_app' => true
         ]);
 
@@ -102,7 +102,7 @@ class WalletsTableSeeder extends Seeder
             'id'      => 6,
             'user_id' => 1,
             'name'    => 'SYSTEM_WITHDRAW_PROFIT',
-            'type'    => WalletType::WITHDRAW_PROFIT,
+            'type'    => WalletType::PROFIT,
             'belongs_to_app' => true
         ]);
 
