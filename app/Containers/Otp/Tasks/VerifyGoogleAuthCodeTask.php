@@ -2,7 +2,7 @@
 
 namespace App\Containers\Otp\Tasks;
 
-use App\Containers\Authorization\Exceptions\GoogleAuthNotSetBeforeException;
+use App\Containers\Otp\Exceptions\GoogleAuthNotSetBeforeException;
 use App\Containers\IdentityProof\Exceptions\UserMobileNotProvedException;
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Tasks\Task;

@@ -8,13 +8,11 @@ use App\Containers\Transfer\Exceptions\InsufficientWalletBalanceException;
 use App\Containers\Transfer\Exceptions\WalletDoesNotBelongToUserException;
 use App\Containers\Transfer\Exceptions\WalletIsLockedException;
 use App\Containers\Transfer\Exceptions\WalletTransferLimitExceededException;
-use App\Containers\Wallet\Enum\TxType;
-use App\Containers\Wallet\Models\Tx;
+use App\Containers\Tx\Enum\TxType;
+use App\Containers\Tx\Models\Tx;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Requests\Request;
-use Apiato\Core\Foundation\Facades\Apiato;
-use App\Ship\Transporters\DataTransporter;
-use Google2FA;
+use Apiato\Core\Foundation\Facades\Apiato;;
 use Illuminate\Support\Facades\DB;
 use Tartan\Log\Facades\XLog;
 
