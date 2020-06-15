@@ -62,7 +62,7 @@ class Tx extends Model
         }
     }
 
-    public function getTrackingIdAttribute($value): int
+    public function getTrackingIdAttribute($value): string
     {
         return 'TX'.
             date('y') .
