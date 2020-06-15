@@ -77,31 +77,7 @@ class WalletsTableSeeder extends Seeder
         Wallet::create([
             'id'      => 3,
             'user_id' => 1,
-            'name'    => 'SYSTEM_TRANSACTION_PROFIT',
-            'type'    => WalletType::PROFIT,
-            'belongs_to_app' => true
-        ]);
-
-        Wallet::create([
-            'id'      => 4,
-            'user_id' => 1,
-            'name'    => 'SYSTEM_TRANSFER_PROFIT',
-            'type'    => WalletType::PROFIT,
-            'belongs_to_app' => true
-        ]);
-
-        Wallet::create([
-            'id'      => 5,
-            'user_id' => 1,
-            'name'    => 'SYSTEM_WALLET_COST_PROFIT',
-            'type'    => WalletType::PROFIT,
-            'belongs_to_app' => true
-        ]);
-
-        Wallet::create([
-            'id'      => 6,
-            'user_id' => 1,
-            'name'    => 'SYSTEM_WITHDRAW_PROFIT',
+            'name'    => 'SYSTEM_PROFIT',
             'type'    => WalletType::PROFIT,
             'belongs_to_app' => true
         ]);
