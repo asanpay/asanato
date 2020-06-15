@@ -4,6 +4,7 @@ namespace App\Ship\Providers;
 
 use App\Ship\Parents\Providers\MainProvider;
 use Creativeorange\Gravatar\GravatarServiceProvider;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Tartan\IranianSms\SmsServiceProvider;
@@ -61,6 +62,10 @@ class ShipProvider extends MainProvider
     {
         // ...
         parent::boot();
+
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
 
         Validator::extend('integer', function ($attribute, $value, $parameters, $validator) {
             $value = $value + 1 - 1;
