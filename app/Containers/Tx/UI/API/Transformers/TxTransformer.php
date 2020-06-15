@@ -28,17 +28,19 @@ class TxTransformer extends Transformer
      */
     public function transform(Tx $entity)
     {
-        $response = [
-            'object' => 'Tx',
-            'id' => $entity->getHashedKey(),
-            'created_at' => $entity->created_at,
-            'updated_at' => $entity->updated_at,
+        $meta = $entity->meta;
 
+        $response = [
+            'object'         => 'Tx',
+            'id'             => $entity->getHashedKey(),
+            'client_ip'      => $meta->ip ?? 'unknown',
+            'j_created_at'   => $entity->j_created_at,
+            'created_at'     => $entity->created_at,
+            'tracking_id'    => $entity->tracking_id,
         ];
 
         $response = $this->ifAdmin([
-            'real_id'    => $entity->id,
-            // 'deleted_at' => $entity->deleted_at,
+            'real_id'    => $entity->id
         ], $response);
 
         return $response;

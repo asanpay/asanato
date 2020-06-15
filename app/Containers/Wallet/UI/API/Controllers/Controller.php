@@ -9,7 +9,6 @@ use App\Containers\Wallet\UI\API\Requests\FindWalletByIdRequest;
 use App\Containers\Wallet\UI\API\Requests\GetUserWalletsRequest;
 use App\Containers\Wallet\UI\API\Requests\TopUpWalletRequest;
 use App\Containers\Wallet\UI\API\Requests\UpdateWalletRequest;
-use App\Containers\Wallet\UI\API\Transformers\TxTransformer;
 use App\Containers\Wallet\UI\API\Transformers\WalletTransformer;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;
