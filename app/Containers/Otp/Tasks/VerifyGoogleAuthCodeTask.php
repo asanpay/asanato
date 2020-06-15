@@ -6,7 +6,7 @@ use App\Containers\Otp\Exceptions\GoogleAuthNotSetBeforeException;
 use App\Containers\IdentityProof\Exceptions\UserMobileNotProvedException;
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Tasks\Task;
-use PragmaRX\Google2FA\Google2FA;
+use Google2FA;
 
 class VerifyGoogleAuthCodeTask extends Task
 {
