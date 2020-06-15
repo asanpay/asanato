@@ -18,15 +18,15 @@ $$
 
 BEGIN
  -- only check wallets that does not belong to app --
-IF NEW.belongs_to_app = false AND NEW.balance < 0 THEN
+IF OLD.belongs_to_app = false AND NEW.balance < 0 THEN
        RAISE EXCEPTION 'wallet % balance could not be less than zero.', OLD.id;
 END IF;
 
-IF OLD.locked = true AND (NEW.balance <= OLD.balance) THEN
+IF OLD.belongs_to_app = false AND OLD.locked = true AND (NEW.balance <= OLD.balance) THEN
        RAISE EXCEPTION 'wallet % is locked.', OLD.id;
 END IF;
 
-IF OLD.locked = false AND (NEW.balance < OLD.locked_balance) THEN
+IF OLD.belongs_to_app = false AND OLD.locked = false AND (NEW.balance < OLD.locked_balance) THEN
        RAISE EXCEPTION 'wallet % balance become less than locked balance.', OLD.id;
 END IF;
 
