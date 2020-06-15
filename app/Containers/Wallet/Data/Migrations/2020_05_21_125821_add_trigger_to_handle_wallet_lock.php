@@ -17,8 +17,8 @@ CREATE OR REPLACE FUNCTION check_wallet_lock_status()
 $$
 
 BEGIN
-
-IF NEW.balance < 0 THEN
+ -- only check wallets that does not belong to app --
+IF NEW.belongs_to_app = false AND NEW.balance < 0 THEN
        RAISE EXCEPTION 'wallet % balance could not be less than zero.', OLD.id;
 END IF;
 
@@ -36,6 +36,8 @@ END;
 
 $$
 LANGUAGE 'plpgsql';
+
+DROP TRIGGER IF EXISTS check_wallet_lock_status_trigger ON wallets;
 
 CREATE TRIGGER check_wallet_lock_status_trigger
 BEFORE UPDATE OF balance

@@ -26,7 +26,7 @@ class CreateWalletsTable extends Migration
 
 
             $table->string('name', 64);
-            $table->unsignedBigInteger('balance')->default(0);
+            $table->bigInteger('balance')->default(0);
             $table->unsignedBigInteger('locked_balance')->default(0);
             $table->string('locked_reason', 255)->nullable();
             $table->unsignedBigInteger('transfer_limit')->nullable();
