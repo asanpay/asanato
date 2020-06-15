@@ -72,10 +72,10 @@ class TransferToOthersWalletsAction extends Action
                 $dstWallet->id,
                 $data['amount'],
                 TxType::TRANSFER,
+                $data['client_ip'],
                 // TX meta
                 [
                     'description' => $data['description'],
-                    'ip'          => $data['client_ip'],
                 ],
             ]);
 

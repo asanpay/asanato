@@ -28,6 +28,7 @@ class WalletToWalletTransferTask extends Task
      * @param int $destinationWallet
      * @param int $amount
      * @param int $reason
+     * @param string $ipAddress
      * @param array $meta
      *
      * @return bool
@@ -38,6 +39,7 @@ class WalletToWalletTransferTask extends Task
         int $destinationWallet,
         int $amount,
         int $reason,
+        string $ipAddress,
         array $meta = []
     ): Tx {
         if ($amount <= 0) {
@@ -48,7 +50,7 @@ class WalletToWalletTransferTask extends Task
 
         $tx = null;
 
-        DB::transaction(function () use ($sourceWallet, $destinationWallet, $amount, $reason, $meta, &$tx) {
+        DB::transaction(function () use ($sourceWallet, $destinationWallet, $amount, $reason, $ipAddress, $meta, &$tx) {
 
             $meta = $this->prepareExtraFor($reason, $meta);
 
@@ -72,7 +74,8 @@ class WalletToWalletTransferTask extends Task
                 ->update(['balance' => DB::raw("balance + {$amount}")]);
 
             // create transfer transaction in wallet transactions field
-            $tx = $this->createWalletTransferTransactions($sourceWallet, $destinationWallet, $amount, $meta);
+            $tx = $this->createWalletTransferTransactions($sourceWallet, $destinationWallet, $amount, $ipAddress,
+                $meta);
         });
 
         return $tx;
@@ -108,17 +111,19 @@ class WalletToWalletTransferTask extends Task
         int $sourceWalletId,
         int $destinationWalletId,
         int $amount,
+        string $ipAddress,
         array $meta = []
     ): Tx {
 
         XLog::debug(__METHOD__, func_get_args());
 
         // debtor transaction
-        $debtorTransactions            = $this->TxRepository->makeModel();
-        $debtorTransactions->wallet_id = $sourceWalletId;
-        $debtorTransactions->type      = TxType::TRANSFER;
-        $debtorTransactions->debtor    = $amount;
-        $debtorTransactions->meta      = json_encode($meta);
+        $debtorTransactions             = $this->TxRepository->makeModel();
+        $debtorTransactions->wallet_id  = $sourceWalletId;
+        $debtorTransactions->type       = TxType::TRANSFER;
+        $debtorTransactions->debtor     = $amount;
+        $debtorTransactions->ip_address = $ipAddress;
+        $debtorTransactions->meta       = json_encode($meta);
 
         $t1 = $debtorTransactions->save();
 
@@ -130,6 +135,7 @@ class WalletToWalletTransferTask extends Task
         $creditorTransaction->type      = TxType::TRANSFER;
         $creditorTransaction->creditor  = $amount;
         $creditorTransaction->meta      = json_encode($meta);
+        $debtorTransactions->ip_address = $ipAddress;
         $creditorTransaction->double_id = $debtorTransactions->id;
 
         $t2 = $creditorTransaction->save();
