@@ -135,7 +135,7 @@ class WalletToWalletTransferTask extends Task
         $creditorTransaction->type      = TxType::TRANSFER;
         $creditorTransaction->creditor  = $amount;
         $creditorTransaction->meta      = json_encode($meta);
-        $debtorTransactions->ip_address = $ipAddress;
+        $creditorTransaction->ip_address = $ipAddress;
         $creditorTransaction->double_id = $debtorTransactions->id;
 
         $t2 = $creditorTransaction->save();
