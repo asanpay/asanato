@@ -2,7 +2,7 @@
 
 namespace App\Containers\Wallet\Actions;
 
-use App\Containers\Wallet\Enum\TxType;
+use App\Containers\Tx\Enum\TxType;
 use App\Containers\Transfer\Exceptions\InsufficientWalletBalanceException;
 use App\Containers\Wallet\Exceptions\PayerWalletNotDefinedException;
 use App\Containers\Wallet\Models\Wallet;

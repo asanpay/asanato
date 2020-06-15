@@ -2,14 +2,14 @@
 
 namespace App\Containers\Transfer\Tasks;
 
-use App\Containers\Wallet\Data\Repositories\TxRepository;
-use App\Containers\Wallet\Enum\TxType;
+use App\Containers\Tx\Data\Repositories\TxRepository;
+use App\Containers\Tx\Enum\TxType;
 use App\Containers\Transfer\Exceptions\InsufficientWalletBalanceException;
 use App\Containers\Wallet\Exceptions\InvalidTransferAmountException;
 use App\Containers\Transfer\Exceptions\WalletTransferFailedException;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
-use App\Containers\Wallet\Models\Tx;
+use App\Containers\Tx\Models\Tx;
 use Illuminate\Support\Facades\DB;
 use Tartan\Log\Facades\XLog;
 
