@@ -64,9 +64,9 @@ class GetTopUpWalletPaymentTokenAction extends Action
     protected function getInternalCallbackUrl(bool $isMobileApp): string
     {
         if ($isMobileApp) {
-            return config('wallet-container.internal_callback.mobile');
+            return config('ipg-container.internal_callback.mobile');
         } else {
-            return config('wallet-container.internal_callback.web');
+            return config('ipg-container.internal_callback.web');
         }
     }
 }

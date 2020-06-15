@@ -24,6 +24,7 @@ class RequestTokenErrors
     const INVALID_INVOICE_ID       = -12;
     const INVALID_REFUND           = -13;
     const INVALID_DIRECT           = -14;
+    const INVALID_PAYER_DATA       = -15;
 
     const UNKNOWN_ERROR = -999;
 }

@@ -137,6 +137,21 @@ class RequestPaymentTokenAction extends Action
                 ], 422);
             }
 
+            // payer data ----------------------------------------------------------------------------------------------
+            $validator = Validator::make($request->all(), [
+                'name' => 'nullable|string|max:32',
+                'email' => 'nullable|email|string|max:40',
+                'mobile' => 'nullable|regex:'.config('regex.mobile_regex'),
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'code'       => RequestTokenErrors::INVALID_PAYER_DATA,
+                    'error'      => $validator->errors()->first(),
+                    'x_track_id' => resolve('xTrackId'),
+                ], 422);
+            }
+
             // merchant ------------------------------------------------------------------------------------------------
             $validator = Validator::make($request->all(), [
                 'merchant' => 'required|alpha_num|size:64|exists:merchants,api_key',
@@ -211,15 +226,16 @@ class RequestPaymentTokenAction extends Action
                 'merchant_share' => $calculatedAmounts->merchant_share,
                 'callback_url'   => $request->input('callback_url'),
                 'invoice_number' => trim($request->input('invoice_id')),
-                'description'    => trim($request->input('description')),
                 'payer_name'     => trim($request->input('name')),
-                'payer_email'    => emailify($request->input('email')),
+                'payer_email'    => emailify($request->input('email', '')),
                 'payer_mobile'   => mobilify($request->input('mobile'), '0'),
             ];
-            $jsonb = [
+
+            $data ['meta'] = [
+                'description'    => trim($request->input('description')),
                 // extra
-                'direct' => boolval($request->input('direct', true)),
-                'refund' => boolval($request->input('direct', true)),
+                'direct' => boolval($request->input('direct', false)),
+                'refund' => boolval($request->input('refund', false)),
                 // wage policy at specific time
                 'wage'   => [
                     'policy' => $m->wage_policy,
@@ -228,7 +244,7 @@ class RequestPaymentTokenAction extends Action
                 ],
             ];
 
-            $t = Apiato::call('Transaction@CreateTransactionTask', [$data, $jsonb]);
+            $t = Apiato::call('Transaction@CreateTransactionTask', [$data]);
 
             return response()->json([
                 'code'        => 0,

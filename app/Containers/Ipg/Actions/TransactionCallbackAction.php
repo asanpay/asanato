@@ -5,7 +5,6 @@ namespace App\Containers\Ipg\Actions;
 
 use App\Containers\Ipg\UI\WEB\Requests\IpgTransactionCallbackRequest;
 use App\Containers\Transaction\Enum\TransactionStatus;
-use App\Containers\Transaction\Enum\TransactionType;
 use App\Containers\Transaction\Models\Transaction;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
@@ -19,6 +18,8 @@ class TransactionCallbackAction extends Action
 {
     public function run(string $token, IpgTransactionCallbackRequest $request)
     {
+        XLog::info('TransactionCallbackAction');
+
         $paidSuccessfully = false;
 
         do {
@@ -36,6 +37,7 @@ class TransactionCallbackAction extends Action
 
                 // validate required route parameters
                 if ($validator->fails()) {
+                    XLog::debug('TransactionCallbackAction::run' .  ['error' => $validator->errors()->first()]);
                     return view('ipg::callback')->withErrors([__('ipg.callback_err.tr_not_found_cod1')]);
                 }
 
@@ -44,6 +46,7 @@ class TransactionCallbackAction extends Action
 
                 // transaction not found
                 if (!$transaction) {
+                    XLog::debug('TransactionCallbackAction::run' .  ['error' => 'transaction not found']);
                     return view('ipg::callback')->withErrors([__('ipg.callback_err.tr_not_found_cod2')]);
                 }
 

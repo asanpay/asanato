@@ -3,9 +3,7 @@
 namespace App\Containers\Ipg\UI\WEB\Controllers;
 
 use App\Containers\Ipg\UI\WEB\Requests\IpgGatewayPageRequest;
-use App\Containers\Ipg\UI\WEB\Requests\IpgRequestTokenRequest;
 use App\Containers\Ipg\UI\WEB\Requests\IpgTransactionCallbackRequest;
-use App\Containers\Ipg\UI\WEB\Requests\IpgVerifyTransactionRequest;
 use App\Ship\Parents\Controllers\WebController;
 use Apiato\Core\Foundation\Facades\Apiato;
 

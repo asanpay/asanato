@@ -167,7 +167,7 @@ function transaction_flag()
 
 function xd()
 {
-    $p = array_merge(func_get_args(), ['random' => mt_rand(1,100)]);
+    $p = array_merge(func_get_args(), ['random' => mt_rand(1, 100)]);
     var_dump($p);
     exit;
 }

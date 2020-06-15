@@ -43,7 +43,7 @@ class IpgTransactionCallbackRequest extends Request
      */
     public function rules()
     {
-        XLog::info('GatewayController::callback', $this->all());
+        XLog::info('IpgTransactionCallbackRequest::rules', $this->all());
 
         return [];
     }

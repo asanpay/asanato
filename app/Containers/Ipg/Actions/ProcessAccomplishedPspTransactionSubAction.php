@@ -17,14 +17,14 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
     public function run(Transaction $transaction): void
     {
         if (!empty($transaction->wallet_id)) {
-            // topup wallet transaction
+            // top-up wallet transaction
             $this->processWalletTopUp($transaction);
         }
     }
 
     protected function processWalletTopUp(Transaction $transaction)
     {
-        // if transaction was wallet topup transaction then verification is not required and
+        // if transaction was wallet top-up transaction then verification is not required and
         // we should accomplish it immediately after verification
 
         // check if transaction is ready for accomplishment or not
@@ -34,7 +34,7 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
             } else {
                 // create transaction related Txes
 
-                XLog::info('creating topup wallet txes');
+                XLog::info('creating top-up wallet txes');
                 DB::transaction(function () use (&$transaction) {
                     // incoming money wallet
                     XLog::debug('create incoming money tx');
@@ -63,9 +63,13 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
                             'raw_amount'     => $transaction->payable_amount,
                         ]
                     ];
+                    // add transaction description to TX of destination wallet
+                    if (isset($transaction->meta['description'])) {
+                        $dstWalletTx['meta']['description'] = $transaction->meta['description'];
+                    }
                     Apiato::call('Tx@CreateTxTask', [$dstWalletTx]);
 
-                    // if transaction has benefit for us
+                    // if transaction has benefit for system
                     if ($transaction->benefit > 0) {
                         XLog::debug('create profit tx');
                         $profitWallet = Apiato::call('Wallet@GetSystemWalletTask', [WalletType::PROFIT]);
@@ -82,7 +86,7 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
                 }, 3);
             }
         } else {
-            throw new Exception('The transaction is not ready for accomplishment process!');
+            throw new Exception('The wallet top-up transaction is not ready for accomplishment process!');
         }
     }
 }
