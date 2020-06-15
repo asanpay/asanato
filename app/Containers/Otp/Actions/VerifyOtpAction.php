@@ -8,6 +8,7 @@ use App\Containers\IdentityProof\Enum\IdPoofType;
 use App\Containers\Otp\Enum\OtpReason;
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Actions\Action;
+use Tartan\Log\Facades\XLog;
 
 class VerifyOtpAction extends Action
 {
@@ -17,8 +18,9 @@ class VerifyOtpAction extends Action
      * @param string $reason
      * @return bool
      */
-    public function run(User $user, int $token, string $reason): bool
+    public function run(User $user, string $token, string $reason): bool
     {
+        XLog::debug("VerifyOtpAction token: {$token}");
         // verify token
         if (strlen($token) == 6) {
             // code is in Google Auth token format -- No reason required
@@ -32,6 +34,8 @@ class VerifyOtpAction extends Action
                 $status = false;
             }
         }
+
+        XLog::debug("VerifyOtpAction result:".boolval($status));
 
         //@todo move following part to a TASK
         if ($status === true) {

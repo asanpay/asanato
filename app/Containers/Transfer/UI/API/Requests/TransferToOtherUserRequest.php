@@ -34,7 +34,7 @@ class TransferToOtherUserRequest extends Request
             'src_wallet_id' => "required|exists:wallets,id,user_id,{$userId}",
             'dst_user_id'   => "required|exists:users,id,locked,false|not_in:{$userId}",
             'client_ip'     => 'required|ip',
-            'token'         => "required|numeric|min:1000"
+            'token'         => "required|digits_between:4,6"
         ];
     }
 
