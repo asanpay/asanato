@@ -223,6 +223,7 @@ class TransactionCallbackAction extends Action
                 'status'      => $paidSuccessfully ? 'OK' : 'NOK',
                 'status_code' => $paidSuccessfully ? 0 : -1,
                 'token'       => $token,
+                'tracking_id' => $transaction->tracking_id,
                 'x_track_id'  => resolve('xTrackId'),
             ]);
 

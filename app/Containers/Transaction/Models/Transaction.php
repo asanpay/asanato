@@ -107,6 +107,14 @@ class Transaction extends Model implements TransactionInterface
         return currency($this->payable_amount - $this->merchant_share);
     }
 
+    public function getTrackingIdAttribute($value): int
+    {
+        return 'T'.
+            date('y') .
+            str_pad(date('z'), 3, "0", STR_PAD_LEFT) .
+            strrev($this->id);
+    }
+
     public function tagify()
     {
         return "tr{$this->id}ans";
