@@ -25,6 +25,8 @@ class GetTopUpWalletPaymentTokenAction extends Action
             'is_mobile_app',
         ]);
 
+        $isMobileApp = boolval($request->input('is_mobile_app', false));
+
         $user = $request->user();
 
         $data = [
@@ -34,13 +36,17 @@ class GetTopUpWalletPaymentTokenAction extends Action
             'amount'         => currency($request->input('amount')),
             'payable_amount' => currency($request->input('amount')),
             'merchant_share' => currency($request->input('amount')),
-            'callback_url'   => $request->input('callback_url', $this->getInternalCallbackUrl($request->input('is_mobile_app'))),
+            'callback_url'   => $request->input('callback_url', $this->getInternalCallbackUrl($isMobileApp)),
             'invoice_number' => trim($request->input('invoice_id')),
-            'description'    => trim($request->input('description')),
-            'payer_name'     => $user->full_name,
-            'payer_email'    => emailify($user->email),
-            'payer_mobile'   => mobilify($user->mobile, '0'),
-            'ip_address'     => $request->getClientIp(),
+
+            'payer_name'   => $user->full_name,
+            'payer_email'  => emailify($user->email),
+            'payer_mobile' => mobilify($user->mobile, '0'),
+
+            'ip_address' => $request->getClientIp(),
+            'meta'       => [
+                'description' => trim($request->input('description')),
+            ],
         ];
 
         $t = Apiato::call('Transaction@CreateTransactionTask', [$data]);
@@ -55,7 +61,7 @@ class GetTopUpWalletPaymentTokenAction extends Action
         ];
     }
 
-    protected function getInternalCallbackUrl(bool $isMobileApp) :string
+    protected function getInternalCallbackUrl(bool $isMobileApp): string
     {
         if ($isMobileApp) {
             return config('wallet-container.internal_callback.mobile');
