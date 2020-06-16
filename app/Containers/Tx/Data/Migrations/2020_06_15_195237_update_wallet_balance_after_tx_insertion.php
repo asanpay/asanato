@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class UpdateWlletBalanceAfterTxInsetion extends Migration
+class UpdateWalletBalanceAfterTxInsertion extends Migration
 {
 
     /**

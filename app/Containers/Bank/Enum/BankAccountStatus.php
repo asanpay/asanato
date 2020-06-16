@@ -9,8 +9,8 @@ class BankAccountStatus
 
     use CustomEnums;
 
-    const APPROVED = 'APPROVED';
     const PENDING  = 'PENDING';
+    const APPROVED = 'APPROVED';
     const REJECTED = 'REJECTED';
 
 }

@@ -165,7 +165,7 @@ trait ResponseTrait
      *
      * @return JsonResponse
      */
-    public function created($message = null, $status = 201, array $headers = [], $options = 0)
+    public function created(array $message = null, $status = 201, array $headers = [], $options = 0)
     {
         return $this->apocalypse($message, $status, $headers, $options);
     }

@@ -2,18 +2,18 @@
 
 namespace App\Containers\Bank\Tasks;
 
-use App\Containers\Bank\Data\Repositories\BankRepository;
+use App\Containers\Bank\Data\Repositories\BankAccountRepository;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 use Tartan\Log\Facades\XLog;
 
-class CreateBankTask extends Task
+class CreateBankAccountTask extends Task
 {
 
     protected $repository;
 
-    public function __construct(BankRepository $repository)
+    public function __construct(BankAccountRepository $repository)
     {
         $this->repository = $repository;
     }

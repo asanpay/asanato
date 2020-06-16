@@ -16,24 +16,25 @@ class CreateBankAccountsTable extends Migration
     {
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
-
-            $table->string('owner_first_name', 30)->nullable();
-            $table->string('owner_last_name', 30)->nullable();
-
-            $table->string('sheba', 26)->nullable();
-            $table->string('card_number', 16)->nullable();
-
             $table->unsignedInteger('user_id')->comment('user ID that bank account belongs to');
+            $table->unsignedBigInteger('bank_id')->nullable();
+
+            $table->string('iban', 24)->nullable();
+
+            $table->string('ip_address');
 
             $table->enum('status', BankAccountStatus::toArray())->default(BankAccountStatus::PENDING);
-            $table->unsignedBigInteger('bank_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('bank_accounts', function ($table) {
             $table->foreign('bank_id', 'bank_account_bank')->references('id')->on('banks');
             $table->foreign('user_id', 'bank_account_user')->references('id')->on('users')->onDelete('restrict');
         });
+
+        $query = 'ALTER TABLE bank_accounts ALTER COLUMN ip_address type inet USING ip_address::inet;';
+        \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
     }
 
     /**
