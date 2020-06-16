@@ -1,7 +1,6 @@
 <?php
 
 use App\Containers\User\Enum\UserGender;
-use Google2FA;
 
 $factory->define(\App\Containers\User\Models\User::class, function (Faker\Generator $faker) {
     static $password;
@@ -18,7 +17,7 @@ $factory->define(\App\Containers\User\Models\User::class, function (Faker\Genera
         'password'     => bcrypt('secret78'),
         'meta'         => json_encode(['telegram_id' => $faker->word]),
         'register_ip'  => $faker->ipv4,
-        config('google2fa.otp_secret_column') => Google2FA::generateSecretKey(
+        config('google2fa.otp_secret_column') => \Google2FA::generateSecretKey(
             config('google2fa.key.size', 25),
             config('google2fa.key.prefix', '')
         )
