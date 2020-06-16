@@ -13,6 +13,7 @@ class BankAccount extends Model
         'iban',
         'user_id',
         'ip_address',
+        'status'
     ];
 
     protected $dates = [
@@ -24,4 +25,9 @@ class BankAccount extends Model
      * A resource key to be used by the the JSON API Serializer responses.
      */
     protected $resourceKey = 'bank_accounts';
+
+    public function getShebaAttribute(): string
+    {
+        return 'IR'. $this->iban;
+    }
 }

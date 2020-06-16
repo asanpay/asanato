@@ -28,9 +28,13 @@ class BankAccountTransformer extends Transformer
      */
     public function transform(BankAccount $entity)
     {
+        $entity->refresh();
         $response = [
             'object' => 'BankAccount',
             'id' => $entity->getHashedKey(),
+            'iban' => $entity->iban,
+            'sheba' => $entity->sheba,
+            'status' => $entity->status,
             'created_at' => $entity->created_at,
             'updated_at' => $entity->updated_at,
 
