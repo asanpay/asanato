@@ -31,7 +31,8 @@ class CreateBankAccountRequest extends Request
                 'required',
                 'digits:24',
                 Rule::unique('bank_accounts')->where(function ($query) {
-                    return $query->where('status', BankAccountStatus::APPROVED);
+                    return $query->where('status', BankAccountStatus::APPROVED)
+                        ->whereNull('deleted_at');
                 })
             ],
         ];

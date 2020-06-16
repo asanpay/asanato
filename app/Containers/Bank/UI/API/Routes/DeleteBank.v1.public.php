@@ -4,19 +4,15 @@
  * @apiGroup           Bank
  * @apiName            deleteBank
  *
- * @api                {DELETE} /v0/banks/:id Delete Bank
+ * @api                {DELETE} /v1/banks/:id Delete Bank
  * @apiDescription     Delete Bank
  *
  * @apiVersion         1.0.0
  * @apiPermission      none
  *
- * @apiParam           {String}  parameters here..
  *
  * @apiSuccessExample  {json}  Success-Response:
- * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
-}
+ * HTTP/1.1 204 No Content
  */
 
 /** @var Route $router */

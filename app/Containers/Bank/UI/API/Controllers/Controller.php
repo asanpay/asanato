@@ -4,6 +4,7 @@ namespace App\Containers\Bank\UI\API\Controllers;
 
 use App\Containers\Bank\UI\API\Requests\CreateBankAccountRequest;
 use App\Containers\Bank\UI\API\Requests\CreateBankRequest;
+use App\Containers\Bank\UI\API\Requests\DeleteBankAccountRequest;
 use App\Containers\Bank\UI\API\Requests\DeleteBankRequest;
 use App\Containers\Bank\UI\API\Requests\GetAllBanksRequest;
 use App\Containers\Bank\UI\API\Requests\FindBankByIdRequest;
@@ -89,5 +90,16 @@ class Controller extends ApiController
             BankAccountTransformer::class,
             [], [], null, 201
         );
+    }
+
+    /**
+     * @param DeleteBankAccountRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteBankAccount(DeleteBankAccountRequest $request)
+    {
+        Apiato::call('Bank@DeleteBankAccountAction', [$request]);
+
+        return $this->noContent();
     }
 }
