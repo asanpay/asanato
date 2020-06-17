@@ -70,7 +70,7 @@ class TransferToOtherUserAction extends Action
                 $dstWallet->id,
                 $data['amount'],
                 TxType::TRANSFER,
-                $data['client_ip'],
+                $request->getClientIp(),
                 // TX meta
                 [
                     'description' => $data['description'],

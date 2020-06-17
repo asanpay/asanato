@@ -33,7 +33,6 @@ class TransferToOtherUserRequest extends Request
             'description'   => 'nullable|string|max:64',
             'src_wallet_id' => "required|exists:wallets,id,user_id,{$userId}",
             'dst_user_id'   => "required|exists:users,id,locked,false|not_in:{$userId}",
-            'client_ip'     => 'required|ip',
             'token'         => "required|digits_between:4,6"
         ];
     }
@@ -43,7 +42,6 @@ class TransferToOtherUserRequest extends Request
         $this->merge(
             [
                 'amount'    => english($this->getInputByKey('amount')),
-                'client_ip' => request('client_ip', $this->getClientIp()),
             ]
         );
     }

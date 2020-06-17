@@ -32,7 +32,6 @@ class TransferBetweenMyWalletsRequest extends Request
             'description'   => 'nullable|string|max:64',
             'src_wallet_id' => "required|different:dst_wallet_id|exists:wallets,id,user_id,{$userId}",
             'dst_wallet_id' => "required|different:src_wallet_id|exists:wallets,id,user_id,{$userId}",
-            'client_ip'     => 'required|ip',
         ];
     }
 
@@ -41,7 +40,6 @@ class TransferBetweenMyWalletsRequest extends Request
         $this->merge(
             [
                 'amount'    => english($this->getInputByKey('amount')),
-                'client_ip' => request('client_ip', $this->getClientIp()),
             ]
         );
     }

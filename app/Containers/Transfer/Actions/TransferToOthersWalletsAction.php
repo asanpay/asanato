@@ -29,7 +29,6 @@ class TransferToOthersWalletsAction extends Action
             'dst_wallet_id',
             'amount',
             'description',
-            'client_ip',
             'token',
         ]);
 
@@ -72,7 +71,7 @@ class TransferToOthersWalletsAction extends Action
                 $dstWallet->id,
                 $data['amount'],
                 TxType::TRANSFER,
-                $data['client_ip'],
+                $request->getClientIp(),
                 // TX meta
                 [
                     'description' => $data['description'],

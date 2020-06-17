@@ -63,7 +63,7 @@ class CreateWalletAction extends Action
                         $walletConstProfitWallet->id,
                         $createWalletWage,
                         TxType::WALLET_COST,
-                        $data['client_ip'],
+                        $request->getClientIp(),
                         ['createdWalletId' => $wallet->id]
                     ]);
                 }
