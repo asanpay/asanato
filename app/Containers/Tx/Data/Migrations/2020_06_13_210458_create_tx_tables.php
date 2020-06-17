@@ -14,7 +14,7 @@ class CreateTxTables extends Migration
         Schema::create('txes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('wallet_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable()->comment('completing async by worker');
 
             $table->unsignedSmallInteger('type'); // based on TxType::class
 
