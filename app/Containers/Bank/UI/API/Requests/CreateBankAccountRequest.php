@@ -27,14 +27,15 @@ class CreateBankAccountRequest extends Request
     public function rules()
     {
         return [
-            'iban' => [
+            'iban'    => [
                 'required',
                 'digits:24',
                 Rule::unique('bank_accounts')->where(function ($query) {
                     return $query->where('status', BankAccountStatus::APPROVED)
                         ->whereNull('deleted_at');
-                })
+                }),
             ],
+            'default' => 'nullable|boolean',
         ];
     }
 

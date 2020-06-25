@@ -15,7 +15,9 @@ class WalletRepository extends Repository
      */
     protected $fieldSearchable = [
         'id' => '=',
-        // ...
+        'name' => 'like',
+        'type' => '=',
+        'default' => '=',
     ];
 
 }

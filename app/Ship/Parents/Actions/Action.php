@@ -3,12 +3,11 @@
 namespace App\Ship\Parents\Actions;
 
 use Apiato\Core\Abstracts\Actions\Action as AbstractAction;
+use App\Containers\User\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 /**
  * Class Action.
- *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class Action extends AbstractAction
 {
@@ -22,8 +21,13 @@ abstract class Action extends AbstractAction
         return config('apiato.api.debug', false);
     }
 
-    public function getUser()
+    public function getUser(): User
     {
         return Auth::user();
+    }
+
+    public function getUserId(): int
+    {
+        return $this->getUser()->id;
     }
 }

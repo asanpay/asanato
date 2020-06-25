@@ -24,6 +24,8 @@ class CreateBankAccountsTable extends Migration
             $table->string('ip_address');
 
             $table->enum('status', BankAccountStatus::toArray())->default(BankAccountStatus::PENDING);
+            $table->boolean('default')->default(true);
+
             $table->timestamps();
             $table->softDeletes();
         });

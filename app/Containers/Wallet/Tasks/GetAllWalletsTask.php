@@ -7,8 +7,7 @@ use App\Ship\Parents\Tasks\Task;
 
 class GetAllWalletsTask extends Task
 {
-
-    protected $repository;
+    protected WalletRepository $repository;
 
     public function __construct(WalletRepository $repository)
     {
@@ -17,6 +16,8 @@ class GetAllWalletsTask extends Task
 
     public function run()
     {
-        return $this->repository->paginate();
+        $wallets = $this->repository->paginate();
+
+        return $wallets;
     }
 }

@@ -63,7 +63,7 @@ class Controller extends ApiController
      */
     public function getAllWallets(GetAllWalletsRequest $request)
     {
-        $wallets = Apiato::call('Wallet@GetAllWalletsAction', [$request]);
+        $wallets = Apiato::call('Wallet@GetAllWalletsAction', [$request->user()]);
 
         return $this->transform($wallets, WalletTransformer::class);
     }
@@ -99,7 +99,7 @@ class Controller extends ApiController
      */
     public function getUserWallets(GetUserWalletsRequest $request)
     {
-        $wallets = Apiato::call('Wallet@GetUserWalletsAction', [$request]);
+        $wallets = Apiato::call('Wallet@GetUserWalletsAction', [$request->user()]);
 
         return $this->transform($wallets, WalletTransformer::class);
     }

@@ -6,8 +6,10 @@ use App\Containers\Bank\UI\API\Requests\CreateBankAccountRequest;
 use App\Containers\Bank\UI\API\Requests\CreateBankRequest;
 use App\Containers\Bank\UI\API\Requests\DeleteBankAccountRequest;
 use App\Containers\Bank\UI\API\Requests\DeleteBankRequest;
+use App\Containers\Bank\UI\API\Requests\GetAllBankAccountsRequest;
 use App\Containers\Bank\UI\API\Requests\GetAllBanksRequest;
 use App\Containers\Bank\UI\API\Requests\FindBankByIdRequest;
+use App\Containers\Bank\UI\API\Requests\GetUserBankAccountsRequest;
 use App\Containers\Bank\UI\API\Requests\UpdateBankRequest;
 use App\Containers\Bank\UI\API\Transformers\BankAccountTransformer;
 use App\Containers\Bank\UI\API\Transformers\BankTransformer;
@@ -101,5 +103,27 @@ class Controller extends ApiController
         Apiato::call('Bank@DeleteBankAccountAction', [$request]);
 
         return $this->noContent();
+    }
+
+    /**
+     * @param GetAllBankAccountsRequest $request
+     * @return array
+     */
+    public function getAllBankAccounts(GetAllBankAccountsRequest $request)
+    {
+        $bankAccounts = Apiato::call('Bank@GetAllBankAccountsAction', [$request->user()]);
+
+        return $this->transform($bankAccounts, BankAccountTransformer::class);
+    }
+
+    /**
+     * @param GetUserBankAccountsRequest $request
+     * @return array
+     */
+    public function getUserBankAccounts(GetUserBankAccountsRequest $request)
+    {
+        $bankAccounts = Apiato::call('Bank@GetUserBankAccountsAction', [$request->user()]);
+
+        return $this->transform($bankAccounts, BankAccountTransformer::class);
     }
 }

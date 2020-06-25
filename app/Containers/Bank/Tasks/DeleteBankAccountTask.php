@@ -10,7 +10,7 @@ use Tartan\Log\Facades\XLog;
 
 class DeleteBankAccountTask extends Task
 {
-    protected $repository;
+    protected BankAccountRepository $repository;
 
     public function __construct(BankAccountRepository $repository)
     {

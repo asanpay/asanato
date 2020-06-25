@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Containers\Wallet\Actions;
+namespace App\Containers\Bank\Actions;
 
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
 
-class GetUserWalletsAction extends Action
+class GetAllBankAccountsAction extends Action
 {
     public function run(User $user)
     {
-        $wallets = Apiato::call('Wallet@GetAllWalletsTask', [], [
+        return Apiato::call('Bank@GetAllBankAccountsTask', [], [
             'addRequestCriteria',
             [
                 'pushCurrentUserCriteria' => [$user],
             ],
         ]);
-
-        return $wallets;
     }
 }

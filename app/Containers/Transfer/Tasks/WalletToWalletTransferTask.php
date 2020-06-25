@@ -5,8 +5,10 @@ namespace App\Containers\Transfer\Tasks;
 use App\Containers\Tx\Data\Repositories\TxRepository;
 use App\Containers\Tx\Enum\TxType;
 use App\Containers\Transfer\Exceptions\InsufficientWalletBalanceException;
+use App\Containers\Wallet\Data\Repositories\WalletRepository;
 use App\Containers\Wallet\Exceptions\InvalidTransferAmountException;
 use App\Containers\Transfer\Exceptions\WalletTransferFailedException;
+use App\Containers\Wallet\Models\Wallet;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
 use App\Containers\Tx\Models\Tx;
@@ -16,11 +18,13 @@ use Tartan\Log\Facades\XLog;
 class WalletToWalletTransferTask extends Task
 {
 
-    private TxRepository $TxRepository;
+    private TxRepository $txRepository;
+    private WalletRepository $walletRepository;
 
-    public function __construct(TxRepository $TxRepository)
+    public function __construct(TxRepository $TxRepository, WalletRepository $walletRepository)
     {
-        $this->TxRepository = $TxRepository;
+        $this->txRepository = $TxRepository;
+        $this->walletRepository = $walletRepository;
     }
 
     /**
@@ -35,8 +39,8 @@ class WalletToWalletTransferTask extends Task
      * @throws InvalidTransferAmountException
      */
     public function run(
-        int $sourceWallet,
-        int $destinationWallet,
+        int $sourceWalletId,
+        int $destinationWalletId,
         int $amount,
         int $reason,
         string $ipAddress,
@@ -48,30 +52,39 @@ class WalletToWalletTransferTask extends Task
 
         XLog::debug(__METHOD__, func_get_args());
 
+        $sourceWallet = $this->walletRepository->find($sourceWalletId);
+        if (empty($sourceWallet) || $sourceWallet->get)
+
+
+
         $tx = null;
 
-        DB::transaction(function () use ($sourceWallet, $destinationWallet, $amount, $reason, $ipAddress, $meta, &$tx) {
+        DB::transaction(function () use ($sourceWalletId, $destinationWalletId, $amount, $reason, $ipAddress, $meta, &$tx) {
 
             $meta = $this->prepareExtraFor($reason, $meta);
+
+
 
             // source wallet
             $source = DB::table('wallets')
                 ->where('id', $sourceWallet);
 
+
+
             // prevent from spending more than wallet balance
             $source->whereRaw("balance - locked_balance >= {$amount}");
 
-            $updatedRow = $source->update(['balance' => DB::raw("balance - {$amount}")]);
+//            $updatedRow = $source->update(['balance' => DB::raw("balance - {$amount}")]);
 
-            if ($updatedRow < 1) {
-                throw new InsufficientWalletBalanceException();
-            }
+//            if ($updatedRow < 1) {
+//                throw new InsufficientWalletBalanceException();
+//            }
 
             // destination wallet
 
-            DB::table('wallets')
-                ->where('id', $destinationWallet)
-                ->update(['balance' => DB::raw("balance + {$amount}")]);
+//            DB::table('wallets')
+//                ->where('id', $destinationWallet)
+//                ->update(['balance' => DB::raw("balance + {$amount}")]);
 
             // create transfer transaction in wallet transactions field
             $tx = $this->createWalletTransferTransactions($sourceWallet, $destinationWallet, $amount, $ipAddress,
@@ -118,7 +131,7 @@ class WalletToWalletTransferTask extends Task
         XLog::debug(__METHOD__, func_get_args());
 
         // debtor transaction
-        $debtorTransactions             = $this->TxRepository->makeModel();
+        $debtorTransactions             = $this->txRepository->makeModel();
         $debtorTransactions->wallet_id  = $sourceWalletId;
         $debtorTransactions->type       = TxType::TRANSFER;
         $debtorTransactions->debtor     = $amount;
@@ -130,7 +143,7 @@ class WalletToWalletTransferTask extends Task
         XLog::debug(__METHOD__ . " T1 = {$t1}");
 
         // creditor transaction
-        $creditorTransaction            = $this->TxRepository->makeModel();
+        $creditorTransaction            = $this->txRepository->makeModel();
         $creditorTransaction->wallet_id = $destinationWalletId;
         $creditorTransaction->type      = TxType::TRANSFER;
         $creditorTransaction->creditor  = $amount;
