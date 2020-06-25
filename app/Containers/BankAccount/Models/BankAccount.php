@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Bank\Models;
+namespace App\Containers\BankAccount\Models;
 
 use App\Ship\Parents\Models\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

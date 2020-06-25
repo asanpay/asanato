@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Containers\Bank\UI\API\Requests;
+namespace App\Containers\BankAccount\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class GetAllBankAccountsRequest
+ * Class GetUserBankAccountsRequest
  */
-class GetAllBankAccountsRequest extends Request
+class GetUserBankAccountsRequest extends Request
 {
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -24,7 +24,9 @@ class GetAllBankAccountsRequest extends Request
      *
      * @var  array
      */
-    protected $decode = [];
+    protected $decode = [
+        'id',
+    ];
 
     /**
      * Defining the URL parameters (e.g, `/user/{id}`) allows applying
@@ -32,14 +34,18 @@ class GetAllBankAccountsRequest extends Request
      *
      * @var  array
      */
-    protected $urlParameters = [];
+    protected $urlParameters = [
+        'id',
+    ];
 
     /**
      * @return  array
      */
     public function rules()
     {
-        return [];
+        return [
+            'id' => 'required|numeric|exists:users'
+        ];
     }
 
     /**
@@ -48,7 +54,7 @@ class GetAllBankAccountsRequest extends Request
     public function authorize()
     {
         return $this->check([
-            'hasAccess',
+            'hasAccess|isOwner',
         ]);
     }
 }

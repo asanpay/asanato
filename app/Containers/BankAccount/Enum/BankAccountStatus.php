@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Bank\Enum;
+namespace App\Containers\BankAccount\Enum;
 
 use App\Ship\Traits\CustomEnums;
 

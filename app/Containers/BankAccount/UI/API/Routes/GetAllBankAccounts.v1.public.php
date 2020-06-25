@@ -22,7 +22,7 @@
 /** @var Route $router */
 $router->get('bank-accounts', [
     'as' => 'api_bank_get_all_bank_accounts',
-    'uses'  => 'BankAccountController@getAllBankAccounts',
+    'uses'  => 'Controller@getAllBankAccounts',
     'middleware' => [
       'auth:api',
     ],

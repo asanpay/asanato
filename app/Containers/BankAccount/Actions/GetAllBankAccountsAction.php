@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Bank\Actions;
+namespace App\Containers\BankAccount\Actions;
 
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Actions\Action;
@@ -10,7 +10,7 @@ class GetAllBankAccountsAction extends Action
 {
     public function run(User $user)
     {
-        return Apiato::call('Bank@GetAllBankAccountsTask', [], [
+        return Apiato::call('BankAccount@GetAllBankAccountsTask', [], [
             'addRequestCriteria',
             [
                 'pushCurrentUserCriteria' => [$user],

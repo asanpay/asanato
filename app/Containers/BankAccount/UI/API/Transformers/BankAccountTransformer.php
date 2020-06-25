@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Bank\UI\API\Transformers;
+namespace App\Containers\BankAccount\UI\API\Transformers;
 
-use App\Containers\Bank\Models\BankAccount;
+use App\Containers\BankAccount\Models\BankAccount;
 use App\Ship\Parents\Transformers\Transformer;
 
 class BankAccountTransformer extends Transformer

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Bank\Tasks;
+namespace App\Containers\BankAccount\Tasks;
 
-use App\Containers\Bank\Data\Repositories\BankAccountRepository;
+use App\Containers\BankAccount\Data\Repositories\BankAccountRepository;
 use App\Ship\Exceptions\DeleteResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
