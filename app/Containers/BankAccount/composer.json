@@ -1,0 +1,6 @@
+{
+  "name": "apiato/bankaccount",
+  "description": "BankAccount Container for apiato.",
+  "require": {
+  }
+}
