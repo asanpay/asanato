@@ -2,7 +2,10 @@
 
 namespace App\Containers\BankAccount\UI\API\Requests;
 
+use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\BankAccount\Enum\BankAccountStatus;
 use App\Ship\Parents\Requests\Request;
+use Illuminate\Validation\Rule;
 
 /**
  * Class UpdateBankAccountRequest.
@@ -23,7 +26,7 @@ class UpdateBankAccountRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => '',
+        'permissions' => 'update-bank-accounts',
         'roles'       => '',
     ];
 
@@ -33,7 +36,9 @@ class UpdateBankAccountRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'id',
+        'user_id',
+        'bank_id',
     ];
 
     /**
@@ -43,7 +48,8 @@ class UpdateBankAccountRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'id',
+        'user_id',
     ];
 
     /**
@@ -52,8 +58,18 @@ class UpdateBankAccountRequest extends Request
     public function rules()
     {
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'id'      => 'required|exists:bank_accounts,id',
+            'iban'    => [
+                'nullable',
+                'digits:24',
+                Rule::unique('bank_accounts')->where(function ($query) {
+                    return $query->where('status', BankAccountStatus::APPROVED)
+                        ->whereNull('deleted_at');
+                }),
+            ],
+            'user_id' => 'required|exists:users,id',
+            'bank_id' => 'required|exists:banks,id',
+            'status'  => 'nullable|in:' . BankAccountStatus::commaSeparated(),
         ];
     }
 
@@ -63,7 +79,12 @@ class UpdateBankAccountRequest extends Request
     public function authorize()
     {
         return $this->check([
-            'hasAccess',
+            'hasAccess|isOwner',
         ]);
+    }
+
+    public function isOwner()
+    {
+        return (Apiato::call('BankAccount@FindBankAccountByIdTask', [$this->id])->user_id == $this->user_id);
     }
 }

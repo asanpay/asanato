@@ -46,10 +46,13 @@ class Wallet extends Model
      */
     protected $resourceKey = 'wallets';
 
+    public function user()
+    {
+        return $this->belongsTo('App\Containers\User\Models\User', 'user_id', 'id');
+    }
+
     public function merchants()
     {
-        $this->dateFormat;
-
         return $this->belongsToMany(Merchant::class, 'merchant_wallet');
     }
 

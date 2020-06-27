@@ -24,7 +24,7 @@ class DeleteWalletRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => 'delete-wallet',
+        'permissions' => 'delete-wallets',
         'roles'       => '',
     ];
 

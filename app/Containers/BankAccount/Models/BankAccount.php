@@ -2,6 +2,7 @@
 
 namespace App\Containers\BankAccount\Models;
 
+use App\Containers\BankAccount\Enum\BankAccountStatus;
 use App\Ship\Parents\Models\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -26,8 +27,23 @@ class BankAccount extends Model
      */
     protected $resourceKey = 'bank_accounts';
 
+    public function user()
+    {
+        return $this->belongsTo('App\Containers\User\Models\User', 'user_id', 'id');
+    }
+
     public function getShebaAttribute(): string
     {
         return 'IR'. $this->iban;
+    }
+
+    public function isApproved()
+    {
+        return $this->status === BankAccountStatus::APPROVED;
+    }
+
+    public function isDefault()
+    {
+        return boolval($this->default) === true;
     }
 }

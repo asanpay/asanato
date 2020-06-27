@@ -2,10 +2,10 @@
 
 /**
  * @apiGroup           BankAccount
- * @apiName            getAllBankAccounts
+ * @apiName            getUserBankAccounts
  *
- * @api                {GET} /v1/bank-accounts GetAllBankAccounts
- * @apiDescription     Get All User BankAccounts
+ * @api                {GET} /v1/users/{user_id}/bank-accounts GetUserBankAccounts
+ * @apiDescription     Get a User BankAccounts
  *
  * @apiVersion         1.0.0
  * @apiPermission      none
@@ -20,9 +20,9 @@
  */
 
 /** @var Route $router */
-$router->get('bank-accounts', [
-    'as' => 'api_bank_get_all_bank_accounts',
-    'uses'  => 'Controller@getAllBankAccounts',
+$router->get('users/{user_id}/bank-accounts', [
+    'as' => 'api_bank_get_user_bank_accounts',
+    'uses'  => 'Controller@getUserBankAccounts',
     'middleware' => [
       'auth:api',
     ],

@@ -24,7 +24,7 @@ class UpdateWalletRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => 'update-wallet',
+        'permissions' => 'update-wallets',
         'roles'       => '',
     ];
 

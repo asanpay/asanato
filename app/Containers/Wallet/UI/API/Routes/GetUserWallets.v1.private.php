@@ -8,7 +8,7 @@
  * @apiDescription     Get all user wallets
  *
  * @apiVersion         1.0.0
- * @apiPermission      read-wallet
+ * @apiPermission      read-wallets
  *
  * @apiParam           {String} id hashed user id
  *

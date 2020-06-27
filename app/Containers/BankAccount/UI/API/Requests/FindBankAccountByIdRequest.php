@@ -2,6 +2,7 @@
 
 namespace App\Containers\BankAccount\UI\API\Requests;
 
+use Apiato\Core\Foundation\Facades\Apiato;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -23,7 +24,7 @@ class FindBankAccountByIdRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => '',
+        'permissions' => 'read-bank-accounts',
         'roles'       => '',
     ];
 
@@ -33,7 +34,8 @@ class FindBankAccountByIdRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'id',
+        'user_id',
     ];
 
     /**
@@ -43,7 +45,8 @@ class FindBankAccountByIdRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'id',
+        'user_id',
     ];
 
     /**
@@ -52,8 +55,8 @@ class FindBankAccountByIdRequest extends Request
     public function rules()
     {
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'id'      => 'required|exists:bank_accounts',
+            'user_id' => 'required|exists:users,id',
         ];
     }
 
@@ -63,7 +66,12 @@ class FindBankAccountByIdRequest extends Request
     public function authorize()
     {
         return $this->check([
-            'hasAccess',
+            'hasAccess|isOwner',
         ]);
+    }
+
+    public function isOwner()
+    {
+        return Apiato::call('BankAccount@FindBankAccountByIdTask', [$this->id])->user_id == $this->user_id;
     }
 }

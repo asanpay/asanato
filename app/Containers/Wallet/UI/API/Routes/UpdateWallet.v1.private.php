@@ -8,7 +8,7 @@
  * @apiDescription     Update wallet data
  *
  * @apiVersion         1.0.0
- * @apiPermission      update-wallet
+ * @apiPermission      update-wallets
  *
  * @apiParam           {String} id  hashed wallet id
  * @apiParam           {String} name  wallet name

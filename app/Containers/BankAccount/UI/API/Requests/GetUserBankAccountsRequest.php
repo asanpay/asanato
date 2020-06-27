@@ -2,7 +2,9 @@
 
 namespace App\Containers\BankAccount\UI\API\Requests;
 
+use App\Containers\Authentication\Tasks\GetAuthenticatedUserTask;
 use App\Ship\Parents\Requests\Request;
+use Illuminate\Support\Facades\App;
 
 /**
  * Class GetUserBankAccountsRequest
@@ -15,7 +17,7 @@ class GetUserBankAccountsRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => 'view-all-bank-accounts',
+        'permissions' => 'read-bank-accounts',
         'roles'       => '',
     ];
 
@@ -25,7 +27,7 @@ class GetUserBankAccountsRequest extends Request
      * @var  array
      */
     protected $decode = [
-        'id',
+        'user_id',
     ];
 
     /**
@@ -35,7 +37,7 @@ class GetUserBankAccountsRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        'id',
+        'user_id',
     ];
 
     /**
@@ -44,7 +46,7 @@ class GetUserBankAccountsRequest extends Request
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:users'
+            'user_id' => 'required|numeric|exists:users'
         ];
     }
 
@@ -56,5 +58,10 @@ class GetUserBankAccountsRequest extends Request
         return $this->check([
             'hasAccess|isOwner',
         ]);
+    }
+
+    public function isOwner()
+    {
+        return App::make(GetAuthenticatedUserTask::class)->run()->id == $this->user_id;
     }
 }

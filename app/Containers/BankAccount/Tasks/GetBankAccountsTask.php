@@ -5,7 +5,7 @@ namespace App\Containers\BankAccount\Tasks;
 use App\Containers\BankAccount\Data\Repositories\BankAccountRepository;
 use App\Ship\Parents\Tasks\Task;
 
-class GetAllBankAccountsTask extends Task
+class GetBankAccountsTask extends Task
 {
     protected BankAccountRepository $repository;
 

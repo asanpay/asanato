@@ -5,12 +5,13 @@
  * @apiName            createBankAccount
  *
  * @api                {POST} /v1/bank-accounts Create BankAccount
- * @apiDescription     Create Bank
+ * @apiDescription     Create Bank Account
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      create-bank-accounts
  *
  * @apiParam           {int}  iban IBAN (Sheba number) of the user only 24 digits without IR
+ * @apiParam           {string}  user_id (optional) only if logged in user has authorization to create bank account for other users
  *
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 201 OK
@@ -18,6 +19,7 @@
     "data": {
         "object": "BankAccount",
         "id": "ao6grd4ed38kyeqz",
+        "user_id": "ao6grd4ed38kyeqz",
         "iban": "123456789012345678901234",
         "sheba": "IR123456789012345678901234",
         "status": "PENDING",

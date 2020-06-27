@@ -17,8 +17,13 @@ class CreateBankAccountRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => '',
+        'permissions' => 'create-bank-accounts',
         'roles'       => '',
+    ];
+
+    protected $decode = [
+        'user_id',
+        'bank_id',
     ];
 
     /**
@@ -36,6 +41,8 @@ class CreateBankAccountRequest extends Request
                 }),
             ],
             'default' => 'nullable|boolean',
+            'user_id' => 'nullable|exists:users,id',
+            'bank_id' => 'nullable|exists:banks,id',
         ];
     }
 

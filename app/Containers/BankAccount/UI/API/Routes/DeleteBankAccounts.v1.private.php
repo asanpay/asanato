@@ -4,11 +4,11 @@
  * @apiGroup           BankAccount
  * @apiName            deleteBankAccount
  *
- * @api                {DELETE} /v1/bank-accounts/:id Delete Bank Account
- * @apiDescription     Delete BankAccount
+ * @api                {DELETE} /v1/users/{user_id}/bank-accounts/:id Delete Bank Account
+ * @apiDescription     Delete User BankAccount
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      delete-bank-accounts
  *
  *
  * @apiSuccessExample  {json}  Success-Response:
@@ -16,7 +16,7 @@
  */
 
 /** @var Route $router */
-$router->delete('bank-accounts/{id}', [
+$router->delete('users/{user_id}/bank-accounts/{id}', [
     'as' => 'api_bank_delete_bank_account',
     'uses'  => 'Controller@deleteBankAccount',
     'middleware' => [

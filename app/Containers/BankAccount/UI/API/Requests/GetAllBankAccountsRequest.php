@@ -15,7 +15,7 @@ class GetAllBankAccountsRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => 'view-all-bank-accounts',
+        'permissions' => 'read-bank-accounts',
         'roles'       => '',
     ];
 
@@ -24,7 +24,10 @@ class GetAllBankAccountsRequest extends Request
      *
      * @var  array
      */
-    protected $decode = [];
+    protected $decode = [
+        'id',
+        'user_id',
+    ];
 
     /**
      * Defining the URL parameters (e.g, `/user/{id}`) allows applying
@@ -39,7 +42,10 @@ class GetAllBankAccountsRequest extends Request
      */
     public function rules()
     {
-        return [];
+        return [
+            'id'      => 'required|exists:bank_accounts',
+            'user_id' => 'required|exists:users,id',
+        ];
     }
 
     /**

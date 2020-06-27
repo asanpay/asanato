@@ -6,6 +6,7 @@ use App\Containers\BankAccount\UI\API\Requests\GetUserBankAccountsRequest;
 use App\Containers\BankAccount\UI\API\Requests\CreateBankAccountRequest;
 use App\Containers\BankAccount\UI\API\Requests\DeleteBankAccountRequest;
 use App\Containers\BankAccount\UI\API\Requests\GetAllBankAccountsRequest;
+use App\Containers\BankAccount\UI\API\Requests\UpdateBankAccountRequest;
 use App\Containers\BankAccount\UI\API\Transformers\BankAccountTransformer;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;
@@ -39,9 +40,21 @@ class Controller extends ApiController
      */
     public function deleteBankAccount(DeleteBankAccountRequest $request)
     {
-        Apiato::call('BankAccount@DeleteBankAccountAction', [$request]);
+        Apiato::transactionalCall('BankAccount@DeleteBankAccountAction', [$request]);
 
         return $this->noContent();
+    }
+
+    /**
+     * @param UpdateBankAccountRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateBankAccount(UpdateBankAccountRequest $request)
+    {
+        $bankAccounts = Apiato::call('BankAccount@UpdateBankAccountAction', [$request]);
+
+        return $this->transform($bankAccounts, BankAccountTransformer::class);
     }
 
     /**
@@ -51,7 +64,7 @@ class Controller extends ApiController
      */
     public function getAllBankAccounts(GetAllBankAccountsRequest $request)
     {
-        $bankAccounts = Apiato::call('BankAccount@GetAllBankAccountsAction', [$request->user()]);
+        $bankAccounts = Apiato::call('BankAccount@GetBankAccountsAction', [$request->user()]);
 
         return $this->transform($bankAccounts, BankAccountTransformer::class);
     }
@@ -62,7 +75,7 @@ class Controller extends ApiController
      */
     public function getUserBankAccounts(GetUserBankAccountsRequest $request)
     {
-        $bankAccounts = Apiato::call('BankAccount@GetUserBankAccountsAction', [$request->user()]);
+        $bankAccounts = Apiato::call('BankAccount@GetBankAccountsAction', [$request->user()]);
 
         return $this->transform($bankAccounts, BankAccountTransformer::class);
     }

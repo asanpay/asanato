@@ -32,6 +32,7 @@ class WalletTransformer extends Transformer
         $response = [
             'object'         => 'Wallet',
             'id'             => $entity->getHashedKey(),
+            'user_id'        => $entity->user->getHashedKey(),
             'name'           => $entity->name,
             'raw_balance'    => intval($entity->balance),
             'locked_balance' => intval($entity->locked_balance),

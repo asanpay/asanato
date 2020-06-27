@@ -6,6 +6,7 @@ use App\Containers\BankAccount\Data\Repositories\BankAccountRepository;
 use App\Ship\Exceptions\UpdateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class UpdateBankAccountTask extends Task
 {
@@ -17,9 +18,12 @@ class UpdateBankAccountTask extends Task
         $this->repository = $repository;
     }
 
-    public function run($id, array $data)
+    public function run(int $id, array $data)
     {
         try {
+            if (isset($data['default']) && $data['default'] == true) {
+                DB::update('update bank_accounts set "default" = false where user_id = ?', [$data['user_id']]);
+            }
             return $this->repository->update($data, $id);
         }
         catch (Exception $exception) {

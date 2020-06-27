@@ -8,7 +8,7 @@
  * @apiDescription     Delete a non-default Wallet
  *
  * @apiVersion         1.0.0
- * @apiPermission      delete-wallet
+ * @apiPermission      delete-wallets
  *
  * @apiParam           {String}  id Encrypted wallet ID
  *

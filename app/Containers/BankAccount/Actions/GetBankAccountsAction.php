@@ -6,11 +6,11 @@ use App\Containers\User\Models\User;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
 
-class GetAllBankAccountsAction extends Action
+class GetBankAccountsAction extends Action
 {
     public function run(User $user)
     {
-        return Apiato::call('BankAccount@GetAllBankAccountsTask', [], [
+        return Apiato::call('BankAccount@GetBankAccountsTask', [], [
             'addRequestCriteria',
             [
                 'pushCurrentUserCriteria' => [$user],

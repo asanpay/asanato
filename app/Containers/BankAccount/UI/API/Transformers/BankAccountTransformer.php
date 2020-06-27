@@ -32,6 +32,7 @@ class BankAccountTransformer extends Transformer
         $response = [
             'object' => 'BankAccount',
             'id' => $entity->getHashedKey(),
+            'user_id' => $entity->user->getHashedKey(),
             'iban' => $entity->iban,
             'sheba' => $entity->sheba,
             'status' => $entity->status,
