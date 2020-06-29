@@ -46,7 +46,7 @@ class GetUserBankAccountsRequest extends Request
     public function rules()
     {
         return [
-            'user_id' => 'required|numeric|exists:users'
+            'user_id' => 'required|numeric|exists:users,id'
         ];
     }
 

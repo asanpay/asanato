@@ -2,6 +2,7 @@
 
 namespace App\Containers\BankAccount\UI\API\Controllers;
 
+use App\Containers\BankAccount\UI\API\Requests\FindBankAccountByIdRequest;
 use App\Containers\BankAccount\UI\API\Requests\GetUserBankAccountsRequest;
 use App\Containers\BankAccount\UI\API\Requests\CreateBankAccountRequest;
 use App\Containers\BankAccount\UI\API\Requests\DeleteBankAccountRequest;
@@ -77,7 +78,19 @@ class Controller extends ApiController
      */
     public function getUserBankAccounts(GetUserBankAccountsRequest $request)
     {
-        $bankAccounts = Apiato::call('BankAccount@GetBankAccountsAction', [$request->user()]);
+        $bankAccounts = Apiato::call('BankAccount@GetUserBankAccountsAction', [$request->user()]);
+
+        return $this->transform($bankAccounts, BankAccountTransformer::class);
+    }
+
+    /**
+     * @param FindBankAccountByIdRequest $request
+     *
+     * @return mixed
+     */
+    public function findUserAccountById(FindBankAccountByIdRequest $request)
+    {
+        $bankAccounts = Apiato::call('BankAccount@FindBankAccountByIdAction', [$request->id]);
 
         return $this->transform($bankAccounts, BankAccountTransformer::class);
     }

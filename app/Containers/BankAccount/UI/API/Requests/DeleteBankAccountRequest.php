@@ -59,6 +59,6 @@ class DeleteBankAccountRequest extends Request
 
     public function isOwner()
     {
-      return (Apiato::call('BankAccount@FindBankAccountByIdTask', [$this->id])->user_id == $this->user_id);
+      return ($this->id && Apiato::call('BankAccount@FindBankAccountByIdTask', [$this->id])->user_id == $this->user_id);
     }
 }

@@ -13,13 +13,30 @@
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK
 {
-}Zkey
+    "data": {
+        "object": "BankAccount",
+        "id": "8ykwxd4gx3ampj9v",
+        "user_id": "qmv7dk48x5b690wx",
+        "iban": "123456789012345678901234",
+        "sheba": "IR123456789012345678901234",
+        "status": "PENDING",
+        "created_at": "2020-06-29 11:25:42",
+        "updated_at": "2020-06-29 11:25:42"
+    },
+    "meta": {
+        "include": [],
+        "custom": []
+    },
+    "message": "everything's ok",
+    "code": 0,
+    "xTrackId": "861adbb3f4"
+}
  */
 
 /** @var Route $router */
 $router->get('users/{user_id}/bank-accounts/{id}', [
-    'as' => 'api_bank_get_all_bank_accounts',
-    'uses'  => 'Controller@getAllBankAccounts',
+    'as' => 'api_bank_find_a_bank_account',
+    'uses'  => 'Controller@findUserAccountById',
     'middleware' => [
       'auth:api',
     ],
