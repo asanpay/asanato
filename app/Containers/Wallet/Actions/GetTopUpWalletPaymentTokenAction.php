@@ -3,6 +3,7 @@
 namespace App\Containers\Wallet\Actions;
 
 use App\Containers\Transaction\Enum\TransactionType;
+use App\Containers\Wallet\Exceptions\WalletIsLockedException;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
@@ -25,6 +26,12 @@ class GetTopUpWalletPaymentTokenAction extends Action
             'is_mobile_app',
         ]);
 
+
+        //$wallet = Apiato::call('Wallet@FindWalletByIdTask', [$data['wallet_id']]);
+        //if ($wallet->isFullLocked()) {
+        //    throw new WalletIsLockedException();
+        //}
+
         $isMobileApp = boolval($request->input('is_mobile_app', false));
 
         $user = $request->user();
@@ -32,7 +39,7 @@ class GetTopUpWalletPaymentTokenAction extends Action
         $data = [
             'type'           => TransactionType::WALLET_TOPUP,
             'user_id'        => $user->id,
-            'wallet_id'      => $request->getInputByKey('wallet_id'),
+            'wallet_id'      => $data['wallet_id'],
             'amount'         => currency($request->input('amount')),
             'payable_amount' => currency($request->input('amount')),
             'merchant_share' => currency($request->input('amount')),

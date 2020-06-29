@@ -90,6 +90,11 @@ class Wallet extends Model
         return boolval($this->default) === true;
     }
 
+    public function isFullLocked(): bool
+    {
+        return boolval($this->locked) === true;
+    }
+
     public function belongsToUser(int $userId): bool
     {
         return intval($this->user_id) === $userId;
