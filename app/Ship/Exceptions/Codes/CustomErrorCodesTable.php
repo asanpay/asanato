@@ -73,4 +73,8 @@ class CustomErrorCodesTable extends ErrorCodesTable
     const USER_IS_LOCKED = [
         'code' => 100012
     ];
+
+    const ACCOUNT_DELETE_FAILED = [
+        'code' => 100013
+    ];
 }

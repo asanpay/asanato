@@ -3,6 +3,7 @@
 namespace App\Containers\BankAccount\Tasks;
 
 use App\Containers\BankAccount\Data\Repositories\BankAccountRepository;
+use App\Containers\BankAccount\Exceptions\CouldNotDeleteAccountException;
 use App\Ship\Exceptions\DeleteResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
@@ -19,6 +20,16 @@ class DeleteBankAccountTask extends Task
 
     public function run($id)
     {
+        $account = $this->repository->find($id);
+
+        if ($account->isApproved()) {
+            throw new CouldNotDeleteAccountException();
+        }
+
+        if ($account->isDefault()) {
+            throw new CouldNotDeleteAccountException('Could not delete default account');
+        }
+
         try {
             return $this->repository->delete($id);
         }

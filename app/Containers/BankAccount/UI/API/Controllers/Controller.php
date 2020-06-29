@@ -41,8 +41,6 @@ class Controller extends ApiController
      */
     public function deleteBankAccount(DeleteBankAccountRequest $request)
     {
-        return $this->message('delete bank account has not implemented yet', 501);
-
         Apiato::transactionalCall('BankAccount@DeleteBankAccountAction', [$request]);
 
         return $this->noContent();
