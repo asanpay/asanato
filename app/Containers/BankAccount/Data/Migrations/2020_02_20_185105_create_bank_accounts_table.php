@@ -1,6 +1,6 @@
 <?php
 
-use App\Containers\Bank\Enum\BankAccountStatus;
+use App\Containers\BankAccount\Enum\BankAccountStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,7 +24,7 @@ class CreateBankAccountsTable extends Migration
             $table->string('ip_address');
 
             $table->enum('status', BankAccountStatus::toArray())->default(BankAccountStatus::PENDING);
-            $table->boolean('default')->default(true);
+            $table->boolean('default')->default(false);
 
             $table->timestamps();
             $table->softDeletes();

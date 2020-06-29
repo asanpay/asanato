@@ -15,6 +15,7 @@ class BankAccountRepository extends Repository
      */
     protected $fieldSearchable = [
         'id' => '=',
+        'user_id' => '=',
         'iban' => '=',
         'status' => '=',
         'default' => '=',

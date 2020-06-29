@@ -24,10 +24,7 @@ class GetAllBankAccountsRequest extends Request
      *
      * @var  array
      */
-    protected $decode = [
-        'id',
-        'user_id',
-    ];
+    protected $decode = [];
 
     /**
      * Defining the URL parameters (e.g, `/user/{id}`) allows applying
@@ -42,10 +39,7 @@ class GetAllBankAccountsRequest extends Request
      */
     public function rules()
     {
-        return [
-            'id'      => 'required|exists:bank_accounts',
-            'user_id' => 'required|exists:users,id',
-        ];
+        return [];
     }
 
     /**

@@ -17,7 +17,7 @@ class CreateBankAccountRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => 'create-bank-accounts',
+        'permissions' => '',
         'roles'       => '',
     ];
 

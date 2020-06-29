@@ -3,6 +3,7 @@
 namespace Apiato\Core\Abstracts\Tasks;
 
 use Apiato\Core\Traits\HasRequestCriteriaTrait;
+use Prettus\Repository\Criteria\RequestCriteria;
 
 /**
  * Class Task.
@@ -12,5 +13,4 @@ use Apiato\Core\Traits\HasRequestCriteriaTrait;
 abstract class Task
 {
     use HasRequestCriteriaTrait;
-
 }
