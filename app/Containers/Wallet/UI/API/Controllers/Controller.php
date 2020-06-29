@@ -35,6 +35,7 @@ class Controller extends ApiController
             'wallet' => $transformedWallet->toArray()['data'],
         ];
 
+        // add payer wallet id to response
         if ($request->payer_wallet_id) {
             $payerWallet           = Apiato::call('Wallet@FindWalletByIdTask', [$request->payer_wallet_id]);
             $transformedWallet     = Fractal::create($payerWallet, WalletTransformer::class);

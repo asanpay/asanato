@@ -8,7 +8,7 @@
  * @apiDescription     Create a user wallet
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      create-wallets
  *
  * @apiParam           {String}  name
  * @apiParam           {Boolean}  default

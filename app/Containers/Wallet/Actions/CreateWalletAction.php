@@ -26,7 +26,9 @@ class CreateWalletAction extends Action
         $user =  $request->user();
         $data['user_id'] = $request->user()->id;
 
+        // get user wallet IDs
         $userWallets = $user->wallets->pluck('id')->all();
+        // check whether create wage needed
         $createWageRequired = (count($userWallets) > 0);
 
 
@@ -38,7 +40,6 @@ class CreateWalletAction extends Action
         if (count($userWallets) == 0) {
             $data['default'] = true; // first wallet should be the default wallet
         }
-
 
         try {
             DB::beginTransaction();
@@ -52,15 +53,18 @@ class CreateWalletAction extends Action
                     // check for wallet balance that is responsible for create wallet's wage
                     $payerWallet = Apiato::call('Wallet@FindWalletByIdTask', [$payerWalletId]);
 
+                    // if payer wallet has enough balance to pay the wage
                     if ($payerWallet->getBalance() < $createWalletWage) {
                         throw new InsufficientWalletBalanceException();
                     }
 
-                    $walletConstProfitWallet = Apiato::call('Wallet@GetCreateWalletProfitWalletTask');
+                    // transfer wage from payer wallet to system profit wallet
+                    $walletCostProfitWallet = Apiato::call('Wallet@GetProfitWalletTask');
 
+                    // create profit transaction
                     Apiato::call('Transfer@WalletToWalletTransferTask', [
                         $payerWallet->id,
-                        $walletConstProfitWallet->id,
+                        $walletCostProfitWallet->id,
                         $createWalletWage,
                         TxType::WALLET_COST,
                         $request->getClientIp(),

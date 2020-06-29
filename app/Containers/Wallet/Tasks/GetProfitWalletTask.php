@@ -7,7 +7,7 @@ use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class GetCreateWalletProfitWalletTask extends Task
+class GetProfitWalletTask extends Task
 {
 
     protected $repository;
