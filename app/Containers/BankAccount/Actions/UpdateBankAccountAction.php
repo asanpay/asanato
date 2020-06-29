@@ -21,6 +21,9 @@ class UpdateBankAccountAction extends Action
         if ($bankAccount->isApproved()) {
             // because we could not changed IBAN and bank of Approved accounts
             unset($data['iban'], $data['bank_id']);
+        } else {
+            // because we could not mark non-approved account as default account
+            unset($data['default']);
         }
 
         if ($request->user()->can('update-bank-accounts') !== true) {

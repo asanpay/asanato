@@ -11,7 +11,6 @@ use Tartan\Log\Facades\XLog;
 
 class CreateBankAccountTask extends Task
 {
-
     protected $repository;
 
     public function __construct(BankAccountRepository $repository)
@@ -27,7 +26,7 @@ class CreateBankAccountTask extends Task
 
             // remove default flag from all other user accounts
             if ($makeDefault === true) {
-                DB::update('update bank_Accounts set "default" = false where user_id = ?', [$data['user_id']]);
+                DB::update('update bank_accounts set "default" = false where user_id = ?', [$data['user_id']]);
             }
 
             return $this->repository->create($data);
