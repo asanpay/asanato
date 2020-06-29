@@ -4,7 +4,7 @@
  * @apiGroup           Wallet
  * @apiName            DeleteWallet
  *
- * @api                {DELETE} /v1/wallets/:id deleteWallet
+ * @api                {DELETE} /v1/users/{user_id}/wallets/:id deleteWallet
  * @apiDescription     Delete a non-default Wallet
  *
  * @apiVersion         1.0.0
@@ -17,7 +17,7 @@
  */
 
 /** @var Route $router */
-$router->delete('wallets/{id}', [
+$router->delete('users/{user_id}/wallets/{id}', [
     'as' => 'api_wallet_delete_wallet',
     'uses'  => 'Controller@deleteWallet',
     'middleware' => [

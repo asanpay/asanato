@@ -8,10 +8,12 @@
  * @apiDescription     Update User BankAccount
  *
  * @apiVersion         1.0.0
- * @apiPermission      delete-bank-accounts
+ * @apiPermission      update-bank-accounts
  *
  * @apiParam           {int}  iban IBAN (Sheba number) of the user only 24 digits without IR
- * @apiParam           {int}  iban IBAN (Sheba number) of the user only 24 digits without IR
+ * @apiParam           {int}  bank_id id of the bank that account belong to
+ * @apiParam           {boolean}  default make this account user's default account
+ * @apiParam           {string}  status the status of the account (update-bank-accounts permission needed)
  *
  *
  * @apiSuccessExample  {json}  Success-Response:

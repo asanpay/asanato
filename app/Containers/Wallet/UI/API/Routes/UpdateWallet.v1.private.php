@@ -4,7 +4,7 @@
  * @apiGroup           Wallet
  * @apiName            UpdateWallet
  *
- * @api                {PATCH} /v1/wallets/:id UpdateWallet
+ * @api                {PATCH} /v1/users/{user_id}/wallets/:id UpdateWallet
  * @apiDescription     Update wallet data
  *
  * @apiVersion         1.0.0
@@ -42,7 +42,7 @@
 
 
 /** @var Route $router */
-$router->patch('wallets/{id}', [
+$router->patch('users/{user_id}/wallets/{id}', [
     'as' => 'api_wallet_update_wallet',
     'uses'  => 'Controller@updateWallet',
     'middleware' => [

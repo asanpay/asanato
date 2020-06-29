@@ -35,6 +35,7 @@ class DeleteWalletRequest extends Request
      */
     protected $decode = [
         'id',
+        'user_id',
     ];
 
     /**
@@ -45,6 +46,7 @@ class DeleteWalletRequest extends Request
      */
     protected $urlParameters = [
         'id',
+        'user_id',
     ];
 
     /**
@@ -53,7 +55,8 @@ class DeleteWalletRequest extends Request
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:wallets',
+            'id' => 'required|numeric|exists:wallets,id',
+            'user_id' => 'required|numeric|exists:users,id',
         ];
     }
 
@@ -69,7 +72,6 @@ class DeleteWalletRequest extends Request
 
     public function isOwner()
     {
-        $wallet = Apiato::call('Wallet@FindWalletByIdTask', [$this->id]);
-        return $wallet && ($wallet->user_id == $this->user()->id);
+      return (Apiato::call('Wallet@FindWalletByIdTask', [$this->id])->user_id == $this->user_id);
     }
 }

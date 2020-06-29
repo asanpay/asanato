@@ -70,7 +70,17 @@ class UpdateBankAccountRequest extends Request
             'user_id' => 'required|exists:users,id',
             'bank_id' => 'required|exists:banks,id',
             'status'  => 'nullable|in:' . BankAccountStatus::commaSeparated(),
+            'default' => 'nullable|boolean',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge(
+            [
+                'default' => $this->has('default') ? filter_var($this->get('default'), FILTER_VALIDATE_BOOLEAN) : null,
+            ]
+        );
     }
 
     /**

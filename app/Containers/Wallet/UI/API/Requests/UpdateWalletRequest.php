@@ -35,6 +35,7 @@ class UpdateWalletRequest extends Request
      */
     protected $decode = [
         'id',
+        'user_id',
     ];
 
     /**
@@ -45,6 +46,7 @@ class UpdateWalletRequest extends Request
      */
     protected $urlParameters = [
         'id',
+        'user_id',
     ];
 
     /**
@@ -54,9 +56,18 @@ class UpdateWalletRequest extends Request
     {
         return [
             'id'      => 'required|numeric|exists:wallets',
-            'name'    => 'required|string|min:1|max:64',
+            'name'    => 'nullable|string|min:1|max:64',
             'default' => 'nullable|boolean',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge(
+            [
+                'default' => $this->has('default') ? filter_var($this->get('default'), FILTER_VALIDATE_BOOLEAN) : null,
+            ]
+        );
     }
 
     /**
@@ -71,8 +82,6 @@ class UpdateWalletRequest extends Request
 
     public function isOwner()
     {
-        $wallet = Apiato::call('Wallet@FindWalletByIdTask', [$this->id]);
-
-        return $wallet && ($wallet->user_id == $this->user()->id);
+        return (Apiato::call('Wallet@FindWalletByIdTask', [$this->id])->user_id == $this->user_id);
     }
 }

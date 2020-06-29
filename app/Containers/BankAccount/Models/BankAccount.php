@@ -37,12 +37,12 @@ class BankAccount extends Model
         return 'IR'. $this->iban;
     }
 
-    public function isApproved()
+    public function isApproved(): bool
     {
         return $this->status === BankAccountStatus::APPROVED;
     }
 
-    public function isDefault()
+    public function isDefault(): bool
     {
         return boolval($this->default) === true;
     }

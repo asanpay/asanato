@@ -88,9 +88,11 @@ class Controller extends ApiController
      */
     public function deleteWallet(DeleteWalletRequest $request)
     {
-        Apiato::call('Wallet@DeleteWalletAction', [$request]);
+        return $this->message('delete wallet has not implemented yet', 501);
 
-        return $this->noContent();
+        //Apiato::call('Wallet@DeleteWalletAction', [$request->user_id, $request->id]);
+
+        //return $this->noContent();
     }
 
     /**

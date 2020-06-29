@@ -14,6 +14,7 @@ class UpdateBankAccountAction extends Action
             'iban',
             'default',
             'status',
+            'user_id',
         ]);
 
         $bankAccount = Apiato::call('BankAccount@FindBankAccountByIdTask', [$request->id]);
