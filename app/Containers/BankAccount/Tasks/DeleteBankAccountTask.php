@@ -26,10 +26,6 @@ class DeleteBankAccountTask extends Task
             throw new CouldNotDeleteAccountException();
         }
 
-        if ($account->isDefault()) {
-            throw new CouldNotDeleteAccountException('Could not delete default account');
-        }
-
         try {
             return $this->repository->delete($id);
         }
