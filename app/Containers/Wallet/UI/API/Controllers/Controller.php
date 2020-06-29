@@ -102,7 +102,7 @@ class Controller extends ApiController
      */
     public function getUserWallets(GetUserWalletsRequest $request)
     {
-        $wallets = Apiato::call('Wallet@GetUserWalletsAction', [$request->user()]);
+        $wallets = Apiato::call('Wallet@GetUserWalletsAction', [$request->user_id]);
 
         return $this->transform($wallets, WalletTransformer::class);
     }

@@ -78,7 +78,7 @@ class Controller extends ApiController
      */
     public function getUserBankAccounts(GetUserBankAccountsRequest $request)
     {
-        $bankAccounts = Apiato::call('BankAccount@GetUserBankAccountsAction', [$request->user()]);
+        $bankAccounts = Apiato::call('BankAccount@GetUserBankAccountsAction', [$request->user_id]);
 
         return $this->transform($bankAccounts, BankAccountTransformer::class);
     }

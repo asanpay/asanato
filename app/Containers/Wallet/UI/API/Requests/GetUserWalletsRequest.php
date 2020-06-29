@@ -2,7 +2,9 @@
 
 namespace App\Containers\Wallet\UI\API\Requests;
 
+use App\Containers\Authentication\Tasks\GetAuthenticatedUserTask;
 use App\Ship\Parents\Requests\Request;
+use Illuminate\Support\Facades\App;
 
 /**
  * Class GetAllWalletsRequest.
@@ -33,7 +35,7 @@ class GetUserWalletsRequest extends Request
      * @var  array
      */
     protected $decode = [
-         'id',
+         'user_id',
     ];
 
     /**
@@ -43,7 +45,7 @@ class GetUserWalletsRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        'id',
+        'user_id',
     ];
 
     /**
@@ -52,7 +54,7 @@ class GetUserWalletsRequest extends Request
     public function rules()
     {
         return [
-             'id' => 'required|numeric|exists:users'
+            'user_id' => 'required|numeric|exists:users,id'
         ];
     }
 
@@ -64,5 +66,10 @@ class GetUserWalletsRequest extends Request
         return $this->check([
             'hasAccess|isOwner',
         ]);
+    }
+
+    public function isOwner()
+    {
+        return App::make(GetAuthenticatedUserTask::class)->run()->id == $this->user_id;
     }
 }

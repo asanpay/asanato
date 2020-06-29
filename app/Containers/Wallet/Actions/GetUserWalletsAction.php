@@ -8,12 +8,12 @@ use Apiato\Core\Foundation\Facades\Apiato;
 
 class GetUserWalletsAction extends Action
 {
-    public function run(User $user)
+    public function run(int $userId)
     {
         $wallets = Apiato::call('Wallet@GetAllWalletsTask', [], [
             'addRequestCriteria',
             [
-                'pushCurrentUserCriteria' => [$user],
+                'pushCurrentUserCriteria' => [Apiato::call('User@FindUserByIdTask', [$userId])],
             ],
         ]);
 

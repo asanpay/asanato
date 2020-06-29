@@ -8,12 +8,12 @@ use Apiato\Core\Foundation\Facades\Apiato;
 
 class GetUserBankAccountsAction extends Action
 {
-    public function run(User $user)
+    public function run(int $userId)
     {
         return Apiato::call('BankAccount@GetBankAccountsTask', [], [
             'addRequestCriteria',
             [
-                'pushCurrentUserCriteria' => [$user],
+                'pushCurrentUserCriteria' => [Apiato::call('User@FindUserByIdTask', [$userId])],
             ],
         ]);
     }
