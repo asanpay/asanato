@@ -21,6 +21,7 @@ class UpdateBankAccountTask extends Task
     public function run(int $id, array $data)
     {
         try {
+            // remove default flag from all other user accounts
             if (isset($data['default']) && $data['default'] == true) {
                 DB::update('update bank_accounts set "default" = false where user_id = ?', [$data['user_id']]);
             }
