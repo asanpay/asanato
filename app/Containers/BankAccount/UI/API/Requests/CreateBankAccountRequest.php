@@ -51,6 +51,7 @@ class CreateBankAccountRequest extends Request
         $this->merge(
             [
                 'iban' => $this->get('iban') ? substr($this->get('iban'), -24) : $this->get('iban'),
+                'default' => $this->has('default') ? filter_var($this->get('default'), FILTER_VALIDATE_BOOLEAN) : null,
             ]
         );
     }

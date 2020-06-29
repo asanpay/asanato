@@ -11,7 +11,9 @@
  * @apiPermission      create-bank-accounts
  *
  * @apiParam           {int}  iban IBAN (Sheba number) of the user only 24 digits without IR
- * @apiParam           {string}  user_id (optional) only if logged in user has authorization to create bank account for other users
+ * @apiParam           {string}  user_id (optional) only if logged in user has access to create bank account for other users
+ * @apiParam           {string}  bank_id (optional) the bank that account belongs to
+ * @apiParam           {boolean}  default (optional) made default the created account
  *
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 201 OK
