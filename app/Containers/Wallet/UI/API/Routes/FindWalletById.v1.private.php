@@ -4,7 +4,7 @@
  * @apiGroup           Wallet
  * @apiName            FindWalletById
  *
- * @api                {GET} /v1/wallets/:id FindWalletById
+ * @api                {GET} /v1/users/{user_id}/wallets/:id FindWalletById
  * @apiDescription     Read a wallet
  *
  * @apiVersion         1.0.0
@@ -37,7 +37,7 @@
 }
  */
 /** @var Route $router */
-$router->get('wallets/{id}', [
+$router->get('users/{user_id}/wallets/{id}', [
     'as' => 'api_wallet_find_wallet_by_id',
     'uses'  => 'Controller@findWalletById',
     'middleware' => [
