@@ -69,7 +69,7 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
                     }
                     Apiato::call('Tx@CreateTxTask', [$dstWalletTx]);
 
-                    // if transaction has benefit for system
+                    // in case of the transaction has benefit for system
                     if ($transaction->benefit > 0) {
                         XLog::debug('create profit tx');
                         $profitWallet = Apiato::call('Wallet@GetSystemWalletTask', [WalletType::PROFIT]);

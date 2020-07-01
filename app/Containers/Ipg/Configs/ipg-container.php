@@ -2,7 +2,7 @@
 
 return [
     'internal_callback' => [
-        'mobile' => 'https://my.asanpay.com/mobile_callback',
-        'web'    => 'https://my.asanpay.com/wallets'
+        'mobile' => env('APP_URL', 'https://my.asanpay.com') . '/mobile_callback',
+        'web'    => env('APP_URL', 'https://my.asanpay.com') . '/wallets'
     ]
 ];
