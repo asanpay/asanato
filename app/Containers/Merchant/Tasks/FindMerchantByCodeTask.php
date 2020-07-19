@@ -20,7 +20,7 @@ class FindMerchantByApiKeyTask extends Task
     public function run(string $apiKey)
     {
         try {
-            return $this->repository->findByField('api_key', $apiKey)->first();
+            return $this->repository->findByField('code', $apiKey)->first();
         }
         catch (Exception $exception) {
             throw new NotFoundException();
