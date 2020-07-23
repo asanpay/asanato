@@ -38,7 +38,7 @@ class GetLocalizationsTest extends TestCase
         $class = App::make(GetAllLocalizationsTask::class);
         $localizations = $class->run();
 
-        $unsupportedLocale = new Localization('fr');
+        $unsupportedLocale = new Localization('fa');
 
         $this->assertContainsEquals($unsupportedLocale, $localizations);
     }

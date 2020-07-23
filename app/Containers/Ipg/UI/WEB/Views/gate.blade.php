@@ -14,9 +14,7 @@
 
                     <div class="card google w_social">
                         <div>
-                            @if(config('app.debug'))
-                                {!! implode('', $errors->all('<div>:message</div>')) !!}
-                            @endif
+                            {!! implode('', $errors->all('<div>:message</div>')) !!}
                         </div>
                         <hr>
                         <p class="mb-0">

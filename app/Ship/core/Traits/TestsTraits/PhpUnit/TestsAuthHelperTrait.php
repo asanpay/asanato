@@ -77,7 +77,7 @@ trait TestsAuthHelperTrait
      */
     private function findOrCreateTestingUser($userDetails, $access)
     {
-        return $this->testingUser ? : $this->createTestingUser($userDetails, $access);
+        return $this->testingUser ?: $this->createTestingUser($userDetails, $access);
     }
 
     /**
@@ -89,9 +89,9 @@ trait TestsAuthHelperTrait
     private function createTestingUser($userDetails = null, $access = null)
     {
         // "inject" the confirmed status, if userdetails are submitted
-        if(is_array($userDetails)) {
+        if (is_array($userDetails)) {
             $defaults = [
-                'confirmed' => true,
+                'idproofs' => 63,
             ];
 
             $userDetails = array_merge($defaults, $userDetails);
@@ -128,13 +128,25 @@ trait TestsAuthHelperTrait
     private function prepareUserDetails($userDetails = null)
     {
         $defaultUserDetails = [
-            'name'     => $this->faker->name,
-            'email'    => $this->faker->email,
-            'password' => 'testing-password',
+            'first_name'   => $this->faker->firstName,
+            'last_name'    => $this->faker->lastName,
+            'email'        => $this->faker->safeEmail,
+            'password'     => 'testing-password',
+            'group'        => \App\Containers\User\Enum\UserGroup::NORMAL,
+            'type'         => \App\Containers\User\Enum\UserType::PERSONAL,
+            'register_via' => 'site',
+            'mobile'       => '912' . mt_rand(1111111, 9999999),
+            'gender'       => 'MALE',
+            'register_ip'  => $this->faker->ipv4,
+            'api_key'      => hash('sha256', uniqid()),
+            config('google2fa.otp_secret_column') => \Google2FA::generateSecretKey(
+                config('google2fa.key.size', 25),
+                config('google2fa.key.prefix', '')
+            )
         ];
 
         // if no user detail provided, use the default details, to find the password or generate one before encoding it
-        return $this->prepareUserPassword($userDetails ? : $defaultUserDetails);;
+        return $this->prepareUserPassword($userDetails ?: $defaultUserDetails);;
     }
 
     /**
@@ -170,7 +182,7 @@ trait TestsAuthHelperTrait
      */
     private function setupTestingUserAccess($user, $access = null)
     {
-        $access = $access ? : $this->getAccess();
+        $access = $access ?: $this->getAccess();
 
         $user = $this->setupTestingUserPermissions($user, $access);
         $user = $this->setupTestingUserRoles($user, $access);
@@ -220,7 +232,7 @@ trait TestsAuthHelperTrait
     {
         return [
             'permissions' => null,
-            'roles'       => null
+            'roles'       => null,
         ];
     }
 

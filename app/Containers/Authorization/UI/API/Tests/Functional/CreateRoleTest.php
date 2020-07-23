@@ -27,7 +27,7 @@ class CreateRoleTest extends ApiTestCase
     public function testCreateRole_()
     {
         $data = [
-            'name'         => 'manager',
+            'name'         => 'test-manager',
             'display_name' => 'manager',
             'description'  => 'he manages things',
             'level'        => 7,
@@ -48,7 +48,7 @@ class CreateRoleTest extends ApiTestCase
     public function testCreateRoleWithoutLevel_()
     {
         $data = [
-            'name'         => 'manager',
+            'name'         => 'test-manager',
             'display_name' => 'manager',
             'description'  => 'he manages things',
         ];

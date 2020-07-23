@@ -17,6 +17,8 @@ $factory->define(\App\Containers\User\Models\User::class, function (Faker\Genera
         'password'     => bcrypt('secret78'),
         'meta'         => json_encode(['telegram_id' => $faker->word]),
         'register_ip'  => $faker->ipv4,
+        'api_key'      => hash('sha256', uniqid()),
+        'is_client'    => true,
         config('google2fa.otp_secret_column') => \Google2FA::generateSecretKey(
             config('google2fa.key.size', 25),
             config('google2fa.key.prefix', '')

@@ -16,7 +16,8 @@ class UserRepository extends Repository
      * @var array
      */
     protected $fieldSearchable = [
-        'name'       => 'like',
+        'first_name' => 'like',
+        'last_name'  => 'like',
         'id'         => '=',
         'email'      => '=',
         'confirmed'  => '=',

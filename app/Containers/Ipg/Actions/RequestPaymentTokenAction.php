@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Containers\Ipg\Actions;
 
@@ -54,45 +54,6 @@ class RequestPaymentTokenAction extends Action
             if ($validator->fails()) {
                 return response()->json([
                     'code'       => RequestTokenErrors::INVALID_INVOICE_ID,
-                    'error'      => $validator->errors()->first(),
-                    'x_track_id' => resolve('xTrackId'),
-                ], 422);
-            }
-
-            // payer name ----------------------------------------------------------------------------------------------
-            $validator = Validator::make($parameters, [
-                'name' => 'nullable|string|max:32',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'code'       => RequestTokenErrors::INVALID_NAME,
-                    'error'      => $validator->errors()->first(),
-                    'x_track_id' => resolve('xTrackId'),
-                ], 422);
-            }
-
-            // payer mobile --------------------------------------------------------------------------------------------
-            $validator = Validator::make($parameters, [
-                'mobile' => 'nullable|regex:' . config('regex.mobile_regex'),
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'code'       => RequestTokenErrors::INVALID_MOBILE,
-                    'error'      => $validator->errors()->first(),
-                    'x_track_id' => resolve('xTrackId'),
-                ], 422);
-            }
-
-            // payer email ---------------------------------------------------------------------------------------------
-            $validator = Validator::make($parameters, [
-                'email' => 'nullable|email|max:40',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'code'       => RequestTokenErrors::INVALID_EMAIL,
                     'error'      => $validator->errors()->first(),
                     'x_track_id' => resolve('xTrackId'),
                 ], 422);
@@ -154,7 +115,7 @@ class RequestPaymentTokenAction extends Action
 
             // merchant ------------------------------------------------------------------------------------------------
             $validator = Validator::make($request->all(), [
-                'merchant' => 'required|alpha_num|size:64|exists:merchants,api_key',
+                'merchant' => 'required|alpha_num|size:64|exists:merchants,code',
             ]);
 
             if ($validator->fails()) {
@@ -165,7 +126,7 @@ class RequestPaymentTokenAction extends Action
                 ], 422);
             }
 
-            $m = Apiato::call('Merchant@FindMerchantByApiKeyTask', [$request->input('merchant')]);
+            $m = Apiato::call('Merchant@FindMerchantByCodeTask', [$request->input('merchant')]);
 
             // check if merchant is active or not
             if ($m->status != true) {
@@ -183,7 +144,7 @@ class RequestPaymentTokenAction extends Action
                 if (!in_array($request->ip(), $ipAddresses)) {
                     return response()->json([
                         'code'       => RequestTokenErrors::UNAUTHORIZED_IP_ADDRESS,
-                        'error'      => "unauthorized ip address {$request->ip()}",
+                        'error'      => "{$request->ip()} ip address is unauthorized",
                         'x_track_id' => resolve('xTrackId'),
                     ], 422);
                 }
@@ -200,7 +161,7 @@ class RequestPaymentTokenAction extends Action
                 ], 422);
             }
 
-            $calculatedAmounts = $m->calculatePayable($request->input('amount'));
+            $calculatedAmounts = $m->calculatePayable(intval($request->input('amount')));
 
             // check amount validity
             if ($calculatedAmounts->payable_amount < $minimumPayableAmount) {
@@ -217,6 +178,35 @@ class RequestPaymentTokenAction extends Action
                 ], 422);
             }
 
+            // multiplex handling --------------------------------------------------------------------------------------
+            if ($request->filled('multiplex')) {
+                // parse and validate multiplex data
+                try {
+                    $multiplexParseResult = Apiato::call('Ipg@MultiplexDataParserTask', [
+                        $request->all(),
+                        $m->wage_policy,
+                        $m->wage_value,
+                        $m->wage_by,
+                    ]);
+                } catch (\App\Exception $e) {
+                    return response()->json([
+                        'code'       => $e->getCode(),
+                        'error'      => $e->getMessage(),
+                        'x_track_id' => resolve('xTrackId'),
+                    ], 422);
+                }
+
+                // check user access to all requested wallets
+                $userHasAccess = Apiato::call('User@CheckUserHasAccessToWalletsTask', [$m->user->id, $multiplexParseResult['wallets']]);
+                if ($userHasAccess !== true) {
+                    return response()->json([
+                        'code'       => RequestTokenErrors::INVALID_MULTIPLEX_DATA,
+                        'error'      => 'you dont have access to all passed multiplex wallets',
+                        'x_track_id' => resolve('xTrackId'),
+                    ], 401);
+                }
+            }
+
             $data  = [
                 'type'           => TransactionType::MERCHANT,
                 'user_id'        => $m->user_id,
@@ -225,10 +215,12 @@ class RequestPaymentTokenAction extends Action
                 'payable_amount' => $calculatedAmounts->payable_amount,
                 'merchant_share' => $calculatedAmounts->merchant_share,
                 'callback_url'   => $request->input('callback_url'),
-                'invoice_number' => trim($request->input('invoice_id')),
-                'payer_name'     => trim($request->input('name')),
+                'invoice_number' => $request->input('invoice_id'),
+                'payer_name'     => $request->input('name'),
                 'payer_email'    => emailify($request->input('email', '')),
                 'payer_mobile'   => mobilify($request->input('mobile'), '0'),
+                'ip_address'     => $request->getClientIp(),
+                'multiplex'      => $request->input('multiplex', '{}'),
             ];
 
             $data ['meta'] = [

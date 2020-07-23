@@ -7,7 +7,7 @@ use App\Containers\Merchant\Models\Merchant;
 use App\Containers\Wallet\Enum\WageBy;
 use App\Containers\Wallet\Enum\WagePolicy;
 
-class MerchantsTableSeeder extends Seeder
+class TestMerchantsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -94,6 +94,71 @@ class MerchantsTableSeeder extends Seeder
             'wage_policy' => WagePolicy::PERCENT,
             'wage_value'  => 1.5,
             'wage_by'     => WageBy::MERCHANT,
+            'domain'      => $domain,
+        ]);
+
+
+        $domain = 'foo.yhn';
+
+        $user = \App\Containers\User\Models\User::find(3);
+
+        $merchant = Merchant::create([
+            'name'        => 'درگاه کاربر شناسه ۳',
+            'user_id'     => $user->id,
+            'code'        => hash('sha256', uniqid()),
+            'status'      => true,
+            'wage_policy' => WagePolicy::TURNOVER,
+            'wage_value'  => 0,
+            'wage_by'     => WageBy::NONE,
+            'domain'      => $domain,
+        ]);
+
+
+        $domain = 'gholi.yhn';
+
+        $user = \App\Containers\User\Models\User::find(4);
+
+        $merchant = Merchant::create([
+            'name'        => 'درگاه کاربر شناسه ۴',
+            'user_id'     => $user->id,
+            'code'        => hash('sha256', uniqid()),
+            'status'      => true,
+            'wage_policy' => WagePolicy::PERCENT,
+            'wage_value'  => 1,
+            'wage_by'     => WageBy::CUSTOMER,
+            'domain'      => $domain,
+        ]);
+
+
+        $domain = 'bar.yhn';
+
+        $user = \App\Containers\User\Models\User::find(5);
+
+        $merchant = Merchant::create([
+            'name'        => 'درگاه کاربر شناسه ۵',
+            'user_id'     => $user->id,
+            'code'        => hash('sha256', uniqid()),
+            'status'      => true,
+            'wage_policy' => WagePolicy::PERCENT,
+            'wage_value'  => 1.5,
+            'wage_by'     => WageBy::MERCHANT,
+            'wage_max'    => 1000,
+            'domain'      => $domain,
+        ]);
+
+        $domain = 'baz.yhn';
+
+        $user = \App\Containers\User\Models\User::find(6);
+
+        $merchant = Merchant::create([
+            'name'        => 'درگاه کاربر شناسه ۶',
+            'user_id'     => $user->id,
+            'code'        => hash('sha256', uniqid()),
+            'status'      => true,
+            'wage_policy' => WagePolicy::PERCENT,
+            'wage_value'  => 4,
+            'wage_by'     => WageBy::MERCHANT,
+            'wage_max'    => 3000,
             'domain'      => $domain,
         ]);
     }

@@ -4,7 +4,6 @@ namespace App\Containers\Wallet\Data\Seeders;
 use App\Containers\Wallet\Enum\WalletStatus;
 use App\Containers\Wallet\Enum\WalletType;
 use App\Containers\Wallet\Models\Wallet;
-use App\Containers\User\Models\User;
 use App\Ship\Parents\Seeders\Seeder;
 
 class WalletsTableSeeder extends Seeder
@@ -16,54 +15,13 @@ class WalletsTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::where('mobile', 9354885725)->first();
-
-        $w = Wallet::create([
-            'user_id'     => $user->id,
-            'name'        => 'WALLET_A',
-            'type'        => WalletType::USER,
-            'default'     => true
-        ]);
-        $w->balance = 10000000;
-        $w->save();
-
-        $w = Wallet::create([
-            'user_id'     => $user->id,
-            'name'        => 'WALLET_B',
-            'type'        => WalletType::USER,
-        ]);
-
-        $w->balance = 100000;
-        $w->save();
-
-        $w = Wallet::create([
-            'user_id'     => $user->id,
-            'name'        => 'WALLET_LOCKED',
-            'type'        => WalletType::USER,
-            'locked'      => true
-        ]);
-
-        $w->balance = 5000000;
-        $w->save();
-
-        $w = Wallet::create([
-            'user_id'     => $user->id,
-            'name'        => 'WALLET_LOCKED_BAL',
-            'type'        => WalletType::USER,
-        ]);
-
-        $w->balance = 1500000;
-        $w->locked_balance = 1000000;
-        $w->save();
-
-
         // SYSTEM wallets ------------------------------
         Wallet::create([
             'id'      => 1,
             'user_id' => 1,
             'name'    => 'SYSTEM_INCOMING_MONEY',
             'type'    => WalletType::INCOMING_MONEY,
-            'belongs_to_app' => true
+            'belongs_to_app' => true,
         ]);
 
         Wallet::create([
@@ -71,7 +29,7 @@ class WalletsTableSeeder extends Seeder
             'user_id' => 1,
             'name'    => 'SYSTEM_OUTGOING_MONEY',
             'type'    => WalletType::OUTGOING_MONEY,
-            'belongs_to_app' => true
+            'belongs_to_app' => true,
         ]);
 
         Wallet::create([
@@ -79,7 +37,7 @@ class WalletsTableSeeder extends Seeder
             'user_id' => 1,
             'name'    => 'SYSTEM_PROFIT',
             'type'    => WalletType::PROFIT,
-            'belongs_to_app' => true
+            'belongs_to_app' => true,
         ]);
 
         // GATEWAYs wallets ------------------------------

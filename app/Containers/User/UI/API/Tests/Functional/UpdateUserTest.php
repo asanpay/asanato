@@ -7,8 +7,8 @@ use App\Containers\User\Tests\ApiTestCase;
 /**
  * Class UpdateUserTest.
  *
- * @group user
- * @group api
+ * @group  user
+ * @group  api
  *
  * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
@@ -30,8 +30,17 @@ class UpdateUserTest extends ApiTestCase
         $user = $this->getTestingUser();
 
         $data = [
-            'name'     => 'Updated Name',
-            'password' => 'updated#Password',
+            'type'        => 'PERSONAL',
+            'gender'      => 'MALE',
+            'first_name'  => 'Updated Name',
+            'last_name'   => 'Updated LName',
+            'national_id' => 1234554321,
+            'password'    => 'updated#Password',
+            'email'       => $user->email,
+            'mobile'      => 9121234567,
+            'tel'         => '02112312312',
+            'birth_date'  => '2020-06-10',
+            'address'     => 'foo bar baz',
         ];
 
         // send the HTTP request
@@ -42,13 +51,13 @@ class UpdateUserTest extends ApiTestCase
 
         // assert returned user is the updated one
         $this->assertResponseContainKeyValue([
-            'object' => 'User',
-            'email'  => $user->email,
-            'name'   => $data['name'],
+            'object'     => 'User',
+            'email'      => $user->email,
+            'first_name' => $data['first_name'],
         ]);
 
         // assert data was updated in the database
-        $this->assertDatabaseHas('users', ['name' => $data['name']]);
+        $this->assertDatabaseHas('users', ['first_name' => $data['first_name']]);
     }
 
     /**
@@ -69,7 +78,7 @@ class UpdateUserTest extends ApiTestCase
         $response->assertStatus(422);
 
         $this->assertResponseContainKeyValue([
-            'status' => 'error'
+            'status' => 'error',
         ]);
     }
 
@@ -85,7 +94,7 @@ class UpdateUserTest extends ApiTestCase
         $response->assertStatus(422);
 
         $this->assertResponseContainKeyValue([
-            'message' => 'The given data was invalid.'
+            'message' => 'The given data was invalid.',
         ]);
     }
 
@@ -95,8 +104,17 @@ class UpdateUserTest extends ApiTestCase
     public function testUpdateExistingUserWithEmptyValues()
     {
         $data = [
-            'name'     => '',
-            'password' => '',
+            'type'        => '',
+            'gender'      => '',
+            'first_name'  => '',
+            'last_name'   => '',
+            'national_id' => '',
+            'password'    => '',
+            'email'       => '',
+            'mobile'      => '',
+            'tel'         => '',
+            'birth_date'  => '',
+            'address'     => '',
         ];
 
         // send the HTTP request
@@ -107,8 +125,8 @@ class UpdateUserTest extends ApiTestCase
 
         $this->assertValidationErrorContain([
             // messages should be updated after modifying the validation rules, to pass this test
-            'password' => 'The password must be at least 6 characters.',
-            'name'     => 'The name must be at least 2 characters.',
+            'national_id' => 'The national id field is required.',
+            'first_name'  => 'The first name field is required.',
         ]);
 
     }

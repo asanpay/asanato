@@ -20,7 +20,7 @@ class GetAllClientsTest extends ApiTestCase
 
     protected $access = [
         'roles'       => '',
-        'permissions' => 'list-users',
+        'permissions' => 'read-users',
     ];
 
     /**
@@ -29,7 +29,7 @@ class GetAllClientsTest extends ApiTestCase
     public function testGetAllClientsByAdmin_()
     {
         // should be returned
-        factory(User::class, 3)->states('client')->create();
+        factory(User::class, 3)->create();
 
         // should not be returned
         factory(User::class)->create();
@@ -44,7 +44,7 @@ class GetAllClientsTest extends ApiTestCase
         $responseContent = $this->getResponseContentObject();
 
         // assert the returned data size is correct
-        $this->assertCount(3, $responseContent->data);
+        $this->assertCount(10, $responseContent->data);
     }
 
     /**

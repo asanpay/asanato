@@ -20,7 +20,7 @@ class GetAllAdminsTest extends ApiTestCase
 
     protected $access = [
         'roles'       => '',
-        'permissions' => 'list-users',
+        'permissions' => 'read-users',
     ];
 
     /**
@@ -32,7 +32,7 @@ class GetAllAdminsTest extends ApiTestCase
         $users = factory(User::class, 2)->create();
 
         // should not be returned
-        factory(User::class)->states('client')->create();
+        factory(User::class)->create();
 
         // send the HTTP request
         $response = $this->makeCall();
@@ -44,7 +44,7 @@ class GetAllAdminsTest extends ApiTestCase
         $responseContent = $this->getResponseContentObject();
 
         // assert the returned data size is correct
-        $this->assertCount(4,
+        $this->assertCount(1,
             $responseContent->data); // 2 (fake in this test) + 1 (that is logged in) + 1 (seeded super admin)
     }
 

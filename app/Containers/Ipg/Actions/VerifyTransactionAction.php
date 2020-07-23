@@ -3,7 +3,6 @@
 
 namespace App\Containers\Ipg\Actions;
 
-use App\Containers\Ipg\UI\API\Requests\IpgRequestTokenRequest;
 use App\Containers\Ipg\Enum\VerifyRequestErrors;
 use App\Containers\Ipg\UI\API\Requests\IpgVerifyTransactionRequest;
 use App\Ship\Parents\Actions\Action;
@@ -11,6 +10,7 @@ use Apiato\Core\Foundation\Facades\Apiato;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Tartan\Log\Facades\XLog;
+use App\Exception;
 
 class VerifyTransactionAction extends Action
 {
@@ -34,7 +34,7 @@ class VerifyTransactionAction extends Action
 
             // merchant ------------------------------------------------------------------------------------------------
             $validator = Validator::make($request->all(), [
-                'merchant' => 'required|alpha_num|size:64|exists:merchants,api_key',
+                'merchant' => 'required|alpha_num|size:64|exists:merchants,code',
             ]);
 
             if ($validator->fails()) {
@@ -44,7 +44,7 @@ class VerifyTransactionAction extends Action
                 ], 422);
             }
 
-            $m = Apiato::call('Merchant@FindMerchantByApiKeyTask', [$request->input('merchant')]);
+            $m = Apiato::call('Merchant@FindMerchantByCodeTask', [$request->input('merchant')]);
 
             // check if merchant is active or not
             if ($m->status != true) {

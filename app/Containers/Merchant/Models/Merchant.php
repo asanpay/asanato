@@ -7,8 +7,8 @@ use App\Containers\Wallet\Enum\WagePolicy;
 use App\Containers\Transaction\Models\Transaction;
 use App\Containers\User\Models\User;
 use App\Containers\Wallet\Models\Wallet;
+use App\Exception;
 use App\Ship\Parents\Models\Model;
-use Tartan\Zaman\Facades\Zaman;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -71,9 +71,9 @@ class Merchant extends Model implements HasMedia
         return $query->where('status', true);
     }
 
-    public function findByApiKey(string $apiKey): ?self
+    public function findByCode(string $apiKey): ?self
     {
-        return $this->where('api_key', $apiKey)
+        return $this->where('code', $apiKey)
             ->first();
     }
 
@@ -98,7 +98,7 @@ class Merchant extends Model implements HasMedia
             }
             case WagePolicy::PERMANENT:
             {
-                $extra = $this->wage_value;
+                $extra = min($this->wage_value, $this->wage_max);
                 break;
             }
             case WagePolicy::PERCENT:
@@ -113,6 +113,7 @@ class Merchant extends Model implements HasMedia
                 break;
             }
         }
+        $r->wage = $extra;
 
         if ($this->wage_by == WageBy::CUSTOMER) {
             $r->payable_amount = $amount + $extra;

@@ -45,7 +45,7 @@ class CheckLocalizationMiddlewareTest extends ApiTestCase
 
     public function test_if_middleware_sets_custom_language()
     {
-        $language = 'fr';
+        $language = 'fa';
 
         $data = [];
         $requestHeaders = [
@@ -75,7 +75,8 @@ class CheckLocalizationMiddlewareTest extends ApiTestCase
         $response = $this->makeCall($data, $requestHeaders);
 
         // assert the response status
-        $response->assertStatus(412);
+        $response->assertStatus(200);
+        $response->assertHeader('content-language', 'fa');
     }
 
 }

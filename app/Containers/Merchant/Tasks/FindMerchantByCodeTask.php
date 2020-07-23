@@ -6,8 +6,9 @@ use App\Containers\Merchant\Data\Repositories\MerchantRepository;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
+use Tartan\Log\Facades\XLog;
 
-class FindMerchantByApiKeyTask extends Task
+class FindMerchantByCodeTask extends Task
 {
 
     protected $repository;
@@ -17,12 +18,13 @@ class FindMerchantByApiKeyTask extends Task
         $this->repository = $repository;
     }
 
-    public function run(string $apiKey)
+    public function run(string $code)
     {
         try {
-            return $this->repository->findByField('code', $apiKey)->first();
+            return $this->repository->findByField('code', $code)->first();
         }
         catch (Exception $exception) {
+            XLog::exception($exception);
             throw new NotFoundException();
         }
     }

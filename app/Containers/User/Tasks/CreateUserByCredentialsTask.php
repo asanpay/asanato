@@ -10,6 +10,7 @@ use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 use Illuminate\Support\Facades\Hash;
+use Tartan\Log\Facades\XLog;
 
 /**
  * Class CreateUserByCredentialsTask
@@ -43,12 +44,14 @@ class CreateUserByCredentialsTask extends Task
                 'register_ip'  => $t->client_ip,
                 'register_via' => $t->device,
                 'referrer'     => $t->referrer,
+                'api_key'      => hash('sha256', uniqid()),
             ]);
 
             if ($t->should_verify_mobile == true) {
                 $user->verify(IdPoofType::MOBILE);
             }
         } catch (Exception $e) {
+            XLog::exception($e);
             throw (new CreateResourceFailedException())->debug($e);
         }
 

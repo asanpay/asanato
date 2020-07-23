@@ -18,21 +18,22 @@ class CreateTransactionTables extends Migration
             // transaction owner
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('merchant_id')->nullable()->comment('uses for merchant transaction');
-            $table->unsignedBigInteger('wallet_id')->nullable()->comment('uses for wallet topup transaction');
+            $table->unsignedBigInteger('wallet_id')->nullable()->comment('uses for wallet top-up transaction');
 
             //request parameters
             $table->unsignedBigInteger('amount')->comment('amount that merchant requested to gateway');
             $table->unsignedBigInteger('payable_amount')->comment('amount that customer should pay on gateway');
             $table->unsignedBigInteger('merchant_share')->nullable()->comment('amount that should pay to merchant after checkout');
+            $table->jsonb('multiplex')->default('{}')->comment('multiplex info');
+
 
             $table->string('invoice_number', 32)->nullable()->comment('invoice number at merchant side');
             $table->string('callback_url', 255);
             $table->string('description',255)->nullable();
+            $table->string('authorized_card',16)->nullable();
 
             // payer information
-            $table->string('payer_name', 32)->nullable()->comment('payer name');
-            $table->string('payer_mobile', 11)->nullable()->comment('payer mobile');
-            $table->string('payer_email', 40)->nullable()->comment('payer email');
+            $table->jsonb('payer')->nullable()->comment('payer info');
 
             // gateway parameters
             $table->unsignedInteger('psp_id')->unsigned()->nullable();
@@ -54,7 +55,6 @@ class CreateTransactionTables extends Migration
             $table->jsonb('meta')->default('{}');
             $table->string('ip_address');
 
-            $table->unsignedInteger('day_of_year')->comment('created at which the day of the year');
             $table->timestamps();
         });
 
@@ -65,7 +65,7 @@ class CreateTransactionTables extends Migration
         });
 
         // add GAP between gateway wallets and user wallets
-        $query = 'ALTER SEQUENCE transactions_id_seq RESTART WITH 1000000;';
+        $query = 'ALTER SEQUENCE transactions_id_seq RESTART WITH 10001111;';
         \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
 
         $query = 'ALTER TABLE transactions ALTER COLUMN ip_address type inet USING ip_address::inet;';

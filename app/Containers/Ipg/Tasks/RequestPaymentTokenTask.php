@@ -165,7 +165,7 @@ class RequestPaymentTokenTask extends Task
 
             // merchant ------------------------------------------------------------------------------------------------
             $validator = Validator::make($request->all(), [
-                'merchant' => 'required|alpha_num|size:64|exists:merchants,api_key',
+                'merchant' => 'required|alpha_num|size:64|exists:merchants,code',
             ]);
 
             if ($validator->fails()) {
@@ -178,7 +178,7 @@ class RequestPaymentTokenTask extends Task
                 ];
             }
 
-            $m = $this->merchant->findByApiKey($request->input('merchant'));
+            $m = $this->merchant->findByCode($request->input('merchant'));
 
             // check if merchant is active or not
             if ($m->status != true) {

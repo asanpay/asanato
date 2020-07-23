@@ -39,6 +39,7 @@ class Transaction extends Model implements TransactionInterface
     protected $casts = [
         'gateway_callback_params' => 'json',
         'meta' => 'json',
+        'multiplex' => 'json',
     ];
 
     protected $dates = [

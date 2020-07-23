@@ -19,8 +19,8 @@ class GetAllUsersTest extends ApiTestCase
     protected $endpoint = 'get@v1/users';
 
     protected $access = [
-        'roles'       => 'admin',
-        'permissions' => 'list-users',
+        'roles'       => 'super-admin',
+        'permissions' => 'read-users',
     ];
 
     /**
@@ -41,7 +41,7 @@ class GetAllUsersTest extends ApiTestCase
         $responseContent = $this->getResponseContentObject();
 
         // assert the returned data size is correct
-        $this->assertCount(4, $responseContent->data);
+        $this->assertCount(10, $responseContent->data);
     }
 
     /**
@@ -72,21 +72,22 @@ class GetAllUsersTest extends ApiTestCase
     public function testSearchUsersByName()
     {
         $user = $this->getTestingUser([
-            'name' => 'mahmoudzzz'
+            'first_name' => 'abooozar',
+            'last_name' => 'ghafffari',
         ]);
 
         // 3 random users
         factory(User::class, 3)->create();
 
         // send the HTTP request
-        $response = $this->endpoint($this->endpoint. '?search=name:mahmoudzzz')->makeCall();
+        $response = $this->endpoint($this->endpoint. '?search=first_name:abooozar')->makeCall();
 
         // assert response status is correct
         $response->assertStatus(200);
 
         $responseArray = $response->decodeResponseJson();
 
-        $this->assertEquals($user->name, $responseArray['data'][0]['name']);
+        $this->assertEquals($user->full_name, $responseArray['data'][0]['name']);
 
         // assert only single user was returned
         $this->assertCount(1, $responseArray['data']);

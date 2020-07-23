@@ -14,7 +14,7 @@ return [
         'mobile' => 'signup,transfer-money,mobile-verify,reset-pass',
         'email'  => 'email-verify',
     ],
-    'ip_check'             => true,
+    'ip_check'             => env('OTP_IP_CHECK', true),
     'ip_limit_hours'       => 48,
     'ip_limit_count'       => 10, // in 48 hours
     'throttle_limit_hours' => 24,

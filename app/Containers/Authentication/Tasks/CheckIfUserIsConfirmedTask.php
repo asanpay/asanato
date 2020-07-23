@@ -35,7 +35,7 @@ class CheckIfUserIsConfirmedTask extends Task
      *
      * @throws LoginFailedException
      */
-    public function loginWithCredentials($username, $password, $field = 'email')
+    public function loginWithCredentials($username, $password, $field = 'mobile')
     {
         if (Auth::attempt([$field => $username, 'password' => $password])) {
             $this->user = Auth::user();

@@ -19,7 +19,7 @@ class CreateMerchantsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id')->unsigned()->nullable();
 
-            $table->string('api_key', 64)->unique();
+            $table->string('code', 64)->unique();
 
             $table->boolean('status')->default(true);
 
@@ -32,6 +32,7 @@ class CreateMerchantsTable extends Migration
             $table->string('logo')->nullable();
             $table->string('domain', 255)->comment('Merchant`s main domain');
 
+            $table->boolean('multiplex_support')->default(false);
             $table->string('ip_access')->nullable()->comment('comma separated ip addresses');
 
             $table->timestamps();

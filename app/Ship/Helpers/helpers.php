@@ -73,12 +73,12 @@ function is_mobile(string $sting): bool
     return true;
 }
 
-function mobilify(string $mobile, string $prefix = ''): string
+function mobilify(?string $mobile, string $prefix = ''): string
 {
     return $prefix . substr(trim($mobile), -10);
 }
 
-function emailify(string $email): string
+function emailify(?string $email): string
 {
     return strtolower(trim($email));
 }
@@ -170,4 +170,11 @@ function xd()
     $p = array_merge(func_get_args(), ['random' => mt_rand(1, 100)]);
     var_dump($p);
     exit;
+}
+
+function isJson($string): bool
+{
+    json_decode($string);
+
+    return (json_last_error() == JSON_ERROR_NONE);
 }

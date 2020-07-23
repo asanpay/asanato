@@ -42,7 +42,7 @@ class CreateWalletsTable extends Migration
         });
 
         // add GAP between gateway wallets and user wallets
-        $query = 'ALTER SEQUENCE wallets_id_seq RESTART WITH 2000;';
+        $query = 'ALTER SEQUENCE wallets_id_seq RESTART WITH 1000111111;';
         \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
     }
 

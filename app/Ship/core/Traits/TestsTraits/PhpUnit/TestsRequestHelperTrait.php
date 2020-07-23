@@ -76,7 +76,7 @@ trait TestsRequestHelperTrait
      * @param array $headers
      *
      * @throws \App\Ship\Exceptions\UndefinedMethodException
-     * 
+     *
      * @return \Illuminate\Foundation\Testing\TestResponse
      */
     public function makeCall(array $data = [], array $headers = [])
@@ -103,7 +103,7 @@ trait TestsRequestHelperTrait
             default:
                 throw new UndefinedMethodException('Unsupported HTTP Verb (' . $verb . ')!');
         }
-
+        //dump($verb, $url, $data, $headers);
         $httpResponse = $this->json($verb, $url, $data, $headers);
 
         return $this->setResponseObjectAndContent($httpResponse);

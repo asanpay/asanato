@@ -23,7 +23,12 @@
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK
 {
-  // Insert the response of the request here...
+    "code": 0,
+    "token": "APMR-1000011",
+    "date": "2020-07-01 16:13:00",
+    "jalali_date": "1399/04/11 16:13:00",
+    "x_track_id": "504837936b",
+    "gate_url": "http://ipg.asanpay.yhn/gate/APMR-1000011"
 }
  */
 

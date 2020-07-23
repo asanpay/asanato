@@ -58,12 +58,11 @@ class OtpBrokerManager
             if (!empty($err)) {
                 return [null, $err];
             }
-
-            $otpToken = $this->createNewToken($to, $reason, $brokerName, $clientIp);
-
-            return $this->process($otpToken);
-
         }
+
+        $otpToken = $this->createNewToken($to, $reason, $brokerName, $clientIp);
+
+        return $this->process($otpToken);
     }
 
     public function process(OtpToken $otpToken): array

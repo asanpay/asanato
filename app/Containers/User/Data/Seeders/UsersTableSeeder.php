@@ -28,6 +28,8 @@ class UsersTableSeeder extends Seeder
             'password'     => bcrypt('secret78'),
             'meta'         => json_encode(['telegram_id' => 'a6oozar']),
             'register_ip'  => '127.0.0.1',
+            'api_key'      => hash('sha256', uniqid()),
+            'is_client'    => false,
         ]);
         $admin->assignRole('super-admin');
 
@@ -42,6 +44,8 @@ class UsersTableSeeder extends Seeder
             'gender'       => UserGender::MALE,
             'password'     => bcrypt('secret78'),
             'register_ip'  => '127.0.0.1',
+            'api_key'     => hash('sha256', uniqid()),
+            'is_client'    => true,
         ]);
         $user->assignRole('member');
     }

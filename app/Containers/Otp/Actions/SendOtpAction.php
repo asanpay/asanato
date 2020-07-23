@@ -24,7 +24,7 @@ class SendOtpAction extends Action
                 case OtpReason::SIGN_UP:
                 {
                     // normalize phone number
-                    $data->to = mobilify($data->mobile);
+                    $data->to = mobilify($data->to);
 
                     // check for existing mobile
                     $existUser = Apiato::call('User@FindUserByMobileTask', [$data->to]);

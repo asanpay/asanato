@@ -15,7 +15,7 @@ use App\Containers\Authentication\Tests\ApiTestCase;
 class ApiLogoutTest extends ApiTestCase
 {
 
-    protected $endpoint = 'delete@v1/logout';
+    protected $endpoint = 'delete@v1/signout';
 
     protected $access = [
         'permissions' => '',

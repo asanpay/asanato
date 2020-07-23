@@ -2,15 +2,15 @@
 
 use Apiato\Core\Loaders\SeederLoaderTrait;
 use Illuminate\Database\Seeder as LaravelSeeder;
+use \Illuminate\Support\Facades\Artisan;
 
 /**
  * Class DatabaseSeeder
- *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class DatabaseSeeder extends LaravelSeeder
 {
-    use SeederLoaderTrait;
+    //commented by Aboozar user Apiato seeders instead
+    //use SeederLoaderTrait;
 
     /**
      * Run the database seeds.
@@ -19,6 +19,12 @@ class DatabaseSeeder extends LaravelSeeder
      */
     public function run()
     {
-        $this->runLoadingSeeders();
+        //commented by Aboozar user Apiato seeders instead
+        // $this->runLoadingSeeders();
+
+        Artisan::call('apiato:seed-deploy');
+        if (app()->environment() == 'testing') {
+            Artisan::call('apiato:seed-test');
+        }
     }
 }

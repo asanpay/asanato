@@ -25,6 +25,8 @@ class CreateUsersTable extends Migration
             $table->enum('gender', UserGender::toArray())->default(UserGender::UNKNOWN);
             $table->date('birth_date')->nullable();
 
+            $table->string('api_key', 64)->unique();
+
 
             // company
             $table->string('company', 50)->nullable();
@@ -59,6 +61,7 @@ class CreateUsersTable extends Migration
 
             // see UserVerifications class
             $table->unsignedSmallInteger('idproofs')->default(0)->comment('bit value');
+            $table->boolean('is_client')->default(true);
 
             $table->rememberToken();
             $table->timestamps();
