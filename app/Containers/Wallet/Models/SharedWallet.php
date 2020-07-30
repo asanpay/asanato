@@ -17,8 +17,10 @@ class SharedWallet extends Model
      *
      * @return void
      */
-    protected static function booted()
+    protected static function boot()
     {
+        parent::boot();
+
         static::addGlobalScope('accepted', function (Builder $builder) {
             $builder->where('accepted', true);
         });

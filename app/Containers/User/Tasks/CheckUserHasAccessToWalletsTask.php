@@ -13,14 +13,18 @@ class CheckUserHasAccessToWalletsTask extends Task
     {
         $ownedWallets = Wallet::select('id')
             ->where('user_id', $userId)
-            ->get();
+            ->get()
+            ->pluck('id')
+            ->toArray();
 
         $shareWallets =  SharedWallet::select('wallet_id')
             ->where('user_id', $userId)
-            ->get();
+            ->get()
+            ->pluck('wallet_id')
+            ->toArray();
 
         $allAuthorizedWallets = array_merge($ownedWallets, $shareWallets);
 
-        return  empty(array_diff($walletIds, $allAuthorizedWallets));
+        return empty(array_diff($walletIds, $allAuthorizedWallets));
     }
 }

@@ -21,23 +21,25 @@ class TransactionCallbackAction extends Action
         XLog::info('TransactionCallbackAction');
 
         $paidSuccessfully = false;
+        $accomplished = [];
 
         do {
             try {
 
                 $validator = Validator::make([
-                    'token'   => $token,
+                    'token' => $token,
                 ], [
-                    'token'   => [
+                    'token' => [
                         'required',
                         'alpha_dash',
                         'regex:' . config('regex.token_regex'),
-                    ]
+                    ],
                 ]);
 
                 // validate required route parameters
                 if ($validator->fails()) {
-                    XLog::debug('TransactionCallbackAction::run' .  ['error' => $validator->errors()->first()]);
+                    XLog::debug('TransactionCallbackAction::run', ['error' => $validator->errors()->first()]);
+
                     return view('ipg::callback')->withErrors([__('ipg.callback_err.tr_not_found_cod1')]);
                 }
 
@@ -46,16 +48,17 @@ class TransactionCallbackAction extends Action
 
                 // transaction not found
                 if (!$transaction) {
-                    XLog::debug('TransactionCallbackAction::run' .  ['error' => 'transaction not found']);
+                    XLog::debug('TransactionCallbackAction::run', ['error' => 'transaction not found']);
+
                     return view('ipg::callback')->withErrors([__('ipg.callback_err.tr_not_found_cod2')]);
                 }
 
                 // get PSP that transaction paid by
-                $psp = $transaction->psp->slug;
+                $psp     = $transaction->psp->slug;
                 $gateway = $transaction->gateway_id;
 
                 // patch `shaparak mode` into gateway properties that fetched from gateway row
-                $gatewayProperties = $transaction->gateway->getRealtimeProperties(['mode' => config('shaparak.mode')]);
+                $gatewayProperties = $transaction->gateway->getRealtimeProperties();
 
                 // init Shaparak
                 $shaparak = Shaparak::with($psp, $transaction, $gatewayProperties)
@@ -70,23 +73,22 @@ class TransactionCallbackAction extends Action
 
                 // transaction never touched callback process
                 if ($transaction->status <= TransactionStatus::CALLBACK) {
-                    // update transaction`s callback parameter
-                    $transaction->setCallBackParameters($request->all());
-
-//                    // check for founded transaction status
-//                    if ($transaction->status > TransactionStatus::CALLBACK) {
-//                        return view('ipg.gate')->withErrors([__('The Transaction has been verified before')]);
-//                    }
 
                     // extract PSP gateway`s reference Id from the posted callback parameters
                     $referenceId = $shaparak->getGatewayReferenceId();
 
-                    $doubleSpending = Apiato::call('Transaction@TransactionHasDoubleSpendingTask', [$transaction, $referenceId, $request]);
+                    // check for double-spending transaction
+                    $doubleSpending = Apiato::call('Transaction@TransactionHasDoubleSpendingTask',
+                        [$transaction, $referenceId, $request]);
 
-                    if ($doubleSpending) {
+                    // if double-spending transaction found
+                    if ($doubleSpending === true) {
                         Session::flash('alert-danger', trans('ipg.double_spending'));
                         break;
                     }
+
+                    // update transaction`s callback parameter
+                    $transaction->setCallBackParameters($request->all());
                 }
 
                 // start to verify the transaction ---------------------------------------------------------------------
@@ -143,9 +145,7 @@ class TransactionCallbackAction extends Action
                     }
                 }
                 // verify end ------------------------------------------------------------------------------------------
-                XLog::info("invoice status change to $transaction->status after verification",
-                    [$transaction->tagify()]);
-
+                XLog::info("transaction status is $transaction->status after verification", [$transaction->tagify()]);
 
                 // settle start ----------------------------------------------------------------------------------
                 if ($transaction->status < TransactionStatus::SETTLED) {
@@ -197,35 +197,47 @@ class TransactionCallbackAction extends Action
                             ['ref' => $referenceId, 'gate' => $gateway, 'psp' => $psp, $transaction->tagify()]);
                     }
                 }
-
-
-                Apiato::call('Ipg@ProcessAccomplishedPspTransactionSubAction', [$transaction]);
-
                 // settle end ------------------------------------------------------------------------------------
-                XLog::info("invoice status change to $transaction->status after settlement",
-                    [$transaction->tagify()]);
+                XLog::info("transaction status is $transaction->status after settlement", [$transaction->tagify()]);
+
+                // if transaction has been accomplished before
+                if ($transaction >= TransactionStatus::ACCOMPLISHED) {
+                    XLog::info("transaction has been processed before", [$transaction->tagify()]);
+                    $paidSuccessfully = true;
+                    $accomplished = ['accomplished' => 1]; // add flag to callback parameters
+                    // no further process required
+                    break;
+                }
+
+                /*
+                * ** process transactions that should be processed in this level and does not require verification **
+                *
+                * for example wallet top-up transaction does not require verification
+                * from any 3rd party service like Merchant website and should be process immediately
+                */
+                XLog::debug("trying to process transaction", [$transaction->tagify()]);
+                Apiato::call('Ipg@ProcessAccomplishedPspTransactionSubAction', [$transaction]);
 
                 $paidSuccessfully = true;
 
             } catch (Exception $e) {
-                $p = [];
+                $tags = [];
                 if (isset($transaction) && $transaction instanceof Transaction) {
-                    $p[] = $transaction->tagify();
+                    $tags[] = $transaction->tagify();
                 }
                 XLog::emergency($e->getMessage() . ' code:' . $e->getCode() . ' ' . $e->getFile() . ':' . $e->getLine(),
-                    $p);
+                    $tags);
                 break;
             }
 
         } while (false); // do not repeat
 
-        $merchantCallbackUrl = $transaction->callback_url . '?' . http_build_query([
-                'status'      => $paidSuccessfully ? 'OK' : 'NOK',
-                'status_code' => $paidSuccessfully ? 0 : -1,
+        $merchantCallbackUrl = $transaction->callback_url . '?' . http_build_query(array_merge([
+                'status'      => $paidSuccessfully ? 1 : 0,
                 'token'       => $token,
                 'tracking_id' => $transaction->tracking_id,
                 'x_track_id'  => resolve('xTrackId'),
-            ]);
+            ], $accomplished));
 
         XLog::info('redirecting to: ' . $merchantCallbackUrl, ['tag' => ($transaction ? $transaction->tagify() : '')]);
 

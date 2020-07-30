@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Containers\Ipg\Actions;
 
@@ -100,9 +100,9 @@ class RequestPaymentTokenAction extends Action
 
             // payer data ----------------------------------------------------------------------------------------------
             $validator = Validator::make($request->all(), [
-                'name' => 'nullable|string|max:32',
-                'email' => 'nullable|email|string|max:40',
-                'mobile' => 'nullable|regex:'.config('regex.mobile_regex'),
+                'name'   => 'nullable|string|max:32',
+                'email'  => 'nullable|email|string|max:40',
+                'mobile' => 'nullable|regex:' . config('regex.mobile_regex'),
             ]);
 
             if ($validator->fails()) {
@@ -184,9 +184,7 @@ class RequestPaymentTokenAction extends Action
                 try {
                     $multiplexParseResult = Apiato::call('Ipg@MultiplexDataParserTask', [
                         $request->all(),
-                        $m->wage_policy,
-                        $m->wage_value,
-                        $m->wage_by,
+                        $m
                     ]);
                 } catch (\App\Exception $e) {
                     return response()->json([
@@ -197,7 +195,8 @@ class RequestPaymentTokenAction extends Action
                 }
 
                 // check user access to all requested wallets
-                $userHasAccess = Apiato::call('User@CheckUserHasAccessToWalletsTask', [$m->user->id, $multiplexParseResult['wallets']]);
+                $userHasAccess = Apiato::call('User@CheckUserHasAccessToWalletsTask',
+                    [$m->user->id, $multiplexParseResult['wallets']]);
                 if ($userHasAccess !== true) {
                     return response()->json([
                         'code'       => RequestTokenErrors::INVALID_MULTIPLEX_DATA,
@@ -207,7 +206,7 @@ class RequestPaymentTokenAction extends Action
                 }
             }
 
-            $data  = [
+            $data = [
                 'type'           => TransactionType::MERCHANT,
                 'user_id'        => $m->user_id,
                 'merchant_id'    => $m->id,
@@ -216,20 +215,22 @@ class RequestPaymentTokenAction extends Action
                 'merchant_share' => $calculatedAmounts->merchant_share,
                 'callback_url'   => $request->input('callback_url'),
                 'invoice_number' => $request->input('invoice_id'),
-                'payer_name'     => $request->input('name'),
-                'payer_email'    => emailify($request->input('email', '')),
-                'payer_mobile'   => mobilify($request->input('mobile'), '0'),
+                'payer'          => array_filter([
+                    'name'   => $request->input('name'),
+                    'email'  => emailify($request->input('email')),
+                    'mobile' => mobilify($request->input('mobile')),
+                ]),
                 'ip_address'     => $request->getClientIp(),
                 'multiplex'      => $request->input('multiplex', '{}'),
             ];
 
             $data ['meta'] = [
-                'description'    => trim($request->input('description')),
+                'description' => $request->input('description'),
                 // extra
-                'direct' => boolval($request->input('direct', false)),
-                'refund' => boolval($request->input('refund', false)),
+                'direct'      => boolval($request->input('direct', false)),
+                'refund'      => boolval($request->input('refund', false)),
                 // wage policy at specific time
-                'wage'   => [
+                'wage'        => [
                     'policy' => $m->wage_policy,
                     'value'  => $m->wage_value,
                     'by'     => $m->wage_by,

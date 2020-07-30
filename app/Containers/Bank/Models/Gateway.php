@@ -27,6 +27,7 @@ class Gateway extends Model
      */
     public function getRealtimeProperties(array $patches = []): array
     {
+        $patches = array_merge($patches, ['mode' => config('shaparak.mode')]);
         return array_merge(json_decode($this->properties, true), $patches);
     }
 }

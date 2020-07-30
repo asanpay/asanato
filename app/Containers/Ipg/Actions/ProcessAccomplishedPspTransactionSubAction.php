@@ -30,14 +30,15 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
         // check if transaction is ready for accomplishment or not
         if ($transaction->isReadyAccomplish()) {
             if ($transaction->setAccomplished() == false) {
-                throw new Exception('Could not accomplish transaction');
+                throw new Exception('could not accomplish the transaction', [$transaction->tagify()]);
             } else {
+                // ** transaction accomplishment was successful **
                 // create transaction related Txes
 
-                XLog::info('creating top-up wallet txes');
+                XLog::info('creating top-up wallet txes', [$transaction->tagify()]);
                 DB::transaction(function () use (&$transaction) {
                     // incoming money wallet
-                    XLog::debug('create incoming money tx');
+                    XLog::debug('create incoming money tx', [$transaction->tagify()]);
                     $incomingMoneyWallet = Apiato::call('Wallet@GetSystemWalletTask', [WalletType::INCOMING_MONEY]);
                     $incomingTx          = [
                         'type'           => TxType::SYSTEM,

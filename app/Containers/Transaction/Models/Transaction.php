@@ -25,7 +25,7 @@ class Transaction extends Model implements TransactionInterface
     ];
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $attributes = [
@@ -38,8 +38,9 @@ class Transaction extends Model implements TransactionInterface
 
     protected $casts = [
         'gateway_callback_params' => 'json',
-        'meta' => 'json',
-        'multiplex' => 'json',
+        'payer'                   => 'json',
+        'meta'                    => 'json',
+        'multiplex'               => 'json',
     ];
 
     protected $dates = [
@@ -110,7 +111,7 @@ class Transaction extends Model implements TransactionInterface
 
     public function getTrackingIdAttribute($value): string
     {
-        return 'T'.
+        return 'T' .
             date('y') .
             str_pad(date('z'), 3, "0", STR_PAD_LEFT) .
             strrev($this->id);

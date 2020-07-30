@@ -28,13 +28,14 @@ class TransactionHasDoubleSpendingTask extends Task
             }
 
             // prevent from using a reference Id for double-spending
-            $doubleInvoice = $this->transaction->where('gateway_ref_id', $referenceId)
+            $doubleTransaction = $this->transaction->where('id', '<>', $transaction->id)
+                ->where('gateway_ref_id', $referenceId)
                 ->where('status', '>=', TransactionStatus::VERIFIED)// verified before
                 ->where('gateway_id', $transaction->gateway_id)
                 ->where('psp_id', $transaction->psp_id)
                 ->first();
 
-            if (!empty($doubleInvoice)) {
+            if (!empty($doubleTransaction)) {
                 // double spending detected
                 Xlog::emergency('referenceId double spending detected', [
                     'ref'      => $referenceId,
@@ -43,9 +44,10 @@ class TransactionHasDoubleSpendingTask extends Task
                     'gate'     => $request->psp,
                     $transaction->tagify(),
                 ]);
+
                 // mark transaction as double spending
                 $transaction->addToJsonb('double_spending', true, false);
-                $transaction->addToJsonb('double_spending_to', $doubleInvoice->id, true);
+                $transaction->addToJsonb('double_spending_to', $doubleTransaction->id, true);
 
                 return true;
             } else {
