@@ -2,6 +2,7 @@
 
 namespace App\Containers\Ipg\UI\CLI\Commands;
 
+use App\Containers\Ipg\Enum\MultiplexType;
 use App\Containers\Transaction\Enum\TransactionStatus;
 use App\Containers\Transaction\Enum\TransactionType;
 use App\Containers\Bank\Models\Gateway;
@@ -25,7 +26,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
     /**
      * @var string
      */
-    protected $description = 'Create wallet transaction after each gateway transaction accomplishment';
+    protected $description = 'Create Tx after each gateway transaction accomplishment';
 
     /**
      * @var Transaction
@@ -69,11 +70,11 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
         Gateway $gateway
     ) {
         parent::__construct();
-        $this->transaction           = $transaction;
-        $this->wallet                = $wallet;
-        $this->gateway               = $gateway;
-        $this->tx     = $tx;
-        $this->txRepo = $txRepo;
+        $this->transaction = $transaction;
+        $this->wallet      = $wallet;
+        $this->gateway     = $gateway;
+        $this->tx          = $tx;
+        $this->txRepo      = $txRepo;
     }
 
     /**
@@ -89,10 +90,12 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
                 'gateway_id',
                 'merchant_id',
                 'wallet_id',
+                'amount',
                 'payable_amount',
                 'merchant_share',
                 'status',
                 'process',
+                'multiplex',
             ])
             ->processable()
             ->orderBy('id')
@@ -103,13 +106,12 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
         foreach ($processableTransaction as $t) {
             $this->info(sprintf('processing transaction id: %d', $t->id));
 
-
             try {
                 DB::beginTransaction();
                 if (!empty($t->merchant_id)) {
                     // this is a merchant-related transaction
                     $involvedWallets = $this->getInvolvedWalletsShares($t);
-
+                    dd($involvedWallets);
                     // create merchant wallet(s) transaction
                     $this->createMerchantWalletTransaction($t, $involvedWallets);
 
@@ -155,26 +157,89 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
      */
     private function getInvolvedWalletsShares(Transaction $t): array
     {
-        $involvedWallets = $t->merchant->wallets->toArray();
+        if (!empty($t->multiplex) && isset($t->multiplex['wallets']) && !empty($t->multiplex['wallets'])) {
+            // transaction has multiplex data
+            return $this->getInvolvedWalletsShareFromMultiplex($t);
+        }
 
-        $this->info(sprintf('transaction id %d has %d involved wallets', $t->id, count($involvedWallets)));
+        return $this->getInvolvedWalletsShareFromMerchantPivot($t);
+    }
 
-        $overflowShare = 0;
+    private function getInvolvedWalletsShareFromMerchantPivot(Transaction $t): array
+    {
+        $this->info('GetInvolvedWalletsShareFromMerchantPivot');
+        $merchantWallets = $t->merchant->wallets->toArray();
 
-        foreach ($involvedWallets as $i => $w) {
-            $thisWalletShare = $involvedWallets[$i]['pivot']['share'];
+        $this->info(sprintf('transaction id %d has %d involved wallets', $t->id, count($merchantWallets)));
+
+        $overflowShare   = 0;
+        $involvedWallets = [];
+
+
+        foreach ($merchantWallets as $w) {
+            $thisWalletShare = $w['pivot']['share'];
             $moneyShare      = $thisWalletShare * $t->merchant_share / 100;
 
-            $involvedWallets[$i]['share']             = $thisWalletShare;
-            $involvedWallets[$i]['transaction_share'] = intval($moneyShare);
-            $involvedWallets[$i]['extra_share']       = $moneyShare - $involvedWallets[$i]['transaction_share'];
-            $overflowShare                            += $moneyShare - $involvedWallets[$i]['transaction_share'];
-            unset($involvedWallets[$i]['pivot']);
+
+            $involvedWallets [] = [
+                'id'                => $w['id'],
+                'share'             => $thisWalletShare,
+                'transaction_share' => intval($moneyShare),
+                'extra_share'       => $moneyShare - intval($moneyShare),
+            ];
+            $overflowShare      += $moneyShare - intval($moneyShare);
         }
 
         if ($overflowShare > 0) {
             // add extra share to the wallet that has biggest share
             $involvedWallets[0]['transaction_share'] += intval(round($overflowShare));
+        }
+
+        return $involvedWallets;
+    }
+
+    private function getInvolvedWalletsShareFromMultiplex(Transaction $t): array
+    {
+        $this->info('GetInvolvedWalletsShareFromMultiplex');
+        $multiplexWallets = $t->multiplex['wallets'];
+        $this->info(sprintf('transaction id %d has %d involved wallets', $t->id, count($multiplexWallets)));
+
+        $multiplexMethod = $t->multiplex['method'];
+
+        $overflowShare = 0;
+
+        if ($t->multiplex['method'] == MultiplexType::PERCENT) {
+            foreach ($multiplexWallets as $w) {
+                $thisWalletShare = $w['share'];
+                $moneyShare      = $thisWalletShare * $t->merchant_share / 100;
+
+                $involvedWallets [] = [
+                    'id'                => $w['id'],
+                    'share'             => $thisWalletShare,
+                    'transaction_share' => intval($moneyShare),
+                    'extra_share'       => $moneyShare - intval($moneyShare),
+                ];
+
+                $overflowShare += $moneyShare - intval($moneyShare);
+            }
+        } else {
+            $merchantWage = $t->getMerchantWage();
+
+            foreach ($multiplexWallets as $w) {
+                $thisWalletShare = $w['share'];
+                if (isset($w['wage'])) {
+                    $moneyShare = $w['share'] - $merchantWage;
+                } else {
+                    $moneyShare = $w['share'];
+                }
+
+                $involvedWallets [] = [
+                    'id'                => $w['id'],
+                    'share'             => $thisWalletShare,
+                    'transaction_share' => intval($moneyShare),
+                    'extra_share'       => 0,
+                ];
+            }
         }
 
         return $involvedWallets;
@@ -244,13 +309,15 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
         }
 
         switch ($t->type) {
-            case TransactionType::MERCHANT: {
-                $profit = abs($t->payable_amount - $t->merchant_share);
+            case TransactionType::MERCHANT:
+            {
+                $profit    = abs($t->payable_amount - $t->merchant_share);
                 $userShare = $t->merchant_share;
                 break;
             }
-            case TransactionType::WALLET_TOPUP: {
-                $profit = 0;
+            case TransactionType::WALLET_TOPUP:
+            {
+                $profit    = 0;
                 $userShare = $t->payable_amount;
                 break;
             }

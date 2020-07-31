@@ -13,6 +13,7 @@ use Hashids\Hashids;
 
 class MultiplexDataParserTask extends Task
 {
+    private $wagePayerWalletDefined = false;
     /**
      * @param array $parameters
      *
@@ -62,6 +63,7 @@ class MultiplexDataParserTask extends Task
         $wagePayerWalletId = null;
         $percentage        = 0;
         $shares            = 0;
+        $wagePayerWalletsCount = 0;
 
         // parse and validate multiplex json
         foreach ($multiplexWallets as $item) {
@@ -78,6 +80,7 @@ class MultiplexDataParserTask extends Task
                     if (!isset($item['wallet'], $item['share'], $item['wage'])) {
                         self::error('each multiplex item could contains just wallet, share and wage keys');
                     }
+                    $wagePayerWalletsCount++;
                     break;
                 }
                 default:
@@ -97,16 +100,24 @@ class MultiplexDataParserTask extends Task
             $wallets [] = $w[0];
 
             // only check if MERCHANT is responsible for paying the transaction wage otherwise ignore wage checkup
-            if ($merchant->wage_by = WageBy::MERCHANT) {
+            if ($merchant->wage_by == WageBy::MERCHANT) {
                 if (isset($item['wage']) && $item['wage'] == true) {
                     $wagePayerWalletId = $item['wallet'];
 
                     $paymentInfo = $merchant->calculatePayable(currency($parameters['amount']));
 
-                    // check if selected wallet share is bigger than the transaction amount
-                    if ($item['share'] < $paymentInfo->wage) {
+                    if ($multiplexMethod == MultiplexType::PERCENT) {
+                        $payerWalletTotalShare = currency($item['share'] / 100 * $parameters['amount']);
+                    } else {
+                        $payerWalletTotalShare = $item['share'];
+                    }
+
+                    // check if selected wallet share is enough to pay the transaction fee
+                    if ($payerWalletTotalShare < $paymentInfo->wage) {
                         self::error('transaction wage value is bigger than the share of the wallet that you have selected as wage payer');
                     }
+
+                    $this->wagePayerWalletDefined = true;
                 }
             }
 
@@ -117,9 +128,17 @@ class MultiplexDataParserTask extends Task
             }
         }
 
+        if ($wagePayerWalletsCount != 1) {
+            self::error(sprintf('One wallet should be select to pay the transaction fee. You selected %d', $wagePayerWalletsCount));
+        }
+
+        if ($merchant->wage_by == WageBy::MERCHANT && $this->wagePayerWalletDefined !== true) {
+            self::error('The transaction fee payer\'s wallet is not specified');
+        }
+
         if ($multiplexMethod == MultiplexType::PERCENT && $percentage !== 100) {
             self::error('The sum of the multiplexing shares is not 100%');
-        } elseif ($multiplexMethod == MultiplexType::DEFINED && $shares !== $parameters['amount']) {
+        } elseif ($multiplexMethod == MultiplexType::FIXED && $shares !== $parameters['amount']) {
             self::error('The sum of the multiplexing shares is not equals to transaction amount');
         }
 

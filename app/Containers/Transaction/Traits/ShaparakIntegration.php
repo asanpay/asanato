@@ -102,7 +102,7 @@ trait ShaparakIntegration
      * check if transaction is ready to mark as  accomplished
      * @return bool
      */
-    public function isReadyAccomplish(): bool
+    public function isReadyForAccomplish(): bool
     {
         return (intval($this->status) >= TransactionStatus::VERIFIED) &&
             (intval($this->status) < TransactionStatus::ACCOMPLISHED);

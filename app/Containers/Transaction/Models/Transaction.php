@@ -117,6 +117,11 @@ class Transaction extends Model implements TransactionInterface
             strrev($this->id);
     }
 
+    public function getMerchantWage()
+    {
+        return currency($this->amount - $this->merchant_share);
+    }
+
     public function tagify()
     {
         return "tr{$this->id}ans";
@@ -204,7 +209,7 @@ class Transaction extends Model implements TransactionInterface
     public function pspSupportsRefund(): bool
     {
         return !empty($this->psp) &&
-            $this->psp->refund_support == true;
+            $this->psp->refund_support === true;
     }
 
     /**

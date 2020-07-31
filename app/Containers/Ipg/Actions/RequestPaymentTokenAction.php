@@ -221,7 +221,7 @@ class RequestPaymentTokenAction extends Action
                     'mobile' => mobilify($request->input('mobile')),
                 ]),
                 'ip_address'     => $request->getClientIp(),
-                'multiplex'      => $request->input('multiplex', '{}'),
+                'multiplex'      => json_decode($request->input('multiplex', '{}')),
             ];
 
             $data ['meta'] = [

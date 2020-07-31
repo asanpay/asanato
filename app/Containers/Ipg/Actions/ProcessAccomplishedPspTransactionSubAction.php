@@ -28,7 +28,7 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
         // we should accomplish it immediately after verification
 
         // check if transaction is ready for accomplishment or not
-        if ($transaction->isReadyAccomplish()) {
+        if ($transaction->isReadyFoAccomplish()) {
             if ($transaction->setAccomplished() == false) {
                 throw new Exception('could not accomplish the transaction', [$transaction->tagify()]);
             } else {

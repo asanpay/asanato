@@ -2,7 +2,7 @@
 
 /**
  * @apiGroup           IPG
- * @apiName            verifyTransaction
+ * @apiName            accomplishTransaction
  *
  * @api                {POST} /v1/ipg/verify verify a transaction
  *
@@ -22,7 +22,7 @@
 
 /** @var Route $router */
 $router->post('verify', [
-    'as' => 'api_ipg_verify_transaction',
-    'uses'  => 'Controller@verifyTransaction',
+    'as' => 'api_ipg_accomplish_transaction',
+    'uses'  => 'Controller@accomplishTransaction',
     'domain' => 'ipg.'. parse_url(\Config::get('app.url'))['host'],
 ]);

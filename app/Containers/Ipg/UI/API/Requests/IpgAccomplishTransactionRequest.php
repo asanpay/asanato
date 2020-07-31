@@ -8,7 +8,7 @@ use Tartan\Log\Facades\XLog;
 /**
  * Class IpgVerifyTransactionRequest.
  */
-class IpgVerifyTransactionRequest extends Request
+class IpgAccomplishTransactionRequest extends Request
 {
     protected $access = [];
     /**

@@ -4,7 +4,7 @@
 namespace App\Containers\Ipg\Actions;
 
 use App\Containers\Ipg\Enum\VerifyRequestErrors;
-use App\Containers\Ipg\UI\API\Requests\IpgVerifyTransactionRequest;
+use App\Containers\Ipg\UI\API\Requests\IpgAccomplishTransactionRequest;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
 use Illuminate\Http\JsonResponse;
@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Validator;
 use Tartan\Log\Facades\XLog;
 use App\Exception;
 
-class VerifyTransactionAction extends Action
+class AccomplishTransactionAction extends Action
 {
-    public function run(IpgVerifyTransactionRequest $request): JsonResponse
+    public function run(IpgAccomplishTransactionRequest $request): JsonResponse
     {
         try {
             $parameters = $request->all();
@@ -87,7 +87,7 @@ class VerifyTransactionAction extends Action
                     'token'      => $t->token,
                     'x_track_id' => resolve('xTrackId'),
                 ], $refundPatch));
-            } elseif ($t->isReadyAccomplish()) {
+            } elseif ($t->isReadyForAccomplish()) {
                 // check if transaction is ready for accomplishment or not
                 if ($t->setAccomplished()) {
                     // transaction marked as accomplished

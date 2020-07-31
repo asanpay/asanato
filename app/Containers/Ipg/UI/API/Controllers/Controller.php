@@ -3,7 +3,7 @@
 namespace App\Containers\Ipg\UI\API\Controllers;
 
 use App\Containers\Ipg\UI\API\Requests\IpgRequestTokenRequest;
-use App\Containers\Ipg\UI\API\Requests\IpgVerifyTransactionRequest;
+use App\Containers\Ipg\UI\API\Requests\IpgAccomplishTransactionRequest;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;
 
@@ -24,8 +24,13 @@ class Controller extends ApiController
         return  Apiato::call('Ipg@RequestPaymentTokenAction', [$request]);
     }
 
-    public function verifyTransaction(IpgVerifyTransactionRequest $request)
+    /**
+     * @param IpgAccomplishTransactionRequest $request
+     *
+     * @return mixed
+     */
+    public function accomplishTransaction(IpgAccomplishTransactionRequest $request)
     {
-        return  Apiato::call('Ipg@VerifyTransactionAction', [$request]);
+        return  Apiato::call('Ipg@AccomplishTransactionAction', [$request]);
     }
 }
