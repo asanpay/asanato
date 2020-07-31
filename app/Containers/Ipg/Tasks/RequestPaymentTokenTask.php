@@ -225,7 +225,7 @@ class RequestPaymentTokenTask extends Task
                 return [
                     null,
                     [
-                        'code'  => RequestTokenErrors::LOWER_AMOUNT_AFTER_WAGE,
+                        'code'  => RequestTokenErrors::LOWER_AMOUNT_AFTER_FEE,
                         'error' => $validator->errors()->first(),
                     ],
                 ];
@@ -233,7 +233,7 @@ class RequestPaymentTokenTask extends Task
                 return [
                     null,
                     [
-                        'code'  => RequestTokenErrors::HIGHER_AMOUNT_AFTER_WAGE,
+                        'code'  => RequestTokenErrors::HIGHER_AMOUNT_AFTER_FEE,
                         'error' => $validator->errors()->first(),
                     ],
                 ];
@@ -256,11 +256,11 @@ class RequestPaymentTokenTask extends Task
             $t->addToJsonb('direct', boolval($request->input('direct', true)), false);
             $t->addToJsonb('refund', boolval($request->input('refund', false)), false);
 
-            // wage policy at specific time
-            $t->addToJsonb('wage', [
-                'policy' => $m->wage_policy,
-                'value'  => $m->wage_value,
-                'by'     => $m->wage_by,
+            // fee policy at specific time
+            $t->addToJsonb('fee', [
+                'policy' => $m->fee_policy,
+                'value'  => $m->fee_value,
+                'by'     => $m->fee_by,
             ], false);
 
             $t->save();

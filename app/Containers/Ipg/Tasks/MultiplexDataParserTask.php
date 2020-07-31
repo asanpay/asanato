@@ -6,14 +6,14 @@ namespace App\Containers\Ipg\Tasks;
 use App\Containers\Ipg\Enum\MultiplexType;
 use App\Containers\Ipg\Enum\RequestTokenErrors;
 use App\Containers\Merchant\Models\Merchant;
-use App\Containers\Wallet\Enum\WageBy;
+use App\Containers\Wallet\Enum\FeeBy;
 use App\Exception;
 use App\Ship\Parents\Tasks\Task;
 use Hashids\Hashids;
 
 class MultiplexDataParserTask extends Task
 {
-    private $wagePayerWalletDefined = false;
+    private $feePayerWalletDefined = false;
     /**
      * @param array $parameters
      *
@@ -23,7 +23,7 @@ class MultiplexDataParserTask extends Task
      * "multiplex" : {
      *      "method": "percent",
      *      "wallets": [
-     *          {"wallet":"foo", "share": 20, "wage": true},
+     *          {"wallet":"foo", "share": 20, "fee": true},
      *          {"wallet":"bar", "share": 40},
      *          {"wallet":"baz", "share": 20},
      *      ]
@@ -33,7 +33,7 @@ class MultiplexDataParserTask extends Task
      * "multiplex" : {
      *      "method": "defined",
      *      "wallets": [
-     *          {"wallet":"foo", "share": 2000, "wage": true},
+     *          {"wallet":"foo", "share": 2000, "fee": true},
      *          {"wallet":"bar", "share": 4500},
      *          {"wallet":"baz", "share": 230000"},
      *      ]
@@ -60,10 +60,10 @@ class MultiplexDataParserTask extends Task
         }
 
         $wallets           = [];
-        $wagePayerWalletId = null;
+        $feePayerWalletId = null;
         $percentage        = 0;
         $shares            = 0;
-        $wagePayerWalletsCount = 0;
+        $feePayerWalletsCount = 0;
 
         // parse and validate multiplex json
         foreach ($multiplexWallets as $item) {
@@ -71,22 +71,22 @@ class MultiplexDataParserTask extends Task
                 case 2:
                 {
                     if (!isset($item['wallet'], $item['share'])) {
-                        self::error('each multiplex item could contains just wallet, share and wage keys');
+                        self::error('each multiplex item could contains just wallet, share and fee keys');
                     }
                     break;
                 }
                 case 3:
                 {
-                    if (!isset($item['wallet'], $item['share'], $item['wage'])) {
-                        self::error('each multiplex item could contains just wallet, share and wage keys');
+                    if (!isset($item['wallet'], $item['share'], $item['fee'])) {
+                        self::error('each multiplex item could contains just wallet, share and fee keys');
                     }
-                    $wagePayerWalletsCount++;
+                    $feePayerWalletsCount++;
                     break;
                 }
                 default:
                 {
                     // invalid item structure
-                    self::error('each multiplex item should contains 2 or 3 items from wallet, share and wage keys');
+                    self::error('each multiplex item should contains 2 or 3 items from wallet, share and fee keys');
                     break;
                 }
             }
@@ -99,10 +99,10 @@ class MultiplexDataParserTask extends Task
             }
             $wallets [] = $w[0];
 
-            // only check if MERCHANT is responsible for paying the transaction wage otherwise ignore wage checkup
-            if ($merchant->wage_by == WageBy::MERCHANT) {
-                if (isset($item['wage']) && $item['wage'] == true) {
-                    $wagePayerWalletId = $item['wallet'];
+            // only check if MERCHANT is responsible for paying the transaction fee otherwise ignore fee checkup
+            if ($merchant->fee_by == FeeBy::MERCHANT) {
+                if (isset($item['fee']) && $item['fee'] == true) {
+                    $feePayerWalletId = $item['wallet'];
 
                     $paymentInfo = $merchant->calculatePayable(currency($parameters['amount']));
 
@@ -113,11 +113,11 @@ class MultiplexDataParserTask extends Task
                     }
 
                     // check if selected wallet share is enough to pay the transaction fee
-                    if ($payerWalletTotalShare < $paymentInfo->wage) {
-                        self::error('transaction wage value is bigger than the share of the wallet that you have selected as wage payer');
+                    if ($payerWalletTotalShare < $paymentInfo->fee) {
+                        self::error('transaction fee value is bigger than the share of the wallet that you have selected as fee payer');
                     }
 
-                    $this->wagePayerWalletDefined = true;
+                    $this->feePayerWalletDefined = true;
                 }
             }
 
@@ -128,11 +128,11 @@ class MultiplexDataParserTask extends Task
             }
         }
 
-        if ($wagePayerWalletsCount != 1) {
-            self::error(sprintf('One wallet should be select to pay the transaction fee. You selected %d', $wagePayerWalletsCount));
+        if ($feePayerWalletsCount != 1) {
+            self::error(sprintf('One wallet should be select to pay the transaction fee. You selected %d', $feePayerWalletsCount));
         }
 
-        if ($merchant->wage_by == WageBy::MERCHANT && $this->wagePayerWalletDefined !== true) {
+        if ($merchant->fee_by == FeeBy::MERCHANT && $this->feePayerWalletDefined !== true) {
             self::error('The transaction fee payer\'s wallet is not specified');
         }
 
@@ -145,7 +145,7 @@ class MultiplexDataParserTask extends Task
         return [
             'method'            => $multiplexMethod,
             'wallets'           => $wallets,
-            'wagePayerWalletId' => $wagePayerWalletId,
+            'feePayerWalletId' => $feePayerWalletId,
         ];
     }
 

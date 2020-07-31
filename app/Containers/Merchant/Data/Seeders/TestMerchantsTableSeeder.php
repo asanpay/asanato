@@ -4,8 +4,8 @@ namespace App\Containers\Merchant\Data\Seeders;
 
 use App\Ship\Parents\Seeders\Seeder;
 use App\Containers\Merchant\Models\Merchant;
-use App\Containers\Wallet\Enum\WageBy;
-use App\Containers\Wallet\Enum\WagePolicy;
+use App\Containers\Wallet\Enum\FeeBy;
+use App\Containers\Wallet\Enum\FeePolicy;
 
 class TestMerchantsTableSeeder extends Seeder
 {
@@ -25,9 +25,9 @@ class TestMerchantsTableSeeder extends Seeder
             'user_id'     => $user->id,
             'code'        => hash('sha256', 'test-merchant-percent-1-merchant'),
             'status'      => true,
-            'wage_policy' => WagePolicy::PERCENT,
-            'wage_value'  => 4,
-            'wage_by'     => WageBy::MERCHANT,
+            'fee_policy' => FeePolicy::PERCENT,
+            'fee_value'  => 4,
+            'fee_by'     => FeeBy::MERCHANT,
             'domain'      => $domain,
         ]);
 
@@ -36,9 +36,9 @@ class TestMerchantsTableSeeder extends Seeder
             'user_id'     => $user->id,
             'code'        => hash('sha256', 'test-merchant-percent-1-merchant-2'),
             'status'      => true,
-            'wage_policy' => WagePolicy::PERCENT,
-            'wage_value'  => 1,
-            'wage_by'     => WageBy::MERCHANT,
+            'fee_policy' => FeePolicy::PERCENT,
+            'fee_value'  => 1,
+            'fee_by'     => FeeBy::MERCHANT,
             'domain'      => $domain,
         ]);
 
@@ -47,9 +47,9 @@ class TestMerchantsTableSeeder extends Seeder
             'user_id'     => $user->id,
             'code'        => hash('sha256', 'test-merchant-percent-1-customer'),
             'status'      => true,
-            'wage_policy' => WagePolicy::PERCENT,
-            'wage_value'  => 1,
-            'wage_by'     => WageBy::CUSTOMER,
+            'fee_policy' => FeePolicy::PERCENT,
+            'fee_value'  => 1,
+            'fee_by'     => FeeBy::CUSTOMER,
             'domain'      => $domain,
         ]);
 
@@ -58,9 +58,9 @@ class TestMerchantsTableSeeder extends Seeder
             'user_id'     => $user->id,
             'code'        => hash('sha256', 'test-merchant-permanent-1-merchant'),
             'status'      => true,
-            'wage_policy' => WagePolicy::PERMANENT,
-            'wage_value'  => 1500,
-            'wage_by'     => WageBy::MERCHANT,
+            'fee_policy' => FeePolicy::PERMANENT,
+            'fee_value'  => 1500,
+            'fee_by'     => FeeBy::MERCHANT,
             'domain'      => $domain,
         ]);
 
@@ -69,9 +69,9 @@ class TestMerchantsTableSeeder extends Seeder
             'user_id'     => $user->id,
             'code'        => hash('sha256', 'test-merchant-permanent-1-customer'),
             'status'      => true,
-            'wage_policy' => WagePolicy::PERMANENT,
-            'wage_value'  => 1500,
-            'wage_by'     => WageBy::CUSTOMER,
+            'fee_policy' => FeePolicy::PERMANENT,
+            'fee_value'  => 1500,
+            'fee_by'     => FeeBy::CUSTOMER,
             'domain'      => $domain,
         ]);
 
@@ -80,9 +80,9 @@ class TestMerchantsTableSeeder extends Seeder
             'user_id'     => $user->id,
             'code'        => hash('sha256', 'test-merchant-turnover'),
             'status'      => true,
-            'wage_policy' => WagePolicy::TURNOVER,
-            'wage_value'  => 0,
-            'wage_by'     => WageBy::MERCHANT,
+            'fee_policy' => FeePolicy::TURNOVER,
+            'fee_value'  => 0,
+            'fee_by'     => FeeBy::MERCHANT,
             'domain'      => $domain,
         ]);
 
@@ -91,9 +91,9 @@ class TestMerchantsTableSeeder extends Seeder
             'user_id'     => $user->id,
             'code'        => hash('sha256', 'test-merchant-disabled'),
             'status'      => false,
-            'wage_policy' => WagePolicy::PERCENT,
-            'wage_value'  => 1.5,
-            'wage_by'     => WageBy::MERCHANT,
+            'fee_policy' => FeePolicy::PERCENT,
+            'fee_value'  => 1.5,
+            'fee_by'     => FeeBy::MERCHANT,
             'domain'      => $domain,
         ]);
 
@@ -107,9 +107,9 @@ class TestMerchantsTableSeeder extends Seeder
             'user_id'     => $user->id,
             'code'        => hash('sha256', uniqid()),
             'status'      => true,
-            'wage_policy' => WagePolicy::TURNOVER,
-            'wage_value'  => 0,
-            'wage_by'     => WageBy::NONE,
+            'fee_policy' => FeePolicy::TURNOVER,
+            'fee_value'  => 0,
+            'fee_by'     => FeeBy::NONE,
             'domain'      => $domain,
         ]);
 
@@ -123,9 +123,9 @@ class TestMerchantsTableSeeder extends Seeder
             'user_id'     => $user->id,
             'code'        => hash('sha256', uniqid()),
             'status'      => true,
-            'wage_policy' => WagePolicy::PERCENT,
-            'wage_value'  => 1,
-            'wage_by'     => WageBy::CUSTOMER,
+            'fee_policy' => FeePolicy::PERCENT,
+            'fee_value'  => 1,
+            'fee_by'     => FeeBy::CUSTOMER,
             'domain'      => $domain,
         ]);
 
@@ -139,10 +139,10 @@ class TestMerchantsTableSeeder extends Seeder
             'user_id'     => $user->id,
             'code'        => hash('sha256', uniqid()),
             'status'      => true,
-            'wage_policy' => WagePolicy::PERCENT,
-            'wage_value'  => 1.5,
-            'wage_by'     => WageBy::MERCHANT,
-            'wage_max'    => 1000,
+            'fee_policy' => FeePolicy::PERCENT,
+            'fee_value'  => 1.5,
+            'fee_by'     => FeeBy::MERCHANT,
+            'fee_max'    => 1000,
             'domain'      => $domain,
         ]);
 
@@ -155,10 +155,10 @@ class TestMerchantsTableSeeder extends Seeder
             'user_id'     => $user->id,
             'code'        => hash('sha256', uniqid()),
             'status'      => true,
-            'wage_policy' => WagePolicy::PERCENT,
-            'wage_value'  => 4,
-            'wage_by'     => WageBy::MERCHANT,
-            'wage_max'    => 3000,
+            'fee_policy' => FeePolicy::PERCENT,
+            'fee_value'  => 4,
+            'fee_by'     => FeeBy::MERCHANT,
+            'fee_max'    => 3000,
             'domain'      => $domain,
         ]);
     }

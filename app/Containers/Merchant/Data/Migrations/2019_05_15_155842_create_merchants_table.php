@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Containers\Wallet\Enum\WagePolicy;
-use App\Containers\Wallet\Enum\WageBy;
+use App\Containers\Wallet\Enum\FeePolicy;
+use App\Containers\Wallet\Enum\FeeBy;
 
 class CreateMerchantsTable extends Migration
 {
@@ -23,10 +23,10 @@ class CreateMerchantsTable extends Migration
 
             $table->boolean('status')->default(true);
 
-            $table->enum('wage_policy', WagePolicy::toArray())->default(WagePolicy::PERCENT);
-            $table->unsignedDecimal('wage_value')->default(1);
-            $table->enum('wage_by', WageBy::toArray())->default(WageBy::MERCHANT);
-            $table->unsignedInteger('wage_max')->default(40000)->comment('Rial');
+            $table->enum('fee_policy', FeePolicy::toArray())->default(FeePolicy::PERCENT);
+            $table->unsignedDecimal('fee_value')->default(1);
+            $table->enum('fee_by', FeeBy::toArray())->default(FeeBy::MERCHANT);
+            $table->unsignedInteger('fee_max')->default(40000)->comment('Rial');
 
             $table->string('name', 64)->comment('Merchant`s name to show on gateway page');
             $table->string('logo')->nullable();

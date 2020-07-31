@@ -4,7 +4,7 @@
  *  *** ALL finance values are in Rial currency ***
  */
 return [
-    'wages' => [
+    'fees' => [
         'wallet' => [
             'create' => 10000,
         ],

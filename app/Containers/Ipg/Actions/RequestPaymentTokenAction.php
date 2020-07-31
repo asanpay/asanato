@@ -166,13 +166,13 @@ class RequestPaymentTokenAction extends Action
             // check amount validity
             if ($calculatedAmounts->payable_amount < $minimumPayableAmount) {
                 return response()->json([
-                    'code'       => RequestTokenErrors::LOWER_AMOUNT_AFTER_WAGE,
+                    'code'       => RequestTokenErrors::LOWER_AMOUNT_AFTER_FEE,
                     'error'      => $validator->errors()->first(),
                     'x_track_id' => resolve('xTrackId'),
                 ], 422);
             } elseif ($request->input('direct') == true && ($calculatedAmounts->payable_amount > config('finance.limit.psp.max'))) {
                 return response()->json([
-                    'code'       => RequestTokenErrors::HIGHER_AMOUNT_AFTER_WAGE,
+                    'code'       => RequestTokenErrors::HIGHER_AMOUNT_AFTER_FEE,
                     'error'      => $validator->errors()->first(),
                     'x_track_id' => resolve('xTrackId'),
                 ], 422);
@@ -229,11 +229,11 @@ class RequestPaymentTokenAction extends Action
                 // extra
                 'direct'      => boolval($request->input('direct', false)),
                 'refund'      => boolval($request->input('refund', false)),
-                // wage policy at specific time
-                'wage'        => [
-                    'policy' => $m->wage_policy,
-                    'value'  => $m->wage_value,
-                    'by'     => $m->wage_by,
+                // fee policy at specific time
+                'fee'        => [
+                    'policy' => $m->fee_policy,
+                    'value'  => $m->fee_value,
+                    'by'     => $m->fee_by,
                 ],
             ];
 

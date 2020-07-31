@@ -3,7 +3,7 @@ namespace App\Containers\Wallet\Enum;
 
 use App\Ship\Traits\CustomEnums;
 
-class WagePolicy
+class FeePolicy
 {
     use CustomEnums;
 

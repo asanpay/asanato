@@ -223,12 +223,12 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
                 $overflowShare += $moneyShare - intval($moneyShare);
             }
         } else {
-            $merchantWage = $t->getMerchantWage();
+            $merchantFee = $t->getMerchantFee();
 
             foreach ($multiplexWallets as $w) {
                 $thisWalletShare = $w['share'];
-                if (isset($w['wage'])) {
-                    $moneyShare = $w['share'] - $merchantWage;
+                if (isset($w['fee'])) {
+                    $moneyShare = $w['share'] - $merchantFee;
                 } else {
                     $moneyShare = $w['share'];
                 }

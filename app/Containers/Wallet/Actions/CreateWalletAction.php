@@ -28,12 +28,12 @@ class CreateWalletAction extends Action
 
         // get user wallet IDs
         $userWallets = $user->wallets->pluck('id')->all();
-        // check whether create wage needed
-        $createWageRequired = (count($userWallets) > 0);
+        // check whether create fee needed
+        $createFeeRequired = (count($userWallets) > 0);
 
 
         // check if this is the user's first wallet or not
-        if ($createWageRequired && (empty($payerWalletId) || !in_array($payerWalletId, $userWallets))) {
+        if ($createFeeRequired && (empty($payerWalletId) || !in_array($payerWalletId, $userWallets))) {
             throw new PayerWalletNotDefinedException();
         }
 
@@ -46,26 +46,26 @@ class CreateWalletAction extends Action
 
             $wallet = Apiato::call('Wallet@CreateWalletTask', [$data]);
 
-            if ($createWageRequired && !is_null($payerWalletId)) {
-                $createWalletWage = intval(config('wallet-container::wages.wallet.create', 10000));
+            if ($createFeeRequired && !is_null($payerWalletId)) {
+                $createWalletFee = intval(config('wallet-container::fees.wallet.create', 10000));
 
-                if ($createWalletWage > 0) {
-                    // check for wallet balance that is responsible for create wallet's wage
+                if ($createWalletFee > 0) {
+                    // check for wallet balance that is responsible for create wallet's fee
                     $payerWallet = Apiato::call('Wallet@FindWalletByIdTask', [$payerWalletId]);
 
-                    // if payer wallet has enough balance to pay the wage
-                    if ($payerWallet->getBalance() < $createWalletWage) {
+                    // if payer wallet has enough balance to pay the fee
+                    if ($payerWallet->getBalance() < $createWalletFee) {
                         throw new InsufficientWalletBalanceException();
                     }
 
-                    // transfer wage from payer wallet to system profit wallet
+                    // transfer fee from payer wallet to system profit wallet
                     $walletCostProfitWallet = Apiato::call('Wallet@GetProfitWalletTask');
 
                     // create profit transaction
                     Apiato::call('Transfer@WalletToWalletTransferTask', [
                         $payerWallet->id,
                         $walletCostProfitWallet->id,
-                        $createWalletWage,
+                        $createWalletFee,
                         TxType::WALLET_COST,
                         $request->getClientIp(),
                         ['createdWalletId' => $wallet->id]

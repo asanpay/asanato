@@ -2,8 +2,8 @@
 
 namespace App\Containers\Merchant\Models;
 
-use App\Containers\Wallet\Enum\WageBy;
-use App\Containers\Wallet\Enum\WagePolicy;
+use App\Containers\Wallet\Enum\FeeBy;
+use App\Containers\Wallet\Enum\FeePolicy;
 use App\Containers\Transaction\Models\Transaction;
 use App\Containers\User\Models\User;
 use App\Containers\Wallet\Models\Wallet;
@@ -90,32 +90,32 @@ class Merchant extends Model implements HasMedia
         $r->payable_amount = $amount;
         $r->merchant_share = $amount;
 
-        switch ($this->wage_policy) {
-            case WagePolicy::TURNOVER:
+        switch ($this->fee_policy) {
+            case FeePolicy::TURNOVER:
             {
                 $extra = 0;
                 break;
             }
-            case WagePolicy::PERMANENT:
+            case FeePolicy::PERMANENT:
             {
-                $extra = min($this->wage_value, $this->wage_max);
+                $extra = min($this->fee_value, $this->fee_max);
                 break;
             }
-            case WagePolicy::PERCENT:
+            case FeePolicy::PERCENT:
             {
-                $extra = round($amount * $this->wage_value / 100);
-                $extra = min($extra, $this->wage_max);
+                $extra = round($amount * $this->fee_value / 100);
+                $extra = min($extra, $this->fee_max);
                 break;
             }
             default:
             {
-                throw new Exception('Wage policy not defined');
+                throw new Exception('Fee policy not defined');
                 break;
             }
         }
-        $r->wage = $extra;
+        $r->fee = $extra;
 
-        if ($this->wage_by == WageBy::CUSTOMER) {
+        if ($this->fee_by == FeeBy::CUSTOMER) {
             $r->payable_amount = $amount + $extra;
             $r->merchant_share = $amount;
         } else {

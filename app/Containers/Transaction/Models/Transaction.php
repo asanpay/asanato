@@ -117,7 +117,7 @@ class Transaction extends Model implements TransactionInterface
             strrev($this->id);
     }
 
-    public function getMerchantWage()
+    public function getMerchantFee()
     {
         return currency($this->amount - $this->merchant_share);
     }

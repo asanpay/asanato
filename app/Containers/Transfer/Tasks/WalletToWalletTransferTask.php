@@ -111,7 +111,7 @@ class WalletToWalletTransferTask extends Task
                     throw new NotFoundException('createdWalletId is required');
                 }
 
-                $meta ['description'] = __('wallet.create_wallet_wage', ['id' => $meta['createdWalletId']]);
+                $meta ['description'] = __('wallet.create_wallet_fee', ['id' => $meta['createdWalletId']]);
                 break;
             }
         }
