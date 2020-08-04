@@ -6,6 +6,7 @@ use App\Containers\Authentication\Data\Seeders\TestOauthClientSeeder;
 use App\Containers\Merchant\Data\Seeders\TestMerchantsTableSeeder;
 use App\Containers\User\Data\Seeders\TestUsersTableSeeder;
 use App\Containers\Wallet\Data\Seeders\TestMerchantWalletSeeder;
+use App\Containers\Wallet\Data\Seeders\TestSharedWalletsTableSeeder;
 use App\Containers\Wallet\Data\Seeders\TestWalletsTableSeeder;
 use App\Ship\Parents\Seeders\Seeder;
 
@@ -28,6 +29,7 @@ class SeedTestingData extends Seeder
         $this->call(TestMerchantsTableSeeder::class);
         $this->call(TestWalletsTableSeeder::class);
         $this->call(TestMerchantWalletSeeder::class);
+        $this->call(TestSharedWalletsTableSeeder::class);
     }
 
 }

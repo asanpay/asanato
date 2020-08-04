@@ -10,8 +10,6 @@ class SharedWallet extends Model
     protected $table = 'shared_wallets';
     protected $primaryKey = 'id';
 
-    public $timestamps = [ 'created_at' ];
-
     /**
      * only return the shared wallets that accepted by target account owner
      *

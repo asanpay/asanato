@@ -100,7 +100,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
             ->processable()
             ->orderBy('id')
             ->get();
-
+dd($processableTransaction);
         $this->info(sprintf('%d unprocessed transaction(s) found', $processableTransaction->count()));
 
         foreach ($processableTransaction as $t) {

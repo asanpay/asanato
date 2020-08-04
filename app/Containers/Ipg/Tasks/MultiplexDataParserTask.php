@@ -14,6 +14,7 @@ use Hashids\Hashids;
 class MultiplexDataParserTask extends Task
 {
     private $feePayerWalletDefined = false;
+
     /**
      * @param array $parameters
      *
@@ -47,8 +48,8 @@ class MultiplexDataParserTask extends Task
 
             self::error('multiplexing data should be a json array');
         }
-        $multiplex       = json_decode($parameters['multiplex'], true);
-        $multiplexMethod = strtolower($multiplex['method']) ?? null;
+        $multiplex        = json_decode($parameters['multiplex'], true);
+        $multiplexMethod  = strtolower($multiplex['method']) ?? null;
         $multiplexWallets = $multiplex['wallets'] ?? [];
 
         if (!in_array($multiplexMethod, MultiplexType::toArray())) {
@@ -59,10 +60,11 @@ class MultiplexDataParserTask extends Task
             self::error('multiplexing wallets should be an array');
         }
 
-        $wallets           = [];
-        $feePayerWalletId = null;
-        $percentage        = 0;
-        $shares            = 0;
+        $wallets              = [];
+        $feePayerWalletId     = null;
+        $percentage           = 0;
+        $fixShare             = 0;
+        $shares               = [];
         $feePayerWalletsCount = 0;
 
         // parse and validate multiplex json
@@ -98,11 +100,12 @@ class MultiplexDataParserTask extends Task
                 self::error(sprintf("'%s' wallet is not a valid wallet id", $item['wallet']));
             }
             $wallets [] = $w[0];
+            $shares []  = $item['share'];
 
             // only check if MERCHANT is responsible for paying the transaction fee otherwise ignore fee checkup
             if ($merchant->fee_by == FeeBy::MERCHANT) {
                 if (isset($item['fee']) && $item['fee'] == true) {
-                    $feePayerWalletId = $item['wallet'];
+                    $feePayerWalletId = $w[0];
 
                     $paymentInfo = $merchant->calculatePayable(currency($parameters['amount']));
 
@@ -124,12 +127,13 @@ class MultiplexDataParserTask extends Task
             if ($multiplexMethod == MultiplexType::PERCENT) {
                 $percentage += $item['share'];
             } else {
-                $shares += $item['share'];
+                $fixShare += $item['share'];
             }
         }
 
         if ($feePayerWalletsCount != 1) {
-            self::error(sprintf('One wallet should be select to pay the transaction fee. You selected %d', $feePayerWalletsCount));
+            self::error(sprintf('One wallet should be select to pay the transaction fee. You selected %d',
+                $feePayerWalletsCount));
         }
 
         if ($merchant->fee_by == FeeBy::MERCHANT && $this->feePayerWalletDefined !== true) {
@@ -138,14 +142,15 @@ class MultiplexDataParserTask extends Task
 
         if ($multiplexMethod == MultiplexType::PERCENT && $percentage !== 100) {
             self::error('The sum of the multiplexing shares is not 100%');
-        } elseif ($multiplexMethod == MultiplexType::FIXED && $shares !== $parameters['amount']) {
+        } elseif ($multiplexMethod == MultiplexType::FIXED && $fixShare !== $parameters['amount']) {
             self::error('The sum of the multiplexing shares is not equals to transaction amount');
         }
 
         return [
-            'method'            => $multiplexMethod,
-            'wallets'           => $wallets,
-            'feePayerWalletId' => $feePayerWalletId,
+            'method'           => $multiplexMethod,
+            'wallets'          => $wallets,
+            'shares'           => $shares,
+            'feePayerWallet'   => $feePayerWalletId,
         ];
     }
 

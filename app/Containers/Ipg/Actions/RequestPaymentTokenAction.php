@@ -204,6 +204,8 @@ class RequestPaymentTokenAction extends Action
                         'x_track_id' => resolve('xTrackId'),
                     ], 401);
                 }
+            } else {
+                $multiplexParseResult = new \stdClass();
             }
 
             $data = [
@@ -221,7 +223,7 @@ class RequestPaymentTokenAction extends Action
                     'mobile' => mobilify($request->input('mobile')),
                 ]),
                 'ip_address'     => $request->getClientIp(),
-                'multiplex'      => json_decode($request->input('multiplex', '{}')),
+                'multiplex'      => $multiplexParseResult,
             ];
 
             $data ['meta'] = [

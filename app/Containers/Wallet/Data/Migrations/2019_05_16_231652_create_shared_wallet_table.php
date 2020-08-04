@@ -19,7 +19,7 @@ class CreateSharedWalletTable extends Migration
             $table->unsignedBigInteger('wallet_id');
             $table->boolean('accepted')->default(false)
                 ->comment('whether accepted by target account');
-            $table->timestamp('created_at', 0)->nullable();
+            $table->timestamps();
         });
 
         Schema::table('shared_wallets', function (Blueprint $table) {
@@ -40,6 +40,6 @@ class CreateSharedWalletTable extends Migration
             $table->dropForeign(['wallet_id']);
         });
 
-        Schema::dropIfExists('shared_wallet');
+        Schema::dropIfExists('shared_wallets');
     }
 }
