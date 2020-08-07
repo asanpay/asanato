@@ -2,12 +2,13 @@
 
 namespace App\Containers\Ipg\UI\CLI\Commands;
 
-use App\Containers\Ipg\Enum\MultiplexType;
+use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\Transaction\Enum\TransactionStatus;
 use App\Containers\Transaction\Enum\TransactionType;
 use App\Containers\Bank\Models\Gateway;
 use App\Containers\Transaction\Models\Transaction;
 use App\Containers\Tx\Enum\TxType;
+use App\Containers\Wallet\Enum\WalletType;
 use App\Containers\Wallet\Models\Wallet;
 use App\Containers\Tx\Models\Tx;
 use App\Containers\Tx\Data\Repositories\TxRepository;
@@ -100,7 +101,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
             ->processable()
             ->orderBy('id')
             ->get();
-dd($processableTransaction);
+
         $this->info(sprintf('%d unprocessed transaction(s) found', $processableTransaction->count()));
 
         foreach ($processableTransaction as $t) {
@@ -110,8 +111,8 @@ dd($processableTransaction);
                 DB::beginTransaction();
                 if (!empty($t->merchant_id)) {
                     // this is a merchant-related transaction
-                    $involvedWallets = $this->getInvolvedWalletsShares($t);
-                    dd($involvedWallets);
+                    $involvedWallets = Apiato::call('Ipg@GetInvolvedWalletSharesTask', [$t]);
+
                     // create merchant wallet(s) transaction
                     $this->createMerchantWalletTransaction($t, $involvedWallets);
 
@@ -120,7 +121,7 @@ dd($processableTransaction);
                 } elseif (!empty($t->wallet_id)) {
                     // this is a wallet-related transaction like TopUp
                     // create top-upped wallet transaction
-                    $this->info('bypath topup transaction');
+                    $this->info('bypath top-up transaction');
                 } else {
                     throw new Exception(__METHOD__ . ' could not detect wallet transaction type');
                 }
@@ -150,99 +151,23 @@ dd($processableTransaction);
         $this->info('processing done!');
     }
 
-    /**
-     * @param Transaction $t
-     *
-     * @return array
-     */
-    private function getInvolvedWalletsShares(Transaction $t): array
+
+    private function createIncomingWalletTransaction(Transaction $transaction)
     {
-        if (!empty($t->multiplex) && isset($t->multiplex['wallets']) && !empty($t->multiplex['wallets'])) {
-            // transaction has multiplex data
-            return $this->getInvolvedWalletsShareFromMultiplex($t);
-        }
+        // incoming money wallet
+        XLog::debug('create incoming money tx', [$transaction->tagify()]);
 
-        return $this->getInvolvedWalletsShareFromMerchantPivot($t);
-    }
+        $incomingMoneyWallet = Apiato::call('Wallet@GetSystemWalletTask', [WalletType::INCOMING_MONEY]);
 
-    private function getInvolvedWalletsShareFromMerchantPivot(Transaction $t): array
-    {
-        $this->info('GetInvolvedWalletsShareFromMerchantPivot');
-        $merchantWallets = $t->merchant->wallets->toArray();
-
-        $this->info(sprintf('transaction id %d has %d involved wallets', $t->id, count($merchantWallets)));
-
-        $overflowShare   = 0;
-        $involvedWallets = [];
-
-
-        foreach ($merchantWallets as $w) {
-            $thisWalletShare = $w['pivot']['share'];
-            $moneyShare      = $thisWalletShare * $t->merchant_share / 100;
-
-
-            $involvedWallets [] = [
-                'id'                => $w['id'],
-                'share'             => $thisWalletShare,
-                'transaction_share' => intval($moneyShare),
-                'extra_share'       => $moneyShare - intval($moneyShare),
-            ];
-            $overflowShare      += $moneyShare - intval($moneyShare);
-        }
-
-        if ($overflowShare > 0) {
-            // add extra share to the wallet that has biggest share
-            $involvedWallets[0]['transaction_share'] += intval(round($overflowShare));
-        }
-
-        return $involvedWallets;
-    }
-
-    private function getInvolvedWalletsShareFromMultiplex(Transaction $t): array
-    {
-        $this->info('GetInvolvedWalletsShareFromMultiplex');
-        $multiplexWallets = $t->multiplex['wallets'];
-        $this->info(sprintf('transaction id %d has %d involved wallets', $t->id, count($multiplexWallets)));
-
-        $multiplexMethod = $t->multiplex['method'];
-
-        $overflowShare = 0;
-
-        if ($t->multiplex['method'] == MultiplexType::PERCENT) {
-            foreach ($multiplexWallets as $w) {
-                $thisWalletShare = $w['share'];
-                $moneyShare      = $thisWalletShare * $t->merchant_share / 100;
-
-                $involvedWallets [] = [
-                    'id'                => $w['id'],
-                    'share'             => $thisWalletShare,
-                    'transaction_share' => intval($moneyShare),
-                    'extra_share'       => $moneyShare - intval($moneyShare),
-                ];
-
-                $overflowShare += $moneyShare - intval($moneyShare);
-            }
-        } else {
-            $merchantFee = $t->getMerchantFee();
-
-            foreach ($multiplexWallets as $w) {
-                $thisWalletShare = $w['share'];
-                if (isset($w['fee'])) {
-                    $moneyShare = $w['share'] - $merchantFee;
-                } else {
-                    $moneyShare = $w['share'];
-                }
-
-                $involvedWallets [] = [
-                    'id'                => $w['id'],
-                    'share'             => $thisWalletShare,
-                    'transaction_share' => intval($moneyShare),
-                    'extra_share'       => 0,
-                ];
-            }
-        }
-
-        return $involvedWallets;
+        $incomingTx          = [
+            'type'           => TxType::SYSTEM,
+            'wallet_id'      => $incomingMoneyWallet->id,
+            'user_id'        => config('settings.app_user_id'),
+            'transaction_id' => $transaction->id,
+            'debtor'         => $transaction->payable_amount,
+            'ip_address'     => $transaction->ip_address,
+        ];
+        Apiato::call('Tx@CreateTxTask', [$incomingTx]);
     }
 
     /**

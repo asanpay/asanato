@@ -42,7 +42,7 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
                     $incomingMoneyWallet = Apiato::call('Wallet@GetSystemWalletTask', [WalletType::INCOMING_MONEY]);
                     $incomingTx          = [
                         'type'           => TxType::SYSTEM,
-                        'wallet_id'      => $incomingMoneyWallet->id,
+                        'wallet_id'     => $incomingMoneyWallet->id,
                         'user_id'        => config('settings.app_user_id'),
                         'transaction_id' => $transaction->id,
                         'debtor'         => $transaction->payable_amount,
