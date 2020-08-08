@@ -81,7 +81,7 @@ return [
         | Default: ['email' => ['email']
         |
         */
-        'allowed_login_attributes' => [
+        'attributes' => [
             //'email' => ['email'],
             // 'name' => [],
             'mobile' => ['string', 'regex:'.config('regex.mobile_regex')],

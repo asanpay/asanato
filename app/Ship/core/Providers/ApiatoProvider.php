@@ -11,11 +11,10 @@ use Apiato\Core\Loaders\FactoriesLoaderTrait;
 use Apiato\Core\Traits\ValidationTrait;
 use App\Ship\Parents\Providers\RoutesProvider;
 use App\Ship\Providers\ShipProvider;
-use Barryvdh\Cors\ServiceProvider as CorsServiceProvider;
+use Fruitcake\Cors\CorsServiceProvider;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Tinker\TinkerServiceProvider;
-use Optimus\Heimdal\Provider\LaravelServiceProvider as HeimdalExceptionsServiceProvider;
 use Prettus\Repository\Providers\RepositoryServiceProvider;
 use Spatie\Fractal\FractalFacade;
 use Spatie\Fractal\FractalServiceProvider;
@@ -48,7 +47,6 @@ class ApiatoProvider extends AbstractMainProvider
         RepositoryServiceProvider::class,
         CorsServiceProvider::class,
         FractalServiceProvider::class,
-        HeimdalExceptionsServiceProvider::class,
 
         // add the Laravel Tinker Service Provider
         TinkerServiceProvider::class,
@@ -57,7 +55,6 @@ class ApiatoProvider extends AbstractMainProvider
         RoutesProvider::class, // exceptionally adding the Route Provider, unlike all other providers in the parents.
         ShipProvider::class, // the ShipProvider for the Ship third party packages.
         GeneratorsServiceProvider::class, // the code generator provider.
-
     ];
 
     /**

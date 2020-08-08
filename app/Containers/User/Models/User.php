@@ -2,6 +2,7 @@
 
 namespace App\Containers\User\Models;
 
+use App\Containers\Authorization\Traits\AuthenticationTrait;
 use App\Containers\Authorization\Traits\AuthorizationTrait;
 use App\Containers\IdentityProof\Enum\IdPoofType;
 use App\Containers\IdentityProof\Enum\IdProofStatus;
@@ -25,6 +26,7 @@ use Google2FA;
 class User extends UserModel implements HasMedia
 {
     use AuthorizationTrait;
+    use AuthenticationTrait;
     use Notifiable;
     use InteractsWithMedia;
 

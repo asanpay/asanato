@@ -86,6 +86,14 @@ trait DocsGeneratorTrait
     }
 
     /**
+     * @return  mixed
+     */
+    private function getSwaggerConverter()
+    {
+        return Config::get($this->getConfigFile() . '.swagger-converter');
+    }
+
+    /**
      * @param $type
      *
      * @return  mixed
@@ -107,11 +115,12 @@ trait DocsGeneratorTrait
         $configs = $this->getTypeConfig();
 
         // what files types needs to be included
-        $routeFilesCommand = '';
+        $routeFilesCommand = [];
         $routes = $configs[$type]['routes'];
 
         foreach ($routes as $route) {
-            $routeFilesCommand .= '-f ' . $route . '.php ';
+            $routeFilesCommand[] = '-f';
+            $routeFilesCommand[] = $route . '.php';
         }
 
         return $routeFilesCommand;

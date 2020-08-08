@@ -2,8 +2,8 @@
 
 namespace App\Containers\Authentication\UI\API\Requests;
 
-use Illuminate\Support\Arr;
 use App\Ship\Parents\Requests\Request;
+use Illuminate\Support\Arr;
 
 /**
  * Class LoginRequest.
@@ -51,7 +51,7 @@ class LoginRequest extends Request
     {
         $prefix = config('authentication-container.login.prefix', '');
 
-        $allowedLoginFields = config('authentication-container.login.allowed_login_attributes', ['email' => []]);
+        $allowedLoginFields = config('authentication-container.login.attributes', ['email' => []]);
 
         $rules = [
             'password' => 'required|min:3|max:30',

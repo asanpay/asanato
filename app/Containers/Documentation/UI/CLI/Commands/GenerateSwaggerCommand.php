@@ -7,11 +7,11 @@ use App\Ship\Parents\Commands\ConsoleCommand;
 use App\Ship\Transporters\DataTransporter;
 
 /**
- * Class GenerateApiDocsCommand
+ * Class GenerateSwaggerCommand
  *
  * @author  Mahmoud Zalt  <mahmoud@zalt.me>
  */
-class GenerateApiDocsCommand extends ConsoleCommand
+class GenerateSwaggerCommand extends ConsoleCommand
 {
 
     /**
@@ -19,14 +19,14 @@ class GenerateApiDocsCommand extends ConsoleCommand
      *
      * @var string
      */
-    protected $signature = "apiato:apidoc";
+    protected $signature = "apiato:swagger";
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = "Generate API Documentations with (API-Doc-JS)";
+    protected $description = "Generate API Documentations with (Swagger from API-Doc-JS)";
 
     /**
      * Create a new command instance.
@@ -43,7 +43,7 @@ class GenerateApiDocsCommand extends ConsoleCommand
         $transporter = new DataTransporter();
         $transporter->setInstance("command_instance", $this);
 
-        Apiato::call('Documentation@GenerateDocumentationAction', [$transporter]);
+        Apiato::call('Documentation@GenerateSwaggerAction', [$transporter]);
     }
 
 }

@@ -8,11 +8,11 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 /**
- * Class GenerateAPIDocsTask.
+ * Class GenerateSwaggerTask.
  *
- * @author Mahmoud Zalt <mahmoud@zalt.me>
+ * @author M. Mert Yildiran <mehmetmertyildiran@gmail.com>
  */
-class GenerateAPIDocsTask extends Task
+class GenerateSwaggerTask extends Task
 {
     use DocsGeneratorTrait;
 
@@ -27,24 +27,32 @@ class GenerateAPIDocsTask extends Task
      */
     public function run($type, $console)
     {
-        $path = $this->getDocumentationPath($type);
+        // little hack to move the apidoc.json file to the /app directory in order to be seen by apidoc-swagger
+        // since the command doesn't support passing custom path.
+        $app_path = 'app';
+        $apidoc_json = '/apidoc.json';
+        copy($this->getJsonFilePath($type) . $apidoc_json, $app_path . $apidoc_json);
 
         $command = [
-            $this->getExecutable(),
+            $this->getSwaggerConverter(),
             // executable parameters
-            "-c",
-            $this->getJsonFilePath($type),
-            ...$this->getEndpointFiles($type),
+            "-v",
+            "",
+            "-f",
+            "'.*\.php$'",
             "-i",
-            "app",
+            $app_path,
             "-o",
-            $path
+            "{$this->getDocumentationPath($type)}/swagger"
         ];
 
         $process = new Process($command);
 
         // execute the command
         $process->run();
+
+        // delete the apidoc.json file after executing the command since it's no longer needed.
+        unlink($app_path . $apidoc_json);
 
         if (!$process->isSuccessful()) {
             $console->error('Error Output: ' . $process->getOutput());
@@ -56,7 +64,7 @@ class GenerateAPIDocsTask extends Task
         $console->info('Output: ' . $process->getOutput());
 
         // return the past to that generated documentation
-        return $this->getFullApiUrl($type);
+        return $this->getFullApiUrl($type).'/swagger/swagger.json';
     }
 
 }

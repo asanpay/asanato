@@ -11,7 +11,18 @@ return [
     |
     */
 
-    'executable' => '$(npm bin)/apidoc',
+    'executable' => 'node_modules/.bin/apidoc',
+
+    /*
+    |--------------------------------------------------------------------------
+    | apiDoc to Swagger/OpenAPI Converter
+    |--------------------------------------------------------------------------
+    |
+    | Converts apiDoc inline documentation to Swagger/OpenAPI JSON schema
+    |
+    */
+
+    'swagger-converter' => 'node_modules/.bin/apidoc-swagger',
 
     /*
     |--------------------------------------------------------------------------
