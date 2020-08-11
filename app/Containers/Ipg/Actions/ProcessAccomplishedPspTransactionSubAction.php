@@ -38,17 +38,8 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
                 XLog::info('creating top-up wallet txes', [$transaction->tagify()]);
                 DB::transaction(function () use (&$transaction) {
                     // incoming money wallet
-                    XLog::debug('create incoming money tx', [$transaction->tagify()]);
-                    $incomingMoneyWallet = Apiato::call('Wallet@GetSystemWalletTask', [WalletType::INCOMING_MONEY]);
-                    $incomingTx          = [
-                        'type'           => TxType::SYSTEM,
-                        'wallet_id'     => $incomingMoneyWallet->id,
-                        'user_id'        => config('settings.app_user_id'),
-                        'transaction_id' => $transaction->id,
-                        'debtor'         => $transaction->payable_amount,
-                        'ip_address'     => $transaction->ip_address,
-                    ];
-                    Apiato::call('Tx@CreateTxTask', [$incomingTx]);
+                    // create incoming wallet Tx
+                    Apiato::call('Tx@CreateIncomeTxFromTransactionSubAction', [$transaction]);
 
                     // destination wallet
                     XLog::debug('create destination wallet tx');

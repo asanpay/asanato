@@ -131,27 +131,32 @@ class MultiplexDataParserTask extends Task
             }
         }
 
-        if ($feePayerWalletsCount != 1) {
-            self::error(sprintf('One wallet should be select to pay the transaction fee. You selected %d',
+        if ($feePayerWalletsCount > 1) {
+            self::error(sprintf('One wallet could be select to pay the transaction fee. You selected %d',
                 $feePayerWalletsCount));
         }
 
-        if ($merchant->fee_by == FeeBy::MERCHANT && $this->feePayerWalletDefined !== true) {
-            self::error('The transaction fee payer\'s wallet is not specified');
-        }
+        //        if ($merchant->fee_by == FeeBy::MERCHANT && $this->feePayerWalletDefined !== true) {
+        //            self::error('The transaction fee payer\'s wallet is not specified');
+        //        }
 
         if ($multiplexMethod == MultiplexType::PERCENT && $percentage !== 100) {
             self::error('The sum of the multiplexing shares is not 100%');
-        } elseif ($multiplexMethod == MultiplexType::FIXED && $fixShare !== $parameters['amount']) {
+        } elseif ($multiplexMethod == MultiplexType::FIX && $fixShare !== $parameters['amount']) {
             self::error('The sum of the multiplexing shares is not equals to transaction amount');
         }
 
-        return [
-            'method'           => $multiplexMethod,
-            'wallets'          => $wallets,
-            'shares'           => $shares,
-            'feePayerWallet'   => $feePayerWalletId,
+        $data = [
+            'method'  => $multiplexMethod,
+            'wallets' => $wallets,
+            'shares'  => $shares,
         ];
+
+        if ($feePayerWalletId) {
+            $data ['feePayerWallet'] = $feePayerWalletId;
+        }
+
+        return $data;
     }
 
     private static function error(string $message)

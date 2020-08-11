@@ -22,7 +22,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
     /**
      * @var string
      */
-    protected $signature = 'ipg:transactions-to-tx';
+    protected $signature = 'ipg:transaction-to-tx';
 
     /**
      * @var string
@@ -97,6 +97,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
                 'status',
                 'process',
                 'multiplex',
+                'meta',
             ])
             ->processable()
             ->orderBy('id')
@@ -112,12 +113,15 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
                 if (!empty($t->merchant_id)) {
                     // this is a merchant-related transaction
                     $involvedWallets = Apiato::call('Ipg@GetInvolvedWalletSharesTask', [$t]);
+dd($involvedWallets);
+                    // create incoming wallet Tx
+                    Apiato::call('Tx@CreateIncomeTxFromTransactionSubAction', [$t]);
 
-                    // create merchant wallet(s) transaction
-                    $this->createMerchantWalletTransaction($t, $involvedWallets);
+                    // create merchant wallet(s) Txs
+                    $this->createMerchantWalletTxs($t, $involvedWallets);
 
-                    // create profit wallet transaction
-                    $this->createProfitWalletTransaction($t);
+                    // create profit wallet Tx
+                    $this->createProfitWalletTx($t);
                 } elseif (!empty($t->wallet_id)) {
                     // this is a wallet-related transaction like TopUp
                     // create top-upped wallet transaction
@@ -151,25 +155,6 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
         $this->info('processing done!');
     }
 
-
-    private function createIncomingWalletTransaction(Transaction $transaction)
-    {
-        // incoming money wallet
-        XLog::debug('create incoming money tx', [$transaction->tagify()]);
-
-        $incomingMoneyWallet = Apiato::call('Wallet@GetSystemWalletTask', [WalletType::INCOMING_MONEY]);
-
-        $incomingTx          = [
-            'type'           => TxType::SYSTEM,
-            'wallet_id'      => $incomingMoneyWallet->id,
-            'user_id'        => config('settings.app_user_id'),
-            'transaction_id' => $transaction->id,
-            'debtor'         => $transaction->payable_amount,
-            'ip_address'     => $transaction->ip_address,
-        ];
-        Apiato::call('Tx@CreateTxTask', [$incomingTx]);
-    }
-
     /**
      * @param Transaction $t
      * @param array $involvedWallets
@@ -177,7 +162,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
      * @return bool
      *
      */
-    private function createMerchantWalletTransaction(Transaction $t, array $involvedWallets): void
+    private function createMerchantWalletTxs(Transaction $t, array $involvedWallets): void
     {
         $this->line('creating merchant wallet(s) transaction');
 
@@ -274,7 +259,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
      *
      * @return void
      */
-    private function createProfitWalletTransaction(Transaction $t): void
+    private function createProfitWalletTx(Transaction $t): void
     {
         $this->line('creating transaction profit\'s wallet transaction');
 

@@ -9,6 +9,6 @@ class MultiplexType
     use CustomEnums;
 
     const PERCENT = 'percentage';
-    const FIXED = 'fixed';
+    const FIX = 'fix';
 
 }

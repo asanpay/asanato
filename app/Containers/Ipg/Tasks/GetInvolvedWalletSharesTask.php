@@ -4,12 +4,16 @@ namespace App\Containers\Ipg\Tasks;
 
 use App\Containers\Ipg\Enum\MultiplexType;
 use App\Containers\Transaction\Models\Transaction;
+use App\Containers\Wallet\Traits\InvolvedWalletsFixMethod;
+use App\Containers\Wallet\Traits\InvolvedWalletsPercentageMethod;
 use App\Ship\Parents\Tasks\Task;
 
 class GetInvolvedWalletSharesTask extends Task
 {
+    use InvolvedWalletsFixMethod;
+    use InvolvedWalletsPercentageMethod;
 
-    public function run(Transaction $t) : array
+    public function run(Transaction $t): array
     {
         if (!empty($t->multiplex) && isset($t->multiplex['wallets']) && !empty($t->multiplex['wallets'])) {
             // transaction has multiplex data
@@ -21,32 +25,38 @@ class GetInvolvedWalletSharesTask extends Task
 
     private function getInvolvedWalletsShareFromMerchantPivot(Transaction $t): array
     {
-        $this->info('GetInvolvedWalletsShareFromMerchantPivot');
+        echo 'GetInvolvedWalletsShareFromMerchantPivot' . PHP_EOL;
         $merchantWallets = $t->merchant->wallets->toArray();
-
-        $this->info(sprintf('transaction id %d has %d involved wallets', $t->id, count($merchantWallets)));
+        echo sprintf('transaction id %d has %d involved wallets', $t->id, count($merchantWallets)) . PHP_EOL;
 
         $overflowShare   = 0;
         $involvedWallets = [];
+        $maxShare        = 0;
+        $maxShareIndex   = 0;
 
+        foreach ($merchantWallets as $i => $w) {
+            $walletShare      = $w['pivot']['share'];
+            $walletMoneyShare = ($walletShare / 100) * $t->merchant_share;
 
-        foreach ($merchantWallets as $w) {
-            $thisWalletShare = $w['pivot']['share'];
-            $moneyShare      = $thisWalletShare * $t->merchant_share / 100;
+            $overflow = $walletMoneyShare - intval($walletMoneyShare);
+            if ($walletShare > $maxShare) {
+                $maxShare      = $walletShare;
+                $maxShareIndex = $i;
+            }
 
-
-            $involvedWallets [] = [
-                'id'                => $w['id'],
-                'share'             => $thisWalletShare,
-                'transaction_share' => intval($moneyShare),
-                'extra_share'       => $moneyShare - intval($moneyShare),
+            $involvedWallets [$i] = [
+                'id'          => $w['id'],
+                'share'       => $walletShare,
+                'money_share' => currency($walletMoneyShare),
+                'extra_share' => $overflow,
             ];
-            $overflowShare      += $moneyShare - intval($moneyShare);
+
+            $overflowShare += $overflow;
         }
 
         if ($overflowShare > 0) {
             // add extra share to the wallet that has biggest share
-            $involvedWallets[0]['transaction_share'] += intval(round($overflowShare));
+            $involvedWallets[$maxShareIndex]['transaction_share'] += intval(round($overflowShare));
         }
 
         return $involvedWallets;
@@ -54,49 +64,23 @@ class GetInvolvedWalletSharesTask extends Task
 
     private function getInvolvedWalletsShareFromMultiplex(Transaction $t): array
     {
-        $this->info('GetInvolvedWalletsShareFromMultiplex');
-        $multiplexWallets = $t->multiplex['wallets'];
-        $this->info(sprintf('transaction id %d has %d involved wallets', $t->id, count($multiplexWallets)));
-
-        $multiplexMethod = $t->multiplex['method'];
-
-        $overflowShare = 0;
+        echo 'GetInvolvedWalletsShareFromMultiplex' . PHP_EOL;
+        echo sprintf('transaction id %d has %d involved wallets', $t->id, count($t->multiplex['wallets'])) . PHP_EOL;
 
         if ($t->multiplex['method'] == MultiplexType::PERCENT) {
-            foreach ($multiplexWallets as $w) {
-                $thisWalletShare = $w['share'];
-                $moneyShare      = $thisWalletShare * $t->merchant_share / 100;
-
-                $involvedWallets [] = [
-                    'id'                => $w['id'],
-                    'share'             => $thisWalletShare,
-                    'transaction_share' => intval($moneyShare),
-                    'extra_share'       => $moneyShare - intval($moneyShare),
-                ];
-
-                $overflowShare += $moneyShare - intval($moneyShare);
+            if (isset($t->multiplex['feePayerWallet'])) {
+                return $this->calculateInvolvedWalletsShareByPercentageMethodOneFeePayer($t);
             }
-        } else {
-            $merchantFee = $t->getMerchantFee();
 
-            foreach ($multiplexWallets as $w) {
-                $thisWalletShare = $w['share'];
-                if (isset($w['fee'])) {
-                    $moneyShare = $w['share'] - $merchantFee;
-                } else {
-                    $moneyShare = $w['share'];
-                }
-
-                $involvedWallets [] = [
-                    'id'                => $w['id'],
-                    'share'             => $thisWalletShare,
-                    'transaction_share' => intval($moneyShare),
-                    'extra_share'       => 0,
-                ];
+            return $this->calculateInvolvedWalletsShareByPercentageMethodAllFeePayer($t);
+        } else { // fix fee policy
+            if (isset($t->multiplex['feePayerWallet'])) {
+                return $this->calculateInvolvedWalletsShareByFixMethodOneFeePayer($t);
             }
+
+            return $this->calculateInvolvedWalletsShareByFixMethodAllFeePayer($t);
         }
-
-        return $involvedWallets;
     }
+
 
 }
