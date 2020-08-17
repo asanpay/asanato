@@ -46,6 +46,7 @@ class GetInvolvedWalletSharesTask extends Task
 
             $involvedWallets [$i] = [
                 'id'          => $w['id'],
+                'owner'       => $w['user_id'],
                 'share'       => $walletShare,
                 'money_share' => currency($walletMoneyShare),
                 'extra_share' => $overflow,
@@ -81,6 +82,4 @@ class GetInvolvedWalletSharesTask extends Task
             return $this->calculateInvolvedWalletsShareByFixMethodAllFeePayer($t);
         }
     }
-
-
 }

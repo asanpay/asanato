@@ -26,7 +26,7 @@ class CreateTxTask extends Task
             return $this->repository->create($data);
         }
         catch (Exception $exception) {
-            XLog::exceotion($exception);
+            XLog::exception($exception);
             throw new CreateResourceFailedException();
         }
     }

@@ -4,6 +4,7 @@
 namespace App\Containers\Wallet\Traits;
 
 
+use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\Transaction\Models\Transaction;
 
 trait InvolvedWalletsFixMethod
@@ -27,7 +28,7 @@ trait InvolvedWalletsFixMethod
             }
 
             // wallet's share percentage
-            $walletShareInPercent = round(($t->multiplex['shares'][$i] / $t->amount) * 100, 2);
+            $walletShareInPercent = $t->multiplex['shares'][$i] / $t->amount;
             $walletFeeShare       = $systemFee * $walletShareInPercent; // in currency
 
             $walletMoneyShare = $walletShare - $walletFeeShare;
@@ -35,6 +36,7 @@ trait InvolvedWalletsFixMethod
 
             $involvedWallets [] = [
                 'id'          => $w,
+                'owner'       => Apiato::call('wallet@FindWalletByIdTask',[$w])->user_id,
                 'share'       => $walletShare,
                 'money_share' => currency($walletMoneyShare),
                 'extra_share' => $overflow,
@@ -66,6 +68,7 @@ trait InvolvedWalletsFixMethod
 
             $involvedWallets [] = [
                 'id'          => $w,
+                'owner'       => Apiato::call('wallet@FindWalletByIdTask',[$w])->user_id,
                 'share'       => $walletShare,
                 'money_share' => intval($moneyShare),
                 'extra_share' => 0,

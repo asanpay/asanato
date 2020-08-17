@@ -3,12 +3,12 @@
 namespace App\Containers\Ipg\UI\CLI\Commands;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Transaction\Enum\TransactionProcess;
 use App\Containers\Transaction\Enum\TransactionStatus;
 use App\Containers\Transaction\Enum\TransactionType;
 use App\Containers\Bank\Models\Gateway;
 use App\Containers\Transaction\Models\Transaction;
 use App\Containers\Tx\Enum\TxType;
-use App\Containers\Wallet\Enum\WalletType;
 use App\Containers\Wallet\Models\Wallet;
 use App\Containers\Tx\Models\Tx;
 use App\Containers\Tx\Data\Repositories\TxRepository;
@@ -98,6 +98,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
                 'process',
                 'multiplex',
                 'meta',
+                'ip_address',
             ])
             ->processable()
             ->orderBy('id')
@@ -111,9 +112,13 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
             try {
                 DB::beginTransaction();
                 if (!empty($t->merchant_id)) {
+                    $this->info(json_encode($t->toArray()));
                     // this is a merchant-related transaction
+                    $transactionFee = $t->getMerchantFee();
+                   $this->info(sprintf("Transaction fee >>> %s", $transactionFee));
                     $involvedWallets = Apiato::call('Ipg@GetInvolvedWalletSharesTask', [$t]);
-dd($involvedWallets);
+                    $this->warn(json_encode($involvedWallets));
+
                     // create incoming wallet Tx
                     Apiato::call('Tx@CreateIncomeTxFromTransactionSubAction', [$t]);
 
@@ -121,7 +126,7 @@ dd($involvedWallets);
                     $this->createMerchantWalletTxs($t, $involvedWallets);
 
                     // create profit wallet Tx
-                    $this->createProfitWalletTx($t);
+                    Apiato::call('Tx@CreateProfitTxFromTransactionSubAction', [$t]);
                 } elseif (!empty($t->wallet_id)) {
                     // this is a wallet-related transaction like TopUp
                     // create top-upped wallet transaction
@@ -129,9 +134,6 @@ dd($involvedWallets);
                 } else {
                     throw new Exception(__METHOD__ . ' could not detect wallet transaction type');
                 }
-
-                // create gateway wallet transaction
-                $this->createGatewayWalletTransaction($t);
 
                 // flag gateway transaction as processed
                 $t->process = ($t->status == TransactionStatus::ACCOMPLISHED ? TransactionProcess::ACMP : TransactionProcess::RFNP);
@@ -167,18 +169,17 @@ dd($involvedWallets);
         $this->line('creating merchant wallet(s) transaction');
 
         foreach ($involvedWallets as $w) {
-            $wt                 = new Tx();
-            $wt->wallet_id      = $w['id'];
-            $wt->type           = $this->getWalletTransactionType($t);
-            $wt->transaction_id = $t->id;
-            $wt->raw_amount     = $t->payable_amount;
-            $wt->user_share     = $t->merchant_share;
-            // accomplished transaction
-            $wt->creditor = $w['transaction_share'];
-            $wt->meta     = json_encode([
-                'description' => trans('wallet.acmp_inc_desc', ['id' => $t->id, 'share' => $w['share']]),
-            ]);
-            $wt->save();
+            $merchantTx = [
+                'type'           => TxType::MERCHANT,
+                'wallet_id'      => $w['id'],
+                'user_id'        => $w['owner'],
+                'transaction_id' => $t->id,
+                'creditor'       => $w['money_share'],
+                'gateway_id'     => $t->gateway_id,
+                'ip_address'     => $t->ip_address,
+            ];
+
+            Apiato::call('Tx@CreateTxTask', [$merchantTx]);
         }
     }
 
@@ -252,30 +253,5 @@ dd($involvedWallets);
 
         $wt->save(); //(- TRANSACTION)\\
 
-    }
-
-    /**
-     * @param Transaction $t
-     *
-     * @return void
-     */
-    private function createProfitWalletTx(Transaction $t): void
-    {
-        $this->line('creating transaction profit\'s wallet transaction');
-
-        $profit                  = abs($t->payable_amount - $t->merchant_share);
-        $transactionProfitWallet = $this->wallet->getTransactionsProfitWallet();
-
-        // add profit of accomplished merchant transaction to `transaction profit wallet`
-        $wt                 = new Tx;
-        $wt->wallet_id      = $transactionProfitWallet->id;
-        $wt->type           = $this->getWalletTransactionType($t);
-        $wt->transaction_id = $t->id;
-        $wt->creditor       = $profit;
-        $wt->meta           = json_encode([
-            'description' => trans('wallet.acmp_inc_profit', ['id' => $t->id]),
-        ]);
-
-        $wt->save();
     }
 }

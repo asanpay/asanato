@@ -2,18 +2,14 @@
 
 namespace App\Containers\Tx\Actions;
 
+use App\Containers\Tx\Models\Tx;
 use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
 
 class CreateTxAction extends Action
 {
-    public function run(Request $request)
+    public function run(array $data): Tx
     {
-        $data = $request->sanitizeInput([
-            // add your request data here
-        ]);
-
         $tx = Apiato::call('Tx@CreateTxTask', [$data]);
 
         return $tx;

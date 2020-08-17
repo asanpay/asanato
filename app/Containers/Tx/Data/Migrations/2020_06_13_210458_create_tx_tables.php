@@ -19,7 +19,7 @@ class CreateTxTables extends Migration
             $table->unsignedSmallInteger('type'); // based on TxType::class
 
             $table->unsignedBigInteger('transaction_id')->nullable(); // transaction/withdraw/transfer document ID
-            $table->unsignedBigInteger('double_id')->nullable();
+            $table->unsignedBigInteger('gateway_id')->nullable();
 
             $table->unsignedBigInteger('creditor')->default(0); // plus
             $table->unsignedBigInteger('debtor')->default(0); // minus

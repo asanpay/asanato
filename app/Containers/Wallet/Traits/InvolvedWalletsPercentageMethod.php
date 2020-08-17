@@ -5,6 +5,7 @@ namespace App\Containers\Wallet\Traits;
 
 
 use App\Containers\Transaction\Models\Transaction;
+use Apiato\Core\Foundation\Facades\Apiato;
 
 trait InvolvedWalletsPercentageMethod
 {
@@ -30,6 +31,7 @@ trait InvolvedWalletsPercentageMethod
 
             $involvedWallets [$i] = [
                 'id'          => $w,
+                'owner'       => Apiato::call('wallet@FindWalletByIdTask',[$w])->user_id,
                 'share'       => $walletShare,
                 'money_share' => currency($walletMoneyShare),
                 'extra_share' => $overflow,
@@ -52,6 +54,7 @@ trait InvolvedWalletsPercentageMethod
         $overflowShare = 0;
 
         foreach ($t->multiplex['wallets'] as $i => $w) {
+
             $walletShare      = $t->multiplex['shares'][$i];
 
             // using transaction amount because we will reduce system fee from wallet share
@@ -66,6 +69,7 @@ trait InvolvedWalletsPercentageMethod
 
             $involvedWallets [$i] = [
                 'id'          => $w,
+                'owner'       => Apiato::call('wallet@FindWalletByIdTask',[$w])->user_id,
                 'share'       => $walletShare,
                 'money_share' => currency($walletMoneyShare),
                 'extra_share' => $overflow,

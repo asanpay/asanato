@@ -140,9 +140,9 @@ class MultiplexDataParserTask extends Task
         //            self::error('The transaction fee payer\'s wallet is not specified');
         //        }
 
-        if ($multiplexMethod == MultiplexType::PERCENT && $percentage !== 100) {
+        if ($multiplexMethod == MultiplexType::PERCENT && intval($percentage) !== 100) {
             self::error('The sum of the multiplexing shares is not 100%');
-        } elseif ($multiplexMethod == MultiplexType::FIX && $fixShare !== $parameters['amount']) {
+        } elseif ($multiplexMethod == MultiplexType::FIX && $fixShare !== intval($parameters['amount'])) {
             self::error('The sum of the multiplexing shares is not equals to transaction amount');
         }
 

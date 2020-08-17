@@ -104,7 +104,7 @@ class Transaction extends Model implements TransactionInterface
         return is_null($value) ? null : self::formatJalali($value, 'yyyy/MM/dd HH:mm:ss');
     }
 
-    public function getBenefitAttribute(): int
+    public function getProfitAttribute(): int
     {
         return currency($this->payable_amount - $this->merchant_share);
     }

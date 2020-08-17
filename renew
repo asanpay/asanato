@@ -35,7 +35,7 @@ php artisan passport:keys
 php artisan apiato:seed-deploy
 php artisan apiato:seed-test
 
-php artisan apiato:doc
+php artisan apiato:apidoc
 
 if [ $composer == "yes" ]
 then

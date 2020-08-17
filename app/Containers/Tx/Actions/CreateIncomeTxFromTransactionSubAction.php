@@ -21,9 +21,10 @@ class CreateIncomeTxFromTransactionSubAction extends SubAction
         $incomingTx          = [
             'type'           => TxType::SYSTEM,
             'wallet_id'      => $incomingMoneyWallet->id,
-            'user_id'        => config('settings.app_user_id'),
+            'user_id'        => $transaction->user_id,
             'transaction_id' => $transaction->id,
             'debtor'         => $transaction->payable_amount,
+            'gateway_id'     => $transaction->gateway_id,
             'ip_address'     => $transaction->ip_address,
         ];
         Apiato::call('Tx@CreateTxTask', [$incomingTx]);
