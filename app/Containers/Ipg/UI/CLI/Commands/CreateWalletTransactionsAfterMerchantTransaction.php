@@ -19,6 +19,8 @@ use Tartan\Log\Facades\XLog;
 
 class CreateWalletTransactionsAfterMerchantTransaction extends Command
 {
+    const UPTIME_MINUTES = 30;
+
     /**
      * @var string
      */
@@ -85,76 +87,92 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
      */
     public function handle()
     {
-        $processableTransaction = $this->transaction
-            ->select([
-                'id',
-                'gateway_id',
-                'merchant_id',
-                'wallet_id',
-                'amount',
-                'payable_amount',
-                'merchant_share',
-                'status',
-                'process',
-                'multiplex',
-                'meta',
-                'ip_address',
-            ])
-            ->processable()
-            ->orderBy('id')
-            ->get();
+        $startTime = time();
+        $this->warn($this->signature . ' starttime = ' . $startTime);
 
-        $this->info(sprintf('%d unprocessed transaction(s) found', $processableTransaction->count()));
+        do {
+            $processableTransaction = $this->transaction
+                ->select([
+                    'id',
+                    'gateway_id',
+                    'merchant_id',
+                    'wallet_id',
+                    'amount',
+                    'payable_amount',
+                    'merchant_share',
+                    'status',
+                    'process',
+                    'multiplex',
+                    'meta',
+                    'ip_address',
+                ])
+                ->processable()
+                ->orderBy('id')
+                ->get();
 
-        foreach ($processableTransaction as $t) {
-            $this->info(sprintf('processing transaction id: %d', $t->id));
+            $this->info(sprintf('%d unprocessed transaction(s) found', $processableTransaction->count()));
 
-            try {
-                DB::beginTransaction();
-                if (!empty($t->merchant_id)) {
-                    $this->info(json_encode($t->toArray()));
-                    // this is a merchant-related transaction
-                    $transactionFee = $t->getMerchantFee();
-                   $this->info(sprintf("Transaction fee >>> %s", $transactionFee));
-                    $involvedWallets = Apiato::call('Ipg@GetInvolvedWalletSharesTask', [$t]);
-                    $this->warn(json_encode($involvedWallets));
+            foreach ($processableTransaction as $t) {
+                $this->info(sprintf('processing transaction id: %d', $t->id));
 
-                    // create incoming wallet Tx
-                    Apiato::call('Tx@CreateIncomeTxFromTransactionSubAction', [$t]);
+                try {
+                    DB::beginTransaction();
+                    if (!empty($t->merchant_id)) {
+                        $this->info(json_encode($t->toArray()));
+                        // this is a merchant-related transaction
+                        $transactionFee = $t->getMerchantFee();
+                        $this->info(sprintf("Transaction fee >>> %s", $transactionFee));
+                        $involvedWallets = Apiato::call('Ipg@GetInvolvedWalletSharesTask', [$t]);
+                        $this->warn(json_encode($involvedWallets));
 
-                    // create merchant wallet(s) Txs
-                    $this->createMerchantWalletTxs($t, $involvedWallets);
+                        // create incoming wallet Tx
+                        Apiato::call('Tx@CreateIncomeTxFromTransactionSubAction', [$t]);
 
-                    // create profit wallet Tx
-                    Apiato::call('Tx@CreateProfitTxFromTransactionSubAction', [$t]);
-                } elseif (!empty($t->wallet_id)) {
-                    // this is a wallet-related transaction like TopUp
-                    // create top-upped wallet transaction
-                    $this->info('bypath top-up transaction');
-                } else {
-                    throw new Exception(__METHOD__ . ' could not detect wallet transaction type');
+                        // create merchant wallet(s) Txs
+                        $this->createMerchantWalletTxs($t, $involvedWallets);
+
+                        // create profit wallet Tx
+                        Apiato::call('Tx@CreateProfitTxFromTransactionSubAction', [$t]);
+                    } elseif (!empty($t->wallet_id)) {
+                        // this is a wallet-related transaction like TopUp
+                        // create top-upped wallet transaction
+                        $this->info('bypath top-up transaction');
+                    } else {
+                        throw new Exception(__METHOD__ . ' could not detect wallet transaction type');
+                    }
+
+                    // flag gateway transaction as processed
+                    $t->process = ($t->status == TransactionStatus::ACCOMPLISHED ? TransactionProcess::ACMP : TransactionProcess::RFNP);
+                    $t->save();
+
+                    DB::commit();
+
+                } catch (Exception $e) {
+                    $this->error('Exception: ' . $e->getMessage());
+
+                    if ($this->option('verbose')) {
+                        $this->line($e->getTraceAsString());
+                    }
+
+                    XLog::exception($e, 'emergency');
+                    DB::rollBack();
+                    exit; // each transaction MUST process
                 }
-
-                // flag gateway transaction as processed
-                $t->process = ($t->status == TransactionStatus::ACCOMPLISHED ? TransactionProcess::ACMP : TransactionProcess::RFNP);
-                $t->save();
-
-                DB::commit();
-
-            } catch (Exception $e) {
-                $this->error('Exception: ' . $e->getMessage());
-
-                if ($this->option('verbose')) {
-                    $this->line($e->getTraceAsString());
-                }
-
-                XLog::exception($e, 'emergency');
-                DB::rollBack();
-                exit; // each transaction MUST process
             }
-        }
+            gc_collect_cycles();
+            sleep(self::getLoopDelay());
+        } while (time() - $startTime < (self::UPTIME_MINUTES * 60));
 
         $this->info('processing done!');
+    }
+
+    private static function getLoopDelay()
+    {
+        $hour = date('H');
+        if ($hour > 2 && $hour < 6) {
+            return 5;
+        }
+        return 1;
     }
 
     /**
