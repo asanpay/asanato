@@ -29,7 +29,7 @@ class CreateTicketsTable extends Migration
             $table->unsignedInteger('sla')->index()->nullable();
 
             $table->unsignedSmallInteger('status')->default(TicketStatus::NEW);
-            $table->string('ip_address')->nullable();
+            $table->string('ip')->nullable();
             $table->enum('platform', Platform::toArray());
 
             $table->dateTime('closed_at')->nullable();

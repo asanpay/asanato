@@ -53,7 +53,7 @@ class CreateTransactionTables extends Migration
             $table->unsignedSmallInteger('process')->default(\App\Containers\Transaction\Enum\TransactionProcess::NONE);
 
             $table->jsonb('meta')->default('{}');
-            $table->string('ip_address');
+            $table->string('ip');
 
             $table->timestamps();
         });
@@ -68,7 +68,7 @@ class CreateTransactionTables extends Migration
         $query = 'ALTER SEQUENCE transactions_id_seq RESTART WITH 10001111;';
         \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
 
-        $query = 'ALTER TABLE transactions ALTER COLUMN ip_address type inet USING ip_address::inet;';
+        $query = 'ALTER TABLE transactions ALTER COLUMN ip type inet USING ip::inet;';
         \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
     }
 

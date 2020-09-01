@@ -25,7 +25,7 @@ class CreateTicketActionsTable extends Migration
             $table->text('content')->nullable();
 
 
-            $table->string('ip_address');
+            $table->string('ip');
             $table->boolean('private')->default(false);
             $table->boolean('seen')->default(false);
             $table->enum('platform', Platform::toArray());

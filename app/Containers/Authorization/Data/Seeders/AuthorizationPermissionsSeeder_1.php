@@ -36,5 +36,7 @@ class AuthorizationPermissionsSeeder_1 extends Seeder
         Apiato::call('Authorization@CreatePermissionTask', ['read-bank-accounts', 'View all user\'s bank accounts']);
         Apiato::call('Authorization@CreatePermissionTask', ['delete-bank-accounts', 'Delete all user\'s bank accounts']);
 
+        Apiato::call('Authorization@CreatePermissionTask', ['read-withdrawals', 'Read withdrawal requests']);
+        Apiato::call('Authorization@CreatePermissionTask', ['update-withdrawals', 'Update withdrawal requesta']);
     }
 }

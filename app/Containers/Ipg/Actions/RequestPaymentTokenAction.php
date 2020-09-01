@@ -222,7 +222,7 @@ class RequestPaymentTokenAction extends Action
                     'email'  => emailify($request->input('email')),
                     'mobile' => mobilify($request->input('mobile')),
                 ]),
-                'ip_address'     => $request->getClientIp(),
+                'ip'     => $request->getClientIp(),
                 'multiplex'      => $multiplexParseResult,
             ];
 

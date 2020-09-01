@@ -16,7 +16,7 @@ class CreateBankAccountAction extends Action
             'bank_id',
             'default',
         ]);
-        $data['ip_address'] = $request->getClientIp();
+        $data['ip'] = $request->getClientIp();
 
         if ($request->user()->can('create-bank-accounts') && $request->has('user_id')) {
             // request user can create wallet for any user

@@ -18,5 +18,6 @@ class TxType
     const WALLET_COST = 8;
     const SYSTEM      = 9;
     const PROFIT      = 10;
+    const CORRECTION  = 11; // تراکنش اصلاحیه
 
 }

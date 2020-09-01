@@ -50,7 +50,7 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
                         'user_id'        => $dstWallet->user_id,
                         'transaction_id' => $transaction->id,
                         'creditor'       => $transaction->merchant_share,
-                        'ip_address'     => $transaction->ip_address,
+                        'ip'     => $transaction->ip,
                         'meta'           => [
                             'raw_amount'     => $transaction->payable_amount,
                         ]
@@ -71,7 +71,7 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
                             'user_id'        => config('settings.app_user_id'),
                             'transaction_id' => $transaction->id,
                             'creditor'       => $transaction->profit,
-                            'ip_address'     => $transaction->ip_address,
+                            'ip'     => $transaction->ip,
                         ];
                         Apiato::call('Tx@CreateTxTask', [$profitTx]);
                     }

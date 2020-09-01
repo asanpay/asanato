@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class InsufficientWalletBalanceException extends Exception
 {
-    public $httpStatusCode = Response::HTTP_PAYMENT_REQUIRED;
+    public $httpStatusCode = Response::HTTP_BAD_REQUEST;
 
     public $message = 'The wallet balance is not enough';
 

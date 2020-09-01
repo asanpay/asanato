@@ -6,6 +6,7 @@ use App\Containers\Merchant\Models\Merchant;
 use App\Containers\Transaction\Models\Transaction;
 use App\Containers\Tx\Models\Tx;
 use App\Containers\Wallet\Enum\WalletType;
+use App\Containers\Withdrawal\Models\Withdrawal;
 use App\Ship\Parents\Models\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -64,6 +65,11 @@ class Wallet extends Model
     public function txes()
     {
         return $this->hasMany(Tx::class, 'wallet_id', 'id');
+    }
+
+    public function withdrawals()
+    {
+        return $this->hasMany(Withdrawal::class, 'wallet_id', 'id');
     }
 
     public function getTransferLimitAttribute($value): int

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Tx\Models\Observers;
+namespace App\Containers\Tx\Observers;
 
 
 use App\Containers\Tx\Models\Tx;

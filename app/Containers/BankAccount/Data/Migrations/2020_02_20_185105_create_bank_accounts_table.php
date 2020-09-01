@@ -21,7 +21,7 @@ class CreateBankAccountsTable extends Migration
 
             $table->string('iban', 24)->nullable();
 
-            $table->string('ip_address');
+            $table->string('ip');
 
             $table->enum('status', BankAccountStatus::toArray())->default(BankAccountStatus::PENDING);
             $table->boolean('default')->default(false);
@@ -35,7 +35,7 @@ class CreateBankAccountsTable extends Migration
             $table->foreign('user_id', 'bank_account_user')->references('id')->on('users')->onDelete('restrict');
         });
 
-        $query = 'ALTER TABLE bank_accounts ALTER COLUMN ip_address type inet USING ip_address::inet;';
+        $query = 'ALTER TABLE bank_accounts ALTER COLUMN ip type inet USING ip::inet;';
         \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
     }
 

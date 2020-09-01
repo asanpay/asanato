@@ -50,7 +50,7 @@ class GetTopUpWalletPaymentTokenAction extends Action
             'payer_email'  => emailify($user->email),
             'payer_mobile' => mobilify($user->mobile, '0'),
 
-            'ip_address' => $request->getClientIp(),
+            'ip' => $request->getClientIp(),
             'meta'       => [
                 'description' => trim($request->input('description')),
             ],

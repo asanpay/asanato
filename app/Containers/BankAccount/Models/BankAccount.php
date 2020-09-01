@@ -3,6 +3,7 @@
 namespace App\Containers\BankAccount\Models;
 
 use App\Containers\BankAccount\Enum\BankAccountStatus;
+use App\Containers\Withdrawal\Models\Withdrawal;
 use App\Ship\Parents\Models\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -13,8 +14,8 @@ class BankAccount extends Model
     protected $fillable = [
         'iban',
         'user_id',
-        'ip_address',
-        'status'
+        'ip',
+        'status',
     ];
 
     protected $dates = [
@@ -32,9 +33,14 @@ class BankAccount extends Model
         return $this->belongsTo('App\Containers\User\Models\User', 'user_id', 'id');
     }
 
+    public function withdrawals()
+    {
+        return $this->hasMany(Withdrawal::class, 'wallet_id', 'id');
+    }
+
     public function getShebaAttribute(): string
     {
-        return 'IR'. $this->iban;
+        return 'IR' . $this->iban;
     }
 
     public function isApproved(): bool

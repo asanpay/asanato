@@ -18,14 +18,14 @@ class CreateIncomeTxFromTransactionSubAction extends SubAction
 
         $incomingMoneyWallet = Apiato::call('Wallet@GetSystemWalletTask', [WalletType::INCOMING_MONEY]);
 
-        $incomingTx          = [
+        $incomingTx = [
             'type'           => TxType::SYSTEM,
             'wallet_id'      => $incomingMoneyWallet->id,
             'user_id'        => $transaction->user_id,
             'transaction_id' => $transaction->id,
             'debtor'         => $transaction->payable_amount,
             'gateway_id'     => $transaction->gateway_id,
-            'ip_address'     => $transaction->ip_address,
+            'ip'             => $transaction->ip,
         ];
         Apiato::call('Tx@CreateTxTask', [$incomingTx]);
     }

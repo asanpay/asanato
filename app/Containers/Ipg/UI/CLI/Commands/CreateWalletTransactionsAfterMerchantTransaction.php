@@ -104,7 +104,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
                     'process',
                     'multiplex',
                     'meta',
-                    'ip_address',
+                    'ip',
                 ])
                 ->processable()
                 ->orderBy('id')
@@ -194,7 +194,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
                 'transaction_id' => $t->id,
                 'creditor'       => $w['money_share'],
                 'gateway_id'     => $t->gateway_id,
-                'ip_address'     => $t->ip_address,
+                'ip'     => $t->ip,
             ];
 
             Apiato::call('Tx@CreateTxTask', [$merchantTx]);

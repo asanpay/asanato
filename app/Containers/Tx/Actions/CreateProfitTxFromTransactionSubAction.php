@@ -34,10 +34,10 @@ class CreateProfitTxFromTransactionSubAction extends SubAction
                 'transaction_id' => $transaction->id,
                 'creditor'       => $transaction->profit,
                 'gateway_id'     => $transaction->gateway_id,
-                'ip_address'     => $transaction->ip_address,
+                'ip'             => $transaction->ip,
                 'meta'           => [
                     'description' => trans('wallet::wallet.acmp_inc_profit', ['id' => $transaction->id]),
-                ]
+                ],
             ];
             Apiato::call('Tx@CreateTxTask', [$incomingTx]);
         }

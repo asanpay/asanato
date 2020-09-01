@@ -2,7 +2,7 @@
 
 namespace App\Containers\Tx\Providers;
 
-use App\Containers\Tx\Models\Observers\TxObserver;
+use App\Containers\Tx\Observers\TxObserver;
 use App\Containers\Tx\Models\Tx;
 use App\Ship\Parents\Providers\MainProvider;
 

@@ -77,4 +77,12 @@ class CustomErrorCodesTable extends ErrorCodesTable
     const ACCOUNT_DELETE_FAILED = [
         'code' => 100013
     ];
+
+    const WITHDRAW_UNCANCALABLE = [
+        'code' => 100014
+    ];
+
+    const WITHDRAW_UNCHANGABLE = [
+        'code' => 100015
+    ];
 }

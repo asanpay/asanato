@@ -3,6 +3,7 @@
 namespace App\Ship\Seeders;
 
 use App\Containers\Authentication\Data\Seeders\TestOauthClientSeeder;
+use App\Containers\BankAccount\Data\Seeders\TestBankAccountsTableSeeder;
 use App\Containers\Merchant\Data\Seeders\TestMerchantsTableSeeder;
 use App\Containers\User\Data\Seeders\TestUsersTableSeeder;
 use App\Containers\Wallet\Data\Seeders\TestMerchantWalletSeeder;
@@ -26,6 +27,7 @@ class SeedTestingData extends Seeder
     {
         $this->call(TestOauthClientSeeder::class);
         $this->call(TestUsersTableSeeder::class);
+        $this->call(TestBankAccountsTableSeeder::class);
         $this->call(TestMerchantsTableSeeder::class);
         $this->call(TestWalletsTableSeeder::class);
         $this->call(TestMerchantWalletSeeder::class);

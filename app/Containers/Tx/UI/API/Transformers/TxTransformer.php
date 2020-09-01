@@ -43,7 +43,7 @@ class TxTransformer extends Transformer
             'debtor'         => $entity->debtor,
             'profit'         => $entity->profit,
             'balance'        => $entity->balance,
-            'client_ip'      => $entity->ip_address ?? 'unknown',
+            'client_ip'      => $entity->ip ?? 'unknown',
             'j_created_at'   => $entity->j_created_at,
             'created_at'     => $entity->created_at,
             'tracking_id'    => $entity->tracking_id,

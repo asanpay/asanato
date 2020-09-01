@@ -18,7 +18,8 @@ class CreateTxTables extends Migration
 
             $table->unsignedSmallInteger('type'); // based on TxType::class
 
-            $table->unsignedBigInteger('transaction_id')->nullable(); // transaction/withdraw/transfer document ID
+            $table->unsignedBigInteger('transaction_id')->nullable(); // transaction document ID
+            $table->unsignedBigInteger('withdrawal_id')->nullable(); // withdraw document ID
             $table->unsignedBigInteger('gateway_id')->nullable();
 
             $table->unsignedBigInteger('creditor')->default(0); // plus
@@ -27,7 +28,7 @@ class CreateTxTables extends Migration
             $table->bigInteger('profit')->default(0); // plus or minus benefits of AsanPay
             $table->BigInteger('balance')->nullable(); //signed +/- باقیمانده
 
-            $table->string('ip_address');
+            $table->string('ip');
 
             $table->jsonb('meta')->default('{}');
             $table->unsignedBigInteger('j_created_at')->nullable();
@@ -41,7 +42,7 @@ class CreateTxTables extends Migration
         // add GAP between gateway wallets and user wallets
         $query = 'ALTER SEQUENCE txes_id_seq RESTART WITH 1000000;';
         \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
-        $query = 'ALTER TABLE txes ALTER COLUMN ip_address type inet USING ip_address::inet;';
+        $query = 'ALTER TABLE txes ALTER COLUMN ip TYPE inet USING ip::inet;';
         \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
     }
 
