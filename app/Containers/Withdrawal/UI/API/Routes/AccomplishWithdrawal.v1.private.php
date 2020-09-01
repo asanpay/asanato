@@ -4,11 +4,11 @@
  * @apiGroup           Withdrawal
  * @apiName            accomplishWithdrawal
  *
- * @api                {PATCH} /v1/withdrawals-accomplish/:id Accomplish a withdrawal request
- * @apiDescription     Endpoint description here..
+ * @api                {PATCH} /v1/withdrawals-accomplish/:id Accomplish withdrawal
+ * @apiDescription     mark a withdraw request as accomplished (by system operator)
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      update-withdrawals
  *
  * @apiParam           {String}  tracking_id
  * @apiParam           {String}  processed_at

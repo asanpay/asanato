@@ -4,11 +4,11 @@
  * @apiGroup           Withdrawal
  * @apiName            rejectWithdrawal
  *
- * @api                {PATCH} /v1/withdrawals-reject/:id Reject a withdrawal request
- * @apiDescription     Endpoint description here..
+ * @api                {PATCH} /v1/withdrawals-reject/:id Reject withdrawal
+ * @apiDescription     mark a withdraw request as rejected (by system operator)
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      update-withdrawals
  *
  * @apiParam           {String}  reject_reason
  * @apiParam           {String}  processed_at

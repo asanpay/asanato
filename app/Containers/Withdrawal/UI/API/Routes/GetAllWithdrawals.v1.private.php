@@ -4,11 +4,11 @@
  * @apiGroup           Withdrawal
  * @apiName            getAllWithdrawals
  *
- * @api                {GET} /v1/withdrawals Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {GET} /v1/withdrawals Read All Withdrawal
+ * @apiDescription     Read all withdrawal request
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      read-withdrawals
  *
  * @apiParam           {String}  parameters here..
  *

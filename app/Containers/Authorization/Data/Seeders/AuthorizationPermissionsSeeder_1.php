@@ -38,5 +38,6 @@ class AuthorizationPermissionsSeeder_1 extends Seeder
 
         Apiato::call('Authorization@CreatePermissionTask', ['read-withdrawals', 'Read withdrawal requests']);
         Apiato::call('Authorization@CreatePermissionTask', ['update-withdrawals', 'Update withdrawal requesta']);
+        Apiato::call('Authorization@CreatePermissionTask', ['delete-withdrawals', 'Update withdrawal requesta']);
     }
 }

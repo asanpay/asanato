@@ -26,7 +26,7 @@ class DeleteWithdrawalRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => '',
+        'permissions' => 'delete-withdrawals',
         'roles'       => '',
     ];
 
