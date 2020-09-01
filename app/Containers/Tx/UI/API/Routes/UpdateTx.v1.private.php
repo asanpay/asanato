@@ -4,11 +4,11 @@
  * @apiGroup           Tx
  * @apiName            updateTx
  *
- * @api                {PATCH} /v1/tx/:id Endpoint title here..
+ * @api                {PATCH} /v1/tx/:id Update Tx
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      update-txes
  *
  * @apiParam           {String}  parameters here..
  *

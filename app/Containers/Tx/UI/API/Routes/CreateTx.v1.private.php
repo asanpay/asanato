@@ -4,11 +4,11 @@
  * @apiGroup           Tx
  * @apiName            createTx
  *
- * @api                {POST} /v1/tx Endpoint title here..
+ * @api                {POST} /v1/tx Create Tx
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      create-txes
  *
  * @apiParam           {String}  parameters here..
  *

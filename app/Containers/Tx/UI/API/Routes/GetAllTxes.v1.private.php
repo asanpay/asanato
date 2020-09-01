@@ -4,11 +4,11 @@
  * @apiGroup           Tx
  * @apiName            getAllTxes
  *
- * @api                {GET} /v1/tx Endpoint title here..
+ * @api                {GET} /v1/tx Read All Txs
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      read-txes
  *
  * @apiParam           {String}  parameters here..
  *

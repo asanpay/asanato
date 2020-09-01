@@ -61,15 +61,4 @@ class Controller extends ApiController
 
         return $this->transform($tx, TxTransformer::class);
     }
-
-    /**
-     * @param DeleteTxRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function deleteTx(DeleteTxRequest $request)
-    {
-        Apiato::call('Tx@DeleteTxAction', [$request]);
-
-        return $this->noContent();
-    }
 }
