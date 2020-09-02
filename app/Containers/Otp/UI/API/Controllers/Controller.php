@@ -31,7 +31,7 @@ class Controller extends ApiController
     {
         $t = new CreateOtpTokenTransporter(array_merge($request->all(), [
             'ip' => $request->ip(),
-            'to' => $request->has('mobile') ? $request->has('mobile') : $request->has('email'),
+            'to' => $request->has('mobile') ? $request->input('mobile') : $request->input('email'),
         ]));
 
         list ($message, $err) = Apiato::call('Otp@SendOtpAction', [$t]);

@@ -19,7 +19,7 @@ return [
     'ip_limit_count'       => 10, // in 48 hours
     'throttle_limit_hours' => 24,
     'throttle_limit_count' => 5,
-    'throttle_gap_seconds' => 120, //seconds
+    'throttle_gap_seconds' => env('OTP_GAP', 120), //seconds
     'ttl'                  => '+10 minutes',
     'bypath'               => env('BYPASS_OTP', false)
 ];

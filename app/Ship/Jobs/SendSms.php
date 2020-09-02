@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Tartan\Log\Facades\XLog;
 
 class SendSms implements ShouldQueue
 {
@@ -37,9 +38,11 @@ class SendSms implements ShouldQueue
     public function handle()
     {
         if (!preg_match(config('regex.mobile_regex'), $this->data['number'])) {
+            XLog::debug(sprintf('bypass sending mobile to %s number', $this->data['number']));
             return;
         }
         if (!empty($this->data['lifetime']) && time() > $this->data['lifetime']) {
+            XLog::debug(sprintf('bypass sending mobile to %s number', $this->data['number']));
             return;
         }
         resolve('iraniansms')->make()->send($this->data['number'], $this->data['message']);
