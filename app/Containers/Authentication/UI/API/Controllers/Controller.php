@@ -93,7 +93,7 @@ class Controller extends ApiController
             array_merge($request->all(), [
                 'client_id'       => Config::get('authentication-container.clients.web.my.id'),
                 'client_password' => Config::get('authentication-container.clients.web.my.secret'),
-                'scope' => 'my-panel'
+                'scope' => ''
             ])
         );
 
