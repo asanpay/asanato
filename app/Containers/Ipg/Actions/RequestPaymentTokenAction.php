@@ -129,7 +129,7 @@ class RequestPaymentTokenAction extends Action
             $m = Apiato::call('Merchant@FindMerchantByCodeTask', [$request->input('merchant')]);
 
             // check if merchant is active or not
-            if ($m->status != true) {
+            if ($m->status !==   true) {
                 return response()->json([
                     'code'       => RequestTokenErrors::DISABLED_MERCHANT,
                     'error'      => 'merchant is not active',
@@ -180,6 +180,14 @@ class RequestPaymentTokenAction extends Action
 
             // multiplex handling --------------------------------------------------------------------------------------
             if ($request->filled('multiplex')) {
+                if ($m->multiplex_support !== true) {
+                    return response()->json([
+                        'code'       => RequestTokenErrors::MULTIPLEX_NOT_ENABLED,
+                        'error'      => 'the selected merchant does not support multiplex payment',
+                        'x_track_id' => resolve('xTrackId'),
+                    ], 422);
+                }
+
                 // parse and validate multiplex data
                 try {
                     $multiplexParseResult = Apiato::call('Ipg@MultiplexDataParserTask', [

@@ -3,6 +3,8 @@
 namespace App\Containers\Merchant\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
+use App\Ship\Rules\Domain;
+use Illuminate\Validation\Rule;
 
 /**
  * Class CreateMerchantRequest.
@@ -33,7 +35,7 @@ class CreateMerchantRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+         'sharing.*.wallet',
     ];
 
     /**
@@ -51,9 +53,22 @@ class CreateMerchantRequest extends Request
      */
     public function rules()
     {
+        $domain = $this->input('domain');
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'name'              => 'required',
+            'domain'            => [
+                'required',
+                new Domain,
+                Rule::unique('merchants')->where(function ($query) use ($domain) {
+                    return $query->where('domain', $domain)
+                        ->where('status', 'true');
+                })],
+            'ip_access'      => 'required|array|min:1',
+            "ip_access.*"    => "required|ip|distinct",
+            'multiplex_support' => 'required|boolean',
+            'sharing'           => 'required|array|min:1',
+            "sharing.*.wallet"  => "required|exists:wallets,id|distinct",
+            "sharing.*.share"   => "required|numeric|max:100",
         ];
     }
 

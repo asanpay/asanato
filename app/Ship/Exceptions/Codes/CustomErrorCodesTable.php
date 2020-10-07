@@ -85,4 +85,8 @@ class CustomErrorCodesTable extends ErrorCodesTable
     const WITHDRAW_UNCHANGABLE = [
         'code' => 100015
     ];
+
+    const INVALID_MERCHANT_DATA = [
+        'code' => 100016
+    ];
 }

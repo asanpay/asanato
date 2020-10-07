@@ -26,6 +26,7 @@ class RequestTokenErrors
     const INVALID_DIRECT           = -14;
     const INVALID_PAYER_DATA       = -15;
     const INVALID_MULTIPLEX_DATA   = -16;
+    const MULTIPLEX_NOT_ENABLED   = -17;
 
     const UNKNOWN_ERROR = -999;
 }

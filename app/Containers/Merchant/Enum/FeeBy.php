@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Wallet\Enum;
+namespace App\Containers\Merchant\Enum;
 
 use App\Ship\Traits\CustomEnums;
 

@@ -2,8 +2,8 @@
 
 namespace App\Containers\Merchant\Models;
 
-use App\Containers\Wallet\Enum\FeeBy;
-use App\Containers\Wallet\Enum\FeePolicy;
+use App\Containers\Merchant\Enum\FeeBy;
+use App\Containers\Merchant\Enum\FeePolicy;
 use App\Containers\Transaction\Models\Transaction;
 use App\Containers\User\Models\User;
 use App\Containers\Wallet\Models\Wallet;
@@ -19,7 +19,13 @@ class Merchant extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $fillable = [
-
+        'user_id',
+        'code',
+        'ip_access',
+        'name',
+        'domain',
+        'ip_addresses',
+        'multiplex_support',
     ];
 
     protected $attributes = [

@@ -24,9 +24,11 @@ class Controller extends ApiController
      */
     public function createMerchant(CreateMerchantRequest $request)
     {
-        $merchant = Apiato::call('Merchant@CreateMerchantAction', [$request]);
+        $merchant = Apiato::transactionalCall('Merchant@CreateMerchantAction', [$request]);
 
-        return $this->created($this->transform($merchant, MerchantTransformer::class));
+        return $this->transform($merchant, MerchantTransformer::class, [], [], null, 201);
+
+//        return $this->created($this->transform($merchant, MerchantTransformer::class));
     }
 
     /**

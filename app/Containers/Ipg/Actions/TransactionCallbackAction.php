@@ -201,7 +201,7 @@ class TransactionCallbackAction extends Action
                 XLog::info("transaction status is $transaction->status after settlement", [$transaction->tagify()]);
 
                 // if transaction has been accomplished before
-                if ($transaction >= TransactionStatus::ACCOMPLISHED) {
+                if ($transaction->status >= TransactionStatus::ACCOMPLISHED) {
                     XLog::info("transaction has been processed before", [$transaction->tagify()]);
                     $paidSuccessfully = true;
                     $accomplished = ['accomplished' => 1]; // add flag to callback parameters

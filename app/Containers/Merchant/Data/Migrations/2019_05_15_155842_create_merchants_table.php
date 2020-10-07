@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Containers\Wallet\Enum\FeePolicy;
-use App\Containers\Wallet\Enum\FeeBy;
+use App\Containers\Merchant\Enum\FeePolicy;
+use App\Containers\Merchant\Enum\FeeBy;
+use App\Containers\Merchant\Enum\Progress;
 
 class CreateMerchantsTable extends Migration
 {
@@ -21,7 +22,8 @@ class CreateMerchantsTable extends Migration
 
             $table->string('code', 64)->unique();
 
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->default(false);
+            $table->enum('progress', Progress::toArray())->default(Progress::CREATED);
 
             $table->enum('fee_policy', FeePolicy::toArray())->default(FeePolicy::PERCENT);
             $table->unsignedDecimal('fee_value')->default(1);

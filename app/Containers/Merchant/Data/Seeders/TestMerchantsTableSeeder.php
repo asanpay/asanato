@@ -4,8 +4,8 @@ namespace App\Containers\Merchant\Data\Seeders;
 
 use App\Ship\Parents\Seeders\Seeder;
 use App\Containers\Merchant\Models\Merchant;
-use App\Containers\Wallet\Enum\FeeBy;
-use App\Containers\Wallet\Enum\FeePolicy;
+use App\Containers\Merchant\Enum\FeeBy;
+use App\Containers\Merchant\Enum\FeePolicy;
 
 class TestMerchantsTableSeeder extends Seeder
 {
