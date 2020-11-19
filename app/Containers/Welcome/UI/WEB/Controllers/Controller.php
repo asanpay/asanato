@@ -12,13 +12,5 @@ use App\Ship\Parents\Controllers\WebController;
 class Controller extends WebController
 {
 
-    /**
-     * @return  string
-     */
-    public function sayWelcome()
-    {
-        // No actions to call. Since there's nothing to do but returning a response.
 
-        return view('welcome::welcome-page');
-    }
 }

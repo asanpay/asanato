@@ -20,16 +20,42 @@ mix.js('resources/js/app.js', 'public/js')
  |--------------------------------------------------------------------------
  */
 mix.copyDirectory ('resources/assets/vendors/vazir-font/fonts/', 'public/fonts/vazir') // copy vazir font
+mix.copyDirectory ('resources/assets/vendors/dana-font/fonts/', 'public/fonts/dana') // copy vazir font
 
 mix.styles ([
     'resources/assets/vendors/vazir-font/css/vazir-font.css',
+    'resources/assets/vendors/dana-font/css/dana-font.css',
     'resources/assets/css/bootstrap-rtl.css',
     'resources/assets/css/rtl-patch.css',
     'resources/assets/css/vue-simple-spinner.css',
 ], 'public/css/global-rtl.css')
 
+mix.copy ('resources/themes/simple/simple.css', 'public/css/')
+
+mix.copyDirectory ('resources/themes/darkness/', 'public/darkness')
+mix.styles ([
+    'resources/themes/darkness/css/main.css',
+], 'public/darkness/css/main.min.css')
+mix.scripts ([
+    'resources/themes/darkness/js/jquery.js',
+    'resources/themes/darkness/js/js-plugins/crum-mega-menu.js',
+    'resources/themes/darkness/js/js-plugins/froala_editor.min.js',
+    'resources/themes/darkness/js/js-plugins/imagesLoaded.js',
+    'resources/themes/darkness/js/js-plugins/isotope.pkgd.min.js',
+    'resources/themes/darkness/js/js-plugins/jquery.magnific-popup.js',
+    'resources/themes/darkness/js/js-plugins/jquery.matchHeight.js',
+    'resources/themes/darkness/js/js-plugins/leaflet.js',
+    'resources/themes/darkness/js/js-plugins/MarkerClusterGroup.js',
+    'resources/themes/darkness/js/js-plugins/select2.js',
+    'resources/themes/darkness/js/js-plugins/smooth-scroll.js',
+    'resources/themes/darkness/js/js-plugins/swiper.min.js',
+    'resources/themes/darkness/js/js-plugins/TimeCircles.js',
+    'resources/themes/darkness/js/js-plugins/ajax-pagination.js',
+    'resources/themes/darkness/js/js-plugins/segment.js',
+    'resources/themes/darkness/js/js-plugins/sticky-sidebar.js',
+    'resources/themes/darkness/js/main.js'
+], 'public/darkness/js/main.min.js')
+
 if (mix.config.inProduction) {
     mix.version ()
 }
-
-mix.copy ('resources/themes/simple/simple.css', 'public/css/')

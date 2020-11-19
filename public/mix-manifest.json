@@ -2,5 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/global-rtl.css": "/css/global-rtl.css",
-    "/css/simple.css": "/css/simple.css"
+    "/css/simple.css": "/css/simple.css",
+    "/darkness/css/main.min.css": "/darkness/css/main.min.css",
+    "/darkness/js/main.min.js": "/darkness/js/main.min.js"
 }
