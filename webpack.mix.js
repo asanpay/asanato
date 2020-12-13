@@ -19,12 +19,12 @@ mix.js('resources/js/app.js', 'public/js')
  | Global Asset handling
  |--------------------------------------------------------------------------
  */
-mix.copyDirectory ('resources/assets/vendors/vazir-font/fonts/', 'public/fonts/vazir') // copy vazir font
-mix.copyDirectory ('resources/assets/vendors/dana-font/fonts/', 'public/fonts/dana') // copy vazir font
+mix.copyDirectory ('resources/assets/vendors/vazir-font/fonts/', 'public/fonts/vazir')
+mix.copyDirectory ('resources/assets/vendors/font-awesome/fonts/', 'public/fonts/dana')
 
 mix.styles ([
     'resources/assets/vendors/vazir-font/css/vazir-font.css',
-    'resources/assets/vendors/dana-font/css/dana-font.css',
+    'resources/assets/vendors/font-awesome/css/font-awesome.css',
     'resources/assets/css/bootstrap-rtl.css',
     'resources/assets/css/rtl-patch.css',
     'resources/assets/css/vue-simple-spinner.css',
@@ -38,6 +38,7 @@ mix.styles ([
 ], 'public/darkness/css/main.min.css')
 mix.scripts ([
     'resources/themes/darkness/js/jquery.js',
+    'resources/assets/vendors/font-awesome/js/fontawesome-all.js',
     'resources/themes/darkness/js/js-plugins/crum-mega-menu.js',
     'resources/themes/darkness/js/js-plugins/froala_editor.min.js',
     'resources/themes/darkness/js/js-plugins/imagesLoaded.js',

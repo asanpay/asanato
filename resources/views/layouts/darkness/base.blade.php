@@ -398,7 +398,6 @@
 
 <script defer src="{{mix('js/app.js')}}"></script>
 <script defer src="{{mix('darkness/js/main.min.js')}}"></script>
-<script defer src="{{mix('darkness/fonts/fontawesome-all.js')}}"></script>
 
 </body>
 

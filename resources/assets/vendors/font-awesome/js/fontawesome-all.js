@@ -8,7 +8,7 @@
 var _WINDOW = {};
 try {
   if (typeof window !== 'undefined') _WINDOW = window;
-  
+
 } catch (e) {}
 
 var _ref = _WINDOW.navigator || {};
@@ -24,13 +24,6 @@ var WINDOW = _WINDOW;
 var IS_IE = ~userAgent.indexOf('MSIE') || ~userAgent.indexOf('Trident/');
 
 var NAMESPACE_IDENTIFIER = '___FONT_AWESOME___';
-
-
-
-
-
-
-
 
 
 var PRODUCTION = function () {
@@ -511,7 +504,7 @@ bunker(function () {
 var _WINDOW = {};
 try {
   if (typeof window !== 'undefined') _WINDOW = window;
-  
+
 } catch (e) {}
 
 var _ref = _WINDOW.navigator || {};
@@ -1832,7 +1825,7 @@ bunker(function () {
 var _WINDOW = {};
 try {
   if (typeof window !== 'undefined') _WINDOW = window;
-  
+
 } catch (e) {}
 
 var _ref = _WINDOW.navigator || {};
@@ -3153,7 +3146,7 @@ bunker(function () {
 var _WINDOW = {};
 try {
   if (typeof window !== 'undefined') _WINDOW = window;
-  
+
 } catch (e) {}
 
 var _ref = _WINDOW.navigator || {};
