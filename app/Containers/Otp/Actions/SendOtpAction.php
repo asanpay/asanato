@@ -29,7 +29,7 @@ class SendOtpAction extends Action
                     // check for existing mobile
                     $existUser = Apiato::call('User@FindUserByMobileTask', [$data->to]);
                     if ($existUser) {
-                        return ['null', __('auth.signup.dup_conf_mobile')];
+                        return [null, __('auth.signup.dup_conf_mobile')];
                     }
                     break;
                 }
@@ -52,7 +52,7 @@ class SendOtpAction extends Action
                     }
 
                     if ($existUser->isProvedEmail()) {
-                        return ['null', __('auth.otp.user_email_already_proofed')];
+                        return [null, __('auth.otp.user_email_already_proofed')];
                     }
 
                     break;

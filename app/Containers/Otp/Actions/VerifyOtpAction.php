@@ -37,7 +37,7 @@ class VerifyOtpAction extends Action
 
         XLog::debug("VerifyOtpAction result:".boolval($status));
 
-        //@todo move following part to a TASK
+        //@todo move this block to a TASK
         if ($status === true) {
             switch ($reason) {
                 case OtpReason::EMAIL_VERIFY:

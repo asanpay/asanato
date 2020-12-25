@@ -47,7 +47,7 @@ class OtpBrokerManager
         if (isset($this->config['ip_check']) && $this->config['ip_check'] == true) {
             // bypass ip check on non-production env
             if (!app()->runningInConsole() && app()->environment('production')) {
-                list($r, $err) = $this->ipCheck($clientIp);
+                list($_, $err) = $this->ipCheck($clientIp);
                 if (!empty($err)) {
                     return [null, $err];
                 }

@@ -4,5 +4,6 @@
     "/css/global-rtl.css": "/css/global-rtl.css",
     "/css/simple.css": "/css/simple.css",
     "/darkness/css/main.min.css": "/darkness/css/main.min.css",
+    "/darkness/css/main-rtl.min.css": "/darkness/css/main-rtl.min.css",
     "/darkness/js/main.min.js": "/darkness/js/main.min.js"
 }

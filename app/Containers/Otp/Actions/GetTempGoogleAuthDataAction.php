@@ -8,7 +8,6 @@ use App\Containers\IdentityProof\Exceptions\UserMobileNotProvedException;
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Actions\Action;
 use Illuminate\Support\Facades\Cache;
-use Google2FA;
 
 /**
  * Class AssignUserToRoleAction.

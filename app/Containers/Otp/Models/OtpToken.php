@@ -36,6 +36,7 @@ class OtpToken extends Model
         if (config('otp-container.bypath') == true) {
             return true;
         }
+
         if ($this->used !== false) {
             return false;
         }

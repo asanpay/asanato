@@ -10,7 +10,7 @@
 
         <title>@lang('app.name') | @yield('title')</title>
 
-		<link rel="shortcut icon" href="{{asset('images/favicon.ico')}}">
+		<link rel="shortcut icon" href="{{asset('img/favicon.ico')}}">
 		<link rel="stylesheet" type="text/css" href="{{mix('css/app.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('css/simple.css')}}">
         @stack('css')
@@ -32,7 +32,7 @@
 										<div class="bqVmWV">
                                             <span class="aQXGv" role="presentation">
                                                 <a href="{{url('/')}}" alt="@lang('app.name')">
-                                                    <img style="width: 190px" src="{{asset('images/logo/logo.svg')}}" />
+                                                    <img style="width: 190px" src="{{asset('img/logo/logo.svg')}}" />
                                                 </a>
                                            </span>
                                         </div>
@@ -52,7 +52,7 @@
 									<div class="bqVmWV">
                                         <span class="jOoCmA" role="presentation">
                                             <a href="{{url('/')}}" alt="@lang('app.name')">
-                                                <img style="width: 190px" src="{{asset('images/logo/logo-grayscale.svg')}}" />
+                                                <img style="width: 190px" src="{{asset('img/logo/logo-grayscale.svg')}}" />
                                             </a>
                                         </span>
                                     </div>

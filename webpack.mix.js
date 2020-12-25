@@ -20,7 +20,7 @@ mix.js('resources/js/app.js', 'public/js')
  |--------------------------------------------------------------------------
  */
 mix.copyDirectory ('resources/assets/vendors/vazir-font/fonts/', 'public/fonts/vazir')
-mix.copyDirectory ('resources/assets/vendors/font-awesome/fonts/', 'public/fonts/dana')
+mix.copyDirectory ('resources/assets/vendors/font-awesome/fonts/', 'public/fonts')
 
 mix.styles ([
     'resources/assets/vendors/vazir-font/css/vazir-font.css',
@@ -32,12 +32,19 @@ mix.styles ([
 
 mix.copy ('resources/themes/simple/simple.css', 'public/css/')
 
-mix.copyDirectory ('resources/themes/darkness/', 'public/darkness')
+/*
+ |--------------------------------------------------------------------------
+ | Darkness Theme
+ |--------------------------------------------------------------------------
+ */
+mix.copyDirectory ('resources/themes/darkness/img/', 'public/darkness/img')
 mix.styles ([
     'resources/themes/darkness/css/main.css',
 ], 'public/darkness/css/main.min.css')
+mix.styles ([
+    'resources/themes/darkness/css/main-rtl.css',
+], 'public/darkness/css/main-rtl.min.css')
 mix.scripts ([
-    'resources/themes/darkness/js/jquery.js',
     'resources/assets/vendors/font-awesome/js/fontawesome-all.js',
     'resources/themes/darkness/js/js-plugins/crum-mega-menu.js',
     'resources/themes/darkness/js/js-plugins/froala_editor.min.js',

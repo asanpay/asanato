@@ -37,7 +37,7 @@
                         <div class="card-body text-center ribbon">
                             <div class="ribbon-box tx-id mb-4">@lang('Transaction ID'):&nbsp;<span class="ltr text-red">{{$transaction->id}}</span></div>
                             @if(isset($merchant) && is_object($merchant))
-                                <img class="rounded-circle img-thumbnail w128" src="{{$merchant->logo ?? '/images/merchant-store-blue.svg'}}" alt="">
+                                <img class="rounded-circle img-thumbnail w128" src="{{$merchant->logo ?? '/img/merchant-store-blue.svg'}}" alt="">
                                 <h6 class="mt-3 mb-2">{{$merchant->name}}</h6>
                                 <span><a href="{{$merchant->domain}}" rel="nofollow" target="_blank">{{$merchant->domain}}</a></span>
                                 <br />
