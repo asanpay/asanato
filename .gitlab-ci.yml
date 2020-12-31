@@ -1,6 +1,6 @@
 stages:
-    - test
     - build
+    - test
     - deploy
 
 image: aboozar/laravel-docker:7.4
