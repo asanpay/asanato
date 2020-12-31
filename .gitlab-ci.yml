@@ -1,4 +1,9 @@
-image: lorisleiva/laravel-docker:7.4
+stages:
+    - test
+    - build
+    - deploy
+
+image: aboozar/laravel-docker:7.4
 
 .init_ssh: &init_ssh |
     eval $(ssh-agent -s)
@@ -70,7 +75,7 @@ staging:
         - php artisan deploy asanato.ir -s upload
     environment:
         name: staging
-        url: https://asanato.ir
+        url: https://api.asanato.ir
     only:
         - master
 
