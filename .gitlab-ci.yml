@@ -31,7 +31,11 @@ composer:
     script:
         - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
         - cp .env.example .env
-        - php artisan key:generate --no-interaction --quiet --force
+    artifacts:
+        expire_in: 1 month
+        paths:
+            - vendor/
+            - .env
 
 yarn:
     stage: build
