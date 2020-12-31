@@ -3,7 +3,7 @@ stages:
     - test
     - deploy
 
-image: aboozar/laravel-docker:7.4
+image: aboozar/laravel-docker:apiato-9
 
 .init_ssh: &init_ssh |
     eval $(ssh-agent -s)
