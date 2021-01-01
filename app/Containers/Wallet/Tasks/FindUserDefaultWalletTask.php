@@ -20,10 +20,12 @@ class FindUserDefaultWalletTask extends Task
     public function run(int $userId): Wallet
     {
         try {
-            $wallet = $this->repository->findWhere([
+            $wallet = $this->repository->findWhere(
+                [
                 'user_id' => $userId,
                 'default' => true,
-            ]);
+                ]
+            );
             if (empty($wallet)) {
                 throw new NotFoundException();
             }

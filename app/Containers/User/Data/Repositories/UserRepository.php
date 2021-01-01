@@ -23,5 +23,4 @@ class UserRepository extends Repository
         'confirmed'  => '=',
         'created_at' => 'like',
     ];
-
 }

@@ -20,7 +20,7 @@ use Apiato\Core\Foundation\Facades\Apiato;
 class Controller extends ApiController
 {
     /**
-     * @param CreateBankAccountRequest $request
+     * @param  CreateBankAccountRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function createBankAccount(CreateBankAccountRequest $request)
@@ -30,7 +30,10 @@ class Controller extends ApiController
         return $this->transform(
             $bankAccounts,
             BankAccountTransformer::class,
-            [], [], null, 201
+            [],
+            [],
+            null,
+            201
         );
     }
 
@@ -71,7 +74,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param GetUserBankAccountsRequest $request
+     * @param  GetUserBankAccountsRequest $request
      * @return array
      */
     public function getUserBankAccounts(GetUserBankAccountsRequest $request)

@@ -15,14 +15,14 @@ class UserTransformer extends Transformer
 {
 
     /**
-     * @var  array
+     * @var array
      */
     protected $availableIncludes = [
         'roles',
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $defaultIncludes = [
 
@@ -53,10 +53,13 @@ class UserTransformer extends Transformer
             'readable_updated_at' => $user->updated_at === null ? '' : $user->updated_at->diffForHumans(),
         ];
 
-        $response = $this->ifAdmin([
+        $response = $this->ifAdmin(
+            [
             'real_id'    => $user->id,
             'deleted_at' => $user->deleted_at,
-        ], $response);
+            ],
+            $response
+        );
 
         return $response;
     }
@@ -65,5 +68,4 @@ class UserTransformer extends Transformer
     {
         return $this->collection($user->roles, new RoleTransformer());
     }
-
 }

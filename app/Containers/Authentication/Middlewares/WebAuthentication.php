@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 /**
  * Class WebAuthentication
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class WebAuthentication extends Middleware
 {
@@ -37,8 +37,8 @@ class WebAuthentication extends Middleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
      *
      * @return mixed
      */

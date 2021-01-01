@@ -16,7 +16,7 @@ class LoginRequest extends Request
     /**
      * Define which Roles and/or Permissions has access to this request.
      *
-     * @var  array
+     * @var array
      */
     protected $access = [
         'permissions' => null,
@@ -26,7 +26,7 @@ class LoginRequest extends Request
     /**
      * Id's that needs decoding before applying the validation rules.
      *
-     * @var  array
+     * @var array
      */
     protected $decode = [
 
@@ -36,7 +36,7 @@ class LoginRequest extends Request
      * Defining the URL parameters (`/stores/999/items`) allows applying
      * validation rules on them and allows accessing them like request data.
      *
-     * @var  array
+     * @var array
      */
     protected $urlParameters = [
 
@@ -57,8 +57,7 @@ class LoginRequest extends Request
             'password' => 'required|min:3|max:30',
         ];
 
-        foreach ($allowedLoginFields as $key => $optionalValidators)
-        {
+        foreach ($allowedLoginFields as $key => $optionalValidators) {
             // build all other login fields together
             $allOtherLoginFields = Arr::except($allowedLoginFields, $key);
             $allOtherLoginFields = array_keys($allOtherLoginFields);
@@ -69,11 +68,13 @@ class LoginRequest extends Request
 
             $keyname = $prefix . $key;
 
-            $rules = array_merge($rules,
+            $rules = array_merge(
+                $rules,
                 [
-//                    $keyname => "required_without_all:{$allOtherLoginFields}|exists:users,{$key}|{$validators}",
+                //  $keyname => "required_without_all:{$allOtherLoginFields}|exists:users,{$key}|{$validators}",
                     $keyname => "required|exists:users,{$key}|{$validators}",
-                ]);
+                ]
+            );
         }
 
         return $rules;
@@ -86,8 +87,10 @@ class LoginRequest extends Request
      */
     public function authorize()
     {
-        return $this->check([
+        return $this->check(
+            [
             'hasAccess',
-        ]);
+            ]
+        );
     }
 }

@@ -24,7 +24,7 @@ use Illuminate\Http\JsonResponse;
 class Controller extends ApiController
 {
     /**
-     * @param CreateIdentityProofRequest $request
+     * @param  CreateIdentityProofRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function createIdentityProof(CreateIdentityProofRequest $request)
@@ -39,7 +39,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param FindIdentityProofByIdRequest $request
+     * @param  FindIdentityProofByIdRequest $request
      * @return JsonResponse
      */
     public function findIdentityProofById(FindIdentityProofByIdRequest $request)
@@ -50,12 +50,15 @@ class Controller extends ApiController
     }
 
     /**
-     * @param GetAllIdentityProofsRequest $request
+     * @param  GetAllIdentityProofsRequest $request
      * @return JsonResponse
      */
     public function getAllIdentityProofs(GetAllIdentityProofsRequest $request)
     {
-        $identityproofs = Apiato::call('IdentityProof@GetAllIdentityProofsAction', [new SearchInIdProofsTransporter($request)]);
+        $identityproofs = Apiato::call(
+            'IdentityProof@GetAllIdentityProofsAction',
+            [new SearchInIdProofsTransporter($request)]
+        );
 
         return $this->transform($identityproofs, IdentityProofTransformer::class, ['media']);
     }
@@ -71,7 +74,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param UpdateIdentityProofRequest $request
+     * @param  UpdateIdentityProofRequest $request
      * @return JsonResponse
      */
     public function updateIdentityProof(UpdateIdentityProofRequest $request)

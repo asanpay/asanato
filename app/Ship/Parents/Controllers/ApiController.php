@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 /**
  * Class ApiController.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class ApiController extends AbstractApiController
 {

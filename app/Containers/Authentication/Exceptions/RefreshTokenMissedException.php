@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class RefreshTokenMissedException
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class RefreshTokenMissedException extends Exception
 {

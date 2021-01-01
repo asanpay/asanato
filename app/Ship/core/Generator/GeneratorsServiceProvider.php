@@ -35,7 +35,7 @@ use Illuminate\Support\ServiceProvider;
 /**
  * Class GeneratorsServiceProvider
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class GeneratorsServiceProvider extends ServiceProvider
 {
@@ -58,7 +58,8 @@ class GeneratorsServiceProvider extends ServiceProvider
     public function register()
     {
         // all generators ordered by name
-        $this->registerGenerators([
+        $this->registerGenerators(
+            [
             ActionGenerator::class,
             ConfigurationGenerator::class,
             ContainerGenerator::class,
@@ -87,11 +88,13 @@ class GeneratorsServiceProvider extends ServiceProvider
             TransformerGenerator::class,
             TransporterGenerator::class,
             ValueGenerator::class,
-        ]);
+            ]
+        );
     }
 
     /**
      * Register the generators.
+     *
      * @param array $classes
      */
     private function registerGenerators(array $classes)
@@ -99,9 +102,12 @@ class GeneratorsServiceProvider extends ServiceProvider
         foreach ($classes as $class) {
             $lowerClass = strtolower($class);
 
-            $this->app->singleton("command.porto.$lowerClass", function ($app) use ($class) {
-                return $app[$class];
-            });
+            $this->app->singleton(
+                "command.porto.$lowerClass",
+                function ($app) use ($class) {
+                    return $app[$class];
+                }
+            );
 
             $this->commands("command.porto.$lowerClass");
         }

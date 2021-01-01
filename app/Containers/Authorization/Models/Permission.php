@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Permission as SpatiePermission;
 /**
  * Class Permission
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class Permission extends SpatiePermission
 {

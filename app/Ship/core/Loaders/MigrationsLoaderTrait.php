@@ -8,7 +8,7 @@ use File;
 /**
  * Class MigrationsLoaderTrait.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait MigrationsLoaderTrait
 {
@@ -39,10 +39,7 @@ trait MigrationsLoaderTrait
     private function loadMigrations($directory)
     {
         if (File::isDirectory($directory)) {
-
             $this->loadMigrationsFrom($directory);
-
         }
     }
-
 }

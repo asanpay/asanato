@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
  * @group authorization
  * @group api
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class ProxyRefreshTest extends ApiTestCase
 {
@@ -32,10 +32,12 @@ class ProxyRefreshTest extends ApiTestCase
      */
     public function testRefreshWithoutBeingCreatedOrPassed()
     {
-        $user = $this->getTestingUser([
+        $user = $this->getTestingUser(
+            [
             'email'    => 'testing@mail.com',
             'password' => 'testingpass'
-        ]);
+            ]
+        );
 
         $this->actingAs($user, 'api');
 
@@ -43,7 +45,8 @@ class ProxyRefreshTest extends ApiTestCase
         $clientSecret = 'XXp8x4QK7d3J9R7OVRXWrhc19XPRroHTTKIbY8XX';
 
         // create client
-        DB::table('oauth_clients')->insert([
+        DB::table('oauth_clients')->insert(
+            [
             [
                 'id'                     => $clientId,
                 'secret'                 => $clientSecret,
@@ -53,7 +56,8 @@ class ProxyRefreshTest extends ApiTestCase
                 'personal_access_client' => '0',
                 'revoked'                => '0',
             ],
-        ]);
+            ]
+        );
 
         // make the clients credentials available as env variables
         Config::set('authentication-container.clients.web.admin.id', $clientId);
@@ -84,7 +88,7 @@ class ProxyRefreshTest extends ApiTestCase
     /**
      * @param $fileName
      *
-     * @return  string
+     * @return string
      */
     private function createTestingKey($fileName)
     {

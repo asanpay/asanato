@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Class CreateFailedJobsTable
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
+// @codingStandardsIgnoreLine
 class CreateFailedJobsTable extends Migration
 {
 
@@ -19,14 +20,17 @@ class CreateFailedJobsTable extends Migration
      */
     public function up()
     {
-        Schema::create('failed_jobs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->text('connection');
-            $table->text('queue');
-            $table->longText('payload');
-            $table->longText('exception');
-            $table->timestamp('failed_at')->useCurrent();
-        });
+        Schema::create(
+            'failed_jobs',
+            function (Blueprint $table) {
+                $table->increments('id');
+                $table->text('connection');
+                $table->text('queue');
+                $table->longText('payload');
+                $table->longText('exception');
+                $table->timestamp('failed_at')->useCurrent();
+            }
+        );
     }
 
     /**
@@ -38,5 +42,4 @@ class CreateFailedJobsTable extends Migration
     {
         Schema::drop('failed_jobs');
     }
-
 }

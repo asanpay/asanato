@@ -4,7 +4,6 @@ namespace App\Containers\Bank\Models;
 
 use App\Ship\Parents\Models\Model;
 
-
 class Psp extends Model
 {
 

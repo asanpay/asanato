@@ -16,5 +16,4 @@ class UpdateResourceFailedException extends Exception
     public $httpStatusCode = Response::HTTP_EXPECTATION_FAILED;
 
     public $message = 'Failed to update Resource.';
-
 }

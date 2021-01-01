@@ -16,7 +16,7 @@ class TransactionStatus
     const ACCOMPLISHED = '32';
     const REFUNDED     = '64';
 
-    function translations()
+    public function translations()
     {
         return [
             self::NEW          => 'جدید',

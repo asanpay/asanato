@@ -10,7 +10,7 @@ class OtpTokenRepository extends Repository
     /**
      * the container name. Must be set when the model has different name than the container
      *
-     * @var  string
+     * @var string
      */
     protected $container = 'Otp';
 
@@ -21,5 +21,4 @@ class OtpTokenRepository extends Repository
         'code'         => '=',
         'via'          => 'like',
     ];
-
 }

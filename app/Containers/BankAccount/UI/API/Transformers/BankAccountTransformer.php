@@ -8,14 +8,14 @@ use App\Ship\Parents\Transformers\Transformer;
 class BankAccountTransformer extends Transformer
 {
     /**
-     * @var  array
+     * @var array
      */
     protected $defaultIncludes = [
 
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $availableIncludes = [
 
@@ -41,10 +41,13 @@ class BankAccountTransformer extends Transformer
 
         ];
 
-        $response = $this->ifAdmin([
-            'real_id'    => $entity->id,
-            'deleted_at' => $entity->deleted_at,
-        ], $response);
+        $response = $this->ifAdmin(
+            [
+                'real_id'    => $entity->id,
+                'deleted_at' => $entity->deleted_at,
+            ],
+            $response
+        );
 
         return $response;
     }

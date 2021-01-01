@@ -19,7 +19,7 @@ use Apiato\Core\Foundation\Facades\Apiato;
 class Controller extends ApiController
 {
     /**
-     * @param CreateTransactionRequest $request
+     * @param  CreateTransactionRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function createTransaction(CreateTransactionRequest $request)
@@ -30,7 +30,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param FindTransactionByIdRequest $request
+     * @param  FindTransactionByIdRequest $request
      * @return array
      */
     public function findTransactionById(FindTransactionByIdRequest $request)
@@ -41,7 +41,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param GetAllTransactionsRequest $request
+     * @param  GetAllTransactionsRequest $request
      * @return array
      */
     public function getAllTransactions(GetAllTransactionsRequest $request)
@@ -52,7 +52,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param UpdateTransactionRequest $request
+     * @param  UpdateTransactionRequest $request
      * @return array
      */
     public function updateTransaction(UpdateTransactionRequest $request)
@@ -63,7 +63,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param DeleteTransactionRequest $request
+     * @param  DeleteTransactionRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function deleteTransaction(DeleteTransactionRequest $request)

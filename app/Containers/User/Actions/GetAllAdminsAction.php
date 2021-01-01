@@ -14,11 +14,12 @@ class GetAllAdminsAction extends Action
 {
 
     /**
-     * @return  mixed
+     * @return mixed
      */
     public function run()
     {
-        return Apiato::call('User@GetAllUsersTask',
+        return Apiato::call(
+            'User@GetAllUsersTask',
             [],
             [
                 'addRequestCriteria',

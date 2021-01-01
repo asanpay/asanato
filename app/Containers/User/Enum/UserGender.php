@@ -12,7 +12,7 @@ class UserGender
     const MALE    = 'MALE';
     const FEMALE  = 'FEMALE';
 
-    function translations()
+    public function translations()
     {
         return [
             self::MALE    => __('user.gender.male'),

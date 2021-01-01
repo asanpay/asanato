@@ -8,7 +8,7 @@ trait FormatterTrait
     /**
      * @param $string
      *
-     * @return  string
+     * @return string
      */
     protected function trimString($string)
     {
@@ -19,7 +19,7 @@ trait FormatterTrait
     /**
      * @param $word
      *
-     * @return  string
+     * @return string
      */
     public function capitalize($word)
     {
@@ -31,7 +31,7 @@ trait FormatterTrait
      * @param $operation
      * @param $class
      *
-     * @return  string
+     * @return string
      */
     public function prependOperationToName($operation, $class)
     {
@@ -39,5 +39,4 @@ trait FormatterTrait
 
         return $operation . $this->capitalize($className);
     }
-
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Containers\Withdrawal\Observers;
-
 
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\Withdrawal\Enum\WithdrawalStatus;

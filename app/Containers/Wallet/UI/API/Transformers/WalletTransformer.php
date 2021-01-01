@@ -9,14 +9,14 @@ use Tartan\Zaman\Facades\Zaman;
 class WalletTransformer extends Transformer
 {
     /**
-     * @var  array
+     * @var array
      */
     protected $defaultIncludes = [
 
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $availableIncludes = [
 
@@ -39,16 +39,19 @@ class WalletTransformer extends Transformer
             'balance'        => $entity->getBalance(),
             'transfer_limit' => intval($entity->transfer_limit),
             'default'        => boolval($entity->default),
-//            'rel_created_at' => persian(Zaman::moment(strtotime($entity->created_at))),
+        //            'rel_created_at' => persian(Zaman::moment(strtotime($entity->created_at))),
             'j_created_at'   => Zaman::gToj($entity->created_at),
             'created_at'     => $entity->created_at,
             'updated_at'     => $entity->updated_at,
         ];
 
-        $response = $this->ifAdmin([
-            'real_id' => $entity->id,
-            'deleted_at' => $entity->deleted_at,
-        ], $response);
+        $response = $this->ifAdmin(
+            [
+                'real_id' => $entity->id,
+                'deleted_at' => $entity->deleted_at,
+            ],
+            $response
+        );
 
         return $response;
     }

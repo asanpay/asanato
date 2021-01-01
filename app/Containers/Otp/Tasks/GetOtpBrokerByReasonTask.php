@@ -6,7 +6,6 @@ use App\Containers\Otp\Exceptions\InvalidOTPReasonException;
 use App\Ship\Parents\Tasks\Task;
 use Illuminate\Support\Facades\Config;
 
-
 class GetOtpBrokerByReasonTask extends Task
 {
 

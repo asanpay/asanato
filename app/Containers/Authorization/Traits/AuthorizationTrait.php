@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Auth;
 /**
  * Class AuthorizationTrait
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 trait AuthorizationTrait
 {
     /**
-     * @return  \App\Containers\User\Models\User|null
+     * @return \App\Containers\User\Models\User|null
      */
     public function getUser()
     {
@@ -20,7 +20,7 @@ trait AuthorizationTrait
     }
 
     /**
-     * @return  mixed
+     * @return mixed
      */
     public function hasAdminRole()
     {
@@ -36,5 +36,4 @@ trait AuthorizationTrait
     {
         return ($role = $this->roles()->orderBy('level', 'DESC')->first()) ? $role->level : 0;
     }
-
 }

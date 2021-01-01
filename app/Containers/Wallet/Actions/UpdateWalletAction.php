@@ -10,11 +10,13 @@ class UpdateWalletAction extends Action
 {
     public function run(Request $request)
     {
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             'name',
             'default',
             'user_id'
-        ]);
+            ]
+        );
 
         if (Apiato::call('Wallet@FindWalletByIdTask', [$request->id])->isDefault()) {
             // user could not change default status of default wallet

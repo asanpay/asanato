@@ -7,7 +7,7 @@ use App\Ship\Parents\Models\Model;
 /**
  * Class Setting
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class Setting extends Model
 {
@@ -20,7 +20,7 @@ class Setting extends Model
     protected $table = 'settings';
 
     /**
-     * @var  bool
+     * @var bool
      */
     public $timestamps = false;
 
@@ -42,5 +42,4 @@ class Setting extends Model
     protected $hidden = [
 
     ];
-
 }

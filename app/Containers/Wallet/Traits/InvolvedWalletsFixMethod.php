@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Containers\Wallet\Traits;
-
 
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\Transaction\Models\Transaction;
@@ -36,7 +34,7 @@ trait InvolvedWalletsFixMethod
 
             $involvedWallets [] = [
                 'id'          => $w,
-                'owner'       => Apiato::call('wallet@FindWalletByIdTask',[$w])->user_id,
+                'owner'       => Apiato::call('wallet@FindWalletByIdTask', [$w])->user_id,
                 'share'       => $walletShare,
                 'money_share' => currency($walletMoneyShare),
                 'extra_share' => $overflow,
@@ -68,7 +66,7 @@ trait InvolvedWalletsFixMethod
 
             $involvedWallets [] = [
                 'id'          => $w,
-                'owner'       => Apiato::call('wallet@FindWalletByIdTask',[$w])->user_id,
+                'owner'       => Apiato::call('wallet@FindWalletByIdTask', [$w])->user_id,
                 'share'       => $walletShare,
                 'money_share' => intval($moneyShare),
                 'extra_share' => 0,

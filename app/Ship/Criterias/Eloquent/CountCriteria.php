@@ -9,7 +9,7 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 /**
  * Class CountCriteria
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class CountCriteria extends Criteria
 {
@@ -31,14 +31,16 @@ class CountCriteria extends Criteria
 
 
     /**
-     * @param                                                   $model
+     * @param $model
      * @param \Prettus\Repository\Contracts\RepositoryInterface $repository
      *
-     * @return  mixed
+     * @return mixed
      */
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return DB::table($model->getModel()->getTable())->select($this->field, DB::raw('count(' . $this->field . ') as total_count'))->groupBy($this->field);
+        return DB::table($model->getModel()->getTable())->select(
+            $this->field,
+            DB::raw('count(' . $this->field . ') as total_count')
+        )->groupBy($this->field);
     }
-
 }

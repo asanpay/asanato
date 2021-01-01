@@ -7,7 +7,7 @@ use Apiato\Core\Abstracts\Actions\SubAction as AbstractSubAction;
 /**
  * Class SubAction.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class SubAction extends AbstractSubAction
 {

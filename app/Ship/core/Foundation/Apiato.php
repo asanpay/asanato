@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\File;
  *
  * Helper Class to serve Apiato (Ship/Containers).
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class Apiato
 {
@@ -31,7 +31,7 @@ class Apiato
     /**
      * Get the containers namespace value from the containers config file
      *
-     * @return  string
+     * @return string
      */
     public function getContainersNamespace()
     {
@@ -41,7 +41,7 @@ class Apiato
     /**
      * Get the containers names
      *
-     * @return  array
+     * @return array
      */
     public function getContainersNames()
     {
@@ -57,7 +57,7 @@ class Apiato
     /**
      * Get the port folders names
      *
-     * @return  array
+     * @return array
      */
     public function getShipFoldersNames()
     {
@@ -73,7 +73,7 @@ class Apiato
     /**
      * get containers directories paths
      *
-     * @return  mixed
+     * @return mixed
      */
     public function getContainersPaths()
     {
@@ -81,7 +81,7 @@ class Apiato
     }
 
     /**
-     * @return  mixed
+     * @return mixed
      */
     public function getShipPath()
     {
@@ -93,7 +93,7 @@ class Apiato
      *
      * @param $filePathName
      *
-     * @return  mixed
+     * @return mixed
      */
     public function getClassObjectFromFile($filePathName)
     {
@@ -110,7 +110,7 @@ class Apiato
      *
      * @param $filePathName
      *
-     * @return  string
+     * @return string
      */
     public function getClassFullNameFromFile($filePathName)
     {
@@ -122,16 +122,16 @@ class Apiato
      *
      * @param $filePathName
      *
-     * @return  null|string
+     * @return null|string
      */
     protected function getClassNamespaceFromFile($filePathName)
     {
         $src = file_get_contents($filePathName);
 
-        $tokens = token_get_all($src);
-        $count = count($tokens);
-        $i = 0;
-        $namespace = '';
+        $tokens       = token_get_all($src);
+        $count        = count($tokens);
+        $i            = 0;
+        $namespace    = '';
         $namespace_ok = false;
         while ($i < $count) {
             $token = $tokens[$i];
@@ -140,7 +140,7 @@ class Apiato
                 while (++$i < $count) {
                     if ($tokens[$i] === ';') {
                         $namespace_ok = true;
-                        $namespace = trim($namespace);
+                        $namespace    = trim($namespace);
                         break;
                     }
                     $namespace .= is_array($tokens[$i]) ? $tokens[$i][1] : $tokens[$i];
@@ -161,23 +161,22 @@ class Apiato
      *
      * @param $filePathName
      *
-     * @return  mixed
+     * @return mixed
      */
     protected function getClassNameFromFile($filePathName)
     {
         $php_code = file_get_contents($filePathName);
 
         $classes = [];
-        $tokens = token_get_all($php_code);
-        $count = count($tokens);
+        $tokens  = token_get_all($php_code);
+        $count   = count($tokens);
         for ($i = 2; $i < $count; $i++) {
             if ($tokens[$i - 2][0] == T_CLASS
                 && $tokens[$i - 1][0] == T_WHITESPACE
                 && $tokens[$i][0] == T_STRING
             ) {
-
                 $class_name = $tokens[$i][1];
-                $classes[] = $class_name;
+                $classes[]  = $class_name;
             }
         }
 
@@ -190,7 +189,7 @@ class Apiato
      * @param $word
      * @param $startsWith
      *
-     * @return  bool
+     * @return bool
      */
     public function stringStartsWith($word, $startsWith)
     {
@@ -198,16 +197,19 @@ class Apiato
     }
 
     /**
-     * @param        $word
+     * @param $word
      * @param string $splitter
      * @param bool   $uppercase
      *
-     * @return  mixed|string
+     * @return mixed|string
      */
     public function uncamelize($word, $splitter = " ", $uppercase = true)
     {
-        $word = preg_replace('/(?!^)[[:upper:]][[:lower:]]/', '$0',
-            preg_replace('/(?!^)[[:upper:]]+/', $splitter . '$0', $word));
+        $word = preg_replace(
+            '/(?!^)[[:upper:]][[:lower:]]/',
+            '$0',
+            preg_replace('/(?!^)[[:upper:]]+/', $splitter . '$0', $word)
+        );
 
         return $uppercase ? ucwords($word) : $word;
     }
@@ -234,7 +236,7 @@ class Apiato
      * @param $containerName
      * @param $className
      *
-     * @return  string
+     * @return string
      */
     public function buildClassFullName($containerName, $className)
     {
@@ -247,7 +249,7 @@ class Apiato
      *
      * @param $className
      *
-     * @return  mixed
+     * @return mixed
      */
     public function getClassType($className)
     {
@@ -279,5 +281,4 @@ class Apiato
             throw new ClassDoesNotExistException("Class ($className) is not installed.");
         }
     }
-
 }

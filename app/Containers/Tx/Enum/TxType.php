@@ -19,5 +19,4 @@ class TxType
     const SYSTEM      = 9;
     const PROFIT      = 10;
     const CORRECTION  = 11; // تراکنش اصلاحیه
-
 }

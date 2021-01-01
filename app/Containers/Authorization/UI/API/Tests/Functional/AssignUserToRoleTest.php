@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Config;
  * @group authorization
  * @group api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class AssignUserToRoleTest extends ApiTestCase
 {
@@ -29,7 +29,7 @@ class AssignUserToRoleTest extends ApiTestCase
     /**
      * @test
      */
-    public function testAssignUserToRole_()
+    public function testAssignUserToRole()
     {
         $randomUser = factory(User::class)->create();
 
@@ -56,7 +56,7 @@ class AssignUserToRoleTest extends ApiTestCase
     /**
      * @test
      */
-    public function testAssignUserToRoleWithRealId_()
+    public function testAssignUserToRoleWithRealId()
     {
         $randomUser = factory(User::class)->create();
 
@@ -71,22 +71,23 @@ class AssignUserToRoleTest extends ApiTestCase
         $response = $this->makeCall($data);
 
         // assert response status is correct. Note: this will return 200 if `HASH_ID=false` in the .env
-        if(Config::get('apiato.hash-id')){
+        if (Config::get('apiato.hash-id')) {
             $response->assertStatus(400);
 
-            $this->assertResponseContainKeyValue([
-                'message' => 'Only Hashed ID\'s allowed.',
-            ]);
-        }else{
+            $this->assertResponseContainKeyValue(
+                [
+                    'message' => 'Only Hashed ID\'s allowed.',
+                ]
+            );
+        } else {
             $response->assertStatus(200);
         }
-
     }
 
     /**
      * @test
      */
-    public function testAssignUserToManyRoles_()
+    public function testAssignUserToManyRoles()
     {
         $randomUser = factory(User::class)->create();
 
@@ -116,5 +117,4 @@ class AssignUserToRoleTest extends ApiTestCase
 
         $this->assertContains($data['roles_ids'][1], $roleIds);
     }
-
 }

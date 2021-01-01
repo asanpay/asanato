@@ -21,7 +21,6 @@ class CreateBankAccountTask extends Task
     public function run(array $data)
     {
         try {
-
             $makeDefault = boolval($data['default'] ?? false);
 
             // remove default flag from all other user accounts
@@ -30,8 +29,7 @@ class CreateBankAccountTask extends Task
             }
 
             return $this->repository->create($data);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             XLog::exception($exception);
             throw new CreateResourceFailedException();
         }

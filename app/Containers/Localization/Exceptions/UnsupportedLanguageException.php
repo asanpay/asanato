@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 /**
  * Class UnsupportedLanguageException.
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class UnsupportedLanguageException extends Exception
 {

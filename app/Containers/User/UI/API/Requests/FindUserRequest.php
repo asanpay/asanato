@@ -11,7 +11,7 @@ class FindUserRequest extends Request
 {
 
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {

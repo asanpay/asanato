@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * Class ServiceProviderGenerator
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class ServiceProviderGenerator extends GeneratorCommand implements ComponentsGenerator
 {
@@ -39,21 +39,21 @@ class ServiceProviderGenerator extends GeneratorCommand implements ComponentsGen
     /**
      * The structure of the file path.
      *
-     * @var  string
+     * @var string
      */
     protected $pathStructure = '{container-name}/Providers/*';
 
     /**
      * The structure of the file name.
      *
-     * @var  string
+     * @var string
      */
     protected $nameStructure = '{file-name}';
 
     /**
      * The name of the stub file.
      *
-     * @var  string
+     * @var string
      */
     protected $stubName = 'providers/mainserviceprovider.stub';
 
@@ -61,7 +61,7 @@ class ServiceProviderGenerator extends GeneratorCommand implements ComponentsGen
      * User required/optional inputs expected to be passed while calling the command.
      * This is a replacement of the `getArguments` function "which reads whenever it's called".
      *
-     * @var  array
+     * @var array
      */
     public $inputs = [
         ['stub', null, InputOption::VALUE_OPTIONAL, 'The stub file to load for this generator.'],
@@ -72,11 +72,13 @@ class ServiceProviderGenerator extends GeneratorCommand implements ComponentsGen
      */
     public function getUserInputs()
     {
-        $stub = Str::lower($this->checkParameterOrChoice(
-            'stub',
-            'Select the Stub you want to load',
-            ['Generic', 'MainServiceProvider'],
-            0)
+        $stub = Str::lower(
+            $this->checkParameterOrChoice(
+                'stub',
+                'Select the Stub you want to load',
+                ['Generic', 'MainServiceProvider'],
+                0
+            )
         );
 
         return [

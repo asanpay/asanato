@@ -12,12 +12,12 @@ use Monolog\Logger;
 /**
  * Class RequestsLogger
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class RequestsLogger extends Value
 {
 
-    CONST TESTING_ENV = 'testing';
+    const TESTING_ENV = 'testing';
 
     protected $debuggingEnabled;
 

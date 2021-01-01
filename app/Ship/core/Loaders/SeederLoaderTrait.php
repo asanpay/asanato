@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * This Class has inverted dependency :( you must extend this class from the default
  * seeder class provided by the framework (database/seeds/DatabaseSeeder.php)
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait SeederLoaderTrait
 {
@@ -20,7 +20,7 @@ trait SeederLoaderTrait
     /**
      * Default seeders directory for containers and port
      *
-     * @var  string
+     * @var string
      */
     protected $seedersPath = '/Data/Seeders';
 
@@ -43,9 +43,7 @@ trait SeederLoaderTrait
         $containersDirectories = [];
 
         foreach (Apiato::getContainersNames() as $containerName) {
-
             $containersDirectories[] = base_path('app/Containers/' . $containerName . $this->seedersPath);
-
         }
 
         $seedersClasses = $this->findSeedersClasses($containersDirectories, $seedersClasses);
@@ -63,7 +61,6 @@ trait SeederLoaderTrait
 
         // it has to do it's own loop for now
         foreach (Apiato::getShipFoldersNames() as $portFolderName) {
-
             // Need to Loop over that Directory and load the any Seeder file there.
             $containersDirectories[] = base_path('app/Ship/Seeders/Tests');
         }
@@ -76,27 +73,20 @@ trait SeederLoaderTrait
 
     /**
      * @param array $directories
-     * @param       $seedersClasses
+     * @param $seedersClasses
      *
-     * @return  mixed
+     * @return mixed
      */
     private function findSeedersClasses(array $directories, $seedersClasses)
     {
         foreach ($directories as $directory) {
-
             if (File::isDirectory($directory)) {
-
                 $files = File::allFiles($directory);
 
                 foreach ($files as $seederClass) {
-
                     if (File::isFile($seederClass)) {
-
                         // do not seed the classes now, just store them in a collection and w
-                        $seedersClasses->push(
-                            Apiato::getClassFullNameFromFile(
-                                $seederClass->getPathname())
-                        );
+                        $seedersClasses->push(Apiato::getClassFullNameFromFile($seederClass->getPathname()));
                     }
                 }
             }
@@ -108,7 +98,7 @@ trait SeederLoaderTrait
     /**
      * @param $seedersClasses
      *
-     * @return  \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection
      */
     private function sortSeeders($seedersClasses)
     {
@@ -129,12 +119,14 @@ trait SeederLoaderTrait
         }
 
         // sort the classes that needed to be ordered
-        $orderedSeederClasses = $orderedSeederClasses->sortBy(function ($seederFullClassName) {
-            // get the order number form the end of each class name
-            $orderNumber = substr($seederFullClassName, strpos($seederFullClassName, "_") + 1);
+        $orderedSeederClasses = $orderedSeederClasses->sortBy(
+            function ($seederFullClassName) {
+                // get the order number form the end of each class name
+                $orderNumber = substr($seederFullClassName, strpos($seederFullClassName, "_") + 1);
 
-            return $orderNumber;
-        });
+                return $orderNumber;
+            }
+        );
 
         // append the randomly ordered seeder classes to the end of the ordered seeder classes
         foreach ($seedersClasses as $seederClass) {
@@ -154,5 +146,4 @@ trait SeederLoaderTrait
             $this->call($seeder);
         }
     }
-
 }

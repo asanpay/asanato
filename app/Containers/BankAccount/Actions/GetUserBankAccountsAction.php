@@ -10,11 +10,15 @@ class GetUserBankAccountsAction extends Action
 {
     public function run(int $userId)
     {
-        return Apiato::call('BankAccount@GetBankAccountsTask', [], [
+        return Apiato::call(
+            'BankAccount@GetBankAccountsTask',
+            [],
+            [
             'addRequestCriteria',
             [
                 'pushCurrentUserCriteria' => [Apiato::call('User@FindUserByIdTask', [$userId])],
             ],
-        ]);
+            ]
+        );
     }
 }

@@ -24,7 +24,7 @@ class TransactionObserver
         XLog::debug('transaction observer --> creating');
         // before save ::
         if (!isset($transaction->j_created_at) || empty($transaction->j_created_at)) {
-            $transaction->j_created_at =  static::jalaliTimestamp();
+            $transaction->j_created_at = static::jalaliTimestamp();
         }
         if (!isset($transaction->flag) || empty($transaction->flag)) {
             $transaction->flag = transaction_flag();
@@ -64,16 +64,14 @@ class TransactionObserver
         }
 
         if ($transaction->isDirty('status')) {
-            switch($transaction->status) {
-                case TransactionStatus::ACCOMPLISHED: {
-                    $transaction->accomplished_at = DB::raw('NOW()');
+            switch ($transaction->status) {
+                case TransactionStatus::ACCOMPLISHED:
+                    $transaction->accomplished_at   = DB::raw('NOW()');
                     $transaction->j_accomplished_at = static::jalaliTimestamp();
                     break;
-                }
-                case TransactionStatus::REFUNDED: {
+                case TransactionStatus::REFUNDED:
                     $transaction->refunded_at = DB::raw('NOW()');
                     break;
-                }
             }
         }
     }
@@ -83,7 +81,8 @@ class TransactionObserver
         XLog::debug('transaction observer --> updated', ['tag' => $transaction->tagify()]);
 
         // if transaction accomplished status changed from another state (not accomplished before)
-        if ($transaction->status == TransactionStatus::ACCOMPLISHED && $transaction->getOriginal('status') != TransactionStatus::ACCOMPLISHED) {
+        if ($transaction->status == TransactionStatus::ACCOMPLISHED &&
+            $transaction->getOriginal('status') != TransactionStatus::ACCOMPLISHED) {
             XLog::debug('transaction accomplished');
             event(new TransactionAccomplished($transaction));
         }

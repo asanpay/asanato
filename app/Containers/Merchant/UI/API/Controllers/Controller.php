@@ -19,7 +19,7 @@ use Apiato\Core\Foundation\Facades\Apiato;
 class Controller extends ApiController
 {
     /**
-     * @param CreateMerchantRequest $request
+     * @param  CreateMerchantRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function createMerchant(CreateMerchantRequest $request)
@@ -28,11 +28,11 @@ class Controller extends ApiController
 
         return $this->transform($merchant, MerchantTransformer::class, [], [], null, 201);
 
-//        return $this->created($this->transform($merchant, MerchantTransformer::class));
+        //        return $this->created($this->transform($merchant, MerchantTransformer::class));
     }
 
     /**
-     * @param FindMerchantByIdRequest $request
+     * @param  FindMerchantByIdRequest $request
      * @return array
      */
     public function findMerchantById(FindMerchantByIdRequest $request)
@@ -43,7 +43,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param GetAllMerchantsRequest $request
+     * @param  GetAllMerchantsRequest $request
      * @return array
      */
     public function getAllMerchants(GetAllMerchantsRequest $request)
@@ -54,7 +54,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param UpdateMerchantRequest $request
+     * @param  UpdateMerchantRequest $request
      * @return array
      */
     public function updateMerchant(UpdateMerchantRequest $request)
@@ -65,7 +65,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param DeleteMerchantRequest $request
+     * @param  DeleteMerchantRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function deleteMerchant(DeleteMerchantRequest $request)

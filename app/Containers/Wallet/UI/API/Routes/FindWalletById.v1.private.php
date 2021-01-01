@@ -1,18 +1,18 @@
 <?php
 
 /**
- * @apiGroup           Wallet
- * @apiName            FindWalletById
+ * @apiGroup Wallet
+ * @apiName  FindWalletById
  *
- * @api                {GET} /v1/users/{user_id}/wallets/:id FindWalletById
- * @apiDescription     Read a wallet
+ * @api            {GET} /v1/users/{user_id}/wallets/:id FindWalletById
+ * @apiDescription Read a wallet
  *
- * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiVersion    1.0.0
+ * @apiPermission none
  *
- * @apiParam           {String}  id hashed wallet id
+ * @apiParam {String}  id hashed wallet id
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 200 OK
 {
     "data": {
@@ -36,11 +36,16 @@
     "code": 0
 }
  */
-/** @var Route $router */
-$router->get('users/{user_id}/wallets/{id}', [
-    'as' => 'api_wallet_find_wallet_by_id',
-    'uses'  => 'Controller@findWalletById',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+/**
+ * @var Route $router
+ */
+$router->get(
+    'users/{user_id}/wallets/{id}',
+    [
+        'as' => 'api_wallet_find_wallet_by_id',
+        'uses'  => 'Controller@findWalletById',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);

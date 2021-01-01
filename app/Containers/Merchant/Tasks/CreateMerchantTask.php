@@ -22,11 +22,12 @@ class CreateMerchantTask extends Task
     {
         try {
             $data ['code'] = $data ['code'] ?? hash('sha256', uniqid().random_string(10));
-            $data ['ip_access'] = is_array($data ['ip_access']) ? implode(',', $data ['ip_access']) : $data ['ip_access'];
+            $data ['ip_access'] = is_array($data ['ip_access']) ?
+                implode(',', $data ['ip_access']) :
+                $data ['ip_access'];
             
             return $this->repository->create($data);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             XLog::exception($exception);
             throw new CreateResourceFailedException();
         }

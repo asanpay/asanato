@@ -7,7 +7,7 @@ use App\Ship\Parents\Commands\ConsoleCommand;
 /**
  * Class SeedTestingDataCommand
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class SeedTestingDataCommand extends ConsoleCommand
 {
@@ -39,11 +39,8 @@ class SeedTestingDataCommand extends ConsoleCommand
      */
     public function handle()
     {
-        $this->call('db:seed', [
-            '--class' => \App\Ship\Seeders\SeedTestingData::class
-        ]);
+        $this->call('db:seed', ['--class' => \App\Ship\Seeders\SeedTestingData::class,]);
 
         $this->info('Testing Data Seeded Successfully.');
     }
-
 }

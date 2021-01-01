@@ -9,7 +9,7 @@ use Illuminate\Auth\Middleware\Authenticate as LaravelAuthenticate;
 /**
  * Class Authenticate
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class Authenticate extends LaravelAuthenticate
 {
@@ -17,8 +17,7 @@ class Authenticate extends LaravelAuthenticate
     {
         try {
             return parent::authenticate($request, $guards);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             throw new AuthenticationException();
         }
     }

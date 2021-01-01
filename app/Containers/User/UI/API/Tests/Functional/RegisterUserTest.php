@@ -12,9 +12,8 @@ use Illuminate\Support\Facades\App;
 /**
  * Class RegisterUserTest.
  *
- * @group  user
- * @group  api
- *
+ * @group user
+ * @group api
  */
 class RegisterUserTest extends ApiTestCase
 {
@@ -84,9 +83,11 @@ class RegisterUserTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(405);
 
-        $this->assertResponseContainKeyValue([
+        $this->assertResponseContainKeyValue(
+            [
             'errors' => 'Method Not Allowed!',
-        ]);
+            ]
+        );
     }
 
     /**

@@ -10,7 +10,7 @@ use Illuminate\Foundation\Console\Kernel as LaravelConsoleKernel;
  *
  * A.K.A (app/Console/Kernel.php)
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class ConsoleKernel extends LaravelConsoleKernel
 {
@@ -29,7 +29,7 @@ class ConsoleKernel extends LaravelConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
@@ -49,7 +49,6 @@ class ConsoleKernel extends LaravelConsoleKernel
 
         // $this->load(__DIR__.'/Commands');
 
-        require app_path('Ship/Commands/Routes.php');
+        include app_path('Ship/Commands/Routes.php');
     }
-
 }

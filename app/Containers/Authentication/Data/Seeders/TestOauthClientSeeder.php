@@ -16,17 +16,18 @@ class TestOauthClientSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('oauth_clients')->insert([
-            'id' => 999,
-            'name' => 'Test Oauth Client',
-            'secret' => 'TEqZDfr0wiQDSg7abZOav5r0C9cnhHWO9Y1Ww15z',
-            'redirect' => 'https://asanpay.com',
-            'personal_access_client' => false,
-            'password_client' => true,
-            'revoked' => false,
-            'created_at' => DB::raw('NOW()'),
-            'updated_at' => DB::raw('NOW()'),
-        ]);
-
+        DB::table('oauth_clients')->insert(
+            [
+                'id' => 999,
+                'name' => 'Test Oauth Client',
+                'secret' => 'TEqZDfr0wiQDSg7abZOav5r0C9cnhHWO9Y1Ww15z',
+                'redirect' => 'https://asanpay.com',
+                'personal_access_client' => false,
+                'password_client' => true,
+                'revoked' => false,
+                'created_at' => DB::raw('NOW()'),
+                'updated_at' => DB::raw('NOW()'),
+            ]
+        );
     }
 }

@@ -17,7 +17,7 @@ class UpdateUserAction extends Action
     /**
      * @param UserUpdateProfileTransporter $data
      *
-     * @return  array
+     * @return array
      */
     public function run(UserUpdateProfileTransporter $data): array
     {
@@ -62,6 +62,5 @@ class UpdateUserAction extends Action
         $user = Apiato::call('User@UpdateUserTask', [$userData, $data->id]);
 
         return [$user, null];
-
     }
 }

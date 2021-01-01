@@ -20,7 +20,7 @@ class CreateWalletRequest extends Request
     /**
      * Define which Roles and/or Permissions has access to this request.
      *
-     * @var  array
+     * @var array
      */
     protected $access = [
         'permissions' => '',
@@ -30,14 +30,14 @@ class CreateWalletRequest extends Request
     /**
      * Id's that needs decoding before applying the validation rules.
      *
-     * @var  array
+     * @var array
      */
     protected $decode = [
         'payer_wallet_id',
     ];
 
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {
@@ -49,12 +49,14 @@ class CreateWalletRequest extends Request
     }
 
     /**
-     * @return  bool
+     * @return bool
      */
     public function authorize()
     {
-        return $this->check([
+        return $this->check(
+            [
             'hasAccess',
-        ]);
+            ]
+        );
     }
 }

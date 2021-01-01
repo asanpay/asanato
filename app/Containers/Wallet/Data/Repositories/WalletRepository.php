@@ -19,5 +19,4 @@ class WalletRepository extends Repository
         'type' => '=',
         'default' => '=',
     ];
-
 }

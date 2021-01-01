@@ -8,19 +8,19 @@ use App\Ship\Parents\Transformers\Transformer;
 class SettingTransformer extends Transformer
 {
     /**
-     * @var  array
+     * @var array
      */
     protected $defaultIncludes = [
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $availableIncludes = [
     ];
 
     /**
-     * @param Setting $entity
+     * @param  Setting $entity
      * @return array
      */
     public function transform(Setting $entity)
@@ -34,9 +34,12 @@ class SettingTransformer extends Transformer
             'value' => $entity->value,
         ];
 
-        $response = $this->ifAdmin([
-            'real_id'    => $entity->id,
-        ], $response);
+        $response = $this->ifAdmin(
+            [
+                'real_id'    => $entity->id,
+            ],
+            $response
+        );
 
         return $response;
     }

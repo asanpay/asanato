@@ -74,6 +74,7 @@ class User extends UserModel implements HasMedia
     ];
 
     //relations ============================================================================================
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -156,7 +157,6 @@ class User extends UserModel implements HasMedia
         }
 
         return Gravatar::get($this->email, ['size' => $size]);
-
     }
 
     public function getJBirthDateAttribute(): ?string
@@ -277,33 +277,20 @@ class User extends UserModel implements HasMedia
     {
         switch ($type) {
             case IdPoofType::MOBILE:
-            {
                 return $this->mobile;
-            }
             case IdPoofType::EMAIL:
-            {
                 return $this->email;
-            }
             case IdPoofType::IDENTITY:
-            {
                 return $this->national_id;
-            }
             case IdPoofType::RESIDENCY:
-            {
                 return $this->address;
-            }
             case IdPoofType::TEL:
-            {
                 return $this->tel;
-            }
             case IdPoofType::COMPANY:
-            {
                 return $this->financial_id;
-            }
             default:
-            {
                 throw new Exception(sprintf('could not find user id proof value for: %s', $type));
-            }
+                break;
         }
     }
 
@@ -331,6 +318,7 @@ class User extends UserModel implements HasMedia
     public function setGoogleAuthSecret(string $secret): bool
     {
         $this->{config('google2fa.otp_secret_column')} = $secret;
+
         return $this->save();
     }
 

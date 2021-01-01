@@ -9,7 +9,7 @@ use Illuminate\Foundation\Http\Middleware\TrimStrings as Middleware;
  *
  * A.K.A app/Http/Middleware/TrimStrings.php
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class TrimStrings extends Middleware
 {
@@ -23,5 +23,4 @@ class TrimStrings extends Middleware
         'password',
         'password_confirmation',
     ];
-
 }

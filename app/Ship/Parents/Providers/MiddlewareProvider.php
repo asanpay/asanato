@@ -7,7 +7,7 @@ use Apiato\Core\Abstracts\Providers\MiddlewareProvider as AbstractMiddlewareProv
 /**
  * Class MiddlewareProvider
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 abstract class MiddlewareProvider extends AbstractMiddlewareProvider
 {
@@ -27,5 +27,4 @@ abstract class MiddlewareProvider extends AbstractMiddlewareProvider
     {
         parent::register();
     }
-
 }

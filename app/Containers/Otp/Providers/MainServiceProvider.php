@@ -26,7 +26,7 @@ class MainServiceProvider extends MainProvider
     /**
      * Container Aliases
      *
-     * @var  array
+     * @var array
      */
     public $aliases = [
         // 'Foo' => Bar::class,
@@ -42,13 +42,19 @@ class MainServiceProvider extends MainProvider
 
     protected function registerOtpBroker()
     {
-        $this->app->singleton('otp.manager', function ($app) {
-            return new OtpBrokerManager($app);
-        });
+        $this->app->singleton(
+            'otp.manager',
+            function ($app) {
+                return new OtpBrokerManager($app);
+            }
+        );
 
-        $this->app->bind('otp.model', function ($app) {
-            return new OtpToken();
-        });
+        $this->app->bind(
+            'otp.model',
+            function ($app) {
+                return new OtpToken();
+            }
+        );
     }
 
     public function provides()

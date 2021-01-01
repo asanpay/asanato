@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException as SymfonyHttpException
 /**
  * Class Exception.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class Exception extends SymfonyHttpException
 {
@@ -30,7 +30,7 @@ abstract class Exception extends SymfonyHttpException
      *
      * @var int
      */
-    CONST DEFAULT_STATUS_CODE = Response::HTTP_INTERNAL_SERVER_ERROR;
+    const DEFAULT_STATUS_CODE = Response::HTTP_INTERNAL_SERVER_ERROR;
 
     /**
      * @var string
@@ -128,7 +128,8 @@ abstract class Exception extends SymfonyHttpException
     {
         // if not testing environment, log the error message
         if ($this->environment != 'testing') {
-            Log::error('[ERROR] ' .
+            Log::error(
+                '[ERROR] ' .
                 'Status Code: ' . $statusCode . ' | ' .
                 'Message: ' . $message . ' | ' .
                 'Errors: ' . $this->errors . ' | ' .
@@ -140,7 +141,7 @@ abstract class Exception extends SymfonyHttpException
     /**
      * @param null $errors
      *
-     * @return  \Illuminate\Support\MessageBag|null
+     * @return \Illuminate\Support\MessageBag|null
      */
     private function prepareError($errors = null)
     {
@@ -150,7 +151,7 @@ abstract class Exception extends SymfonyHttpException
     /**
      * @param array $errors
      *
-     * @return  array|\Illuminate\Support\MessageBag
+     * @return array|\Illuminate\Support\MessageBag
      */
     private function prepareArrayError(array $errors = [])
     {
@@ -160,7 +161,7 @@ abstract class Exception extends SymfonyHttpException
     /**
      * @param null $message
      *
-     * @return  null
+     * @return null
      */
     private function prepareMessage($message = null)
     {
@@ -170,7 +171,7 @@ abstract class Exception extends SymfonyHttpException
     /**
      * @param $statusCode
      *
-     * @return  int
+     * @return int
      */
     private function prepareStatusCode($statusCode = null)
     {
@@ -178,11 +179,11 @@ abstract class Exception extends SymfonyHttpException
     }
 
     /**
-     * @return  int
+     * @return int
      */
     private function findStatusCode()
     {
-        return property_exists($this, 'httpStatusCode') ? $this->httpStatusCode : Self::DEFAULT_STATUS_CODE;
+        return property_exists($this, 'httpStatusCode') ? $this->httpStatusCode : self::DEFAULT_STATUS_CODE;
     }
 
     /**

@@ -13,7 +13,7 @@ class Platform
     const ANDROID = 'ANDROID';
 
 
-    function translations()
+    public function translations()
     {
         return [
             self::WEB     => 'WEB',

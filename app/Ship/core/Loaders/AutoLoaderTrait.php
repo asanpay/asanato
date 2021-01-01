@@ -7,7 +7,7 @@ use Apiato\Core\Foundation\Facades\Apiato;
 /**
  * Class AutoLoaderTrait.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait AutoLoaderTrait
 {
@@ -44,5 +44,4 @@ trait AutoLoaderTrait
 
         $this->loadFactoriesFromContainers();
     }
-
 }

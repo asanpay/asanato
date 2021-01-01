@@ -5,7 +5,7 @@ namespace App\Containers\Authorization\Traits;
 /**
  * Class AuthenticationTrait
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 trait AuthenticationTrait
 {
@@ -22,8 +22,7 @@ trait AuthenticationTrait
         $allowedLoginAttributes = config('authentication-container.login.attributes', ['email' => []]);
 
         $builder = $this;
-        foreach (array_keys($allowedLoginAttributes) as $field)
-        {
+        foreach (array_keys($allowedLoginAttributes) as $field) {
             $builder = $builder->orWhere($field, $identifier);
         }
 

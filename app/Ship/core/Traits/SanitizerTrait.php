@@ -10,8 +10,8 @@ use App\Ship\Exceptions\InternalErrorException;
 /**
  * Class SanitizerTrait.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 trait SanitizerTrait
 {

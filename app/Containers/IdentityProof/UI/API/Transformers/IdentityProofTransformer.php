@@ -11,14 +11,14 @@ use App\Ship\Transformers\MediaTransformer;
 class IdentityProofTransformer extends Transformer
 {
     /**
-     * @var  array
+     * @var array
      */
     protected $defaultIncludes = [
 
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $availableIncludes = [
         'media',
@@ -42,16 +42,22 @@ class IdentityProofTransformer extends Transformer
             'readable_created_at' => $entity->created_at,
         ];
 
-        $response = $this->ifAdmin([
-            'real_id' => $entity->id,
-        ], $response);
+        $response = $this->ifAdmin(
+            [
+                'real_id' => $entity->id,
+            ],
+            $response
+        );
 
         return $response;
     }
 
     public function includeMedia(IdentityProof $entity)
     {
-        return $this->collection($entity->getMedia('user_idproof_' . $entity->proof_type), new MediaTransformer(),
-            'media');
+        return $this->collection(
+            $entity->getMedia('user_idproof_' . $entity->proof_type),
+            new MediaTransformer(),
+            'media'
+        );
     }
 }

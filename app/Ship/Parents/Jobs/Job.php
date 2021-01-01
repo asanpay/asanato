@@ -14,7 +14,7 @@ use Illuminate\Queue\SerializesModels;
  *
  * A.K.A (app/Jobs/Job.php)
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 abstract class Job extends AbstractJob implements ShouldQueue
 {
@@ -30,5 +30,4 @@ abstract class Job extends AbstractJob implements ShouldQueue
     | provides access to the "onQueue" and "delay" queue helper methods.
     |
     */
-
 }

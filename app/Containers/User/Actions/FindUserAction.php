@@ -20,7 +20,7 @@ class FindUserAction extends Action
         if (preg_match(config('regex.mobile_regex'), $keyword)) {
             $keyword = mobilify($keyword);
             return Apiato::call('User@FindUserByMobileTask', [$keyword]);
-        } else if (filter_var($keyword, FILTER_VALIDATE_EMAIL)) {
+        } elseif (filter_var($keyword, FILTER_VALIDATE_EMAIL)) {
             return Apiato::call('User@FindUserByEmailTask', [$keyword]);
         }
         return null;

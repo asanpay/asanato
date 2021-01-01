@@ -12,7 +12,7 @@ class IpgRequestTokenRequest extends Request
 {
     protected $access = [];
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {
@@ -21,12 +21,14 @@ class IpgRequestTokenRequest extends Request
     }
 
     /**
-     * @return  bool
+     * @return bool
      */
     public function authorize()
     {
-        return $this->check([
+        return $this->check(
+            [
             'hasAccess',
-        ]);
+            ]
+        );
     }
 }

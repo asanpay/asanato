@@ -8,12 +8,12 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 /**
  * Class OrderByKeyAscendingCriteria.
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class OrderByKeyAscendingCriteria extends Criteria
 {
     /**
-     * @param                                                   $model
+     * @param $model
      * @param \Prettus\Repository\Contracts\RepositoryInterface $repository
      *
      * @return mixed

@@ -14,65 +14,69 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create(
+            'users', function (Blueprint $table) {
+                $table->bigIncrements('id');
 
-            $table->enum('type', UserType::toArray())->default(UserType::UNKNOWN);
-            //personal
-            $table->string('first_name', 30)->nullable();
-            $table->string('last_name', 30)->nullable();
-            $table->string('national_id', 10)->nullable();
-            $table->enum('gender', UserGender::toArray())->default(UserGender::UNKNOWN);
-            $table->date('birth_date')->nullable();
+                $table->enum('type', UserType::toArray())->default(UserType::UNKNOWN);
+                //personal
+                $table->string('first_name', 30)->nullable();
+                $table->string('last_name', 30)->nullable();
+                $table->string('national_id', 10)->nullable();
+                $table->enum('gender', UserGender::toArray())->default(UserGender::UNKNOWN);
+                $table->date('birth_date')->nullable();
 
-            $table->string('api_key', 64)->unique();
-
-
-            // company
-            $table->string('company', 50)->nullable();
-            $table->string('financial_id', 14)->nullable();
+                $table->string('api_key', 64)->unique();
 
 
-            $table->unsignedBigInteger('mobile')->unique();
-            $table->string('email', 48)->nullable();
+                // company
+                $table->string('company', 50)->nullable();
+                $table->string('financial_id', 14)->nullable();
 
-            $table->enum('group', UserGroup::toArray())->default(UserGroup::NORMAL);
 
-            $table->string('avatar_social', 255)->nullable();
-            $table->string('register_via', 30)->default('WEB');
-            $table->string('register_ip',15);
-            $table->string('referrer',40)->nullable();
+                $table->unsignedBigInteger('mobile')->unique();
+                $table->string('email', 48)->nullable();
 
-            $table->text('notes')->nullable();
+                $table->enum('group', UserGroup::toArray())->default(UserGroup::NORMAL);
 
-            // residency
-            $table->unsignedInteger('location_id')->index()->nullable();
+                $table->string('avatar_social', 255)->nullable();
+                $table->string('register_via', 30)->default('WEB');
+                $table->string('register_ip', 15);
+                $table->string('referrer', 40)->nullable();
 
-            $table->string('tel', 16)->nullable();
-            $table->string('address', 196)->nullable();
-            $table->string('zip', 10)->nullable();
+                $table->text('notes')->nullable();
 
-            $table->jsonb('meta')->default('{}');
+                // residency
+                $table->unsignedInteger('location_id')->index()->nullable();
 
-            $table->string('password', 64);
-            $table->boolean('locked')->default(false);
-            $table->string('locked_reason')->nullable();
-            $table->string('google2fa_secret', 32)->nullable();
+                $table->string('tel', 16)->nullable();
+                $table->string('address', 196)->nullable();
+                $table->string('zip', 10)->nullable();
 
-            // see UserVerifications class
-            $table->unsignedSmallInteger('idproofs')->default(0)->comment('bit value');
-            $table->boolean('is_client')->default(true);
+                $table->jsonb('meta')->default('{}');
 
-            $table->rememberToken();
-            $table->timestamps();
-            $table->softDeletes();
-        });
+                $table->string('password', 64);
+                $table->boolean('locked')->default(false);
+                $table->string('locked_reason')->nullable();
+                $table->string('google2fa_secret', 32)->nullable();
 
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreign('location_id')
-                ->references('id')
-                ->on('locations');
-        });
+                // see UserVerifications class
+                $table->unsignedSmallInteger('idproofs')->default(0)->comment('bit value');
+                $table->boolean('is_client')->default(true);
+
+                $table->rememberToken();
+                $table->timestamps();
+                $table->softDeletes();
+            }
+        );
+
+        Schema::table(
+            'users', function (Blueprint $table) {
+                $table->foreign('location_id')
+                    ->references('id')
+                    ->on('locations');
+            }
+        );
     }
 
     /**
@@ -82,9 +86,11 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function ($table) {
-            $table->dropForeign(['location_id']);
-        });
+        Schema::table(
+            'users', function ($table) {
+                $table->dropForeign(['location_id']);
+            }
+        );
 
 
         Schema::dropIfExists('users');

@@ -28,8 +28,7 @@ class DeleteBankAccountTask extends Task
 
         try {
             return $this->repository->delete($id);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             XLog::exception($exception);
             throw new DeleteResourceFailedException();
         }

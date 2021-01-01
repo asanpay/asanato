@@ -10,7 +10,7 @@ use App\Containers\Authorization\Tests\ApiTestCase;
  * @group authorization
  * @group api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class CreateRoleTest extends ApiTestCase
 {
@@ -24,7 +24,7 @@ class CreateRoleTest extends ApiTestCase
         'permissions' => 'manage-roles',
     ];
 
-    public function testCreateRole_()
+    public function testCreateRole()
     {
         $data = [
             'name'         => 'test-manager',
@@ -45,7 +45,7 @@ class CreateRoleTest extends ApiTestCase
         $this->assertEquals($data['level'], $responseContent->data->level);
     }
 
-    public function testCreateRoleWithoutLevel_()
+    public function testCreateRoleWithoutLevel()
     {
         $data = [
             'name'         => 'test-manager',
@@ -64,7 +64,7 @@ class CreateRoleTest extends ApiTestCase
         $this->assertEquals(0, $responseContent->data->level);
     }
 
-    public function testCreateRoleWithWrongName_()
+    public function testCreateRoleWithWrongName()
     {
         $data = [
             'name'         => 'include Space',
@@ -78,5 +78,4 @@ class CreateRoleTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(422);
     }
-
 }

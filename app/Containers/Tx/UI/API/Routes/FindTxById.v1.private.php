@@ -1,29 +1,34 @@
 <?php
 
 /**
- * @apiGroup           Tx
- * @apiName            findTxById
+ * @apiGroup Tx
+ * @apiName  findTxById
  *
- * @api                {GET} /v1/tx/:id Find Tx
- * @apiDescription     Endpoint description here..
+ * @api            {GET} /v1/tx/:id Find Tx
+ * @apiDescription Endpoint description here..
  *
- * @apiVersion         1.0.0
- * @apiPermission      read-txes
+ * @apiVersion    1.0.0
+ * @apiPermission read-txes
  *
- * @apiParam           {String}  parameters here..
+ * @apiParam {String}  parameters here..
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
+ {
+     // Insert the response of the request here...
 }
  */
 
-/** @var Route $router */
-$router->get('tx/{id}', [
-    'as' => 'api_tx_find_tx_by_id',
-    'uses'  => 'Controller@findTxById',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+/**
+ * @var Route $router
+ */
+$router->get(
+    'tx/{id}',
+    [
+        'as' => 'api_tx_find_tx_by_id',
+        'uses'  => 'Controller@findTxById',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);

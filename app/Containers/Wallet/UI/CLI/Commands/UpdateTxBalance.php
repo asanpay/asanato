@@ -57,34 +57,40 @@ class UpdateTxBalance extends ConsoleCommand
             }
 
             foreach ($walletTransactions as $transaction) {
-
-                DB::transaction(function () use ($transaction) {
-                    $previousTransaction = Tx::where('id', '<', $transaction->id)
+                DB::transaction(
+                    function () use ($transaction) {
+                        $previousTransaction = Tx::where('id', '<', $transaction->id)
                         ->where('wallet_id', $transaction->wallet_id)
                         ->orderBy('id', 'DESC')
                         ->first();
 
-                    if (!$previousTransaction) {
-                        // no previous transaction exists
-                        $transaction->balance = $transaction->creditor - $transaction->debtor;
-                    } else {
-                        $transaction->balance = $previousTransaction->balance + $transaction->creditor - $transaction->debtor;
-                    }
+                        if (!$previousTransaction) {
+                            // no previous transaction exists
+                            $transaction->balance = $transaction->creditor - $transaction->debtor;
+                        } else {
+                            $transaction->balance = $previousTransaction->balance +
+                                $transaction->creditor - $transaction->debtor;
+                        }
 
-                    $transaction->j_created_at = Zaman::gtoj($transaction->created_at, 'yyyyMMddHHmmss', 'en');
-                    $transaction->save();
+                        $transaction->j_created_at = Zaman::gtoj($transaction->created_at, 'yyyyMMddHHmmss', 'en');
+                        $transaction->save();
 
-                    // update wallet balance
-                    if ($transaction->type == TxType::MERCHANT) {
                         // update wallet balance
-                        $transaction->wallet->update([
-                            'balance' => DB::raw("balance + {$transaction->creditor} - {$transaction->debtor}"),
-                        ]);
-                        $this->info("wallet $transaction->wallet_id balance updated to {$transaction->wallet->balance}");
-                    }
+                        if ($transaction->type == TxType::MERCHANT) {
+                            // update wallet balance
+                            $transaction->wallet->update(
+                                [
+                                    'balance' => DB::raw("balance + {$transaction->creditor} - {$transaction->debtor}"),
+                                ]
+                            );
+                            $this->info(
+                                "wallet $transaction->wallet_id balance updated to {$transaction->wallet->balance}"
+                            );
+                        }
 
-                    $this->info("transaction $transaction->id balance updated to {$transaction->balance}");
-                });
+                        $this->info("transaction $transaction->id balance updated to {$transaction->balance}");
+                    }
+                );
 
                 usleep(100);
             }

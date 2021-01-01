@@ -36,8 +36,7 @@ class CreateWalletTask extends Task
             $wallet = $this->repository->create($data);
 
             return $wallet;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             XLog::exception($e);
             throw new CreateResourceFailedException();
         }

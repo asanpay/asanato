@@ -29,7 +29,7 @@ trait Jalali
     /**
      * 13 98 04 08 15 37 22
      *
-     * @param int $jalaliStamp
+     * @param int    $jalaliStamp
      * @param string $format
      *
      * @return string
@@ -42,15 +42,12 @@ trait Jalali
         $time = $parts[4] . ':' . $parts[5] . ':' . $parts[6];
 
         switch ($format) {
-            case 'date' : {
+            case 'date':
                 return $date;
-            }
-            case 'time' : {
+            case 'time':
                 return $time;
-            }
-            default:{
+            default:
                 return $date . ' ' . $time;
-            }
         }
     }
 }

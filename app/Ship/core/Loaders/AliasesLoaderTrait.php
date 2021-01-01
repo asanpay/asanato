@@ -8,7 +8,7 @@ use Illuminate\Foundation\AliasLoader;
 /**
  * Class AliasesLoaderTrait.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait AliasesLoaderTrait
 {
@@ -34,5 +34,4 @@ trait AliasesLoaderTrait
     {
         AliasLoader::getInstance()->alias($aliasKey, $aliasValue);
     }
-
 }

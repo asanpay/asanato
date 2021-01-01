@@ -21,8 +21,7 @@ class GetProfitWalletTask extends Task
     {
         try {
             return $this->repository->makeModel()->getCreateWalletProfitWallet();
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             throw new NotFoundException();
         }
     }

@@ -19,8 +19,8 @@ class FindPermissionAction extends Action
     /**
      * @param \App\Ship\Transporters\DataTransporter $data
      *
-     * @return  \App\Containers\Authorization\Models\Permission
-     * @throws  PermissionNotFoundException
+     * @return \App\Containers\Authorization\Models\Permission
+     * @throws PermissionNotFoundException
      */
     public function run(DataTransporter $data): Permission
     {
@@ -32,5 +32,4 @@ class FindPermissionAction extends Action
 
         return $permission;
     }
-
 }

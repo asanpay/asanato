@@ -10,9 +10,11 @@ class UpdateTxAction extends Action
 {
     public function run(Request $request)
     {
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             // add your request data here
-        ]);
+            ]
+        );
 
         $tx = Apiato::call('Tx@UpdateTxTask', [$request->id, $data]);
 

@@ -15,7 +15,8 @@ class UserNotFoundException extends Exception
 
     public $code = 100000;
 
-    public function addCustomData() {
+    public function addCustomData()
+    {
         return [
             'message' => __('auth.user_not_found'),
         ];

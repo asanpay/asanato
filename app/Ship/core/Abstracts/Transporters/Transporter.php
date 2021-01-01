@@ -12,8 +12,8 @@ use Illuminate\Support\Str;
 /**
  * Class Transporter
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 abstract class Transporter extends Dto
 {
@@ -23,7 +23,7 @@ abstract class Transporter extends Dto
     /**
      * Holds instances of objects.
      *
-     * @var  array
+     * @var array
      */
     private $instances = [];
 
@@ -56,7 +56,7 @@ abstract class Transporter extends Dto
      * @param null $key
      * @param null $default
      *
-     * @return  mixed
+     * @return mixed
      */
     public function getInputByKey($key = null, $default = null)
     {
@@ -68,7 +68,7 @@ abstract class Transporter extends Dto
      * This gives us the ability to pass instances, via the DTO.
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function setInstance($key, $value)
     {
@@ -81,13 +81,13 @@ abstract class Transporter extends Dto
      *
      * @param $name
      *
-     * @return  mixed|null
+     * @return mixed|null
      */
     public function __get($name)
     {
 
         // if set as instance, return it directly
-        if(isset($this->instances[$name])){
+        if (isset($this->instances[$name])) {
             return $this->instances[$name];
         }
 
@@ -104,5 +104,4 @@ abstract class Transporter extends Dto
 
         return $value;
     }
-
 }

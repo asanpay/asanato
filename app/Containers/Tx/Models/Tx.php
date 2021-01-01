@@ -29,7 +29,7 @@ class Tx extends Model
     ];
 
     protected $casts = [
-        'meta' => 'json'
+        'meta' => 'json',
     ];
 
     protected $dates = [
@@ -51,20 +51,19 @@ class Tx extends Model
 
     public function transaction()
     {
-        switch ($this->type)
-        {
-            case TxType::MERCHANT: {
+        switch ($this->type) {
+            case TxType::MERCHANT:
                 return $this->belongsTo(Transaction::class, 'transaction_id');
-            }
-            default: {
+                break;
+            default:
                 throw new Exception('Not handled wallet transaction type!');
-            }
+                break;
         }
     }
 
     public function getTrackingIdAttribute($value): string
     {
-        return 'TX'.
+        return 'TX' .
             date('y') .
             str_pad(date('z'), 3, "0", STR_PAD_LEFT) .
             strrev($this->id);

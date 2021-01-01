@@ -9,7 +9,7 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 /**
  * Class ThisUserCriteria.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class ThisUserCriteria extends Criteria
 {
@@ -30,18 +30,17 @@ class ThisUserCriteria extends Criteria
     }
 
     /**
-     * @param                                                   $model
+     * @param $model
      * @param \Prettus\Repository\Contracts\RepositoryInterface $repository
      *
      * @return mixed
      */
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        if(!$this->userId){
+        if (!$this->userId) {
             $this->userId = Auth::user()->id;
         }
 
         return $model->where('user_id', '=', $this->userId);
     }
-
 }

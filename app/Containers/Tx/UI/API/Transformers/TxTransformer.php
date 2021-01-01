@@ -9,14 +9,14 @@ use App\Ship\Parents\Transformers\Transformer;
 class TxTransformer extends Transformer
 {
     /**
-     * @var  array
+     * @var array
      */
     protected $defaultIncludes = [
 
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $availableIncludes = [
         'wallet'
@@ -49,9 +49,12 @@ class TxTransformer extends Transformer
             'tracking_id'    => $entity->tracking_id,
         ];
 
-        $response = $this->ifAdmin([
-            'real_id' => $entity->id,
-        ], $response);
+        $response = $this->ifAdmin(
+            [
+                'real_id' => $entity->id,
+            ],
+            $response
+        );
 
         return $response;
     }

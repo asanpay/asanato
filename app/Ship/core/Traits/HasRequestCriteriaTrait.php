@@ -9,7 +9,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 /**
  * Trait HasRequestCriteriaTrait
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 trait HasRequestCriteriaTrait
 {
@@ -70,5 +70,4 @@ trait HasRequestCriteriaTrait
 
         return $validatedRepository;
     }
-
 }

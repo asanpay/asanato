@@ -1,20 +1,20 @@
 <?php
 
 /**
- * @apiGroup           Wallet
- * @apiName            CreateWallet
+ * @apiGroup Wallet
+ * @apiName  CreateWallet
  *
- * @api                {POST} /v1/wallets CreateWallet
- * @apiDescription     Create a user wallet
+ * @api            {POST} /v1/wallets CreateWallet
+ * @apiDescription Create a user wallet
  *
- * @apiVersion         1.0.0
- * @apiPermission      create-wallets
+ * @apiVersion    1.0.0
+ * @apiPermission create-wallets
  *
- * @apiParam           {String}  name
- * @apiParam           {Boolean}  default
- * @apiParam           {String}  payer_wallet_id The wallet that should pay the fee
+ * @apiParam {String}  name
+ * @apiParam {Boolean}  default
+ * @apiParam {String}  payer_wallet_id The wallet that should pay the fee
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 200 OK
 
 {
@@ -56,11 +56,16 @@
 }
  */
 
-/** @var Route $router */
-$router->post('wallets', [
-    'as' => 'api_wallet_create_wallet',
-    'uses'  => 'Controller@createWallet',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+/**
+ * @var Route $router
+ */
+$router->post(
+    'wallets',
+    [
+        'as' => 'api_wallet_create_wallet',
+        'uses'  => 'Controller@createWallet',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);

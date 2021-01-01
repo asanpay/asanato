@@ -7,7 +7,7 @@ use App\Ship\Parents\Commands\ConsoleCommand;
 /**
  * Class HelloWorldCommand
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class HelloWorldCommand extends ConsoleCommand
 {

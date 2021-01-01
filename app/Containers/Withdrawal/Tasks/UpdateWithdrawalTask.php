@@ -22,8 +22,7 @@ class UpdateWithdrawalTask extends Task
     {
         try {
             return $this->repository->update($data, $id);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             XLog::exception($exception);
             throw new UpdateResourceFailedException();
         }

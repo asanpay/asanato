@@ -8,13 +8,13 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 /**
  * Class OrderByCreationDateDescendingCriteria.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class OrderByCreationDateDescendingCriteria extends Criteria
 {
 
     /**
-     * @param                                                   $model
+     * @param $model
      * @param \Prettus\Repository\Contracts\RepositoryInterface $repository
      *
      * @return mixed
@@ -23,5 +23,4 @@ class OrderByCreationDateDescendingCriteria extends Criteria
     {
         return $model->orderBy('created_at', 'desc');
     }
-
 }

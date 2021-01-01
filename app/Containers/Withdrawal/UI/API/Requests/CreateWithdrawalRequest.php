@@ -24,7 +24,7 @@ class CreateWithdrawalRequest extends Request
 
 
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {

@@ -10,5 +10,4 @@ class MultiplexType
 
     const PERCENT = 'percentage';
     const FIX = 'fix';
-
 }

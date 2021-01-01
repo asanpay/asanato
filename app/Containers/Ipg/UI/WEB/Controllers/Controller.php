@@ -15,7 +15,7 @@ use Apiato\Core\Foundation\Facades\Apiato;
 class Controller extends WebController
 {
     /**
-     * @param string $token
+     * @param string                $token
      * @param IpgGatewayPageRequest $request
      *
      * @return mixed
@@ -26,9 +26,9 @@ class Controller extends WebController
     }
 
     /**
-     * @param string $psp
-     * @param string $gateway
-     * @param string $token
+     * @param string                        $psp
+     * @param string                        $gateway
+     * @param string                        $token
      * @param IpgTransactionCallbackRequest $request
      *
      * @return

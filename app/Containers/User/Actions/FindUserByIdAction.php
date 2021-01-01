@@ -19,7 +19,7 @@ class FindUserByIdAction extends Action
     /**
      * @param \App\Ship\Transporters\DataTransporter $data
      *
-     * @return  \App\Containers\User\Models\User
+     * @return \App\Containers\User\Models\User
      */
     public function run(DataTransporter $data): User
     {
@@ -31,5 +31,4 @@ class FindUserByIdAction extends Action
 
         return $user;
     }
-
 }

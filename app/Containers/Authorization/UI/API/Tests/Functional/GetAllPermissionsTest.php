@@ -10,7 +10,7 @@ use App\Containers\Authorization\Tests\ApiTestCase;
  * @group authorization
  * @group api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class GetAllPermissionsTest extends ApiTestCase
 {
@@ -25,7 +25,7 @@ class GetAllPermissionsTest extends ApiTestCase
     /**
      * @test
      */
-    public function testGetAllPermissions_()
+    public function testGetAllPermissions()
     {
         // send the HTTP request
         $response = $this->makeCall();
@@ -38,5 +38,4 @@ class GetAllPermissionsTest extends ApiTestCase
 
         $this->assertTrue(count($responseContent->data) > 0);
     }
-
 }

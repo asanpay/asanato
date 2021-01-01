@@ -11,13 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class Output
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class Output extends Value
 {
 
     /**
-     * @var  string
+     * @var string
      */
     public $output = '';
 
@@ -59,7 +59,7 @@ class Output extends Value
     /**
      * @param $text
      *
-     * @return  string
+     * @return string
      */
     protected function set($text)
     {
@@ -67,7 +67,7 @@ class Output extends Value
     }
 
     /**
-     * @return  string
+     * @return string
      */
     public function get()
     {
@@ -155,12 +155,19 @@ class Output extends Value
         // Auth Header
         $authHeader = $this->request->header("Authorization");
         // User
-        $user = $this->request->user() ? "ID: " . $this->request->user()->id . " (Name: " . $this->request->user()->name . ")" : "N/A";
+        $user = $this->request->user() ?
+            "ID: " . $this->request->user()->id . " (Name: " . $this->request->user()->name . ")" :
+            "N/A";
         // Browser
         $browser = Agent::browser();
 
-        $this->append(" * Access Token: " . substr($authHeader, 0,
-                $this->tokenDataCut) . (!is_null($authHeader) ? "..." : "N/A") . "\n");
+        $this->append(
+            " * Access Token: " . substr(
+                $authHeader,
+                0,
+                $this->tokenDataCut
+            ) . (!is_null($authHeader) ? "..." : "N/A") . "\n"
+        );
         $this->append(" * User: " . $user . "\n");
         $this->append(" * Device: " . Agent::device() . " (Platform: " . Agent::platform() . ") \n");
         $this->append(" * Browser: " . $browser . " (Version: " . Agent::version($browser) . ") \n");
@@ -184,8 +191,10 @@ class Output extends Value
     public function responseData()
     {
         // Response Data
-        $responseContent = ($this->response && method_exists($this->response,
-                "content")) ? $this->response->content() : "N/A";
+        $responseContent = ($this->response && method_exists(
+            $this->response,
+            "content"
+        )) ? $this->response->content() : "N/A";
 
         $this->append(" * " . substr($responseContent, 0, $this->responseDataCut) . "..." . "\n");
     }
@@ -193,11 +202,10 @@ class Output extends Value
     /**
      * @param $output
      *
-     * @return  string
+     * @return string
      */
     private function append($output)
     {
         return $this->output .= $output;
     }
-
 }

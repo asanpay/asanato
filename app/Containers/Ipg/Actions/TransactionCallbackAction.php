@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Containers\Ipg\Actions;
 
 use App\Containers\Ipg\UI\WEB\Requests\IpgTransactionCallbackRequest;
@@ -21,20 +20,22 @@ class TransactionCallbackAction extends Action
         XLog::info('TransactionCallbackAction');
 
         $paidSuccessfully = false;
-        $accomplished = [];
+        $accomplished     = [];
 
         do {
             try {
-
-                $validator = Validator::make([
-                    'token' => $token,
-                ], [
-                    'token' => [
-                        'required',
-                        'alpha_dash',
-                        'regex:' . config('regex.token_regex'),
+                $validator = Validator::make(
+                    [
+                        'token' => $token,
                     ],
-                ]);
+                    [
+                        'token' => [
+                            'required',
+                            'alpha_dash',
+                            'regex:' . config('regex.token_regex'),
+                        ],
+                    ]
+                );
 
                 // validate required route parameters
                 if ($validator->fails()) {
@@ -73,13 +74,14 @@ class TransactionCallbackAction extends Action
 
                 // transaction never touched callback process
                 if ($transaction->status <= TransactionStatus::CALLBACK) {
-
                     // extract PSP gateway`s reference Id from the posted callback parameters
                     $referenceId = $shaparak->getGatewayReferenceId();
 
                     // check for double-spending transaction
-                    $doubleSpending = Apiato::call('Transaction@TransactionHasDoubleSpendingTask',
-                        [$transaction, $referenceId, $request]);
+                    $doubleSpending = Apiato::call(
+                        'Transaction@TransactionHasDoubleSpendingTask',
+                        [$transaction, $referenceId, $request]
+                    );
 
                     // if double-spending transaction found
                     if ($doubleSpending === true) {
@@ -97,21 +99,24 @@ class TransactionCallbackAction extends Action
 
                     for ($i = 1; $i <= 3; $i++) {
                         try {
-                            XLog::info('trying to verify payment',
+                            XLog::info(
+                                'trying to verify payment',
                                 [
                                     'try'  => $i,
                                     'ref'  => $referenceId,
                                     'gate' => $gateway,
                                     'psp'  => $psp,
                                     $transaction->tagify(),
-                                ]);
+                                ]
+                            );
 
                             $verifyResult = $shaparak->verifyTransaction();
 
                             if ($verifyResult === true) {
                                 $verified = true;
                             }
-                            XLog::info('verify result',
+                            XLog::info(
+                                'verify result',
                                 [
                                     'try'    => $i,
                                     'ref'    => $referenceId,
@@ -119,10 +124,12 @@ class TransactionCallbackAction extends Action
                                     'psp'    => $psp,
                                     'result' => $verifyResult,
                                     $transaction->tagify(),
-                                ]);
+                                ]
+                            );
                             break;
                         } catch (Exception $e) {
-                            XLog::error('Exception: ' . $e->getMessage(),
+                            XLog::error(
+                                'Exception: ' . $e->getMessage(),
                                 [
                                     'try'    => $i,
                                     'ref'    => $referenceId,
@@ -130,18 +137,23 @@ class TransactionCallbackAction extends Action
                                     'psp'    => $psp,
                                     'result' => $verifyResult ?? '',
                                     $transaction->tagify(),
-                                ]);
+                                ]
+                            );
                             continue;
                         }
                     }
 
                     if ($verified !== true) {
-                        XLog::error('transaction verification failed',
-                            ['ref' => $referenceId, 'gate' => $gateway, 'psp' => $psp, $transaction->tagify()]);
+                        XLog::error(
+                            'transaction verification failed',
+                            ['ref' => $referenceId, 'gate' => $gateway, 'psp' => $psp, $transaction->tagify()]
+                        );
                         break;
                     } else {
-                        XLog::info('invoice verified successfully',
-                            ['ref' => $referenceId, 'gate' => $gateway, 'psp' => $psp, $transaction->tagify()]);
+                        XLog::info(
+                            'invoice verified successfully',
+                            ['ref' => $referenceId, 'gate' => $gateway, 'psp' => $psp, $transaction->tagify()]
+                        );
                     }
                 }
                 // verify end ------------------------------------------------------------------------------------------
@@ -152,30 +164,36 @@ class TransactionCallbackAction extends Action
                     $afterVerified = false;
                     for ($i = 1; $i <= 3; $i++) {
                         try {
-                            XLog::info('trying to settle payment',
+                            XLog::info(
+                                'trying to settle payment',
                                 [
                                     'try'  => $i,
                                     'ref'  => $referenceId,
                                     'gate' => $gateway,
                                     'psp'  => $psp,
                                     $transaction->tagify(),
-                                ]);
+                                ]
+                            );
 
                             $settleResult = $shaparak->settleTransaction();
                             if ($settleResult) {
                                 $afterVerified = true;
                             }
-                            XLog::info('settle result', [
-                                'try'    => $i,
-                                'ref'    => $referenceId,
-                                'gate'   => $gateway,
-                                'psp'    => $psp,
-                                'result' => $verifyResult,
-                                $transaction->tagify(),
-                            ]);
+                            XLog::info(
+                                'settle result',
+                                [
+                                    'try'    => $i,
+                                    'ref'    => $referenceId,
+                                    'gate'   => $gateway,
+                                    'psp'    => $psp,
+                                    'result' => $verifyResult,
+                                    $transaction->tagify(),
+                                ]
+                            );
                             break;
                         } catch (\Exception $e) {
-                            XLog::error('Exception: ' . $e->getMessage(),
+                            XLog::error(
+                                'Exception: ' . $e->getMessage(),
                                 [
                                     'try'    => $i,
                                     'ref'    => $referenceId,
@@ -183,18 +201,23 @@ class TransactionCallbackAction extends Action
                                     'psp'    => $psp,
                                     'result' => $verifyResult ?? '',
                                     $transaction->tagify(),
-                                ]);
+                                ]
+                            );
                             continue;
                         }
                     }
 
                     if ($afterVerified !== true) {
-                        XLog::error('transaction settlement failed',
-                            ['ref' => $referenceId, 'gate' => $gateway, 'psp' => $psp, $transaction->tagify()]);
+                        XLog::error(
+                            'transaction settlement failed',
+                            ['ref' => $referenceId, 'gate' => $gateway, 'psp' => $psp, $transaction->tagify()]
+                        );
                         break;
                     } else {
-                        XLog::info('invoice settled successfully',
-                            ['ref' => $referenceId, 'gate' => $gateway, 'psp' => $psp, $transaction->tagify()]);
+                        XLog::info(
+                            'invoice settled successfully',
+                            ['ref' => $referenceId, 'gate' => $gateway, 'psp' => $psp, $transaction->tagify()]
+                        );
                     }
                 }
                 // settle end ------------------------------------------------------------------------------------
@@ -204,7 +227,7 @@ class TransactionCallbackAction extends Action
                 if ($transaction->status >= TransactionStatus::ACCOMPLISHED) {
                     XLog::info("transaction has been processed before", [$transaction->tagify()]);
                     $paidSuccessfully = true;
-                    $accomplished = ['accomplished' => 1]; // add flag to callback parameters
+                    $accomplished     = ['accomplished' => 1]; // add flag to callback parameters
                     // no further process required
                     break;
                 }
@@ -219,25 +242,31 @@ class TransactionCallbackAction extends Action
                 Apiato::call('Ipg@ProcessAccomplishedPspTransactionSubAction', [$transaction]);
 
                 $paidSuccessfully = true;
-
             } catch (Exception $e) {
                 $tags = [];
                 if (isset($transaction) && $transaction instanceof Transaction) {
                     $tags[] = $transaction->tagify();
                 }
-                XLog::emergency($e->getMessage() . ' code:' . $e->getCode() . ' ' . $e->getFile() . ':' . $e->getLine(),
-                    $tags);
+                XLog::emergency(
+                    $e->getMessage() . ' code:' . $e->getCode() . ' ' . $e->getFile() . ':' . $e->getLine(),
+                    $tags
+                );
                 break;
             }
-
         } while (false); // do not repeat
 
-        $merchantCallbackUrl = $transaction->callback_url . '?' . http_build_query(array_merge([
-                'status'      => $paidSuccessfully ? 1 : 0,
-                'token'       => $token,
-                'tracking_id' => $transaction->tracking_id,
-                'x_track_id'  => resolve('xTrackId'),
-            ], $accomplished));
+        $merchantCallbackUrl = $transaction->callback_url . '?' .
+            http_build_query(
+                array_merge(
+                    [
+                        'status'      => ($paidSuccessfully ? 1 : 0),
+                        'token'       => $token,
+                        'tracking_id' => $transaction->tracking_id,
+                        'x_track_id'  => resolve('xTrackId'),
+                    ],
+                    $accomplished
+                )
+            );
 
         XLog::info('redirecting to: ' . $merchantCallbackUrl, ['tag' => ($transaction ? $transaction->tagify() : '')]);
 

@@ -11,7 +11,7 @@ use App\Containers\User\Tests\ApiTestCase;
  * @group user
  * @group api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class GetAllUsersTest extends ApiTestCase
 {
@@ -26,7 +26,7 @@ class GetAllUsersTest extends ApiTestCase
     /**
      * @test
      */
-    public function testGetAllUsersByAdmin_()
+    public function testGetAllUsersByAdmin()
     {
         // create some non-admin users who are clients
         factory(User::class, 2)->create();
@@ -47,7 +47,7 @@ class GetAllUsersTest extends ApiTestCase
     /**
      * @test
      */
-    public function testGetAllUsersByNonAdmin_()
+    public function testGetAllUsersByNonAdmin()
     {
         $this->getTestingUserWithoutAccess();
 
@@ -60,10 +60,12 @@ class GetAllUsersTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(403);
 
-        $this->assertResponseContainKeyValue([
-            'errors' => 'You have no access to this resource!',
-            'message' => 'This action is unauthorized.',
-        ]);
+        $this->assertResponseContainKeyValue(
+            [
+                'errors' => 'You have no access to this resource!',
+                'message' => 'This action is unauthorized.',
+            ]
+        );
     }
 
     /**
@@ -71,10 +73,12 @@ class GetAllUsersTest extends ApiTestCase
      */
     public function testSearchUsersByName()
     {
-        $user = $this->getTestingUser([
-            'first_name' => 'abooozar',
-            'last_name' => 'ghafffari',
-        ]);
+        $user = $this->getTestingUser(
+            [
+                'first_name' => 'abooozar',
+                'last_name' => 'ghafffari',
+            ]
+        );
 
         // 3 random users
         factory(User::class, 3)->create();
@@ -92,5 +96,4 @@ class GetAllUsersTest extends ApiTestCase
         // assert only single user was returned
         $this->assertCount(1, $responseArray['data']);
     }
-
 }

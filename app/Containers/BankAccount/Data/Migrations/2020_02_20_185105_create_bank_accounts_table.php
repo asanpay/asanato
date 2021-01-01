@@ -14,26 +14,30 @@ class CreateBankAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bank_accounts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedInteger('user_id')->comment('user ID that bank account belongs to');
-            $table->unsignedBigInteger('bank_id')->nullable();
+        Schema::create(
+            'bank_accounts', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->unsignedInteger('user_id')->comment('user ID that bank account belongs to');
+                $table->unsignedBigInteger('bank_id')->nullable();
 
-            $table->string('iban', 24)->nullable();
+                $table->string('iban', 24)->nullable();
 
-            $table->string('ip');
+                $table->string('ip');
 
-            $table->enum('status', BankAccountStatus::toArray())->default(BankAccountStatus::PENDING);
-            $table->boolean('default')->default(false);
+                $table->enum('status', BankAccountStatus::toArray())->default(BankAccountStatus::PENDING);
+                $table->boolean('default')->default(false);
 
-            $table->timestamps();
-            $table->softDeletes();
-        });
+                $table->timestamps();
+                $table->softDeletes();
+            }
+        );
 
-        Schema::table('bank_accounts', function ($table) {
-            $table->foreign('bank_id', 'bank_account_bank')->references('id')->on('banks');
-            $table->foreign('user_id', 'bank_account_user')->references('id')->on('users')->onDelete('restrict');
-        });
+        Schema::table(
+            'bank_accounts', function ($table) {
+                $table->foreign('bank_id', 'bank_account_bank')->references('id')->on('banks');
+                $table->foreign('user_id', 'bank_account_user')->references('id')->on('users')->onDelete('restrict');
+            }
+        );
 
         $query = 'ALTER TABLE bank_accounts ALTER COLUMN ip type inet USING ip::inet;';
         \Illuminate\Support\Facades\DB::connection()->getPdo()->exec($query);
@@ -46,10 +50,12 @@ class CreateBankAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::table('bank_accounts', function ($table) {
-            $table->dropForeign('bank_account_bank');
-            $table->dropForeign('bank_account_user');
-        });
+        Schema::table(
+            'bank_accounts', function ($table) {
+                $table->dropForeign('bank_account_bank');
+                $table->dropForeign('bank_account_user');
+            }
+        );
 
         Schema::dropIfExists('bank_accounts');
     }

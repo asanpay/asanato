@@ -8,6 +8,7 @@ use App\Ship\Traits\CustomEnums;
  * - Merchant --- when merchant_id is not null
  *
  * Class TransactionType
+ *
  * @package App\Containers\Transaction\Enum
  */
 class TransactionType

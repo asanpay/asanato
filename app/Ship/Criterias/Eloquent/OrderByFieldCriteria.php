@@ -21,7 +21,7 @@ class OrderByFieldCriteria extends Criteria
     /**
      * OrderByFieldCriteria constructor.
      *
-     * @param string $field The field to be sorted
+     * @param string $field     The field to be sorted
      * @param string $sortOrder the sort direction (asc or desc)
      */
     public function __construct($field, $sortOrder)
@@ -43,7 +43,7 @@ class OrderByFieldCriteria extends Criteria
     }
 
     /**
-     * @param                                                   $model
+     * @param $model
      * @param \Prettus\Repository\Contracts\RepositoryInterface $repository
      *
      * @return mixed
@@ -52,5 +52,4 @@ class OrderByFieldCriteria extends Criteria
     {
         return $model->orderBy($this->field, $this->sortOrder);
     }
-
 }

@@ -26,11 +26,14 @@ class ResetPasswordAction extends Action
     public function run(DataTransporter $data): array
     {
         try {
-            $latestToken = Apiato::call('Otp@GetLatestUnusedOtpTask', [
-                $data->mobile,
-                OtpReason::RESET_PASS,
-                OtpBroker::MOBILE
-            ]);
+            $latestToken = Apiato::call(
+                'Otp@GetLatestUnusedOtpTask',
+                [
+                    $data->mobile,
+                    OtpReason::RESET_PASS,
+                    OtpBroker::MOBILE
+                ]
+            );
 
 
             if (!$latestToken) {
@@ -48,7 +51,6 @@ class ResetPasswordAction extends Action
             $latestToken->markAsUsed();
 
             return [__('auth.password_updated'), null];
-
         } catch (Exception $e) {
             throw new InternalErrorException();
         }

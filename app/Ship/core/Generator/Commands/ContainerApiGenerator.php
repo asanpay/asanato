@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * Class ContainerApiGenerator
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenerator
 {
@@ -40,21 +40,21 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
     /**
      * The structure of the file path.
      *
-     * @var  string
+     * @var string
      */
     protected $pathStructure = '{container-name}/*';
 
     /**
      * The structure of the file name.
      *
-     * @var  string
+     * @var string
      */
     protected $nameStructure = '{file-name}';
 
     /**
      * The name of the stub file.
      *
-     * @var  string
+     * @var string
      */
     protected $stubName = 'composer.stub';
 
@@ -62,13 +62,18 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
      * User required/optional inputs expected to be passed while calling the command.
      * This is a replacement of the `getArguments` function "which reads whenever it's called".
      *
-     * @var  array
+     * @var array
      */
     public $inputs = [
         ['docversion', null, InputOption::VALUE_OPTIONAL, 'The version of all endpoints to be generated (1, 2, ...)'],
         ['doctype', null, InputOption::VALUE_OPTIONAL, 'The type of all endpoints to be generated (private, public)'],
         ['url', null, InputOption::VALUE_OPTIONAL, 'The base URI of all endpoints (/stores, /cars, ...)'],
-        ['transporters', null, InputOption::VALUE_OPTIONAL, 'Use specific Transporters or rely on the generic DataTransporter'],
+        [
+            'transporters',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'Use specific Transporters or rely on the generic DataTransporter',
+        ],
     ];
 
     /**
@@ -78,70 +83,105 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
     {
         $ui = 'api';
 
-        $useTransporters = $this->checkParameterOrConfirm('transporters', 'Would you like to use specific Transporters?', true);
+        $useTransporters = $this->checkParameterOrConfirm(
+            'transporters',
+            'Would you like to use specific Transporters?',
+            true
+        );
 
         // containername as inputted and lower
-        $containerName = $this->containerName;
+        $containerName  = $this->containerName;
         $_containerName = Str::lower($this->containerName);
 
         // name of the model (singular and plural)
-        $model = $this->containerName;
+        $model  = $this->containerName;
         $models = Pluralizer::plural($model);
 
         // add the README file
         $this->printInfoMessage('Generating README File');
-        $this->call('apiato:generate:readme', [
-            '--container'   => $containerName,
-            '--file'        => 'README',
-        ]);
+        $this->call(
+            'apiato:generate:readme',
+            [
+                '--container' => $containerName,
+                '--file'      => 'README',
+            ]
+        );
 
         // create the configuration file
         $this->printInfoMessage('Generating Configuration File');
-        $this->call('apiato:generate:configuration', [
-            '--container'   => $containerName,
-            '--file'        => $_containerName,
-        ]);
+        $this->call(
+            'apiato:generate:configuration',
+            [
+                '--container' => $containerName,
+                '--file'      => $_containerName,
+            ]
+        );
 
         // create the MainServiceProvider for the container
         $this->printInfoMessage('Generating MainServiceProvider');
-        $this->call('apiato:generate:serviceprovider', [
-            '--container'   => $containerName,
-            '--file'        => 'MainServiceProvider',
-            '--stub'        => 'mainserviceprovider',
-        ]);
+        $this->call(
+            'apiato:generate:serviceprovider',
+            [
+                '--container' => $containerName,
+                '--file'      => 'MainServiceProvider',
+                '--stub'      => 'mainserviceprovider',
+            ]
+        );
 
         // create the model and repository for this container
         $this->printInfoMessage('Generating Model and Repository');
-        $this->call('apiato:generate:model', [
-            '--container'   => $containerName,
-            '--file'        => $model,
-            '--repository'  => true,
-        ]);
+        $this->call(
+            'apiato:generate:model',
+            [
+                '--container'  => $containerName,
+                '--file'       => $model,
+                '--repository' => true,
+            ]
+        );
 
         // create the migration file for the model
         $this->printInfoMessage('Generating a basic Migration file');
-        $this->call('apiato:generate:migration', [
-            '--container'   => $containerName,
-            '--file'        => 'create_' . Str::lower($_containerName) . '_tables',
-            '--tablename'   => $models,
-        ]);
+        $this->call(
+            'apiato:generate:migration',
+            [
+                '--container' => $containerName,
+                '--file'      => 'create_' . Str::lower($_containerName) . '_tables',
+                '--tablename' => $models,
+            ]
+        );
 
         // create a transformer for the model
         $this->printInfoMessage('Generating Transformer for the Model');
-        $this->call('apiato:generate:transformer', [
-            '--container'   => $containerName,
-            '--file'        => $containerName . 'Transformer',
-            '--model'       => $model,
-            '--full'        => false,
-        ]);
+        $this->call(
+            'apiato:generate:transformer',
+            [
+                '--container' => $containerName,
+                '--file'      => $containerName . 'Transformer',
+                '--model'     => $model,
+                '--full'      => false,
+            ]
+        );
 
         // create the default routes for this container
         $this->printInfoMessage('Generating Default Routes');
-        $version = $this->checkParameterOrAsk('docversion', 'Enter the version for *all* API endpoints (integer)', 1);
-        $doctype = $this->checkParameterOrChoice('doctype', 'Select the type for *all* endpoints', ['private', 'public'], 0);
+        $version = $this->checkParameterOrAsk(
+            'docversion',
+            'Enter the version for *all* API endpoints (integer)',
+            1
+        );
+        $doctype = $this->checkParameterOrChoice(
+            'doctype',
+            'Select the type for *all* endpoints',
+            ['private', 'public'],
+            0
+        );
 
         // get the URI and remove the first trailing slash
-        $url = Str::lower($this->checkParameterOrAsk('url', 'Enter the base URI for all endpoints (foo/bar)', Str::lower($models)));
+        $url = Str::lower($this->checkParameterOrAsk(
+            'url',
+            'Enter the base URI for all endpoints (foo/bar)',
+            Str::lower($models)
+        ));
         $url = ltrim($url, '/');
 
         $this->printInfoMessage('Creating Requests for Routes');
@@ -206,60 +246,75 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
             ],
         ];
 
-        foreach ($routes as $route)
-        {
-            $this->call('apiato:generate:route', [
-                '--container' => $containerName,
-                '--file' => $route['name'],
-                '--ui' => $ui,
-                '--operation' => $route['operation'],
-                '--doctype' => $doctype,
-                '--docversion' => $version,
-                '--url' => $route['url'],
-                '--verb' => $route['verb'],
-            ]);
+        foreach ($routes as $route) {
+            $this->call(
+                'apiato:generate:route',
+                [
+                    '--container'  => $containerName,
+                    '--file'       => $route['name'],
+                    '--ui'         => $ui,
+                    '--operation'  => $route['operation'],
+                    '--doctype'    => $doctype,
+                    '--docversion' => $version,
+                    '--url'        => $route['url'],
+                    '--verb'       => $route['verb'],
+                ]
+            );
 
-            $this->call('apiato:generate:request', [
-                '--container' => $containerName,
-                '--file' => $route['request'],
-                '--ui' => $ui,
-                '--transporter' => $useTransporters,
-                '--transportername' => $route['transporter'],
-            ]);
+            $this->call(
+                'apiato:generate:request',
+                [
+                    '--container'       => $containerName,
+                    '--file'            => $route['request'],
+                    '--ui'              => $ui,
+                    '--transporter'     => $useTransporters,
+                    '--transportername' => $route['transporter'],
+                ]
+            );
 
-            $this->call('apiato:generate:action', [
-                '--container' => $containerName,
-                '--file' => $route['action'],
-                '--model' => $model,
-                '--stub' => $route['stub'],
-            ]);
+            $this->call(
+                'apiato:generate:action',
+                [
+                    '--container' => $containerName,
+                    '--file'      => $route['action'],
+                    '--model'     => $model,
+                    '--stub'      => $route['stub'],
+                ]
+            );
 
-            $this->call('apiato:generate:task', [
-                '--container' => $containerName,
-                '--file' => $route['task'],
-                '--model' => $model,
-                '--stub' => $route['stub'],
-            ]);
+            $this->call(
+                'apiato:generate:task',
+                [
+                    '--container' => $containerName,
+                    '--file'      => $route['task'],
+                    '--model'     => $model,
+                    '--stub'      => $route['stub'],
+                ]
+            );
         }
 
         // finally generate the controller
         $this->printInfoMessage('Generating Controller to wire everything together');
-        $this->call('apiato:generate:controller', [
-            '--container'   => $containerName,
-            '--file'        => 'Controller',
-            '--ui'          => $ui,
-            '--stub'        => 'crud.' . $ui,
-        ]);
+        $this->call(
+            'apiato:generate:controller',
+            [
+                '--container' => $containerName,
+                '--file'      => 'Controller',
+                '--ui'        => $ui,
+                '--stub'      => 'crud.' . $ui,
+            ]
+        );
 
         $this->printInfoMessage('Generating Composer File');
+
         return [
             'path-parameters' => [
                 'container-name' => $containerName,
             ],
             'stub-parameters' => [
                 '_container-name' => $_containerName,
-                'container-name' => $containerName,
-                'class-name' => $this->fileName,
+                'container-name'  => $containerName,
+                'class-name'      => $this->fileName,
             ],
             'file-parameters' => [
                 'file-name' => $this->fileName,
@@ -281,5 +336,4 @@ class ContainerApiGenerator extends GeneratorCommand implements ComponentsGenera
     {
         return 'json';
     }
-
 }

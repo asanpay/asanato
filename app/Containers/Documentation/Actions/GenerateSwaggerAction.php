@@ -24,10 +24,15 @@ class GenerateSwaggerAction extends Action
         $console->info("Generating Swagger/OpenAPI Documentations for (" . implode(' & ', $types) . ")\n");
 
         // for each type, generate docs.
-        $documentationUrls = array_map(function ($type) use ($console) {
-            return Apiato::call('Documentation@GenerateSwaggerTask', [$type, $console]);
-        }, $types);
+        $documentationUrls = array_map(
+            function ($type) use ($console) {
+                return Apiato::call('Documentation@GenerateSwaggerTask', [$type, $console]);
+            },
+            $types
+        );
 
-        $console->info("Done! You can access your Swagger/OpenAPI JSON schema at: \n" . implode("\n", $documentationUrls));
+        $console->info(
+            "Done! You can access your Swagger/OpenAPI JSON schema at: \n" . implode("\n", $documentationUrls)
+        );
     }
 }

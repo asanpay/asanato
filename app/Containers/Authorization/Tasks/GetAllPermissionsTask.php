@@ -31,11 +31,10 @@ class GetAllPermissionsTask extends Task
     /**
      * @param bool $skipPagination
      *
-     * @return  mixed
+     * @return mixed
      */
     public function run($skipPagination = false)
     {
         return $skipPagination ? $this->repository->all() : $this->repository->paginate();
     }
-
 }

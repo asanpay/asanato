@@ -10,14 +10,14 @@ use App\Ship\Parents\Actions\Action;
 /**
  * Class GetAuthenticatedUserAction
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class GetAuthenticatedUserAction extends Action
 {
 
     /**
-     * @return  \App\Containers\User\Models\User
-     * @throws  NotFoundException
+     * @return \App\Containers\User\Models\User
+     * @throws NotFoundException
      */
     public function run(): User
     {

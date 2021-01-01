@@ -39,13 +39,11 @@ class MultiplexDataParserTask extends Task
      *          {"wallet":"baz", "share": 230000"},
      *      ]
      * }
-     *
      */
     public function run(array $parameters, Merchant $merchant): array
     {
         // multiplex data should be a json
         if (!isset($parameters['multiplex']) || !isJson($parameters['multiplex'])) {
-
             self::error('multiplexing data should be a json array');
         }
         $multiplex        = json_decode($parameters['multiplex'], true);
@@ -71,26 +69,20 @@ class MultiplexDataParserTask extends Task
         foreach ($multiplexWallets as $item) {
             switch (count($item)) {
                 case 2:
-                {
                     if (!isset($item['wallet'], $item['share'])) {
                         self::error('each multiplex item could contains just wallet, share and fee keys');
                     }
                     break;
-                }
                 case 3:
-                {
                     if (!isset($item['wallet'], $item['share'], $item['fee'])) {
                         self::error('each multiplex item could contains just wallet, share and fee keys');
                     }
                     $feePayerWalletsCount++;
                     break;
-                }
                 default:
-                {
                     // invalid item structure
                     self::error('each multiplex item should contains 2 or 3 items from wallet, share and fee keys');
                     break;
-                }
             }
 
             $w = app(Hashids::class)->decode($item['wallet']);
@@ -117,7 +109,10 @@ class MultiplexDataParserTask extends Task
 
                     // check if selected wallet share is enough to pay the transaction fee
                     if ($payerWalletTotalShare < $paymentInfo->fee) {
-                        self::error('transaction fee value is bigger than the share of the wallet that you have selected as fee payer');
+                        self::error(
+                            'transaction fee value is bigger than the share of'.
+                            ' the wallet that you have selected as fee payer'
+                        );
                     }
 
                     $this->feePayerWalletDefined = true;
@@ -132,8 +127,12 @@ class MultiplexDataParserTask extends Task
         }
 
         if ($feePayerWalletsCount > 1) {
-            self::error(sprintf('One wallet could be select to pay the transaction fee. You selected %d',
-                $feePayerWalletsCount));
+            self::error(
+                sprintf(
+                    'One wallet could be select to pay the transaction fee. You selected %d',
+                    $feePayerWalletsCount
+                )
+            );
         }
 
         //        if ($merchant->fee_by == FeeBy::MERCHANT && $this->feePayerWalletDefined !== true) {
@@ -159,19 +158,19 @@ class MultiplexDataParserTask extends Task
         /**
          * sample output
          *  array:4 [
-            "method" => "percentage"
-            "wallets" => array:3 [
-                0 => 1000111122
-                1 => 1000111121
-                2 => 1000111111
-            ]
-            "shares" => array:3 [
-                0 => 50
-                1 => 49.5
-                2 => 0.5
-            ]
-            "feePayerWallet" => 1000111122
-        ]
+         * "method" => "percentage"
+         * "wallets" => array:3 [
+         * 0 => 1000111122
+         * 1 => 1000111121
+         * 2 => 1000111111
+         * ]
+         * "shares" => array:3 [
+         * 0 => 50
+         * 1 => 49.5
+         * 2 => 0.5
+         * ]
+         * "feePayerWallet" => 1000111122
+         * ]
          */
 
         return $data;

@@ -8,7 +8,7 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 /**
  * Class ThisFieldCriteria
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class NotNullCriteria extends Criteria
 {
@@ -29,14 +29,13 @@ class NotNullCriteria extends Criteria
     }
 
     /**
-     * @param                                                   $model
+     * @param $model
      * @param \Prettus\Repository\Contracts\RepositoryInterface $repository
      *
-     * @return  mixed
+     * @return mixed
      */
     public function apply($model, PrettusRepositoryInterface $repository)
     {
         return $model->whereNotNull($this->field);
     }
-
 }

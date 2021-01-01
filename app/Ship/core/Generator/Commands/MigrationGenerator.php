@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * Class MigrationGenerator
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class MigrationGenerator extends GeneratorCommand implements ComponentsGenerator
 {
@@ -41,21 +41,21 @@ class MigrationGenerator extends GeneratorCommand implements ComponentsGenerator
     /**
      * The structure of the file path.
      *
-     * @var  string
+     * @var string
      */
     protected $pathStructure = '{container-name}/Data/Migrations/*';
 
     /**
      * The structure of the file name.
      *
-     * @var  string
+     * @var string
      */
     protected $nameStructure = '{date}_{file-name}';
 
     /**
      * The name of the stub file.
      *
-     * @var  string
+     * @var string
      */
     protected $stubName = 'migration.stub';
 
@@ -63,7 +63,7 @@ class MigrationGenerator extends GeneratorCommand implements ComponentsGenerator
      * User required/optional inputs expected to be passed while calling the command.
      * This is a replacement of the `getArguments` function "which reads whenever it's called".
      *
-     * @var  array
+     * @var array
      */
     public $inputs = [
         ['tablename', null, InputOption::VALUE_OPTIONAL, 'The name for the database table'],

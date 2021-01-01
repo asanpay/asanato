@@ -8,7 +8,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRoute
 /**
  * Class RoutesProvider
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class RoutesProvider extends LaravelRouteServiceProvider
 {
@@ -41,5 +41,4 @@ class RoutesProvider extends LaravelRouteServiceProvider
     {
         $this->runRoutesAutoLoader();
     }
-
 }

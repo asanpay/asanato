@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Config;
 /**
  * Class CallOAuthServerTask
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class CallOAuthServerTask extends Task
 {
@@ -19,12 +19,12 @@ class CallOAuthServerTask extends Task
     /**
      * @string
      */
-    CONST AUTH_ROUTE = '/v1/oauth/token';
+    const AUTH_ROUTE = '/v1/oauth/token';
 
     /**
      * @param $data
      *
-     * @return  array
+     * @return array
      * @throws \App\Containers\Authentication\Exceptions\LoginFailedException
      */
     public function run($data)

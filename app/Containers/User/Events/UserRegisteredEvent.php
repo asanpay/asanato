@@ -12,7 +12,7 @@ class UserRegisteredEvent extends Event implements ShouldQueue
 {
 
     /**
-     * @var  \App\Containers\User\Models\User
+     * @var \App\Containers\User\Models\User
      */
     protected $user;
 
@@ -31,7 +31,9 @@ class UserRegisteredEvent extends Event implements ShouldQueue
      */
     public function handle()
     {
-        Log::info('New User registration. ID = ' . $this->user->getHashedKey() . ' | Email = ' . $this->user->email . '.');
+        Log::info(
+            'New User registration. ID = ' . $this->user->getHashedKey() . ' | Email = ' . $this->user->email
+        );
 
         // ...
     }

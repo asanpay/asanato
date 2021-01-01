@@ -12,15 +12,15 @@ use Request;
 /**
  * Class Repository.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class Repository extends PrettusRepository implements PrettusCacheable
 {
 
     use PrettusCacheableRepository;
-    
+
     /**
-     * Define the maximum amount of entries per page that is returned. 
+     * Define the maximum amount of entries per page that is returned.
      * Set to 0 to "disable" this feature
      */
     protected $maxPaginationLimit = 0;
@@ -44,9 +44,9 @@ abstract class Repository extends PrettusRepository implements PrettusCacheable
         //    model has different name than the container holding it
         // 5_ build the namespace of the Model based on the conventions
 
-        $fullName = get_called_class();
-        $className = substr($fullName, strrpos($fullName, '\\') + 1);
-        $classOnly = str_replace('Repository', '', $className);
+        $fullName       = get_called_class();
+        $className      = substr($fullName, strrpos($fullName, '\\') + 1);
+        $classOnly      = str_replace('Repository', '', $className);
         $modelNamespace = 'App\Containers\\' . $this->getCurrentContainer() . '\\Models\\' . $classOnly;
 
         return $modelNamespace;
@@ -70,11 +70,11 @@ abstract class Repository extends PrettusRepository implements PrettusCacheable
      * The client can request all data (skipping pagination) by applying ?limit=0 to the request, if
      * PAGINATION_SKIP is set to true.
      *
-     * @param null   $limit
-     * @param array  $columns
+     * @param null $limit
+     * @param array $columns
      * @param string $method
      *
-     * @return  mixed
+     * @return mixed
      */
     public function paginate($limit = null, $columns = ['*'], $method = "paginate")
     {
@@ -88,8 +88,8 @@ abstract class Repository extends PrettusRepository implements PrettusCacheable
         }
 
         // check for the maximum entries per pagination
-        if (   is_int($this->maxPaginationLimit) 
-            && $this->maxPaginationLimit > 0 
+        if (is_int($this->maxPaginationLimit)
+            && $this->maxPaginationLimit > 0
             && $limit > $this->maxPaginationLimit
         ) {
             $limit = $this->maxPaginationLimit;
@@ -100,7 +100,10 @@ abstract class Repository extends PrettusRepository implements PrettusCacheable
 
     private function getCurrentContainer(): string
     {
-        return substr(str_replace("App\\Containers\\", "", get_called_class()), 0, strpos(str_replace("App\\Containers\\", "", get_called_class()), '\\'));
+        return substr(
+            str_replace("App\\Containers\\", "", get_called_class()),
+            0,
+            strpos(str_replace("App\\Containers\\", "", get_called_class()), '\\')
+        );
     }
-
 }

@@ -8,7 +8,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 /**
  * Class Task.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class Task
 {

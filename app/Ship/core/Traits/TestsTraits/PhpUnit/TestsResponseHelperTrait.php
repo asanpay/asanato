@@ -11,7 +11,7 @@ use Illuminate\Support\Str as LaravelStr;
  *
  * Tests helper for making formatting and asserting http responses.
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 trait TestsResponseHelperTrait
 {
@@ -58,8 +58,10 @@ trait TestsResponseHelperTrait
 
         foreach (LaravelArr::sortRecursive($data) as $key => $value) {
             $expected = $this->formatToExpectedJson($key, $value);
-            $this->assertTrue(LaravelStr::contains($httpResponse, $expected),
-                "The JSON fragment [ {$expected} ] does not exist in the response [ {$httpResponse} ].");
+            $this->assertTrue(
+                LaravelStr::contains($httpResponse, $expected),
+                "The JSON fragment [ {$expected} ] does not exist in the response [ {$httpResponse} ]."
+            );
         }
     }
 
@@ -79,7 +81,7 @@ trait TestsResponseHelperTrait
      * @param $key
      * @param $value
      *
-     * @return  string
+     * @return string
      */
     private function formatToExpectedJson($key, $value)
     {
@@ -99,7 +101,7 @@ trait TestsResponseHelperTrait
     /**
      * @param array $responseContent
      *
-     * @return  array|mixed
+     * @return array|mixed
      */
     private function removeDataKeyFromResponse(array $responseContent)
     {
@@ -109,5 +111,4 @@ trait TestsResponseHelperTrait
 
         return $responseContent;
     }
-
 }

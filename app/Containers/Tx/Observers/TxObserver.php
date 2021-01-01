@@ -2,7 +2,6 @@
 
 namespace App\Containers\Tx\Observers;
 
-
 use App\Containers\Tx\Models\Tx;
 use App\Ship\Traits\Jalali;
 
@@ -17,5 +16,4 @@ class TxObserver
             $tx->j_created_at =  static::jalaliTimestamp();
         }
     }
-
 }

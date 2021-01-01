@@ -9,7 +9,7 @@ use App\Ship\Transporters\DataTransporter;
 /**
  * Class CreateAdminCommand
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class CreateAdminCommand extends ConsoleCommand
 {
@@ -35,11 +35,13 @@ class CreateAdminCommand extends ConsoleCommand
 
         // ok, we have everything - lets create the user
         // we therefore simply create a Transporter
-        $dataTransporter = new DataTransporter([
+        $dataTransporter = new DataTransporter(
+            [
             'name' => $username,
             'email' => $email,
             'password' => $password,
-        ]);
+            ]
+        );
 
         // and then call respective Action
         $user = Apiato::call('User@CreateAdminAction', [$dataTransporter]);

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as LaravelAuthSe
 /**
  * Class AuthProvider
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class AuthProvider extends LaravelAuthServiceProvider
 {
@@ -21,5 +21,4 @@ class AuthProvider extends LaravelAuthServiceProvider
     {
         $this->registerPolicies();
     }
-
 }

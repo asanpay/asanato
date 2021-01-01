@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @apiDefine UserSuccessSingleResponse
+ * @apiDefine         UserSuccessSingleResponse
  * @apiSuccessExample {json} Success-Response:
 HTTP/1.1 200 OK
 {
@@ -23,4 +23,4 @@ HTTP/1.1 200 OK
     "code": 0,
     "xTrackId": "615fabda74"
 }
-*/
+ */

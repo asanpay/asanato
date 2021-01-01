@@ -11,7 +11,7 @@ use Exception;
 /**
  * Class FindUserByEmailTask
  *
- * @author  Sebastian Weckend
+ * @author Sebastian Weckend
  */
 class FindUserByEmailTask extends Task
 {

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 /**
  * Class RequestsMonitorMiddleware
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class RequestsMonitorMiddleware extends Middleware
 {
@@ -20,7 +20,7 @@ class RequestsMonitorMiddleware extends Middleware
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
      *
-     * @return  mixed
+     * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {

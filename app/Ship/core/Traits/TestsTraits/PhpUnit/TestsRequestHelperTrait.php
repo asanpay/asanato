@@ -16,7 +16,7 @@ use Vinkla\Hashids\Facades\Hashids;
  *
  * Tests helper for making HTTP requests.
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 trait TestsRequestHelperTrait
 {
@@ -24,21 +24,21 @@ trait TestsRequestHelperTrait
     /**
      * property to be set on the user test class
      *
-     * @var  string
+     * @var string
      */
     protected $endpoint = '';
 
     /**
      * property to be set on the user test class
      *
-     * @var  bool
+     * @var bool
      */
     protected $auth = true;
 
     /**
      * Http response
      *
-     * @var  \Illuminate\Foundation\Testing\TestResponse
+     * @var \Illuminate\Foundation\Testing\TestResponse
      */
     protected $response;
 
@@ -75,9 +75,8 @@ trait TestsRequestHelperTrait
      * @param array $data
      * @param array $headers
      *
-     * @throws \App\Ship\Exceptions\UndefinedMethodException
-     *
      * @return \Illuminate\Foundation\Testing\TestResponse
+     * @throws \App\Ship\Exceptions\UndefinedMethodException
      */
     public function makeCall(array $data = [], array $headers = [])
     {
@@ -87,8 +86,8 @@ trait TestsRequestHelperTrait
 
         // read the $endpoint property from the test and set the verb and the uri as properties on this trait
         $endpoint = $this->parseEndpoint();
-        $verb = $endpoint['verb'];
-        $url = $endpoint['url'];
+        $verb     = $endpoint['verb'];
+        $url      = $endpoint['url'];
 
         // validating user http verb input + converting `get` data to query parameter
         switch ($verb) {
@@ -114,7 +113,7 @@ trait TestsRequestHelperTrait
     /**
      * @param $httpResponse
      *
-     * @return  \Illuminate\Foundation\Testing\TestResponse
+     * @return \Illuminate\Foundation\Testing\TestResponse
      */
     public function setResponseObjectAndContent($httpResponse)
     {
@@ -126,7 +125,7 @@ trait TestsRequestHelperTrait
     /**
      * @param $httpResponse
      *
-     * @return  mixed
+     * @return mixed
      */
     public function setResponseContent($httpResponse)
     {
@@ -134,7 +133,7 @@ trait TestsRequestHelperTrait
     }
 
     /**
-     * @return  string
+     * @return string
      */
     public function getResponseContent()
     {
@@ -142,21 +141,21 @@ trait TestsRequestHelperTrait
     }
 
     /**
-     * @return  mixed
+     * @return mixed
      */
     public function getResponseContentArray()
     {
-        return $this->responseContentArray ? : $this->responseContentArray = json_decode($this->getResponseContent(),
-            true);
+        return $this->responseContentArray ?:
+            $this->responseContentArray = json_decode($this->getResponseContent(), true);
     }
 
     /**
-     * @return  mixed
+     * @return mixed
      */
     public function getResponseContentObject()
     {
-        return $this->responseContentObject ? : $this->responseContentObject = json_decode($this->getResponseContent(),
-            false);
+        return $this->responseContentObject ?:
+            $this->responseContentObject = json_decode($this->getResponseContent(), false);
     }
 
     /**
@@ -165,16 +164,16 @@ trait TestsRequestHelperTrait
      *
      * Example: you give it ('users/{id}/stores', 100) it returns 'users/100/stores'
      *
-     * @param        $id
-     * @param bool   $skipEncoding
+     * @param $id
+     * @param bool $skipEncoding
      * @param string $replace
      *
-     * @return  $this
+     * @return $this
      */
     public function injectId($id, $skipEncoding = false, $replace = '{id}')
     {
         // In case Hash ID is enabled it will encode the ID first
-        $id = $this->hashEndpointId($id, $skipEncoding);
+        $id             = $this->hashEndpointId($id, $skipEncoding);
         $this->endpoint = str_replace($replace, $id, $this->endpoint);
 
         return $this;
@@ -187,7 +186,7 @@ trait TestsRequestHelperTrait
      *
      * @param $endpoint
      *
-     * @return  $this
+     * @return $this
      */
     public function endpoint($endpoint)
     {
@@ -197,7 +196,7 @@ trait TestsRequestHelperTrait
     }
 
     /**
-     * @return  string
+     * @return string
      */
     public function getEndpoint()
     {
@@ -211,7 +210,7 @@ trait TestsRequestHelperTrait
      *
      * @param bool $auth
      *
-     * @return  $this
+     * @return $this
      */
     public function auth(bool $auth)
     {
@@ -221,7 +220,7 @@ trait TestsRequestHelperTrait
     }
 
     /**
-     * @return  bool
+     * @return bool
      */
     public function getAuth()
     {
@@ -231,7 +230,7 @@ trait TestsRequestHelperTrait
     /**
      * @param $uri
      *
-     * @return  string
+     * @return string
      */
     private function buildUrlForUri($uri)
     {
@@ -250,7 +249,7 @@ trait TestsRequestHelperTrait
      *
      * @param $headers
      *
-     * @return  mixed
+     * @return mixed
      */
     private function injectAccessToken(array $headers = [])
     {
@@ -268,7 +267,7 @@ trait TestsRequestHelperTrait
      *
      * @param $headers
      *
-     * @return  bool
+     * @return bool
      */
     private function headersContainAuthorization($headers)
     {
@@ -279,7 +278,7 @@ trait TestsRequestHelperTrait
      * @param $data
      * @param $url
      *
-     * @return  string
+     * @return string
      */
     private function dataArrayToQueryParam($data, $url)
     {
@@ -289,7 +288,7 @@ trait TestsRequestHelperTrait
     /**
      * @param $text
      *
-     * @return  string
+     * @return string
      */
     private function getJsonVerb($text)
     {
@@ -298,10 +297,10 @@ trait TestsRequestHelperTrait
 
 
     /**
-     * @param      $id
+     * @param $id
      * @param bool $skipEncoding
      *
-     * @return  mixed
+     * @return mixed
      */
     private function hashEndpointId($id, $skipEncoding = false)
     {
@@ -311,7 +310,7 @@ trait TestsRequestHelperTrait
     /**
      * read `$this->endpoint` property from the test class (`verb@uri`) and convert it to usable data
      *
-     * @return  array
+     * @return array
      */
     private function parseEndpoint()
     {
@@ -326,8 +325,12 @@ trait TestsRequestHelperTrait
 
         // get the verb and uri values from the array
         extract(array_combine(['verb', 'uri'], $asArray));
-        /** @var TYPE_NAME $verb */
-        /** @var TYPE_NAME $uri */
+        /**
+         * @var TYPE_NAME $verb
+         */
+        /**
+         * @var TYPE_NAME $uri
+         */
 
         return [
             'verb' => $verb,
@@ -362,29 +365,30 @@ trait TestsRequestHelperTrait
     /**
      * Transform headers array to array of $_SERVER vars with HTTP_* format.
      *
-     * @param  array $headers
+     * @param array $headers
      *
      * @return array
      */
     protected function transformHeadersToServerVars(array $headers)
     {
-        return collect($headers)->mapWithKeys(function ($value, $name) {
-            $name = strtr(strtoupper($name), '-', '_');
+        return collect($headers)->mapWithKeys(
+            function ($value, $name) {
+                $name = strtr(strtoupper($name), '-', '_');
 
-            return [$this->formatServerHeaderKey($name) => $value];
-        })->all();
+                return [$this->formatServerHeaderKey($name) => $value];
+            }
+        )->all();
     }
 
     /**
-     * @param  \Illuminate\Testing\TestResponse $httpResponse
+     * @param \Illuminate\Testing\TestResponse $httpResponse
      */
     private function logResponseData($httpResponse)
     {
         $responseLoggerEnabled = Config::get('debugger.tests.response_logger');
 
-        if($responseLoggerEnabled){
+        if ($responseLoggerEnabled) {
             Log::notice(get_object_vars($httpResponse->getData()));
         }
     }
-
 }

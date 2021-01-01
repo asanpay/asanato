@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
  *
  * Tests helper for authentication and authorization.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait TestsAuthHelperTrait
 {
@@ -47,7 +47,7 @@ trait TestsAuthHelperTrait
      * @param null $access      roles and permissions you'd like to provide this user with
      * @param null $userDetails what to be attached on the User object
      *
-     * @return  \App\Containers\User\Models\User
+     * @return \App\Containers\User\Models\User
      */
     public function getTestingUser($userDetails = null, $access = null)
     {
@@ -62,7 +62,7 @@ trait TestsAuthHelperTrait
      *
      * @param null $userDetails
      *
-     * @return  \App\Containers\User\Models\User
+     * @return \App\Containers\User\Models\User
      */
     public function getTestingUserWithoutAccess($userDetails = null)
     {
@@ -73,7 +73,7 @@ trait TestsAuthHelperTrait
      * @param $userDetails
      * @param $access
      *
-     * @return  \App\Containers\User\Models\User
+     * @return \App\Containers\User\Models\User
      */
     private function findOrCreateTestingUser($userDetails, $access)
     {
@@ -84,7 +84,7 @@ trait TestsAuthHelperTrait
      * @param null $access
      * @param null $userDetails
      *
-     * @return  User
+     * @return User
      */
     private function createTestingUser($userDetails = null, $access = null)
     {
@@ -113,7 +113,7 @@ trait TestsAuthHelperTrait
     /**
      * @param null $userDetails
      *
-     * @return  User
+     * @return User
      */
     private function factoryCreateUser($userDetails = null)
     {
@@ -123,36 +123,36 @@ trait TestsAuthHelperTrait
     /**
      * @param null $userDetails
      *
-     * @return  array
+     * @return array
      */
     private function prepareUserDetails($userDetails = null)
     {
         $defaultUserDetails = [
-            'first_name'   => $this->faker->firstName,
-            'last_name'    => $this->faker->lastName,
-            'email'        => $this->faker->safeEmail,
-            'password'     => 'testing-password',
-            'group'        => \App\Containers\User\Enum\UserGroup::NORMAL,
-            'type'         => \App\Containers\User\Enum\UserType::PERSONAL,
-            'register_via' => 'site',
-            'mobile'       => '912' . mt_rand(1111111, 9999999),
-            'gender'       => 'MALE',
-            'register_ip'  => $this->faker->ipv4,
-            'api_key'      => hash('sha256', uniqid()),
+            'first_name'                          => $this->faker->firstName,
+            'last_name'                           => $this->faker->lastName,
+            'email'                               => $this->faker->safeEmail,
+            'password'                            => 'testing-password',
+            'group'                               => \App\Containers\User\Enum\UserGroup::NORMAL,
+            'type'                                => \App\Containers\User\Enum\UserType::PERSONAL,
+            'register_via'                        => 'site',
+            'mobile'                              => '912' . mt_rand(1111111, 9999999),
+            'gender'                              => 'MALE',
+            'register_ip'                         => $this->faker->ipv4,
+            'api_key'                             => hash('sha256', uniqid()),
             config('google2fa.otp_secret_column') => \Google2FA::generateSecretKey(
                 config('google2fa.key.size', 25),
                 config('google2fa.key.prefix', '')
-            )
+            ),
         ];
 
         // if no user detail provided, use the default details, to find the password or generate one before encoding it
-        return $this->prepareUserPassword($userDetails ?: $defaultUserDetails);;
+        return $this->prepareUserPassword($userDetails ?: $defaultUserDetails);
     }
 
     /**
      * @param $userDetails
      *
-     * @return  null
+     * @return null
      */
     private function prepareUserPassword($userDetails)
     {
@@ -167,7 +167,7 @@ trait TestsAuthHelperTrait
 
 
     /**
-     * @return  array|null
+     * @return array|null
      */
     private function getAccess()
     {
@@ -178,7 +178,7 @@ trait TestsAuthHelperTrait
      * @param $user
      * @param $access
      *
-     * @return  mixed
+     * @return mixed
      */
     private function setupTestingUserAccess($user, $access = null)
     {
@@ -194,7 +194,7 @@ trait TestsAuthHelperTrait
      * @param $user
      * @param $access
      *
-     * @return  mixed
+     * @return mixed
      */
     private function setupTestingUserRoles($user, $access)
     {
@@ -212,7 +212,7 @@ trait TestsAuthHelperTrait
      * @param $user
      * @param $access
      *
-     * @return  mixed
+     * @return mixed
      */
     private function setupTestingUserPermissions($user, $access)
     {
@@ -226,7 +226,7 @@ trait TestsAuthHelperTrait
 
 
     /**
-     * @return  array
+     * @return array
      */
     private function getNullAccess()
     {
@@ -235,5 +235,4 @@ trait TestsAuthHelperTrait
             'roles'       => null,
         ];
     }
-
 }

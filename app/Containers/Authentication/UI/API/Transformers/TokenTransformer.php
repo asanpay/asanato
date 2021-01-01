@@ -16,7 +16,7 @@ class TokenTransformer extends Transformer
     /**
      * @param $token
      *
-     * @return  array
+     * @return array
      */
     public function transform($token)
     {
@@ -29,5 +29,4 @@ class TokenTransformer extends Transformer
 
         return $response;
     }
-
 }

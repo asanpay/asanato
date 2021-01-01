@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 /**
  * Class LocalizationMiddleware
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class LocalizationMiddleware extends Middleware
 {
@@ -23,7 +23,7 @@ class LocalizationMiddleware extends Middleware
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
      *
-     * @return  mixed
+     * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
@@ -93,7 +93,7 @@ class LocalizationMiddleware extends Middleware
     /**
      * @param $request
      *
-     * @return  string
+     * @return string
      */
     private function findLanguage($request)
     {
@@ -103,9 +103,9 @@ class LocalizationMiddleware extends Middleware
          */
         $language = Config::get('app.locale');
 
-//        if ($request->hasHeader('Accept-Language')) {
-//            $language = $request->header('Accept-Language');
-//        }
+        //        if ($request->hasHeader('Accept-Language')) {
+        //            $language = $request->header('Accept-Language');
+        //        }
 
         return $language;
     }
@@ -136,5 +136,4 @@ class LocalizationMiddleware extends Middleware
 
         return $supported_locales;
     }
-
 }

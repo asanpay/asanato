@@ -11,7 +11,7 @@ use function app_path;
  *
  * A.K.A app/Providers/BroadcastServiceProvider.php
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class BroadcastsProvider extends AbstractBroadcastsProvider
 {
@@ -25,7 +25,6 @@ class BroadcastsProvider extends AbstractBroadcastsProvider
     {
         Broadcast::routes();
 
-        require app_path('Ship/Broadcasts/Routes.php');
+        include app_path('Ship/Broadcasts/Routes.php');
     }
-
 }

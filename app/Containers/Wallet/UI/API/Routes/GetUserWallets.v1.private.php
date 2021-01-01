@@ -1,18 +1,18 @@
 <?php
 
 /**
- * @apiGroup           Wallet
- * @apiName            GetUserWallets
+ * @apiGroup Wallet
+ * @apiName  GetUserWallets
  *
- * @api                {GET} /v1/users/{user_id}/wallets GetUserWallets
- * @apiDescription     Get all user wallets
+ * @api            {GET} /v1/users/{user_id}/wallets GetUserWallets
+ * @apiDescription Get all user wallets
  *
- * @apiVersion         1.0.0
- * @apiPermission      read-wallets
+ * @apiVersion    1.0.0
+ * @apiPermission read-wallets
  *
- * @apiParam           {String} id hashed user id
+ * @apiParam {String} id hashed user id
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 200 OK
 {
     "data": [
@@ -47,11 +47,16 @@
 }
  */
 
-/** @var Route $router */
-$router->get('users/{user_id}/wallets', [
-    'as' => 'api_wallet_get_user_wallets',
-    'uses'  => 'Controller@getUserWallets',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+/**
+ * @var Route $router
+ */
+$router->get(
+    'users/{user_id}/wallets',
+    [
+        'as' => 'api_wallet_get_user_wallets',
+        'uses'  => 'Controller@getUserWallets',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);

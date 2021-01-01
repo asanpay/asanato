@@ -15,7 +15,7 @@ class AccomplishWithdrawalTask extends Task
     public function run(Withdrawal $withdrawal, int $userId, string $ip, string $trackingId): Withdrawal
     {
         try {
-            $withdrawal->status = WithdrawalStatus::DONE;
+            $withdrawal->status      = WithdrawalStatus::DONE;
             $withdrawal->tracking_id = $trackingId;
 
             $withdrawal->addToJsonb('accomplished_by', $userId, false);
@@ -24,8 +24,7 @@ class AccomplishWithdrawalTask extends Task
             $withdrawal->save();
 
             return $withdrawal;
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             XLog::exception($exception);
             throw new UpdateResourceFailedException();
         }

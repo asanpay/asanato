@@ -13,18 +13,22 @@ class CreateMerchantAction extends Action
     {
         $this->validateRequestData($request);
 
-        $data     = $request->sanitizeInput([
+        $data     = $request->sanitizeInput(
+            [
             'name',
             'domain',
             'ip_access',
             'multiplex_support',
             'sharing',
-        ]);
+            ]
+        );
         $merchant = Apiato::call('Merchant@CreateMerchantTask', [$data]);
 
-        collect($data['sharing'])->each(function ($item, $key) use ($merchant) {
-            $merchant->wallets()->attach($item['wallet'], ['share' => $item['share']]);
-        });
+        collect($data['sharing'])->each(
+            function ($item, $key) use ($merchant) {
+                $merchant->wallets()->attach($item['wallet'], ['share' => $item['share']]);
+            }
+        );
 
         return $merchant;
     }
@@ -34,11 +38,15 @@ class CreateMerchantAction extends Action
         $data = $request->all();
 
         if ($data['multiplex_support'] == false && count($data['sharing']) != 1) {
-            throw new CouldNotCreateMerchantException(trans('merchant without multiplex support could have just one sharing wallet with 100 percent share'));
+            throw new CouldNotCreateMerchantException(
+                trans('merchant without multiplex support could have just one sharing wallet with 100 percent share')
+            );
         }
 
         if ($data['multiplex_support'] == true && count($data['sharing']) < 1) {
-            throw (new CouldNotCreateMerchantException(trans('merchant with multiplex support should have at least one sharing wallet')));
+            throw (new CouldNotCreateMerchantException(
+                trans('merchant with multiplex support should have at least one sharing wallet')
+            ));
         }
 
         $wallets    = [];
@@ -54,8 +62,10 @@ class CreateMerchantAction extends Action
         }
 
         // check user access to all requested wallets
-        $userHasAccess = Apiato::call('User@CheckUserHasAccessToWalletsTask',
-            [$request->user()->id, $wallets]);
+        $userHasAccess = Apiato::call(
+            'User@CheckUserHasAccessToWalletsTask',
+            [$request->user()->id, $wallets]
+        );
 
         if ($userHasAccess !== true) {
             throw (new CouldNotCreateMerchantException(trans('you dont have access to all passed sharing wallets')));

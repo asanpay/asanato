@@ -14,11 +14,10 @@ class GetAuthenticatedUserTask extends Task
 {
 
     /**
-     * @return  \Illuminate\Contracts\Auth\Authenticatable|null
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function run()
     {
         return Auth::user();
     }
-
 }

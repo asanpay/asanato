@@ -11,7 +11,7 @@ use App\Containers\Authorization\Tests\ApiTestCase;
  * @group authorization
  * @group api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class FindPermissionTest extends ApiTestCase
 {
@@ -26,7 +26,7 @@ class FindPermissionTest extends ApiTestCase
     /**
      * @test
      */
-    public function testFindPermissionById_()
+    public function testFindPermissionById()
     {
         $permissionA = factory(Permission::class)->create();
 
@@ -40,5 +40,4 @@ class FindPermissionTest extends ApiTestCase
 
         $this->assertEquals($permissionA->name, $responseContent->data->name);
     }
-
 }

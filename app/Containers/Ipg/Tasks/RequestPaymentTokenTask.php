@@ -3,7 +3,6 @@
 
 namespace App\Containers\Ipg\Tasks;
 
-
 use App\Containers\Ipg\Enum\RequestTokenErrors;
 use App\Containers\Merchant\Models\Merchant;
 use App\Containers\Transaction\Models\Transaction;
@@ -29,9 +28,12 @@ class RequestPaymentTokenTask extends Task
 
             // amount --------------------------------------------------------------------------------------------------
             $minimumPayableAmount = config('finance.limit.psp.min');
-            $validator            = Validator::make($parameters, [
-                'amount' => "required|integer|min:{$minimumPayableAmount}",
-            ]);
+            $validator            = Validator::make(
+                $parameters,
+                [
+                    'amount' => "required|integer|min:{$minimumPayableAmount}",
+                ]
+            );
 
             if ($validator->fails()) {
                 return [
@@ -44,9 +46,12 @@ class RequestPaymentTokenTask extends Task
             }
 
             // callback ------------------------------------------------------------------------------------------------
-            $validator = Validator::make($parameters, [
-                'callback_url' => 'required|string|url',
-            ]);
+            $validator = Validator::make(
+                $parameters,
+                [
+                    'callback_url' => 'required|string|url',
+                ]
+            );
 
             if ($validator->fails()) {
                 return [
@@ -59,9 +64,12 @@ class RequestPaymentTokenTask extends Task
             }
 
             // invoice_id ----------------------------------------------------------------------------------------------
-            $validator = Validator::make($parameters, [
-                'invoice_id' => "nullable|string|max:32",
-            ]);
+            $validator = Validator::make(
+                $parameters,
+                [
+                    'invoice_id' => "nullable|string|max:32",
+                ]
+            );
 
             if ($validator->fails()) {
                 return [
@@ -74,9 +82,12 @@ class RequestPaymentTokenTask extends Task
             }
 
             // payer name ----------------------------------------------------------------------------------------------
-            $validator = Validator::make($parameters, [
-                'name' => 'nullable|string|max:32',
-            ]);
+            $validator = Validator::make(
+                $parameters,
+                [
+                    'name' => 'nullable|string|max:32',
+                ]
+            );
 
             if ($validator->fails()) {
                 return [
@@ -89,9 +100,12 @@ class RequestPaymentTokenTask extends Task
             }
 
             // payer mobile --------------------------------------------------------------------------------------------
-            $validator = Validator::make($parameters, [
-                'mobile' => 'nullable|regex:/' . config('regex.mobile_regex') . '/',
-            ]);
+            $validator = Validator::make(
+                $parameters,
+                [
+                    'mobile' => 'nullable|regex:/' . config('regex.mobile_regex') . '/',
+                ]
+            );
 
             if ($validator->fails()) {
                 return [
@@ -104,9 +118,12 @@ class RequestPaymentTokenTask extends Task
             }
 
             // payer email ---------------------------------------------------------------------------------------------
-            $validator = Validator::make($parameters, [
-                'email' => 'nullable|email|max:40',
-            ]);
+            $validator = Validator::make(
+                $parameters,
+                [
+                    'email' => 'nullable|email|max:40',
+                ]
+            );
 
             if ($validator->fails()) {
                 return [
@@ -119,9 +136,12 @@ class RequestPaymentTokenTask extends Task
             }
 
             // description ---------------------------------------------------------------------------------------------
-            $validator = Validator::make($parameters, [
-                'description' => 'nullable|string|max:255',
-            ]);
+            $validator = Validator::make(
+                $parameters,
+                [
+                    'description' => 'nullable|string|max:255',
+                ]
+            );
 
             if ($validator->fails()) {
                 return [
@@ -134,9 +154,12 @@ class RequestPaymentTokenTask extends Task
             }
 
             // refund ---------------------------------------------------------------------------------------------
-            $validator = Validator::make($parameters, [
-                'refund' => 'nullable|integer|in:0,1',
-            ]);
+            $validator = Validator::make(
+                $parameters,
+                [
+                    'refund' => 'nullable|integer|in:0,1',
+                ]
+            );
 
             if ($validator->fails()) {
                 return [
@@ -149,9 +172,12 @@ class RequestPaymentTokenTask extends Task
             }
 
             // direct ---------------------------------------------------------------------------------------------
-            $validator = Validator::make($parameters, [
-                'direct' => 'nullable|integer|in:0,1',
-            ]);
+            $validator = Validator::make(
+                $parameters,
+                [
+                    'direct' => 'nullable|integer|in:0,1',
+                ]
+            );
 
             if ($validator->fails()) {
                 return [
@@ -164,9 +190,12 @@ class RequestPaymentTokenTask extends Task
             }
 
             // merchant ------------------------------------------------------------------------------------------------
-            $validator = Validator::make($request->all(), [
-                'merchant' => 'required|alpha_num|size:64|exists:merchants,code',
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'merchant' => 'required|alpha_num|size:64|exists:merchants,code',
+                ]
+            );
 
             if ($validator->fails()) {
                 return [
@@ -229,7 +258,8 @@ class RequestPaymentTokenTask extends Task
                         'error' => $validator->errors()->first(),
                     ],
                 ];
-            } elseif ($request->input('direct') == true && ($calculatedAmounts->payable_amount > config('finance.limit.psp.max'))) {
+            } elseif ($request->input('direct') == true &&
+                ($calculatedAmounts->payable_amount > config('finance.limit.psp.max'))) {
                 return [
                     null,
                     [
@@ -257,11 +287,15 @@ class RequestPaymentTokenTask extends Task
             $t->addToJsonb('refund', boolval($request->input('refund', false)), false);
 
             // fee policy at specific time
-            $t->addToJsonb('fee', [
-                'policy' => $m->fee_policy,
-                'value'  => $m->fee_value,
-                'by'     => $m->fee_by,
-            ], false);
+            $t->addToJsonb(
+                'fee',
+                [
+                    'policy' => $m->fee_policy,
+                    'value'  => $m->fee_value,
+                    'by'     => $m->fee_by,
+                ],
+                false
+            );
 
             $t->save();
 
@@ -274,13 +308,14 @@ class RequestPaymentTokenTask extends Task
                 ],
                 null,
             ];
-
         } catch (Exception $e) {
             return [
                 null,
                 [
                     'code'  => RequestTokenErrors::UNKNOWN_ERROR,
-                    'error' => config('app.debug') ? $e->getTraceAsString() : __('Internal server error! please try again'),
+                    'error' => config('app.debug') ?
+                    $e->getTraceAsString() :
+                    __('Internal server error! please try again'),
                 ],
             ];
         }

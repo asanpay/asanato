@@ -8,7 +8,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Class Mail.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class Mail extends AbstractMail
 {

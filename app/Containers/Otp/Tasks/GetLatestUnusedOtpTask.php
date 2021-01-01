@@ -8,6 +8,7 @@ use App\Ship\Parents\Tasks\Task;
 
 /**
  * Class GetLatestUnusedOtpTask
+ *
  * @package App\Containers\Authorization\Tasks
  */
 class GetLatestUnusedOtpTask extends Task

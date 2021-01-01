@@ -8,7 +8,7 @@ use File;
 /**
  * Class LocalizationLoaderTrait
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 trait LocalizationLoaderTrait
 {
@@ -38,10 +38,7 @@ trait LocalizationLoaderTrait
     private function loadLocals($directory, $containerName)
     {
         if (File::isDirectory($directory)) {
-
             $this->loadTranslationsFrom($directory, strtolower($containerName));
-
         }
     }
-
 }

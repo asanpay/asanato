@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Class EventJob
  *
- * @author  Arthur Devious
+ * @author Arthur Devious
  */
 class EventJob extends Job implements ShouldQueue
 {

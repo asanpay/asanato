@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Containers\Wallet\Enum\WalletType;
 
+// @codingStandardsIgnoreLine
 class CreateWalletsTable extends Migration
 {
     /**
@@ -14,32 +15,38 @@ class CreateWalletsTable extends Migration
      */
     public function up()
     {
-        Schema::create('wallets', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create(
+            'wallets',
+            function (Blueprint $table) {
+                $table->bigIncrements('id');
 
-            $table->unsignedInteger('user_id')->comment('user ID that wallet belongs to');
+                $table->unsignedInteger('user_id')->comment('user ID that wallet belongs to');
 
-            $table->enum('type', WalletType::toArray());
-            $table->boolean('locked')->default(false);
-            $table->boolean('belongs_to_app')->default('false')
-                ->comment('whether wallet belongs to the application or not');
+                $table->enum('type', WalletType::toArray());
+                $table->boolean('locked')->default(false);
+                $table->boolean('belongs_to_app')->default('false')
+                    ->comment('whether wallet belongs to the application or not');
 
 
-            $table->string('name', 64);
-            $table->bigInteger('balance')->default(0);
-            $table->unsignedBigInteger('locked_balance')->default(0);
-            $table->string('locked_reason', 255)->nullable();
-            $table->unsignedBigInteger('transfer_limit')->nullable();
+                $table->string('name', 64);
+                $table->bigInteger('balance')->default(0);
+                $table->unsignedBigInteger('locked_balance')->default(0);
+                $table->string('locked_reason', 255)->nullable();
+                $table->unsignedBigInteger('transfer_limit')->nullable();
 
-            $table->boolean('default')->default(false);
+                $table->boolean('default')->default(false);
 
-            $table->timestamps();
-            $table->softDeletes();
-        });
+                $table->timestamps();
+                $table->softDeletes();
+            }
+        );
 
-        Schema::table('wallets', function (Blueprint $table) {
-            $table->foreign('user_id', 'wallet_user')->references('id')->on('users')->onDelete('restrict');
-        });
+        Schema::table(
+            'wallets',
+            function (Blueprint $table) {
+                $table->foreign('user_id', 'wallet_user')->references('id')->on('users')->onDelete('restrict');
+            }
+        );
 
         // add GAP between gateway wallets and user wallets
         $query = 'ALTER SEQUENCE wallets_id_seq RESTART WITH 1000111111;';
@@ -53,9 +60,12 @@ class CreateWalletsTable extends Migration
      */
     public function down()
     {
-        Schema::table('wallets', function ($table) {
-            $table->dropForeign('wallet_user');
-        });
+        Schema::table(
+            'wallets',
+            function ($table) {
+                $table->dropForeign('wallet_user');
+            }
+        );
 
         Schema::dropIfExists('wallets');
     }

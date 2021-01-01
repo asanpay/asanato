@@ -20,7 +20,7 @@ trait ResponseTrait
 {
 
     /**
-     * @var  array
+     * @var array
      */
     protected $metaData = [];
 
@@ -30,11 +30,11 @@ trait ResponseTrait
     protected $apiCode = 999;
 
     /**
-     * @param       $data
-     * @param null $transformerName The transformer (e.g., Transformer::class or new Transformer()) to be applied
-     * @param array $includes       additional resources to be included
-     * @param array $meta           additional meta information to be applied
-     * @param null $resourceKey     the resource key to be set for the TOP LEVEL resource
+     * @param $data
+     * @param null  $transformerName The transformer (e.g., Transformer::class or new Transformer()) to be applied
+     * @param array $includes        additional resources to be included
+     * @param array $meta            additional meta information to be applied
+     * @param null  $resourceKey     the resource key to be set for the TOP LEVEL resource
      *
      * @return mixed
      */
@@ -109,7 +109,7 @@ trait ResponseTrait
     /**
      * @param array $data
      *
-     * @return  $this
+     * @return $this
      */
     public function withMeta($data)
     {
@@ -121,7 +121,7 @@ trait ResponseTrait
     /**
      * @param int $code
      *
-     * @return  $this
+     * @return $this
      */
     public function apiCode(int $code)
     {
@@ -131,12 +131,12 @@ trait ResponseTrait
     }
 
     /**
-     * @param       $message
-     * @param int $status
+     * @param $message
+     * @param int   $status
      * @param array $headers
-     * @param int $options
+     * @param int   $options
      *
-     * @return  \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function message(string $message, $status = 200, array $headers = [], $options = 0)
     {
@@ -145,12 +145,12 @@ trait ResponseTrait
     }
 
     /**
-     * @param       $message
-     * @param int $status
+     * @param $message
+     * @param int   $status
      * @param array $headers
-     * @param int $options
+     * @param int   $options
      *
-     * @return  \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function json($message, $status = 200, array $headers = [], $options = 0)
     {
@@ -158,10 +158,10 @@ trait ResponseTrait
     }
 
     /**
-     * @param null $message
-     * @param int $status
+     * @param null  $message
+     * @param int   $status
      * @param array $headers
-     * @param int $options
+     * @param int   $options
      *
      * @return JsonResponse
      */
@@ -172,11 +172,11 @@ trait ResponseTrait
 
     /**
      * @param null  array or string $message
-     * @param int $status
-     * @param array $headers
-     * @param int $options
+     * @param int                   $status
+     * @param array                 $headers
+     * @param int                   $options
      *
-     * @return  \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function accepted($message = null, $status = 202, array $headers = [], $options = 0)
     {
@@ -186,7 +186,7 @@ trait ResponseTrait
     /**
      * @param $responseArray
      *
-     * @return  \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function deleted($responseArray = null)
     {
@@ -197,15 +197,17 @@ trait ResponseTrait
         $id = $responseArray->getHashedKey();
         $className = (new ReflectionClass($responseArray))->getShortName();
 
-        return $this->accepted([
+        return $this->accepted(
+            [
             'message' => "$className ($id) Deleted Successfully.",
-        ]);
+            ]
+        );
     }
 
     /**
      * @param int $status
      *
-     * @return  \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function noContent($status = 204)
     {

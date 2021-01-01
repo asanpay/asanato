@@ -24,8 +24,7 @@ class CreateWithdrawalTask extends Task
             $w = $this->repository->create($data);
             $w->refresh();
             return $w;
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             XLog::exception($exception);
             throw new CreateResourceFailedException();
         }

@@ -74,7 +74,8 @@ return [
         |--------------------------------------------------------------------------
         |
         | A list of fields the user is allowed to login with.
-        | Thereby, the key is the fieldname, the value (array) contains additional validation parameters that are applied!
+        | Thereby, the key is the fieldname, the value (array) contains additional
+        | validation parameters that are applied!
         |
         | The order determines the order the fields are tested to login (in case multiple fields are submitted!
         |
@@ -87,5 +88,4 @@ return [
             'mobile' => ['string', 'regex:'.config('regex.mobile_regex')],
         ],
     ],
-
 ];

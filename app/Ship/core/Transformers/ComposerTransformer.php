@@ -13,7 +13,7 @@ use stdClass;
 class ComposerTransformer extends Transformer
 {
     /**
-     * @param stdClass $decodedJson
+     * @param  stdClass $decodedJson
      * @return array
      */
     public function transform(stdClass $decodedJson)

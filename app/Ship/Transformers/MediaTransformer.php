@@ -21,9 +21,12 @@ class MediaTransformer extends Transformer
             'readable_created_at'  => $entity->created_at->diffForHumans(),
         ];
 
-        $response = $this->ifAdmin([
-            'real_id'    => $entity->id,
-        ], $response);
+        $response = $this->ifAdmin(
+            [
+                'real_id'    => $entity->id,
+            ],
+            $response
+        );
 
         return $response;
     }

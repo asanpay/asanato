@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Config;
 /**
  * Class RevokeUserFromRoleTest.
  *
- * @group authorization
- * @group api
+ * @group  authorization
+ * @group  api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class RevokeUserFromRoleTest extends ApiTestCase
 {
@@ -28,7 +28,7 @@ class RevokeUserFromRoleTest extends ApiTestCase
     /**
      * @test
      */
-    public function testRevokeUserFromRole_()
+    public function testRevokeUserFromRole()
     {
         $roleA = factory(Role::class)->create();
 
@@ -50,16 +50,19 @@ class RevokeUserFromRoleTest extends ApiTestCase
 
         $this->assertEquals($data['user_id'], $responseContent->data->id);
 
-        $this->assertDatabaseMissing('model_has_roles', [
-            'model_id' => $randomUser->id,
-            'role_id' => $roleA->id,
-        ]);
+        $this->assertDatabaseMissing(
+            'model_has_roles',
+            [
+                'model_id' => $randomUser->id,
+                'role_id'  => $roleA->id,
+            ]
+        );
     }
 
     /**
      * @test
      */
-    public function testRevokeUserFromRoleWithRealId_()
+    public function testRevokeUserFromRoleWithRealId()
     {
         $roleA = factory(Role::class)->create();
 
@@ -76,22 +79,23 @@ class RevokeUserFromRoleTest extends ApiTestCase
 
 
         // assert response status is correct. Note: this will return 200 if `HASH_ID=false` in the .env
-        if (Config::get('apiato.hash-id')){
+        if (Config::get('apiato.hash-id')) {
             $response->assertStatus(400);
 
-            $this->assertResponseContainKeyValue([
-                'message' => 'Only Hashed ID\'s allowed.',
-            ]);
-        }else{
+            $this->assertResponseContainKeyValue(
+                [
+                    'message' => 'Only Hashed ID\'s allowed.',
+                ]
+            );
+        } else {
             $response->assertStatus(200);
         }
-
     }
 
     /**
      * @test
      */
-    public function testRevokeUserFromManyRoles_()
+    public function testRevokeUserFromManyRoles()
     {
         $roleA = factory(Role::class)->create();
         $roleB = factory(Role::class)->create();
@@ -111,15 +115,20 @@ class RevokeUserFromRoleTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(200);
 
-        $this->assertDatabaseMissing('model_has_roles', [
-            'model_id' => $randomUser->id,
-            'role_id' => $roleA->id,
-        ]);
+        $this->assertDatabaseMissing(
+            'model_has_roles',
+            [
+                'model_id' => $randomUser->id,
+                'role_id'  => $roleA->id,
+            ]
+        );
 
-        $this->assertDatabaseMissing('model_has_roles', [
-            'model_id' => $randomUser->id,
-            'role_id' => $roleB->id,
-        ]);
+        $this->assertDatabaseMissing(
+            'model_has_roles',
+            [
+                'model_id' => $randomUser->id,
+                'role_id'  => $roleB->id,
+            ]
+        );
     }
-
 }

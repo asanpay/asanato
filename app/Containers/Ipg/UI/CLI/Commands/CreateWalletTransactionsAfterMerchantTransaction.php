@@ -92,20 +92,22 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
 
         do {
             $processableTransaction = $this->transaction
-                ->select([
-                    'id',
-                    'gateway_id',
-                    'merchant_id',
-                    'wallet_id',
-                    'amount',
-                    'payable_amount',
-                    'merchant_share',
-                    'status',
-                    'process',
-                    'multiplex',
-                    'meta',
-                    'ip',
-                ])
+                ->select(
+                    [
+                        'id',
+                        'gateway_id',
+                        'merchant_id',
+                        'wallet_id',
+                        'amount',
+                        'payable_amount',
+                        'merchant_share',
+                        'status',
+                        'process',
+                        'multiplex',
+                        'meta',
+                        'ip',
+                    ]
+                )
                 ->processable()
                 ->orderBy('id')
                 ->get();
@@ -142,11 +144,13 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
                     }
 
                     // flag gateway transaction as processed
-                    $t->process = ($t->status == TransactionStatus::ACCOMPLISHED ? TransactionProcess::ACMP : TransactionProcess::RFNP);
+                    $t->process = ($t->status == TransactionStatus::ACCOMPLISHED ?
+                        TransactionProcess::ACMP :
+                        TransactionProcess::RFNP
+                    );
                     $t->save();
 
                     DB::commit();
-
                 } catch (Exception $e) {
                     $this->error('Exception: ' . $e->getMessage());
 
@@ -172,6 +176,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
         if ($hour > 2 && $hour < 6) {
             return 5;
         }
+
         return 1;
     }
 
@@ -180,7 +185,6 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
      * @param array $involvedWallets
      *
      * @return bool
-     *
      */
     private function createMerchantWalletTxs(Transaction $t, array $involvedWallets): void
     {
@@ -194,7 +198,7 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
                 'transaction_id' => $t->id,
                 'creditor'       => $w['money_share'],
                 'gateway_id'     => $t->gateway_id,
-                'ip'     => $t->ip,
+                'ip'             => $t->ip,
             ];
 
             Apiato::call('Tx@CreateTxTask', [$merchantTx]);
@@ -222,7 +226,6 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
      * @param Transaction $t
      *
      * @return void
-     *
      */
     private function createGatewayWalletTransaction(Transaction $t): void
     {
@@ -239,20 +242,16 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
 
         switch ($t->type) {
             case TransactionType::MERCHANT:
-            {
                 $profit    = abs($t->payable_amount - $t->merchant_share);
                 $userShare = $t->merchant_share;
                 break;
-            }
             case TransactionType::WALLET_TOPUP:
-            {
                 $profit    = 0;
                 $userShare = $t->payable_amount;
                 break;
-            }
         }
 
-        $profit = abs($t->payable_amount - $t->merchant_share);
+//        $profit = abs($t->payable_amount - $t->merchant_share);
 
         $wt                 = new Tx;
         $wt->wallet_id      = $paidGateway->wallet_id;
@@ -265,11 +264,12 @@ class CreateWalletTransactionsAfterMerchantTransaction extends Command
         // accomplished
 
         $wt->debtor = $t->payable_amount;
-        $wt->meta   = json_encode([
-            'description' => trans('wallet.acmp_inc_gate', ['id' => $t->id]),
-        ]);
+        $wt->meta   = json_encode(
+            [
+                'description' => trans('wallet.acmp_inc_gate', ['id' => $t->id]),
+            ]
+        );
 
         $wt->save(); //(- TRANSACTION)\\
-
     }
 }

@@ -16,7 +16,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $admin = User::create([
+        $admin = User::create(
+            [
             'first_name'   => 'مدیر کل',
             'last_name'    => 'آسان پی',
             'group'        => UserGroup::NORMAL,
@@ -30,10 +31,12 @@ class UsersTableSeeder extends Seeder
             'register_ip'  => '127.0.0.1',
             'api_key'      => hash('sha256', uniqid()),
             'is_client'    => false,
-        ]);
+            ]
+        );
         $admin->assignRole('super-admin');
 
-        $user = User::create([
+        $user = User::create(
+            [
             'first_name'   => 'کاربر',
             'last_name'    => 'آسان پی',
             'group'        => UserGroup::NORMAL,
@@ -46,7 +49,8 @@ class UsersTableSeeder extends Seeder
             'register_ip'  => '127.0.0.1',
             'api_key'     => hash('sha256', uniqid()),
             'is_client'    => true,
-        ]);
+            ]
+        );
         $user->assignRole('member');
     }
 }

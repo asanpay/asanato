@@ -10,7 +10,7 @@ use App\Ship\Transporters\DataTransporter;
 /**
  * Class CreatePermissionAction
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class CreatePermissionAction extends Action
 {
@@ -18,11 +18,12 @@ class CreatePermissionAction extends Action
     /**
      * @param \App\Ship\Transporters\DataTransporter $data
      *
-     * @return  \App\Containers\Authorization\Models\Permission
+     * @return \App\Containers\Authorization\Models\Permission
      */
     public function run(DataTransporter $data): Permission
     {
-        $permission = Apiato::call('Authorization@CreatePermissionTask',
+        $permission = Apiato::call(
+            'Authorization@CreatePermissionTask',
             [$data->name, $data->description, $data->display_name]
         );
 

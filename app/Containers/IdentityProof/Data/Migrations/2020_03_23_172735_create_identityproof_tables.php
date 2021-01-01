@@ -12,26 +12,28 @@ class CreateIdentityproofTables extends Migration
      */
     public function up()
     {
-        Schema::create('identity_proofs', function (Blueprint $table) {
+        Schema::create(
+            'identity_proofs', function (Blueprint $table) {
 
-            $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->unsignedSmallInteger('proof_type');
-            $table->string('value', 64)->index();
-            $table->string('code', 128)->nullable();
-            $table->datetime('verified_at')->nullable();
-            $table->enum('status', IdProofStatus::toArray());
-            $table->string('reject_reason')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+                $table->increments('id');
+                $table->integer('user_id')->unsigned();
+                $table->unsignedSmallInteger('proof_type');
+                $table->string('value', 64)->index();
+                $table->string('code', 128)->nullable();
+                $table->datetime('verified_at')->nullable();
+                $table->enum('status', IdProofStatus::toArray());
+                $table->string('reject_reason')->nullable();
+                $table->timestamps();
+                $table->softDeletes();
 
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
 
-        });
+            }
+        );
     }
 
     /**

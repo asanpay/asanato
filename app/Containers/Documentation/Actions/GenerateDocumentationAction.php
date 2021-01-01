@@ -30,11 +30,13 @@ class GenerateDocumentationAction extends Action
         $console->info("Generating API Documentations for (" . implode(' & ', $types) . ")\n");
 
         // for each type, generate docs.
-        $documentationUrls = array_map(function ($type) use ($console) {
-            return Apiato::call('Documentation@GenerateAPIDocsTask', [$type, $console]);
-        }, $types);
+        $documentationUrls = array_map(
+            function ($type) use ($console) {
+                return Apiato::call('Documentation@GenerateAPIDocsTask', [$type, $console]);
+            },
+            $types
+        );
 
         $console->info("Done! You can access your API Docs at: \n" . implode("\n", $documentationUrls));
     }
-
 }

@@ -32,9 +32,15 @@ class RenderTemplatesTask extends Task
         $this->replace('api.domain.test', Config::get('apiato.api.url'));
         $this->replace('{{rate-limit-expires}}', Config::get('apiato.api.throttle.expires'));
         $this->replace('{{rate-limit-attempts}}', Config::get('apiato.api.throttle.attempts'));
-        $this->replace('{{access-token-expires-in}}', $this->minutesToTimeDisplay(Config::get('apiato.api.expires-in')));
+        $this->replace(
+            '{{access-token-expires-in}}',
+            $this->minutesToTimeDisplay(Config::get('apiato.api.expires-in'))
+        );
         $this->replace('{{access-token-expires-in-minutes}}', Config::get('apiato.api.expires-in'));
-        $this->replace('{{refresh-token-expires-in}}', $this->minutesToTimeDisplay(Config::get('apiato.api.refresh-expires-in')));
+        $this->replace(
+            '{{refresh-token-expires-in}}',
+            $this->minutesToTimeDisplay(Config::get('apiato.api.refresh-expires-in'))
+        );
         $this->replace('{{refresh-token-expires-in-minutes}}', Config::get('apiato.api.refresh-expires-in'));
         $this->replace('{{pagination-limit}}', Config::get('repository.pagination.limit'));
 
@@ -47,5 +53,4 @@ class RenderTemplatesTask extends Task
 
         return $path;
     }
-
 }

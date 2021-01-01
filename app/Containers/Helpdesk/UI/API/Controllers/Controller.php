@@ -19,7 +19,7 @@ use Apiato\Core\Foundation\Facades\Apiato;
 class Controller extends ApiController
 {
     /**
-     * @param CreateHelpdeskRequest $request
+     * @param  CreateHelpdeskRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function createHelpdesk(CreateHelpdeskRequest $request)
@@ -30,7 +30,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param FindHelpdeskByIdRequest $request
+     * @param  FindHelpdeskByIdRequest $request
      * @return array
      */
     public function findHelpdeskById(FindHelpdeskByIdRequest $request)
@@ -41,7 +41,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param GetAllHelpdesksRequest $request
+     * @param  GetAllHelpdesksRequest $request
      * @return array
      */
     public function getAllHelpdesks(GetAllHelpdesksRequest $request)
@@ -52,7 +52,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param UpdateHelpdeskRequest $request
+     * @param  UpdateHelpdeskRequest $request
      * @return array
      */
     public function updateHelpdesk(UpdateHelpdeskRequest $request)
@@ -63,7 +63,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param DeleteHelpdeskRequest $request
+     * @param  DeleteHelpdeskRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function deleteHelpdesk(DeleteHelpdeskRequest $request)

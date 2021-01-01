@@ -65,9 +65,10 @@ class ListContainerDependenciesCommand extends ConsoleCommand
     }
 
     /**
-     * Utility print function that takes an array and outputs it by applying the given indent. Each array found will be printed recursively with indent+indentmodifier.
+     * Utility print function that takes an array and outputs it by applying the given indent.
+     * Each array found will be printed recursively with indent+indentmodifier.
      *
-     * @param     $arr
+     * @param $arr
      * @param int $indent
      * @param int $indentModifier
      *
@@ -87,20 +88,22 @@ class ListContainerDependenciesCommand extends ConsoleCommand
 
             if (is_array($value)) {
                 $string .= PHP_EOL . $this->prettyPrintArray($value, $indent + $indentModifier) . PHP_EOL;
-            } else if (is_string($value) || settype($item, 'string') !== false || (is_object($value) && method_exists($value, '__toString'))){
+            } elseif (is_string($value) || settype($item, 'string') !== false ||
+                (is_object($value) && method_exists($value, '__toString'))) {
                 $string .= $value . PHP_EOL;
-            }
-            else {
+            } else {
                 throw new \InvalidArgumentException('Current value cannot be converted to string: value=' . $value);
             }
         }
+
         return $string;
     }
 
     /**
      * Get composer information by decoding the json and applying the ComposerTransformer.
      *
-     * @param $containerName
+     * @param  $containerName
+     *
      * @return array|string
      */
     private function getComposerInformation($containerName)
@@ -112,7 +115,12 @@ class ListContainerDependenciesCommand extends ConsoleCommand
 
             if (isset($content)) {
                 $json = \GuzzleHttp\json_decode($content);
-                return Fractal::create($json, ComposerTransformer::class, ArraySerializer::class)->toArray();
+
+                return Fractal::create(
+                    $json,
+                    ComposerTransformer::class,
+                    ArraySerializer::class
+                )->toArray();
             }
         } catch (Exception $e) {
             return 'No composer.json found in path: ' . $composerFile;
@@ -120,9 +128,11 @@ class ListContainerDependenciesCommand extends ConsoleCommand
     }
 
     /**
-     * Extracts the content of a file  and find all containers by finding all containers in App\Containers\$containerName\*
+     * Extracts the content of a file  and find all containers by finding
+     * all containers in App\Containers\$containerName\*
      *
-     * @param $filePath string - path to the file
+     * @param  $filePath string - path to the file
+     *
      * @return null | array of containers
      */
     private function getContainerFromUseStatement($filePath)
@@ -141,9 +151,11 @@ class ListContainerDependenciesCommand extends ConsoleCommand
     }
 
     /**
-     * Extracts the content of a file  and find all containers by finding all containers in App\Containers\$containerName\*
+     * Extracts the content of a file  and find all containers by finding
+     * all containers in App\Containers\$containerName\*
      *
-     * @param $filePath string - path to the file
+     * @param  $filePath string - path to the file
+     *
      * @return null | array of containers
      */
     private function getContainerFromApiatoCall($filePath)
@@ -155,14 +167,17 @@ class ListContainerDependenciesCommand extends ConsoleCommand
         //group 3: parse functions (starting with one letter followed by alphanumeric letters
         //group 4: arguments inside of the square brackets
         //Examples @ http://www.phpliveregex.com/p/m8p
-        $pattern = "/^([^\/\/]*|[^\/\*]*)Apiato::call\('(?P<containers>.*?)@([?P<functions>a-zA-Z][a-zA-Z\d]*?)',.*?\[(?P<args>.*?)]/m";
+        $pattern = "/^([^\/\/]*|[^\/\*]*)".
+            "Apiato::call\('(?P<containers>.*?)@([?P<functions>a-zA-Z][a-zA-Z\d]*?)',.*?\[(?P<args>.*?)]/m";
         preg_match_all($pattern, $content, $matches);
         $ret = [];
 
         if (isset($matches['containers'])) {
             $ret['containers'] = array_unique($matches['containers']);
         }
-        //todo: add functions and arguments if needed currently unsupported. They are stored in the group 'functions' and 'args'.
+
+        //todo: add functions and arguments if needed currently unsupported.
+        // They are stored in the group 'functions' and 'args'.
         return $ret;
     }
 
@@ -171,7 +186,7 @@ class ListContainerDependenciesCommand extends ConsoleCommand
      *  1) all used containers of the given container
      *  2) an array that contains the containers as keys and all files using it as value.
      *
-     * @param      $path - to the container
+     * @param $path - to the container
      * @param bool $filterOwnContainer
      *
      * @return array - [$usedContainers, $filesInContainers]
@@ -186,13 +201,12 @@ class ListContainerDependenciesCommand extends ConsoleCommand
         }
 
         $recursiveIteratorIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
-        $useStatements = [];
-        $filesInContainers = [];
+        $filesInContainers         = [];
 
         foreach ($recursiveIteratorIterator as $file) {
             if (!$file->isDir()) {
                 $apiatoCalls = $this->getContainerFromApiatoCall($file->getPathName());
-                $imports = $this->getContainerFromUseStatement($file->getPathName());
+                $imports     = $this->getContainerFromUseStatement($file->getPathName());
 
                 if (isset($apiatoCalls['containers'])) {
                     if ($filterOwnContainer) {
@@ -218,5 +232,4 @@ class ListContainerDependenciesCommand extends ConsoleCommand
 
         return $filesInContainers;
     }
-
 }

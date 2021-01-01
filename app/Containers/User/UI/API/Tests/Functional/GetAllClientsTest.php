@@ -11,7 +11,7 @@ use App\Containers\User\Tests\ApiTestCase;
  * @group user
  * @group api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class GetAllClientsTest extends ApiTestCase
 {
@@ -26,7 +26,7 @@ class GetAllClientsTest extends ApiTestCase
     /**
      * @test
      */
-    public function testGetAllClientsByAdmin_()
+    public function testGetAllClientsByAdmin()
     {
         // should be returned
         factory(User::class, 3)->create();
@@ -50,7 +50,7 @@ class GetAllClientsTest extends ApiTestCase
     /**
      * @test
      */
-    public function testGetAllClientsByNonAdmin_()
+    public function testGetAllClientsByNonAdmin()
     {
         // prepare a user without any roles or permissions
         $this->getTestingUserWithoutAccess();
@@ -61,10 +61,11 @@ class GetAllClientsTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(403);
 
-        $this->assertResponseContainKeyValue([
-            'errors' => 'You have no access to this resource!',
-            'message' => 'This action is unauthorized.',
-        ]);
+        $this->assertResponseContainKeyValue(
+            [
+                'errors' => 'You have no access to this resource!',
+                'message' => 'This action is unauthorized.',
+            ]
+        );
     }
-
 }

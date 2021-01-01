@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 /**
  * Class SubActionGenerator
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class SubActionGenerator extends GeneratorCommand implements ComponentsGenerator
 {
@@ -38,21 +38,21 @@ class SubActionGenerator extends GeneratorCommand implements ComponentsGenerator
     /**
      * The structure of the file path.
      *
-     * @var  string
+     * @var string
      */
     protected $pathStructure = '{container-name}/Actions/*';
 
     /**
      * The structure of the file name.
      *
-     * @var  string
+     * @var string
      */
     protected $nameStructure = '{file-name}';
 
     /**
      * The name of the stub file.
      *
-     * @var  string
+     * @var string
      */
     protected $stubName = 'subaction.stub';
 
@@ -60,7 +60,7 @@ class SubActionGenerator extends GeneratorCommand implements ComponentsGenerator
      * User required/optional inputs expected to be passed while calling the command.
      * This is a replacement of the `getArguments` function "which reads whenever it's called".
      *
-     * @var  array
+     * @var array
      */
     public $inputs = [
     ];
@@ -94,5 +94,4 @@ class SubActionGenerator extends GeneratorCommand implements ComponentsGenerator
     {
         return 'DefaultAction';
     }
-
 }

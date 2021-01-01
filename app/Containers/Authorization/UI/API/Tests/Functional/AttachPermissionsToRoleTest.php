@@ -9,10 +9,10 @@ use App\Containers\Authorization\Tests\ApiTestCase;
 /**
  * Class AttachPermissionsToRoleTest.
  *
- * @group authorization
- * @group api
+ * @group  authorization
+ * @group  api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class AttachPermissionsToRoleTest extends ApiTestCase
 {
@@ -27,9 +27,9 @@ class AttachPermissionsToRoleTest extends ApiTestCase
     /**
      * @test
      */
-    public function testAttachSinglePermissionToRole_()
+    public function testAttachSinglePermissionToRole()
     {
-        $roleA = factory(Role::class)->create();
+        $roleA       = factory(Role::class)->create();
         $permissionA = factory(Permission::class)->create();
 
         $data = [
@@ -47,13 +47,16 @@ class AttachPermissionsToRoleTest extends ApiTestCase
 
         $this->assertEquals($roleA['name'], $responseContent->data->name);
 
-        $this->assertDatabaseHas('role_has_permissions', [
-            'permission_id' => $permissionA->id,
-            'role_id'       => $roleA->id
-        ]);
+        $this->assertDatabaseHas(
+            'role_has_permissions',
+            [
+                'permission_id' => $permissionA->id,
+                'role_id'       => $roleA->id,
+            ]
+        );
     }
 
-    public function testAttachMultiplePermissionToRole_()
+    public function testAttachMultiplePermissionToRole()
     {
         $roleA = factory(Role::class)->create();
 
@@ -62,7 +65,7 @@ class AttachPermissionsToRoleTest extends ApiTestCase
 
         $data = [
             'role_id'         => $roleA->getHashedKey(),
-            'permissions_ids' => [$permissionA->getHashedKey(), $permissionB->getHashedKey()]
+            'permissions_ids' => [$permissionA->getHashedKey(), $permissionB->getHashedKey()],
         ];
 
         // send the HTTP request
@@ -71,12 +74,19 @@ class AttachPermissionsToRoleTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas('role_has_permissions', [
-            'permission_id' => $permissionA->id,
-            'permission_id' => $permissionB->id,
-            'role_id'       => $roleA->id
-        ]);
-
+        $this->assertDatabaseHas(
+            'role_has_permissions',
+            [
+                'permission_id' => $permissionA->id,
+                'role_id'       => $roleA->id,
+            ]
+        );
+        $this->assertDatabaseHas(
+            'role_has_permissions',
+            [
+                'permission_id' => $permissionB->id,
+                'role_id'       => $roleA->id,
+            ]
+        );
     }
-
 }

@@ -8,7 +8,7 @@ use File;
 /**
  * Class ConsolesLoaderTrait.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait ConsolesLoaderTrait
 {
@@ -32,7 +32,7 @@ trait ConsolesLoaderTrait
             // ship commands
             base_path('app/Ship/Commands'),
             // core commands
-            __DIR__ . '/../Commands'
+            __DIR__ . '/../Commands',
         ];
 
         foreach ($commandsFoldersPaths as $folderPath) {
@@ -46,11 +46,9 @@ trait ConsolesLoaderTrait
     private function loadTheConsoles($directory)
     {
         if (File::isDirectory($directory)) {
-
             $files = File::allFiles($directory);
 
             foreach ($files as $consoleFile) {
-
                 // do not load route files
                 if (!$this->isRouteFile($consoleFile)) {
                     $consoleClass = Apiato::getClassFullNameFromFile($consoleFile->getPathname());
@@ -60,18 +58,16 @@ trait ConsolesLoaderTrait
                     $this->commands([$consoleClass]);
                 }
             }
-
         }
     }
 
     /**
      * @param $consoleFile
      *
-     * @return  bool
+     * @return bool
      */
     private function isRouteFile($consoleFile)
     {
         return $consoleFile->getFilename() === "Routes.php";
     }
-
 }

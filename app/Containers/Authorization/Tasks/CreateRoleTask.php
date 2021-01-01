@@ -17,7 +17,7 @@ class CreateRoleTask extends Task
 {
 
     /**
-     * @var  \App\Containers\Authorization\Data\Repositories\RoleRepository
+     * @var \App\Containers\Authorization\Data\Repositories\RoleRepository
      */
     protected $repository;
 
@@ -45,18 +45,19 @@ class CreateRoleTask extends Task
         app()['cache']->forget('spatie.permission.cache');
 
         try {
-            $role = $this->repository->create([
+            $role = $this->repository->create(
+                [
                 'name'         => strtolower($name),
                 'description'  => $description,
                 'display_name' => $displayName,
                 'guard_name'   => 'web',
                 'level'        => $level,
-            ]);
+                ]
+            );
         } catch (Exception $exception) {
             throw new CreateResourceFailedException();
         }
 
         return $role;
     }
-
 }

@@ -12,7 +12,7 @@ use Symfony\Component\Finder\SplFileInfo;
 /**
  * Class RoutesLoaderTrait.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait RoutesLoaderTrait
 {
@@ -22,7 +22,7 @@ trait RoutesLoaderTrait
      */
     public function runRoutesAutoLoader()
     {
-        $containersPaths = Apiato::getContainersPaths();
+        $containersPaths     = Apiato::getContainersPaths();
         $containersNamespace = Apiato::getContainersNamespace();
 
         foreach ($containersPaths as $containerPath) {
@@ -42,7 +42,8 @@ trait RoutesLoaderTrait
         // build the container api routes path
         $apiRoutesPath = $containerPath . '/UI/API/Routes';
         // build the namespace from the path
-        $controllerNamespace = $containersNamespace . '\\Containers\\' . basename($containerPath) . '\\UI\API\Controllers';
+        $controllerNamespace = $containersNamespace . '\\Containers\\' .
+            basename($containerPath) . '\\UI\API\Controllers';
 
         if (File::isDirectory($apiRoutesPath)) {
             $files = File::allFiles($apiRoutesPath);
@@ -66,7 +67,8 @@ trait RoutesLoaderTrait
         // build the container web routes path
         $webRoutesPath = $containerPath . '/UI/WEB/Routes';
         // build the namespace from the path
-        $controllerNamespace = $containersNamespace . '\\Containers\\' . basename($containerPath) . '\\UI\WEB\Controllers';
+        $controllerNamespace = $containersNamespace . '\\Containers\\' .
+            basename($containerPath) . '\\UI\WEB\Controllers';
 
         if (File::isDirectory($webRoutesPath)) {
             $files = File::allFiles($webRoutesPath);
@@ -85,12 +87,15 @@ trait RoutesLoaderTrait
      */
     private function loadWebRoute($file, $controllerNamespace)
     {
-        Route::group([
-            'namespace'  => $controllerNamespace,
-            'middleware' => ['web'],
-        ], function ($router) use ($file) {
-            require $file->getPathname();
-        });
+        Route::group(
+            [
+                'namespace'  => $controllerNamespace,
+                'middleware' => ['web'],
+            ],
+            function ($router) use ($file) {
+                include $file->getPathname();
+            }
+        );
     }
 
     /**
@@ -102,15 +107,15 @@ trait RoutesLoaderTrait
         $routeGroupArray = $this->getRouteGroup($file, $controllerNamespace);
 
         Route::group($routeGroupArray, function ($router) use ($file) {
-            require $file->getPathname();
+            include $file->getPathname();
         });
     }
 
     /**
-     * @param      $endpointFileOrPrefixString
+     * @param $endpointFileOrPrefixString
      * @param null $controllerNamespace
      *
-     * @return  array
+     * @return array
      */
     public function getRouteGroup($endpointFileOrPrefixString, $controllerNamespace = null)
     {
@@ -118,13 +123,16 @@ trait RoutesLoaderTrait
             'namespace'  => $controllerNamespace,
             'middleware' => $this->getMiddlewares(),
             'domain'     => $this->getApiUrl(),
-            // if $endpointFileOrPrefixString is a file then get the version name from the file name, else if string use that string as prefix
-            'prefix'     =>  is_string($endpointFileOrPrefixString) ? $endpointFileOrPrefixString :  $this->getApiVersionPrefix($endpointFileOrPrefixString),
+            // if $endpointFileOrPrefixString is a file then get the version name from the file name,
+            // else if string use that string as prefix
+            'prefix'     => is_string($endpointFileOrPrefixString) ?
+                $endpointFileOrPrefixString :
+                $this->getApiVersionPrefix($endpointFileOrPrefixString),
         ];
     }
 
     /**
-     * @return  mixed
+     * @return mixed
      */
     private function getApiUrl()
     {
@@ -134,33 +142,39 @@ trait RoutesLoaderTrait
     /**
      * @param $file
      *
-     * @return  string
+     * @return string
      */
     private function getApiVersionPrefix($file)
     {
-        return Config::get('apiato.api.prefix') . (Config::get('apiato.api.enable_version_prefix') ? $this->getRouteFileVersionFromFileName($file) : '');
+        return Config::get('apiato.api.prefix') .
+            (Config::get('apiato.api.enable_version_prefix') ? $this->getRouteFileVersionFromFileName($file) : '');
     }
 
     /**
-     * @return  array
+     * @return array
      */
     private function getMiddlewares()
     {
-        return array_filter([
-            'api',
-            $this->getRateLimitMiddleware(), // returns NULL if feature disabled. Null will be removed form the array.
-        ]);
+        return array_filter(
+            [
+                'api',
+                $this->getRateLimitMiddleware(),
+                // returns NULL if feature disabled. Null will be removed form the array.
+            ]
+        );
     }
 
     /**
-     * @return  null|string
+     * @return null|string
      */
     private function getRateLimitMiddleware()
     {
         $rateLimitMiddleware = null;
 
         if (Config::get('apiato.api.throttle.enabled')) {
-            $rateLimitMiddleware = 'throttle:' . Config::get('apiato.api.throttle.attempts') . ',' . Config::get('apiato.api.throttle.expires');
+            $rateLimitMiddleware = 'throttle:' .
+                Config::get('apiato.api.throttle.attempts') . ',' .
+                Config::get('apiato.api.throttle.expires');
         }
 
         return $rateLimitMiddleware;
@@ -169,7 +183,7 @@ trait RoutesLoaderTrait
     /**
      * @param $file
      *
-     * @return  mixed
+     * @return mixed
      */
     private function getRouteFileVersionFromFileName($file)
     {
@@ -192,7 +206,7 @@ trait RoutesLoaderTrait
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $file
      *
-     * @return  mixed
+     * @return mixed
      */
     private function getRouteFileNameWithoutExtension(SplFileInfo $file)
     {
@@ -200,5 +214,4 @@ trait RoutesLoaderTrait
 
         return $fileInfo['filename'];
     }
-
 }

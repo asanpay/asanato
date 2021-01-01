@@ -9,14 +9,14 @@ use Vinkla\Hashids\Facades\Hashids;
 class WithdrawalTransformer extends Transformer
 {
     /**
-     * @var  array
+     * @var array
      */
     protected $defaultIncludes = [
 
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $availableIncludes = [
 
@@ -43,9 +43,12 @@ class WithdrawalTransformer extends Transformer
 
         ];
 
-        $response = $this->ifAdmin([
-            'real_id' => $entity->id,
-        ], $response);
+        $response = $this->ifAdmin(
+            [
+                'real_id' => $entity->id,
+            ],
+            $response
+        );
 
         return $response;
     }

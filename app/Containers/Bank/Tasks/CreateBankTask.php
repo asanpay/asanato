@@ -22,8 +22,7 @@ class CreateBankTask extends Task
     {
         try {
             return $this->repository->create($data);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             XLog::exception($exception);
             throw new CreateResourceFailedException();
         }

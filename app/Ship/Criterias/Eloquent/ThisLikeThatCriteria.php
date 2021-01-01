@@ -39,28 +39,31 @@ class ThisLikeThatCriteria extends Criteria
 
     public function __construct($field, $valueString, $separator = ',', $wildcard = '*')
     {
-        $this->field = $field;
+        $this->field       = $field;
         $this->valueString = $valueString;
-        $this->separator = $separator;
-        $this->wildcard = $wildcard;
+        $this->separator   = $separator;
+        $this->wildcard    = $wildcard;
     }
 
     /**
-     * Applies the criteria - if more than one value is separated by the configured separator we will "OR" all the params.
+     * Applies the criteria - if more than one value is separated by the configured separator we will "OR"
+     * all the params.
      *
-     * @param  Builder $model
+     * @param Builder                                           $model
      * @param \Prettus\Repository\Contracts\RepositoryInterface $repository
      *
-     * @return  mixed
+     * @return mixed
      */
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->where(function ($query) {
-            $values = explode($this->separator, $this->valueString);
-            $query->where($this->field, 'LIKE', str_replace($this->wildcard, '%', array_shift($values)));
-            foreach ($values as $value)
-                $query->orWhere($this->field, 'LIKE', str_replace($this->wildcard, '%', $value));
-        });
+        return $model->where(
+            function ($query) {
+                $values = explode($this->separator, $this->valueString);
+                $query->where($this->field, 'LIKE', str_replace($this->wildcard, '%', array_shift($values)));
+                foreach ($values as $value) {
+                    $query->orWhere($this->field, 'LIKE', str_replace($this->wildcard, '%', $value));
+                }
+            }
+        );
     }
-
 }

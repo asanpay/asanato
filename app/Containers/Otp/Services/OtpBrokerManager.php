@@ -67,24 +67,24 @@ class OtpBrokerManager
 
     public function process(OtpToken $otpToken): array
     {
-        switch ($otpToken->broker) {
-            case OtpBroker::MOBILE:
-            {
-                return $this->sendBySms($otpToken);
-            }
-            case OtpBroker::EMAIL:
-            {
-                return $this->sendByEMail($otpToken);
-            }
+        if ($otpToken->broker == OtpBroker::MOBILE) {
+            return $this->sendBySms($otpToken);
+        } elseif ($otpToken->broker == OtpBroker::EMAIL) {
+            return $this->sendByEMail($otpToken);
+        } else {
+            return [null, __('auth.otp.unknown_broker')];
         }
     }
 
     private function sendBySms(OtpToken $otpToken): array
     {
-        $message = __('auth.otp.your_sms_otp', [
+        $message = __(
+            'auth.otp.your_sms_otp',
+            [
                 'token'  => $otpToken->token,
                 'reason' => $otpToken->reason,
-            ]) . PHP_EOL . __('app.name');
+            ]
+        ) . PHP_EOL . __('app.name');
 
         $ttl = $otpToken->expired_at ? strtotime($otpToken->expired_at) : null;
 

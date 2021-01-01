@@ -9,7 +9,7 @@ use Apiato\Core\Abstracts\Providers\EventsProvider as AbstractEventsProvider;
  *
  * A.K.A app/Providers/EventsServiceProvider.php
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class EventsProvider extends AbstractEventsProvider
 {
@@ -33,5 +33,4 @@ class EventsProvider extends AbstractEventsProvider
     {
         parent::boot();
     }
-
 }

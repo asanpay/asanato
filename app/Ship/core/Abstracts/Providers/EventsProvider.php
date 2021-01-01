@@ -7,7 +7,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as LaravelEvent
 /**
  * Class EventsProvider
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class EventsProvider extends LaravelEventServiceProvider
 {
@@ -21,5 +21,4 @@ class EventsProvider extends LaravelEventServiceProvider
     {
         parent::boot();
     }
-
 }

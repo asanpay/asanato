@@ -11,7 +11,7 @@ use Exception;
 /**
  * Class UpdateSettingsByKeyTask
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class UpdateSettingsByKeyTask extends Task
 {
@@ -40,13 +40,14 @@ class UpdateSettingsByKeyTask extends Task
         }
 
         try {
-            return $this->repository->update([
+            return $this->repository->update(
+                [
                 'value' => $value
-            ], $setting->id);
-        }
-        catch (Exception $exception) {
+                ],
+                $setting->id
+            );
+        } catch (Exception $exception) {
             throw new UpdateResourceFailedException();
         }
     }
-
 }

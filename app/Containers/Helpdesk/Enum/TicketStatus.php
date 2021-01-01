@@ -15,7 +15,7 @@ class TicketStatus
     const CLOSED   = '16';
 
 
-    function translations()
+    public function translations()
     {
         return [
             self::NEW      => 'جدید',

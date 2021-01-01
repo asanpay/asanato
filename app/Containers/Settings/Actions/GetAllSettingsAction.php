@@ -8,13 +8,13 @@ use App\Ship\Parents\Actions\Action;
 /**
  * Class GetAllSettingsAction
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class GetAllSettingsAction extends Action
 {
 
     /**
-     * @return  mixed
+     * @return mixed
      */
     public function run()
     {

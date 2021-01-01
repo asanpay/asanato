@@ -13,7 +13,7 @@ class IdProofStatus
     const CANCELED  = 'CANCELED';
     const CONFIRMED = 'CONFIRMED';
 
-    function translations()
+    public function translations()
     {
         return [
             self::PENDING   => trans('auth.proof.status.pending'),

@@ -12,12 +12,17 @@ class DeleteWalletAction extends Action
     public function run(int $userId, int $walletId)
     {
 
-        if (Apiato::call('Wallet@GetAllWalletsTask', [], [
+        if (Apiato::call(
+            'Wallet@GetAllWalletsTask',
+            [],
+            [
                 'addRequestCriteria',
                 [
                     'pushCurrentUserCriteria' => [Apiato::call('User@FindUserByIdTask', [$userId])],
                 ],
-            ])->count() < 2) {
+            ]
+        )->count() < 2
+        ) {
             // User should have at least one active wallet
             throw new DeleteResourceFailedException('User should have at least one active wallet');
         }

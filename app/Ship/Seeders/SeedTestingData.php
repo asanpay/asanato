@@ -13,7 +13,6 @@ use App\Ship\Parents\Seeders\Seeder;
 
 /**
  * Class SeedTestingData
- *
  */
 class SeedTestingData extends Seeder
 {
@@ -33,5 +32,4 @@ class SeedTestingData extends Seeder
         $this->call(TestMerchantWalletSeeder::class);
         $this->call(TestSharedWalletsTableSeeder::class);
     }
-
 }

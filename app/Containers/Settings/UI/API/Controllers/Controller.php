@@ -14,7 +14,7 @@ use App\Ship\Transporters\DataTransporter;
 /**
  * Class Controller
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class Controller extends ApiController
 {

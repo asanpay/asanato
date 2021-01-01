@@ -111,7 +111,6 @@ if (!function_exists('fix_persian_num')) {
         );
 
         return strtr($text, $replacePairs);
-
     }
 }
 
@@ -122,9 +121,7 @@ if (!function_exists('random_string')) {
         // Select which type of characters you want in your random string
         switch ($type) {
             case 'free':
-            {
                 return substr(base64_encode(openssl_random_pseudo_bytes($length)), 0, $length);
-            }
             case 'num':
                 // Use only numbers
                 $salt = '1234567890';

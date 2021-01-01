@@ -22,8 +22,7 @@ class UserGetPendingProofTask extends Task
     {
         try {
             return $this->repository->getPendingProof($user, $type);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             throw new NotFoundException();
         }
     }

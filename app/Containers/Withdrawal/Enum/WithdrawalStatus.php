@@ -14,5 +14,4 @@ class WithdrawalStatus
     const DONE       = 2;
     const REJECTED   = 3;
     const CANCELED   = 4;
-
 }

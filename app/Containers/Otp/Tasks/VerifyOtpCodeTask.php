@@ -10,9 +10,9 @@ use App\Ship\Parents\Tasks\Task;
 class VerifyOtpCodeTask extends Task
 {
     /**
-     * @param User $user
-     * @param int $code
-     * @param string $reason
+     * @param  User   $user
+     * @param  int    $code
+     * @param  string $reason
      * @return bool
      */
     public function run(User $user, int $code, string $reason): bool
@@ -25,11 +25,14 @@ class VerifyOtpCodeTask extends Task
             $via = mobilify($user->mobile);
         }
         // find used latest OTP
-        $otpTokenRow = Apiato::call('Otp@GetLatestUnusedOtpTask', [
-            $via,
-            $reason,
-            $otpBroker,
-        ]);
+        $otpTokenRow = Apiato::call(
+            'Otp@GetLatestUnusedOtpTask',
+            [
+                $via,
+                $reason,
+                $otpBroker,
+            ]
+        );
 
         if (is_null($otpTokenRow) || $otpTokenRow->verify($code) !== true) {
             // invalid OTP token notifications

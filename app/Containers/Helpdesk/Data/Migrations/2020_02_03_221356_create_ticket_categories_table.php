@@ -13,12 +13,14 @@ class CreateTicketCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_categories', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 48);
-            $table->string('status', 7)->default('#000000');
-            $table->timestamps();
-        });
+        Schema::create(
+            'ticket_categories', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name', 48);
+                $table->string('status', 7)->default('#000000');
+                $table->timestamps();
+            }
+        );
     }
 
     /**

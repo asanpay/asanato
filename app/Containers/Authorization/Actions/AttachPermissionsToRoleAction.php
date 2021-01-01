@@ -18,7 +18,7 @@ class AttachPermissionsToRoleAction extends Action
     /**
      * @param \App\Ship\Transporters\DataTransporter $data
      *
-     * @return  \App\Containers\Authorization\Models\Role
+     * @return \App\Containers\Authorization\Models\Role
      */
     public function run(DataTransporter $data): Role
     {
@@ -27,9 +27,12 @@ class AttachPermissionsToRoleAction extends Action
         // convert to array in case single ID was passed
         $permissionIds = (array)$data->permissions_ids;
 
-        $permissions = array_map(function ($permissionId) {
-            return Apiato::call('Authorization@FindPermissionTask', [$permissionId]);
-        }, $permissionIds);
+        $permissions = array_map(
+            function ($permissionId) {
+                return Apiato::call('Authorization@FindPermissionTask', [$permissionId]);
+            },
+            $permissionIds
+        );
 
         $role = $role->givePermissionTo($permissions);
 

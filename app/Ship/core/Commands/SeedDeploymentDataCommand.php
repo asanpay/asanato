@@ -7,7 +7,7 @@ use App\Ship\Parents\Commands\ConsoleCommand;
 /**
  * Class SeedDeploymentDataCommand
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class SeedDeploymentDataCommand extends ConsoleCommand
 {
@@ -39,11 +39,8 @@ class SeedDeploymentDataCommand extends ConsoleCommand
      */
     public function handle()
     {
-        $this->call('db:seed', [
-            '--class' => \App\Ship\Seeders\SeedDeploymentData::class
-        ]);
+        $this->call('db:seed', ['--class' => \App\Ship\Seeders\SeedDeploymentData::class]);
 
         $this->info('Deployment Data Seeded Successfully.');
     }
-
 }

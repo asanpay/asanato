@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\App;
 /**
  * Class CreateUserTest.
  *
- * @group  user
- * @group  unit
+ * @group user
+ * @group unit
  *
  * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
@@ -26,7 +26,7 @@ class RegisterUserTest extends TestCase
     /**
      * @test
      */
-    public function testCreateUser_()
+    public function testCreateUser()
     {
         $data = [
             'to'     => '09121201726',

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Containers\Otp\Enum;
-
 
 use App\Ship\Traits\CustomEnums;
 

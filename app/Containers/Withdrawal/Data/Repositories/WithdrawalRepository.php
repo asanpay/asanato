@@ -17,5 +17,4 @@ class WithdrawalRepository extends Repository
         'id' => '=',
         // ...
     ];
-
 }

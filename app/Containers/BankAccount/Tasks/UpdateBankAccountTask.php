@@ -26,8 +26,7 @@ class UpdateBankAccountTask extends Task
                 DB::update('update bank_accounts set "default" = false where user_id = ?', [$data['user_id']]);
             }
             return $this->repository->update($data, $id);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             throw new UpdateResourceFailedException();
         }
     }

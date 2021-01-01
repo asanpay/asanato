@@ -1,21 +1,21 @@
 <?php
 
 /**
- * @apiGroup           Transfer
- * @apiName            TransferBetweenWallets
+ * @apiGroup Transfer
+ * @apiName  TransferBetweenWallets
  *
- * @api                {POST} /v1/transfer/others-wallets TransferBetweenWallets
- * @apiDescription     Transfer Between Wallets
+ * @api            {POST} /v1/transfer/others-wallets TransferBetweenWallets
+ * @apiDescription Transfer Between Wallets
  *
- * @apiVersion         1.0.0
+ * @apiVersion 1.0.0
  *
- * @apiParam           {String}  src_wallet_id source wallet id
- * @apiParam           {String}  dst_wallet_id destination wallet id
- * @apiParam           {Int}     amount Transfer amount in Rial
- * @apiParam           {String}  description (optional) transaction description
- * @apiParam           {string}  token OTP token
+ * @apiParam {String}  src_wallet_id source wallet id
+ * @apiParam {String}  dst_wallet_id destination wallet id
+ * @apiParam {Int}     amount Transfer amount in Rial
+ * @apiParam {String}  description (optional) transaction description
+ * @apiParam {string}  token OTP token
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 200 OK
 {
     "data": {
@@ -36,11 +36,16 @@
 }
  */
 
-/** @var Route $router */
-$router->post('transfer/others-wallets', [
-    'as' => 'api_transfer_between_wallets',
-    'uses'  => 'Controller@transferBetweenWallets',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+/**
+ * @var Route $router
+ */
+$router->post(
+    'transfer/others-wallets',
+    [
+        'as' => 'api_transfer_between_wallets',
+        'uses'  => 'Controller@transferBetweenWallets',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);

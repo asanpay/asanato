@@ -12,7 +12,6 @@ class TransactionAccomplishedHandler implements ShouldQueue
 {
     public function __construct()
     {
-
     }
 
     /**

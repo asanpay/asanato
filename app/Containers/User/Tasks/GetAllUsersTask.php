@@ -18,7 +18,7 @@ class GetAllUsersTask extends Task
 {
 
     /**
-     * @var  \App\Containers\User\Data\Repositories\UserRepository
+     * @var \App\Containers\User\Data\Repositories\UserRepository
      */
     protected $repository;
 
@@ -56,5 +56,4 @@ class GetAllUsersTask extends Task
     {
         $this->repository->pushCriteria(new RoleCriteria($roles));
     }
-
 }

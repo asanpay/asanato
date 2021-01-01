@@ -18,7 +18,7 @@ class DeleteRoleAction extends Action
     /**
      * @param \App\Ship\Transporters\DataTransporter $data
      *
-     * @return  \Spatie\Permission\Contracts\Role
+     * @return \Spatie\Permission\Contracts\Role
      */
     public function run(DataTransporter $data): Role
     {

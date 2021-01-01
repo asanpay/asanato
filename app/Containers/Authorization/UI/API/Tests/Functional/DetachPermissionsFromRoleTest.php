@@ -9,10 +9,10 @@ use App\Containers\Authorization\Tests\ApiTestCase;
 /**
  * Class DetachPermissionsFromRoleTest.
  *
- * @group authorization
- * @group api
+ * @group  authorization
+ * @group  api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class DetachPermissionsFromRoleTest extends ApiTestCase
 {
@@ -27,7 +27,7 @@ class DetachPermissionsFromRoleTest extends ApiTestCase
     /**
      * @test
      */
-    public function testDetachSinglePermissionFromRole_()
+    public function testDetachSinglePermissionFromRole()
     {
         $permissionA = factory(Permission::class)->create();
 
@@ -48,16 +48,19 @@ class DetachPermissionsFromRoleTest extends ApiTestCase
 
         $this->assertEquals($roleA->name, $responseContent->data->name);
 
-        $this->assertDatabaseMissing('role_has_permissions', [
-            'permission_id' => $permissionA->id,
-            'role_id'       => $roleA->id
-        ]);
+        $this->assertDatabaseMissing(
+            'role_has_permissions',
+            [
+                'permission_id' => $permissionA->id,
+                'role_id'       => $roleA->id,
+            ]
+        );
     }
 
     /**
      * @test
      */
-    public function testDetachMultiplePermissionFromRole_()
+    public function testDetachMultiplePermissionFromRole()
     {
         $permissionA = factory(Permission::class)->create();
         $permissionB = factory(Permission::class)->create();
@@ -80,12 +83,13 @@ class DetachPermissionsFromRoleTest extends ApiTestCase
 
         $this->assertEquals($roleA->name, $responseContent->data->name);
 
-        $this->assertDatabaseMissing('role_has_permissions', [
-            'permission_id' => $permissionA->id,
-            'permission_id' => $permissionB->id,
-            'role_id'       => $roleA->id
-        ]);
+        $this->assertDatabaseMissing(
+            'role_has_permissions',
+            [
+                'permission_id' => $permissionA->id,
+                'permission_id' => $permissionB->id,
+                'role_id'       => $roleA->id,
+            ]
+        );
     }
-
-
 }

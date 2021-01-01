@@ -26,6 +26,4 @@ class ApiCodes
     const DEST_WALLET_IS_NOT_YOURS = 1001;
 
     const WALLET_TRANSFER_LIMIT_EXCEEDED = 1002;
-
-
 }

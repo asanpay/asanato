@@ -15,31 +15,33 @@ class CreateTicketActionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_actions', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create(
+            'ticket_actions', function (Blueprint $table) {
+                $table->increments('id');
 
-            $table->unsignedBigInteger('user_id')->index();
-            $table->unsignedBigInteger('ticket_id')->index();
+                $table->unsignedBigInteger('user_id')->index();
+                $table->unsignedBigInteger('ticket_id')->index();
 
-            $table->enum('type', TicketActionType::toArray());
-            $table->text('content')->nullable();
+                $table->enum('type', TicketActionType::toArray());
+                $table->text('content')->nullable();
 
 
-            $table->string('ip');
-            $table->boolean('private')->default(false);
-            $table->boolean('seen')->default(false);
-            $table->enum('platform', Platform::toArray());
+                $table->string('ip');
+                $table->boolean('private')->default(false);
+                $table->boolean('seen')->default(false);
+                $table->enum('platform', Platform::toArray());
 
-            $table->timestamps();
-            $table->softDeletes();
+                $table->timestamps();
+                $table->softDeletes();
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
-            $table->foreign('ticket_id')
-                ->references('id')
-                ->on('tickets');
-        });
+                $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users');
+                $table->foreign('ticket_id')
+                    ->references('id')
+                    ->on('tickets');
+            }
+        );
     }
 
     /**
@@ -50,10 +52,12 @@ class CreateTicketActionsTable extends Migration
     public function down()
     {
 
-        Schema::table('ticket_actions', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropForeign(['ticket_id']);
-        });
+        Schema::table(
+            'ticket_actions', function (Blueprint $table) {
+                $table->dropForeign(['user_id']);
+                $table->dropForeign(['ticket_id']);
+            }
+        );
 
 
         Schema::drop('ticket_actions');

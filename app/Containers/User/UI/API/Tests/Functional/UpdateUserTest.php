@@ -7,8 +7,8 @@ use App\Containers\User\Tests\ApiTestCase;
 /**
  * Class UpdateUserTest.
  *
- * @group  user
- * @group  api
+ * @group user
+ * @group api
  *
  * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
@@ -25,7 +25,7 @@ class UpdateUserTest extends ApiTestCase
     /**
      * @test
      */
-    public function testUpdateExistingUser_()
+    public function testUpdateExistingUser()
     {
         $user = $this->getTestingUser();
 
@@ -50,11 +50,13 @@ class UpdateUserTest extends ApiTestCase
         $response->assertStatus(200);
 
         // assert returned user is the updated one
-        $this->assertResponseContainKeyValue([
-            'object'     => 'User',
-            'email'      => $user->email,
-            'first_name' => $data['first_name'],
-        ]);
+        $this->assertResponseContainKeyValue(
+            [
+                'object'     => 'User',
+                'email'      => $user->email,
+                'first_name' => $data['first_name'],
+            ]
+        );
 
         // assert data was updated in the database
         $this->assertDatabaseHas('users', ['first_name' => $data['first_name']]);
@@ -63,7 +65,7 @@ class UpdateUserTest extends ApiTestCase
     /**
      * @test
      */
-    public function testUpdateNonExistingUser_()
+    public function testUpdateNonExistingUser()
     {
         $data = [
             'name' => 'Updated Name',
@@ -77,15 +79,17 @@ class UpdateUserTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(422);
 
-        $this->assertResponseContainKeyValue([
-            'status' => 'error',
-        ]);
+        $this->assertResponseContainKeyValue(
+            [
+                'status' => 'error',
+            ]
+        );
     }
 
     /**
      * @test
      */
-    public function testUpdateExistingUserWithoutData_()
+    public function testUpdateExistingUserWithoutData()
     {
         // send the HTTP request
         $response = $this->makeCall();
@@ -93,9 +97,11 @@ class UpdateUserTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(422);
 
-        $this->assertResponseContainKeyValue([
-            'message' => 'The given data was invalid.',
-        ]);
+        $this->assertResponseContainKeyValue(
+            [
+                'message' => 'The given data was invalid.',
+            ]
+        );
     }
 
     /**
@@ -123,11 +129,12 @@ class UpdateUserTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(422);
 
-        $this->assertValidationErrorContain([
-            // messages should be updated after modifying the validation rules, to pass this test
-            'national_id' => 'The national id field is required.',
-            'first_name'  => 'The first name field is required.',
-        ]);
-
+        $this->assertValidationErrorContain(
+            [
+                // messages should be updated after modifying the validation rules, to pass this test
+                'national_id' => 'The national id field is required.',
+                'first_name'  => 'The first name field is required.',
+            ]
+        );
     }
 }

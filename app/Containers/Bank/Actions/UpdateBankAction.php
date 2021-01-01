@@ -10,9 +10,11 @@ class UpdateBankAction extends Action
 {
     public function run(Request $request)
     {
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             // add your request data here
-        ]);
+            ]
+        );
 
         $bank = Apiato::call('Bank@UpdateBankTask', [$request->id, $data]);
 

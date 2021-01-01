@@ -22,47 +22,55 @@ class TestBankAccountsTableSeeder extends Seeder
         $pasargad = Bank::where('slug', 'pasargad')->first();
         $mellat   = Bank::where('slug', 'mellat')->first();
 
-        $a = BankAccount::create([
+        $a = BankAccount::create(
+            [
             'user_id' => $user->id,
             'bank_id' => $saman->id,
             'iban'    => '650560088480002835963001',
             'ip'      => '127.0.0.1',
             'status'  => BankAccountStatus::APPROVED,
             'default' => true,
-        ]);
+            ]
+        );
         $a->save();
 
 
-        $a = BankAccount::create([
+        $a = BankAccount::create(
+            [
             'user_id' => $user->id,
             'bank_id' => $saman->id,
             'iban'    => '130560081188802835963001',
             'ip'      => '127.0.0.1',
             'status'  => BankAccountStatus::APPROVED,
             'default' => false,
-        ]);
+            ]
+        );
         $a->save();
 
 
-        $a = BankAccount::create([
+        $a = BankAccount::create(
+            [
             'user_id' => $user->id,
             'bank_id' => $pasargad->id,
             'iban'    => '650570034480000170034001',
             'ip'      => '127.0.0.1',
             'status'  => BankAccountStatus::APPROVED,
             'default' => false,
-        ]);
+            ]
+        );
         $a->save();
 
 
-        $a = BankAccount::create([
+        $a = BankAccount::create(
+            [
             'user_id' => $user->id,
             'bank_id' => $mellat->id,
             'iban'    => '400120000000005837569665',
             'ip'      => '127.0.0.1',
             'status'  => BankAccountStatus::APPROVED,
             'default' => false,
-        ]);
+            ]
+        );
         $a->save();
     }
 }

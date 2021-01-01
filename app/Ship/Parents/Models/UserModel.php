@@ -13,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * Class UserModel.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class UserModel extends AbstractUserModel
 {

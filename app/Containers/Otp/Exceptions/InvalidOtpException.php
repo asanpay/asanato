@@ -13,7 +13,8 @@ class InvalidOtpException extends Exception
 
     public $message = 'Invalid OTP token';
 
-    public function addCustomData() {
+    public function addCustomData()
+    {
         return [
             'message' => __('auth.invalid_otp'),
         ];

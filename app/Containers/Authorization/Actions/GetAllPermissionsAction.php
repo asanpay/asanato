@@ -14,7 +14,7 @@ class GetAllPermissionsAction extends Action
 {
 
     /**
-     * @return  mixed
+     * @return mixed
      */
     public function run()
     {
@@ -22,5 +22,4 @@ class GetAllPermissionsAction extends Action
 
         return $permissions;
     }
-
 }

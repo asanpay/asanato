@@ -13,17 +13,19 @@ class CreateBanksTable extends Migration
      */
     public function up()
     {
-        Schema::create('banks', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 40);
-            $table->string('slug', 40);
-            $table->string('color', 9)->default('#F5F5F3');
-            $table->boolean('is_active')->default(true);
+        Schema::create(
+            'banks', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name', 40);
+                $table->string('slug', 40);
+                $table->string('color', 9)->default('#F5F5F3');
+                $table->boolean('is_active')->default(true);
 
-            $table->timestamps();
-            $table->unique(['name']);
-            $table->unique(['slug']);
-        });
+                $table->timestamps();
+                $table->unique(['name']);
+                $table->unique(['slug']);
+            }
+        );
     }
 
     /**

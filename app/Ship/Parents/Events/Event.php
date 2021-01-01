@@ -10,11 +10,9 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Class Event
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 abstract class Event extends AbstractEvent
 {
-
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
 }

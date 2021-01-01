@@ -16,10 +16,12 @@ class CreateWalletAction extends Action
 {
     public function run(Request $request): Wallet
     {
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             'name',
             'default',
-        ]);
+            ]
+        );
 
         $payerWalletId = $request->payer_wallet_id;
 
@@ -62,23 +64,25 @@ class CreateWalletAction extends Action
                     $walletCostProfitWallet = Apiato::call('Wallet@GetProfitWalletTask');
 
                     // create profit transaction
-                    Apiato::call('Transfer@WalletToWalletTransferTask', [
-                        $payerWallet->id,
-                        $walletCostProfitWallet->id,
-                        $createWalletFee,
-                        TxType::WALLET_COST,
-                        $request->getClientIp(),
-                        ['createdWalletId' => $wallet->id]
-                    ]);
+                    Apiato::call(
+                        'Transfer@WalletToWalletTransferTask',
+                        [
+                            $payerWallet->id,
+                            $walletCostProfitWallet->id,
+                            $createWalletFee,
+                            TxType::WALLET_COST,
+                            $request->getClientIp(),
+                            ['createdWalletId' => $wallet->id]
+                        ]
+                    );
                 }
             }
             DB::commit();
 
             return $wallet;
-
         } catch (\Exception $e) {
             Db::rollBack();
-            XLog::exception ($e);
+            XLog::exception($e);
             throw $e;
         }
     }

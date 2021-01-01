@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 /**
  * Class ListActionsCommand
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class ListTasksCommand extends ConsoleCommand
 {
@@ -47,17 +47,14 @@ class ListTasksCommand extends ConsoleCommand
     public function handle()
     {
         foreach (Apiato::getContainersNames() as $containerName) {
-
             $this->console->writeln("<fg=yellow> [$containerName]</fg=yellow>");
 
             $directory = base_path('app/Containers/' . $containerName . '/Tasks');
 
             if (File::isDirectory($directory)) {
-
                 $files = File::allFiles($directory);
 
                 foreach ($files as $action) {
-
                     // get the file name as is
                     $fileName = $originalFileName = $action->getFilename();
 
@@ -81,5 +78,4 @@ class ListTasksCommand extends ConsoleCommand
             }
         }
     }
-
 }

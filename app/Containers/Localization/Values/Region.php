@@ -9,13 +9,13 @@ use Locale;
 /**
  * Class Region
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class Region extends Value
 {
 
     /**
-     * @var  null
+     * @var null
      */
     private $region = null;
 
@@ -35,7 +35,7 @@ class Region extends Value
     }
 
     /**
-     * @return  string
+     * @return string
      */
     public function getDefaultName()
     {
@@ -43,7 +43,7 @@ class Region extends Value
     }
 
     /**
-     * @return  string
+     * @return string
      */
     public function getLocaleName()
     {
@@ -51,7 +51,7 @@ class Region extends Value
     }
 
     /**
-     * @return  null
+     * @return null
      */
     public function getRegion()
     {

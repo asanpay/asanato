@@ -7,7 +7,7 @@ use App\Ship\Parents\Commands\ConsoleCommand;
 /**
  * Class SayWelcomeCommand
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class SayWelcomeCommand extends ConsoleCommand
 {

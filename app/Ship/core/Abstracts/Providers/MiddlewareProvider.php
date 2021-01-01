@@ -7,7 +7,7 @@ use Apiato\Core\Loaders\MiddlewaresLoaderTrait;
 /**
  * Class MiddlewareProvider
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 abstract class MiddlewareProvider extends MainProvider
 {
@@ -15,17 +15,17 @@ abstract class MiddlewareProvider extends MainProvider
     use MiddlewaresLoaderTrait;
 
     /**
-     * @var  array
+     * @var array
      */
     protected $middlewares = [];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $middlewareGroups = [];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $routeMiddleware = [];
 
@@ -42,7 +42,5 @@ abstract class MiddlewareProvider extends MainProvider
      */
     public function register()
     {
-
     }
-
 }

@@ -9,20 +9,24 @@ trait ShaparakIntegration
 {
     /**
      * return callback url for payment process
+     *
      * @return string
      */
     public function getCallbackUrl(): string
     {
-        return route('web_ipg_transaction_callback', [
-            'token'   => $this->token,
-        ]);
+        return route(
+            'web_ipg_transaction_callback',
+            [
+                'token'   => $this->token,
+            ]
+        );
     }
 
     /**
      * set gateway token that fetched from PSP gateway
      *
      * @param string $token
-     * @param bool $save
+     * @param bool   $save
      *
      * @return bool
      */
@@ -42,7 +46,7 @@ trait ShaparakIntegration
      * set transaction reference Id that has gotten from the PSP gateway on callback
      *
      * @param string $referenceId
-     * @param bool $save
+     * @param bool   $save
      *
      * @return bool
      */
@@ -60,6 +64,7 @@ trait ShaparakIntegration
 
     /**
      * check if you transaction is ready for requesting payment token
+     *
      * @return bool
      */
     public function isReadyForTokenRequest(): bool
@@ -70,6 +75,7 @@ trait ShaparakIntegration
 
     /**
      * check if transaction is ready for requesting verify transaction
+     *
      * @return bool
      */
     public function isReadyForVerify(): bool
@@ -80,6 +86,7 @@ trait ShaparakIntegration
 
     /**
      * check if transaction is ready for requesting inquiry transaction (if supported by gateway)
+     *
      * @return bool
      */
     public function isReadyForInquiry(): bool
@@ -90,6 +97,7 @@ trait ShaparakIntegration
 
     /**
      * check if transaction is ready for requesting settle/... transaction (if needed by gateway)
+     *
      * @return bool
      */
     public function isReadyForSettle(): bool
@@ -100,6 +108,7 @@ trait ShaparakIntegration
 
     /**
      * check if transaction is ready to mark as  accomplished
+     *
      * @return bool
      */
     public function isReadyForAccomplish(): bool
@@ -111,6 +120,7 @@ trait ShaparakIntegration
 
     /**
      * check if transaction is ready for accomplishment (merchant verify)
+     *
      * @return bool
      */
     public function isReadyForRefund(): bool
@@ -124,7 +134,7 @@ trait ShaparakIntegration
      * update transaction by paid card number (if provided by gateway)
      *
      * @param string $cardNumber
-     * @param bool $save
+     * @param bool   $save
      *
      * @return bool
      */
@@ -220,6 +230,7 @@ trait ShaparakIntegration
 
     /**
      * get transaction amount
+     *
      * @return int
      */
     public function getPayableAmount(): int
@@ -231,7 +242,7 @@ trait ShaparakIntegration
      * save PSP's gateway callback parameters into transaction
      *
      * @param array $parameters
-     * @param bool $save
+     * @param bool  $save
      *
      * @return bool
      */
@@ -253,7 +264,7 @@ trait ShaparakIntegration
      *
      * @param string $key
      * @param $value
-     * @param bool $save
+     * @param bool   $save
      *
      * @return bool
      */

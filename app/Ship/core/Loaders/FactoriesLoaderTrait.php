@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factory;
 /**
  * Class FactoriesLoaderTrait.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait FactoriesLoaderTrait
 {
@@ -30,5 +30,4 @@ trait FactoriesLoaderTrait
             return Factory::construct($faker, base_path() . $newFactoriesPath);
         });
     }
-
 }

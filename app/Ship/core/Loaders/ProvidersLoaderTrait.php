@@ -9,7 +9,7 @@ use File;
 /**
  * Class ProvidersLoaderTrait.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait ProvidersLoaderTrait
 {
@@ -37,16 +37,12 @@ trait ProvidersLoaderTrait
         $mainServiceProviderNameStartWith = 'Main';
 
         if (File::isDirectory($directory)) {
-
             $files = File::allFiles($directory);
 
             foreach ($files as $file) {
-
                 if (File::isFile($file)) {
-
                     // Check if this is the Main Service Provider
                     if (Apiato::stringStartsWith($file->getFilename(), $mainServiceProviderNameStartWith)) {
-
                         $serviceProviderClass = Apiato::getClassFullNameFromFile($file->getPathname());
 
                         $this->loadProvider($serviceProviderClass);
@@ -75,5 +71,4 @@ trait ProvidersLoaderTrait
             $this->loadProvider($provider);
         }
     }
-
 }

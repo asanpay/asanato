@@ -31,6 +31,7 @@ composer:
     script:
         - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
         - cp .env.example .env
+        - php artisan key:generate --no-interaction --quiet --force
     artifacts:
         expire_in: 1 month
         paths:
@@ -57,7 +58,7 @@ codestyle:
     stage: test
     dependencies: []
     script:
-        - phpcs --standard=PSR2 --extensions=php --ignore=app/Support/helpers.php app
+        - phpcs
 
 phpunit:
     stage: test

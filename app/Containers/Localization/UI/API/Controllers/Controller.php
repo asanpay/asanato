@@ -10,7 +10,7 @@ use App\Ship\Parents\Controllers\ApiController;
 /**
  * Class Controller
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class Controller extends ApiController
 {

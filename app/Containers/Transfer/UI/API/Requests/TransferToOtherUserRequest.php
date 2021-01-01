@@ -6,6 +6,7 @@ use App\Ship\Parents\Requests\Request;
 
 /**
  * Class TransferToOtherUserRequest
+ *
  * @package App\Containers\Transfer\UI\API\Requests
  */
 class TransferToOtherUserRequest extends Request
@@ -13,7 +14,7 @@ class TransferToOtherUserRequest extends Request
     /**
      * Id's that needs decoding before applying the validation rules.
      *
-     * @var  array
+     * @var array
      */
     protected $decode = [
         'src_wallet_id',
@@ -21,7 +22,7 @@ class TransferToOtherUserRequest extends Request
     ];
 
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {

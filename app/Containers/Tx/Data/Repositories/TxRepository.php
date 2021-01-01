@@ -17,5 +17,4 @@ class TxRepository extends Repository
         'id' => '=',
         // ...
     ];
-
 }

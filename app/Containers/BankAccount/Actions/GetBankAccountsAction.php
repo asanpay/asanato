@@ -10,8 +10,12 @@ class GetBankAccountsAction extends Action
 {
     public function run(User $user)
     {
-        return Apiato::call('BankAccount@GetBankAccountsTask', [], [
+        return Apiato::call(
+            'BankAccount@GetBankAccountsTask',
+            [],
+            [
             'addRequestCriteria',
-        ]);
+            ]
+        );
     }
 }

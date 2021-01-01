@@ -17,5 +17,4 @@ class MerchantRepository extends Repository
         'id' => '=',
         // ...
     ];
-
 }

@@ -24,7 +24,7 @@ class FindRoleTask extends Task
     /**
      * @param $roleNameOrId
      *
-     * @return  \App\Containers\Authorization\Models\Role
+     * @return \App\Containers\Authorization\Models\Role
      */
     public function run($roleNameOrId): Role
     {
@@ -34,5 +34,4 @@ class FindRoleTask extends Task
 
         return $role;
     }
-
 }

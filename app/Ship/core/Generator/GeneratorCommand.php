@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * Class GeneratorCommand
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 abstract class GeneratorCommand extends Command
 {
@@ -28,26 +28,26 @@ abstract class GeneratorCommand extends Command
      *
      * @var string
      */
-    CONST ROOT = 'app';
+    const ROOT = 'app';
 
     /**
      * Relative path for the stubs (relative to this directory / file)
      *
      * @var string
      */
-    CONST STUB_PATH = 'Stubs/*';
+    const STUB_PATH = 'Stubs/*';
 
     /**
      * Relative path for the custom stubs (relative to the app/Ship directory!
      */
-    CONST CUSTOM_STUB_PATH = 'Generators/CustomStubs/*';
+    const CUSTOM_STUB_PATH = 'Generators/CustomStubs/*';
 
     /**
      * Containers main folder
      *
      * @var string
      */
-    CONST CONTAINER_DIRECTORY_NAME = 'Containers';
+    const CONTAINER_DIRECTORY_NAME = 'Containers';
 
     /**
      * @var string
@@ -85,7 +85,7 @@ abstract class GeneratorCommand extends Command
     protected $renderedStubContent;
 
     /**
-     * @var  \Illuminate\Filesystem\Filesystem
+     * @var \Illuminate\Filesystem\Filesystem
      */
     private $fileSystem;
 
@@ -115,12 +115,18 @@ abstract class GeneratorCommand extends Command
     {
         $this->validateGenerator($this);
 
-        $this->containerName = ucfirst($this->checkParameterOrAsk('container', 'Enter the name of the Container'));
-        $this->fileName = $this->checkParameterOrAsk('file', 'Enter the name of the ' . $this->fileType . ' file', $this->getDefaultFileName());
+        $this->containerName = ucfirst(
+            $this->checkParameterOrAsk('container', 'Enter the name of the Container')
+        );
+        $this->fileName      = $this->checkParameterOrAsk(
+            'file',
+            'Enter the name of the ' . $this->fileType . ' file',
+            $this->getDefaultFileName()
+        );
 
         // now fix the container and file name
         $this->containerName = $this->removeSpecialChars($this->containerName);
-        $this->fileName = $this->removeSpecialChars($this->fileName);
+        $this->fileName      = $this->removeSpecialChars($this->fileName);
 
         // and we are ready to start
         $this->printStartedMessage($this->containerName, $this->fileName);
@@ -136,13 +142,17 @@ abstract class GeneratorCommand extends Command
 
         // get the actual path of the output file as well as the correct filename
         $this->parsedFileName = $this->parseFileStructure($this->nameStructure, $this->userData['file-parameters']);
-        $this->filePath = $this->getFilePath($this->parsePathStructure($this->pathStructure, $this->userData['path-parameters']));
+        $this->filePath       = $this->getFilePath(
+            $this->parsePathStructure($this->pathStructure, $this->userData['path-parameters'])
+        );
 
-        if (! $this->fileSystem->exists($this->filePath)) {
-
+        if (!$this->fileSystem->exists($this->filePath)) {
             // prepare stub content
-            $this->stubContent = $this->getStubContent();
-            $this->renderedStubContent = $this->parseStubContent($this->stubContent, $this->userData['stub-parameters']);
+            $this->stubContent         = $this->getStubContent();
+            $this->renderedStubContent = $this->parseStubContent(
+                $this->stubContent,
+                $this->userData['stub-parameters']
+            );
 
             $this->generateFile($this->filePath, $this->renderedStubContent);
 
@@ -170,13 +180,14 @@ abstract class GeneratorCommand extends Command
     /**
      * @param $path
      *
-     * @return  string
+     * @return string
      */
     protected function getFilePath($path)
     {
         // complete the missing parts of the path
+        $subject = self::ROOT . '/' . self::CONTAINER_DIRECTORY_NAME . '/' . $path;
         $path = base_path() . '/' .
-                str_replace('\\', '/', self::ROOT . '/' . self::CONTAINER_DIRECTORY_NAME . '/' . $path) . '.' . $this->getDefaultFileExtension();
+            str_replace('\\', '/', $subject) . '.' . $this->getDefaultFileExtension();
 
         // try to create directory
         $this->createDirectory($path);
@@ -186,7 +197,7 @@ abstract class GeneratorCommand extends Command
     }
 
     /**
-     * @return  mixed
+     * @return mixed
      */
     protected function getStubContent()
     {
@@ -195,7 +206,7 @@ abstract class GeneratorCommand extends Command
         $file = str_replace('*', $this->stubName, $path);
 
         // check if the custom file exists
-        if (! $this->fileSystem->exists($file)) {
+        if (!$this->fileSystem->exists($file)) {
             // it does not exist - so take the default file!
             $path = __DIR__ . '/' . self::STUB_PATH;
             $file = str_replace('*', $this->stubName, $path);
@@ -203,6 +214,7 @@ abstract class GeneratorCommand extends Command
 
         // now load the stub
         $stub = $this->fileSystem->get($file);
+
         return $stub;
     }
 
@@ -214,14 +226,15 @@ abstract class GeneratorCommand extends Command
     protected function getOptions()
     {
         $arguments = array_merge($this->defaultInputs, $this->inputs);
+
         return $arguments;
     }
 
     /**
-     * @param      $arg
+     * @param $arg
      * @param bool $trim
      *
-     * @return  array|string
+     * @return array|string
      */
     protected function getInput($arg, $trim = true)
     {
@@ -231,17 +244,17 @@ abstract class GeneratorCommand extends Command
     /**
      * Checks if the param is set (via CLI), otherwise asks the user for a value
      *
-     * @param $param
-     * @param $question
+     * @param  $param
+     * @param  $question
      * @param null $default
+     *
      * @return array|string
      */
     protected function checkParameterOrAsk($param, $question, $default = null)
     {
         // check if we have already have a param set
         $value = $this->option($param);
-        if($value == null)
-        {
+        if ($value == null) {
             // there was no value provided via CLI, so ask the user..
             $value = $this->ask($question, $default);
         }
@@ -252,18 +265,18 @@ abstract class GeneratorCommand extends Command
     /**
      * Checks if the param is set (via CLI), otherwise proposes choices to the user
      *
-     * @param $param
-     * @param $question
-     * @param $choices
+     * @param  $param
+     * @param  $question
+     * @param  $choices
      * @param null $default
+     *
      * @return array|string
      */
     protected function checkParameterOrChoice($param, $question, $choices, $default = null)
     {
         // check if we have already have a param set
         $value = $this->option($param);
-        if($value == null)
-        {
+        if ($value == null) {
             // there was no value provided via CLI, so ask the user..
             $value = $this->choice($question, $choices, $default);
         }
@@ -272,8 +285,8 @@ abstract class GeneratorCommand extends Command
     }
 
     /**
-     * @param      $param
-     * @param      $question
+     * @param $param
+     * @param $question
      * @param bool $default
      *
      * @return mixed
@@ -282,8 +295,7 @@ abstract class GeneratorCommand extends Command
     {
         // check if we have already have a param set
         $value = $this->option($param);
-        if ($value === null)
-        {
+        if ($value === null) {
             // there was no value provided via CLI, so ask the user..
             $value = $this->confirm($question, $default);
         }
@@ -295,20 +307,22 @@ abstract class GeneratorCommand extends Command
      * Checks, if the data from the generator contains path, stub and file-parameters.
      * Adds empty arrays, if they are missing
      *
-     * @param $data
+     * @param  $data
+     *
      * @return mixed
      */
-    private function sanitizeUserData($data) {
+    private function sanitizeUserData($data)
+    {
 
-        if (! array_key_exists('path-parameters', $data)) {
+        if (!array_key_exists('path-parameters', $data)) {
             $data['path-parameters'] = [];
         }
 
-        if (! array_key_exists('stub-parameters', $data)) {
+        if (!array_key_exists('stub-parameters', $data)) {
             $data['stub-parameters'] = [];
         }
 
-        if (! array_key_exists('file-parameters', $data)) {
+        if (!array_key_exists('file-parameters', $data)) {
             $data['file-parameters'] = [];
         }
 
@@ -349,5 +363,4 @@ abstract class GeneratorCommand extends Command
 
         return $str;
     }
-
 }

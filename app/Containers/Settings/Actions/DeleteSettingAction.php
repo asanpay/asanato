@@ -9,7 +9,7 @@ use App\Ship\Transporters\DataTransporter;
 /**
  * Class DeleteSettingAction
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class DeleteSettingAction extends Action
 {

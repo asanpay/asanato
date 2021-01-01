@@ -8,7 +8,7 @@ use Apiato\Core\Traits\HasRequestCriteriaTrait;
 /**
  * Class Action.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class Action
 {
@@ -27,7 +27,7 @@ abstract class Action
     /**
      * @param $interface
      *
-     * @return  $this
+     * @return $this
      */
     public function setUI($interface)
     {
@@ -37,11 +37,10 @@ abstract class Action
     }
 
     /**
-     * @return  mixed
+     * @return mixed
      */
     public function getUI()
     {
         return $this->ui;
     }
-
 }

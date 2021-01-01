@@ -1,26 +1,31 @@
 <?php
 
 /**
- * @apiGroup           Wallet
- * @apiName            DeleteWallet
+ * @apiGroup Wallet
+ * @apiName  DeleteWallet
  *
- * @api                {DELETE} /v1/users/{user_id}/wallets/:id deleteWallet
- * @apiDescription     Delete a non-default Wallet
+ * @api            {DELETE} /v1/users/{user_id}/wallets/:id deleteWallet
+ * @apiDescription Delete a non-default Wallet
  *
- * @apiVersion         1.0.0
- * @apiPermission      delete-wallets
+ * @apiVersion    1.0.0
+ * @apiPermission delete-wallets
  *
- * @apiParam           {String}  id Encrypted wallet ID
+ * @apiParam {String}  id Encrypted wallet ID
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 204 OK
  */
 
-/** @var Route $router */
-$router->delete('users/{user_id}/wallets/{id}', [
-    'as' => 'api_wallet_delete_wallet',
-    'uses'  => 'Controller@deleteWallet',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+/**
+ * @var Route $router
+ */
+$router->delete(
+    'users/{user_id}/wallets/{id}',
+    [
+        'as' => 'api_wallet_delete_wallet',
+        'uses'  => 'Controller@deleteWallet',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);

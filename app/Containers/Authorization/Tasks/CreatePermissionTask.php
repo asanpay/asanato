@@ -11,13 +11,13 @@ use Exception;
 /**
  * Class CreatePermissionTask
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class CreatePermissionTask extends Task
 {
 
     /**
-     * @var  \App\Containers\Authorization\Data\Repositories\PermissionRepository
+     * @var \App\Containers\Authorization\Data\Repositories\PermissionRepository
      */
     protected $repository;
 
@@ -44,12 +44,14 @@ class CreatePermissionTask extends Task
         app()['cache']->forget('spatie.permission.cache');
 
         try {
-            $permission = $this->repository->create([
+            $permission = $this->repository->create(
+                [
                 'name'         => $name,
                 'description'  => $description,
                 'display_name' => $displayName,
                 'guard_name'   => 'web',
-            ]);
+                ]
+            );
         } catch (Exception $exception) {
             throw new CreateResourceFailedException();
         }

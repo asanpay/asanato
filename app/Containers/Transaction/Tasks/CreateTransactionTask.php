@@ -29,19 +29,15 @@ class CreateTransactionTask extends Task
 
             switch ($transactionType) {
                 case TransactionType::MERCHANT:
-                {
                     if (!isset($data['merchant_id']) || empty($data['merchant_id'])) {
                         throw new CreateResourceFailedException('merchant_id id is empty');
                     }
                     break;
-                }
                 case TransactionType::WALLET_TOPUP:
-                {
                     if (!isset($data['wallet_id']) || empty($data['wallet_id'])) {
                         throw new CreateResourceFailedException('wallet_id is empty');
                     }
                     break;
-                }
             }
 
             $t = $this->transaction;

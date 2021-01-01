@@ -27,10 +27,13 @@ class DeleteWithdrawalTask extends Task
         try {
             $withdrawal->deleted_at = Carbon::now();
             $withdrawal->status = WithdrawalStatus::CANCELED;
-            $withdrawal->meta = array_merge($withdrawal->meta,[
-                'deleted_by' => $userId,
-                'deleted_ip' => $ip
-            ]);
+            $withdrawal->meta = array_merge(
+                $withdrawal->meta,
+                [
+                    'deleted_by' => $userId,
+                    'deleted_ip' => $ip
+                ]
+            );
             if ($withdrawal->save()) {
                 return $withdrawal;
             }

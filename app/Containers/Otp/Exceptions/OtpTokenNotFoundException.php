@@ -15,7 +15,8 @@ class OtpTokenNotFoundException extends Exception
 
     public $code = 100001;
 
-    public function addCustomData() {
+    public function addCustomData()
+    {
         return [
             'message' => __('auth.otp_not_found'),
         ];

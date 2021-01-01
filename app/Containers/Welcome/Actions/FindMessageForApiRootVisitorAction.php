@@ -13,7 +13,7 @@ class FindMessageForApiRootVisitorAction extends Action
 {
 
     /**
-     * @return  array
+     * @return array
      */
     public function run()
     {

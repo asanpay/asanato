@@ -17,5 +17,4 @@ class TransactionRepository extends Repository
         'id' => '=',
         // ...
     ];
-
 }

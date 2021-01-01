@@ -22,8 +22,7 @@ class FindMerchantByCodeTask extends Task
     {
         try {
             return $this->repository->findByField('code', $code)->first();
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             XLog::exception($exception);
             throw new NotFoundException();
         }

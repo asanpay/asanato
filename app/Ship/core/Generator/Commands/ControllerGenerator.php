@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * Class ControllerGenerator
  *
- * @author  Johannes Schobel  <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel  <johannes.schobel@googlemail.com>
  */
 class ControllerGenerator extends GeneratorCommand implements ComponentsGenerator
 {
@@ -40,21 +40,21 @@ class ControllerGenerator extends GeneratorCommand implements ComponentsGenerato
     /**
      * The structure of the file path.
      *
-     * @var  string
+     * @var string
      */
     protected $pathStructure = '{container-name}/UI/{user-interface}/Controllers/*';
 
     /**
      * The structure of the file name.
      *
-     * @var  string
+     * @var string
      */
     protected $nameStructure = '{file-name}';
 
     /**
      * The name of the stub file.
      *
-     * @var  string
+     * @var string
      */
     protected $stubName = 'controllers/generic.stub';
 
@@ -63,7 +63,7 @@ class ControllerGenerator extends GeneratorCommand implements ComponentsGenerato
      * "--container" and "--file" options, as they are globally handled. Just use the options which are specific to
      * this generator.
      *
-     * @var  array
+     * @var array
      */
     public $inputs = [
         ['ui', null, InputOption::VALUE_OPTIONAL, 'The user-interface to generate the Controller for.'],
@@ -71,17 +71,19 @@ class ControllerGenerator extends GeneratorCommand implements ComponentsGenerato
     ];
 
     /**
-     * @return  array
+     * @return array
      */
     public function getUserInputs()
     {
         $ui = Str::lower($this->checkParameterOrChoice('ui', 'Select the UI for the controller', ['API', 'WEB']));
 
-        $stub = Str::lower($this->checkParameterOrChoice(
-            'stub',
-            'Select the Stub you want to load',
-            ['Generic', 'CRUD.API', 'CRUD.WEB'],
-            0)
+        $stub = Str::lower(
+            $this->checkParameterOrChoice(
+                'stub',
+                'Select the Stub you want to load',
+                ['Generic', 'CRUD.API', 'CRUD.WEB'],
+                0
+            )
         );
 
         // load a new stub-file based on the users choice
@@ -123,5 +125,4 @@ class ControllerGenerator extends GeneratorCommand implements ComponentsGenerato
     {
         return 'Controller';
     }
-
 }

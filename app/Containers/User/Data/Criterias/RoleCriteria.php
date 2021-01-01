@@ -8,7 +8,7 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 /**
  * Class RoleCriteria.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class RoleCriteria extends Criteria
 {
@@ -29,15 +29,18 @@ class RoleCriteria extends Criteria
     }
 
     /**
-     * @param                                                   $model
+     * @param $model
      * @param \Prettus\Repository\Contracts\RepositoryInterface $repository
      *
      * @return mixed
      */
     public function apply($model, PrettusRepositoryInterface $repository)
     {
-        return $model->whereHas('roles', function ($q) {
-            $q->where('name', $this->roles);
-        });
+        return $model->whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', $this->roles);
+            }
+        );
     }
 }

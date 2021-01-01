@@ -8,13 +8,13 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 /**
  * Class OrderByUpdateDateAscendingCriteria
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class OrderByUpdateDateAscendingCriteria extends Criteria
 {
 
     /**
-     * @param                                                   $model
+     * @param $model
      * @param \Prettus\Repository\Contracts\RepositoryInterface $repository
      *
      * @return mixed
@@ -23,5 +23,4 @@ class OrderByUpdateDateAscendingCriteria extends Criteria
     {
         return $model->orderBy('updated_at', 'asc');
     }
-
 }

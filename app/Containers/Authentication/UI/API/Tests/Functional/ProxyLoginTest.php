@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\DB;
 /**
  * Class ProxyLoginTest
  *
- * @group   authorization
- * @group   api
+ * @group authorization
+ * @group api
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class ProxyLoginTest extends ApiTestCase
 {
@@ -29,7 +29,7 @@ class ProxyLoginTest extends ApiTestCase
     /**
      * @test
      */
-    public function testClientWebAdminProxyLogin_()
+    public function testClientWebAdminProxyLogin()
     {
         $endpoint = 'post@v1/clients/web/admin/signin';
 
@@ -47,7 +47,8 @@ class ProxyLoginTest extends ApiTestCase
         $clientSecret = 'XXp8x4QK7d3J9R7OVRXWrhc19XPRroHTTKIbY8XX';
 
         // create client
-        DB::table('oauth_clients')->insert([
+        DB::table('oauth_clients')->insert(
+            [
             [
                 'id'                     => $clientId,
                 'secret'                 => $clientSecret,
@@ -57,7 +58,8 @@ class ProxyLoginTest extends ApiTestCase
                 'personal_access_client' => '0',
                 'revoked'                => '0',
             ],
-        ]);
+            ]
+        );
 
         // make the clients credentials available as env variables
         Config::set('authentication-container.clients.web.admin.id', $clientId);
@@ -73,9 +75,11 @@ class ProxyLoginTest extends ApiTestCase
 
         $response->assertCookie('refreshToken');
 
-        $this->assertResponseContainKeyValue([
+        $this->assertResponseContainKeyValue(
+            [
             'token_type' => 'Bearer',
-        ]);
+            ]
+        );
 
         $this->assertResponseContainKeys(['expires_in', 'access_token']);
 
@@ -89,7 +93,7 @@ class ProxyLoginTest extends ApiTestCase
     /**
      * @test
      */
-    public function testLoginWithDeviceAttribute_()
+    public function testLoginWithDeviceAttribute()
     {
         $endpoint = 'post@v1/clients/web/admin/signin';
 
@@ -108,7 +112,8 @@ class ProxyLoginTest extends ApiTestCase
         $clientSecret = 'XXp8x4QK7d3J9R7OVRXWrhc19XPRroHTTKIbY8XX';
 
         // create client
-        DB::table('oauth_clients')->insert([
+        DB::table('oauth_clients')->insert(
+            [
             [
                 'id'                     => $clientId,
                 'secret'                 => $clientSecret,
@@ -118,7 +123,8 @@ class ProxyLoginTest extends ApiTestCase
                 'personal_access_client' => '0',
                 'revoked'                => '0',
             ],
-        ]);
+            ]
+        );
 
         // make the clients credentials available as env variables
         Config::set('authentication-container.clients.web.admin.id', $clientId);
@@ -148,7 +154,7 @@ class ProxyLoginTest extends ApiTestCase
     /**
      * @test
      */
-    public function testClientWebAdminProxyUnconfirmedLogin_()
+    public function testClientWebAdminProxyUnconfirmedLogin()
     {
         $endpoint = 'post@v1/clients/web/admin/signin';
 
@@ -166,7 +172,8 @@ class ProxyLoginTest extends ApiTestCase
         $clientSecret = 'XXp8x4QK7d3J9R7OVRXWrhc19XPRroHTTKIbY8XX';
 
         // create client
-        DB::table('oauth_clients')->insert([
+        DB::table('oauth_clients')->insert(
+            [
             [
                 'id'                     => $clientId,
                 'secret'                 => $clientSecret,
@@ -176,7 +183,8 @@ class ProxyLoginTest extends ApiTestCase
                 'personal_access_client' => '0',
                 'revoked'                => '0',
             ],
-        ]);
+            ]
+        );
 
         // make the clients credentials available as env variables
         Config::set('authentication-container.clients.web.admin.id', $clientId);
@@ -204,7 +212,7 @@ class ProxyLoginTest extends ApiTestCase
     /**
      * @param $fileName
      *
-     * @return  string
+     * @return string
      */
     private function createTestingKey($fileName)
     {

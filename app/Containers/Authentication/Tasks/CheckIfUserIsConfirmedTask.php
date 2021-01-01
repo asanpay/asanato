@@ -17,7 +17,6 @@ class CheckIfUserIsConfirmedTask extends Task
     {
         // is the config flag set?
         if (Config::get('authentication-container.require_email_confirmation')) {
-
             if (! $this->user) {
                 throw new LoginFailedException();
             }
@@ -31,7 +30,7 @@ class CheckIfUserIsConfirmedTask extends Task
     /**
      * @param string $username The username / email / whatever to be used
      * @param string $password the corresponding password
-     * @param string $field the field to be checked against
+     * @param string $field    the field to be checked against
      *
      * @throws LoginFailedException
      */
@@ -39,8 +38,7 @@ class CheckIfUserIsConfirmedTask extends Task
     {
         if (Auth::attempt([$field => $username, 'password' => $password])) {
             $this->user = Auth::user();
-        }
-        else {
+        } else {
             throw new LoginFailedException();
         }
     }

@@ -7,7 +7,7 @@ use App\Ship\Parents\Exceptions\ErrorCodesTable;
 /**
  * Class ApplicationErrorCodesTable
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class ApplicationErrorCodesTable extends ErrorCodesTable
 {

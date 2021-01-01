@@ -4,11 +4,9 @@ namespace App\Containers\Transfer\Tasks;
 
 use App\Containers\Tx\Data\Repositories\TxRepository;
 use App\Containers\Tx\Enum\TxType;
-use App\Containers\Transfer\Exceptions\InsufficientWalletBalanceException;
 use App\Containers\Wallet\Data\Repositories\WalletRepository;
 use App\Containers\Wallet\Exceptions\InvalidTransferAmountException;
 use App\Containers\Transfer\Exceptions\WalletTransferFailedException;
-use App\Containers\Wallet\Models\Wallet;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
 use App\Containers\Tx\Models\Tx;
@@ -57,44 +55,50 @@ class WalletToWalletTransferTask extends Task
             $tx = null;
         }
 
-        DB::transaction(function () use (
-            $sourceWalletId,
-            $destinationWalletId,
-            $amount,
-            $reason,
-            $ipAddress,
-            $meta,
-            &
-            $tx
-        ) {
+        DB::transaction(
+            function () use (
+                $sourceWalletId,
+                $destinationWalletId,
+                $amount,
+                $reason,
+                $ipAddress,
+                $meta,
+                &$tx
+            ) {
 
-            $meta = $this->prepareExtraFor($reason, $meta);
-
-
-            // source wallet
-            $source = DB::table('wallets')
-                ->where('id', $sourceWallet);
+                $meta = $this->prepareExtraFor($reason, $meta);
 
 
-            // prevent from spending more than wallet balance
-            $source->whereRaw("balance - locked_balance >= {$amount}");
+                // source wallet
+                $source = DB::table('wallets')
+                    ->where('id', $sourceWalletId);
 
-            //            $updatedRow = $source->update(['balance' => DB::raw("balance - {$amount}")]);
 
-            //            if ($updatedRow < 1) {
-            //                throw new InsufficientWalletBalanceException();
-            //            }
+                // prevent from spending more than wallet balance
+                $source->whereRaw("balance - locked_balance >= {$amount}");
 
-            // destination wallet
+                //            $updatedRow = $source->update(['balance' => DB::raw("balance - {$amount}")]);
 
-            //            DB::table('wallets')
-            //                ->where('id', $destinationWallet)
-            //                ->update(['balance' => DB::raw("balance + {$amount}")]);
+                //            if ($updatedRow < 1) {
+                //                throw new InsufficientWalletBalanceException();
+                //            }
 
-            // create transfer transaction in wallet transactions field
-            $tx = $this->createWalletTransferTransactions($sourceWallet, $destinationWallet, $amount, $ipAddress,
-                $meta);
-        });
+                // destination wallet
+
+                //            DB::table('wallets')
+                //                ->where('id', $destinationWallet)
+                //                ->update(['balance' => DB::raw("balance + {$amount}")]);
+
+                // create transfer transaction in wallet transactions field
+                $tx = $this->createWalletTransferTransactions(
+                    $sourceWalletId,
+                    $destinationWalletId,
+                    $amount,
+                    $ipAddress,
+                    $meta
+                );
+            }
+        );
 
         return $tx;
     }
@@ -111,15 +115,14 @@ class WalletToWalletTransferTask extends Task
         // @todo complete all type of wallet transactions
         switch ($reason) {
             case TxType::WALLET_COST:
-            {
                 if (!isset($meta['createdWalletId'])) {
                     throw new NotFoundException('createdWalletId is required');
                 }
 
                 $meta ['description'] = __('wallet.create_wallet_fee', ['id' => $meta['createdWalletId']]);
                 break;
-            }
         }
+
         $meta['xid'] = resolve('xTrackId');
 
         return $meta;
@@ -170,5 +173,4 @@ class WalletToWalletTransferTask extends Task
 
         return $debtorTransactions;
     }
-
 }

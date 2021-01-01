@@ -36,8 +36,7 @@ class DeleteWalletTask extends Task
 
         try {
             return $this->repository->delete($id);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             XLog::exception($e);
             throw new DeleteResourceFailedException();
         }

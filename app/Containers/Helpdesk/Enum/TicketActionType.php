@@ -12,7 +12,7 @@ class TicketActionType
     const OPERATION = 'OPERATION';
 
 
-    function translations()
+    public function translations()
     {
         return [
             self::REPLY     => 'پاسخ',

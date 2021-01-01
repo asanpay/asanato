@@ -19,8 +19,8 @@ class IdentityProofRepository extends Repository
     protected $fieldSearchable = [];
 
     /**
-     * @param User $user
-     * @param int $type
+     * @param User   $user
+     * @param int    $type
      * @param string $status
      *
      * @return mixed
@@ -41,7 +41,7 @@ class IdentityProofRepository extends Repository
 
     /**
      * @param User $user
-     * @param int $type
+     * @param int  $type
      *
      * @return bool
      * @throws \Prettus\Repository\Exceptions\RepositoryException

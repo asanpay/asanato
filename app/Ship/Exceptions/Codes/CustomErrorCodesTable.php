@@ -7,7 +7,7 @@ use App\Ship\Parents\Exceptions\ErrorCodesTable;
 /**
  * Class CustomErrorCodesTable
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class CustomErrorCodesTable extends ErrorCodesTable
 {
@@ -23,7 +23,6 @@ class CustomErrorCodesTable extends ErrorCodesTable
      *      'title' => 'Unknown / Unspecified Error.',
      *      'description' => 'Something unexpected happened.',
      *  ];
-     *
      */
 
     const OTP_USER_NOT_FOUND = [

@@ -24,18 +24,23 @@ class TransferToOthersWalletsAction extends Action
     {
         $userId = $request->user()->id;
 
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             'src_wallet_id',
             'dst_wallet_id',
             'amount',
             'description',
             'token',
-        ]);
+            ]
+        );
 
         try {
             DB::beginTransaction();
 
-            $otpValidity = Apiato::call('Otp@VerifyOtpAction', [$request->user(), $request->token, OtpReason::TRANSFER_MONEY]);
+            $otpValidity = Apiato::call(
+                'Otp@VerifyOtpAction',
+                [$request->user(), $request->token, OtpReason::TRANSFER_MONEY]
+            );
 
             if ($otpValidity !== true) {
                 throw new InvalidOtpException();
@@ -63,27 +68,31 @@ class TransferToOthersWalletsAction extends Action
             }
 
             // destination wallet
-            $dstWallet = Apiato::call('Wallet@FindWalletByIdTask', [$data['dst_wallet_id']]);
+            $dstWallet = Apiato::call(
+                'Wallet@FindWalletByIdTask',
+                [$data['dst_wallet_id']]
+            );
 
             // create both debtor/creditor transactions
-            $tx = Apiato::call('Transfer@WalletToWalletTransferTask', [
-                $srcWallet->id,
-                $dstWallet->id,
-                $data['amount'],
-                TxType::TRANSFER,
-                $request->getClientIp(),
-                // TX meta
+            $tx = Apiato::call(
+                'Transfer@WalletToWalletTransferTask',
                 [
-                    'description' => $data['description'],
-                ],
-            ]);
+                    $srcWallet->id,
+                    $dstWallet->id,
+                    $data['amount'],
+                    TxType::TRANSFER,
+                    $request->getClientIp(),
+                    // TX meta
+                    [
+                        'description' => $data['description'],
+                    ],
+                ]
+            );
 
 
             DB::commit();
 
             return $tx;
-
-
         } catch (\Exception $e) {
             DB::rollBack();
             XLog::exception($e);

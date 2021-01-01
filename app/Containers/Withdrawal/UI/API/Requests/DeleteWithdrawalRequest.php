@@ -23,7 +23,7 @@ class DeleteWithdrawalRequest extends Request
     /**
      * Define which Roles and/or Permissions has access to this request.
      *
-     * @var  array
+     * @var array
      */
     protected $access = [
         'permissions' => 'delete-withdrawals',
@@ -33,7 +33,7 @@ class DeleteWithdrawalRequest extends Request
     /**
      * Id's that needs decoding before applying the validation rules.
      *
-     * @var  array
+     * @var array
      */
     protected $decode = [
         'id',
@@ -43,14 +43,14 @@ class DeleteWithdrawalRequest extends Request
      * Defining the URL parameters (e.g, `/user/{id}`) allows applying
      * validation rules on them and allows accessing them like request data.
      *
-     * @var  array
+     * @var array
      */
     protected $urlParameters = [
         'id',
     ];
 
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {
@@ -59,22 +59,26 @@ class DeleteWithdrawalRequest extends Request
         return [
             'id' => [
                 'required',
-                Rule::exists('withdrawals')->where(function ($query) use ($id) {
-                    $query->where('id', $id)
-                        ->where('status', '<=', WithdrawalStatus::PROCESSING);
-                }),
+                Rule::exists('withdrawals')->where(
+                    function ($query) use ($id) {
+                        $query->where('id', $id)
+                            ->where('status', '<=', WithdrawalStatus::PROCESSING);
+                    }
+                ),
             ],
         ];
     }
 
     /**
-     * @return  bool
+     * @return bool
      */
     public function authorize()
     {
-        return $this->check([
+        return $this->check(
+            [
             'hasAccess|isOwner',
-        ]);
+            ]
+        );
     }
 
     /**
@@ -82,7 +86,9 @@ class DeleteWithdrawalRequest extends Request
      */
     public function isOwner()
     {
-        return ($this->id && Apiato::call('Withdrawal@FindWithdrawalByIdTask',
-                [$this->id])->user_id == $this->user()->id);
+        return ($this->id && Apiato::call(
+            'Withdrawal@FindWithdrawalByIdTask',
+            [$this->id]
+        )->user_id == $this->user()->id);
     }
 }

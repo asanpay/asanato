@@ -197,10 +197,12 @@ class Transaction extends Model implements TransactionInterface
      */
     public function scopeProcessable($query)
     {
-        $query->where(function ($query) {
-            $query->where('status', TransactionStatus::ACCOMPLISHED)
-                ->where('process', TransactionProcess::NONE); // includes 0
-        });
+        $query->where(
+            function ($query) {
+                $query->where('status', TransactionStatus::ACCOMPLISHED)
+                    ->where('process', TransactionProcess::NONE); // includes 0
+            }
+        );
     }
 
     /**

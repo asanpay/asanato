@@ -11,7 +11,7 @@ use Exception;
 /**
  * Class DeleteUserTask
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class DeleteUserTask extends Task
 {
@@ -34,8 +34,7 @@ class DeleteUserTask extends Task
     {
         try {
             return $this->repository->delete($user->id);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             throw new DeleteResourceFailedException();
         }
     }

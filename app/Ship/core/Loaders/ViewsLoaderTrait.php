@@ -7,7 +7,7 @@ use File;
 /**
  * Class ViewsLoaderTrait.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait ViewsLoaderTrait
 {
@@ -44,5 +44,4 @@ trait ViewsLoaderTrait
             $this->loadViewsFrom($directory, strtolower($containerName));
         }
     }
-
 }

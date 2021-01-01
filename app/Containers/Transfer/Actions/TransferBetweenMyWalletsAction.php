@@ -18,12 +18,14 @@ class TransferBetweenMyWalletsAction extends Action
     {
         $userId = $request->user()->id;
 
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             'src_wallet_id',
             'dst_wallet_id',
             'amount',
             'description',
-        ]);
+            ]
+        );
 
         // check source wallet ownership
         $srcWallet = Apiato::call('Wallet@FindWalletByIdTask', [$data['src_wallet_id']]);
@@ -53,17 +55,20 @@ class TransferBetweenMyWalletsAction extends Action
         }
 
         // create both debtor/creditor transactions
-        $tx = Apiato::call('Transfer@WalletToWalletTransferTask', [
-            $srcWallet->id,
-            $dstWallet->id,
-            $data['amount'],
-            TxType::TRANSFER,
-            $request->getClientIp(),
-            // TX meta
+        $tx = Apiato::call(
+            'Transfer@WalletToWalletTransferTask',
             [
-                'description' => $data['description'],
-            ],
-        ]);
+                $srcWallet->id,
+                $dstWallet->id,
+                $data['amount'],
+                TxType::TRANSFER,
+                $request->getClientIp(),
+                // TX meta
+                [
+                    'description' => $data['description'],
+                ],
+            ]
+        );
 
         return $tx;
     }

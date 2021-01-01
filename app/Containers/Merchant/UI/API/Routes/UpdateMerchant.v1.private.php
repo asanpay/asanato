@@ -1,29 +1,34 @@
 <?php
 
 /**
- * @apiGroup           Merchant
- * @apiName            updateMerchant
+ * @apiGroup Merchant
+ * @apiName  updateMerchant
  *
- * @api                {PATCH} /v1/merchants/:id updateMerchant
- * @apiDescription     Endpoint description here..
+ * @api            {PATCH} /v1/merchants/:id updateMerchant
+ * @apiDescription Endpoint description here..
  *
- * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiVersion    1.0.0
+ * @apiPermission none
  *
- * @apiParam           {String}  parameters here..
+ * @apiParam {String}  parameters here..
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
+ {
+     // Insert the response of the request here...
 }
  */
 
-/** @var Route $router */
-$router->patch('merchants/{id}', [
-    'as' => 'api_merchant_update_merchant',
-    'uses'  => 'Controller@updateMerchant',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+/**
+ * @var Route $router
+ */
+$router->patch(
+    'merchants/{id}',
+    [
+        'as' => 'api_merchant_update_merchant',
+        'uses'  => 'Controller@updateMerchant',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);

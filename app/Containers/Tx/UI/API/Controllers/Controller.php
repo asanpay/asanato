@@ -19,7 +19,7 @@ use Apiato\Core\Foundation\Facades\Apiato;
 class Controller extends ApiController
 {
     /**
-     * @param CreateTxRequest $request
+     * @param  CreateTxRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function createTx(CreateTxRequest $request)
@@ -30,7 +30,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param FindTxByIdRequest $request
+     * @param  FindTxByIdRequest $request
      * @return array
      */
     public function findTxById(FindTxByIdRequest $request)
@@ -41,7 +41,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param GetAllTxesRequest $request
+     * @param  GetAllTxesRequest $request
      * @return array
      */
     public function getAllTxes(GetAllTxesRequest $request)
@@ -52,7 +52,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param UpdateTxRequest $request
+     * @param  UpdateTxRequest $request
      * @return array
      */
     public function updateTx(UpdateTxRequest $request)

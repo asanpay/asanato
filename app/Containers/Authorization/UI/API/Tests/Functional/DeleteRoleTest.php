@@ -26,7 +26,7 @@ class DeleteRoleTest extends ApiTestCase
     /**
      * @test
      */
-    public function testDeleteExistingRole_()
+    public function testDeleteExistingRole()
     {
         $role = factory(Role::class)->create();
 
@@ -36,5 +36,4 @@ class DeleteRoleTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(204);
     }
-
 }

@@ -13,19 +13,21 @@ class CreatePspsTable extends Migration
      */
     public function up()
     {
-        Schema::create('psps', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 40);
-            $table->string('slug', 40);
-            $table->boolean('is_active')->default(false);
-            $table->boolean('is_bank')->default(false);
-            $table->boolean('refund_support')->default(false);
-            $table->boolean('app_gate')->default(false);
+        Schema::create(
+            'psps', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name', 40);
+                $table->string('slug', 40);
+                $table->boolean('is_active')->default(false);
+                $table->boolean('is_bank')->default(false);
+                $table->boolean('refund_support')->default(false);
+                $table->boolean('app_gate')->default(false);
 
-            $table->timestamps();
-            $table->unique(['name']);
-            $table->unique(['slug']);
-        });
+                $table->timestamps();
+                $table->unique(['name']);
+                $table->unique(['slug']);
+            }
+        );
     }
 
     /**

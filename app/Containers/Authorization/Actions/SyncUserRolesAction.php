@@ -18,7 +18,7 @@ class SyncUserRolesAction extends Action
     /**
      * @param \App\Ship\Transporters\DataTransporter $data
      *
-     * @return  \App\Containers\User\Models\User
+     * @return \App\Containers\User\Models\User
      */
     public function run(DataTransporter $data): User
     {
@@ -27,9 +27,12 @@ class SyncUserRolesAction extends Action
         // convert roles IDs to array (in case single id passed)
         $rolesIds = (array)$data->roles_ids;
 
-        $roles = array_map(function ($roleId) {
-            return Apiato::call('Authorization@FindRoleTask', [$roleId]);
-        }, $rolesIds);
+        $roles = array_map(
+            function ($roleId) {
+                return Apiato::call('Authorization@FindRoleTask', [$roleId]);
+            },
+            $rolesIds
+        );
 
         $user->syncRoles($roles);
 

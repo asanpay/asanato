@@ -9,7 +9,7 @@ use App\Ship\Parents\Tasks\Task;
 /**
  * Class FindSettingsByKeyTask
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class FindSettingByKeyTask extends Task
 {

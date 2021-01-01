@@ -8,7 +8,7 @@ use App\Ship\Parents\Providers\MiddlewareProvider;
 /**
  * Class MiddlewareServiceProvider.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class MiddlewareServiceProvider extends MiddlewareProvider
 {
@@ -16,7 +16,7 @@ class MiddlewareServiceProvider extends MiddlewareProvider
     /**
      * Register Middleware's
      *
-     * @var  array
+     * @var array
      */
     protected $middlewares = [
         RequestsMonitorMiddleware::class,
@@ -25,7 +25,7 @@ class MiddlewareServiceProvider extends MiddlewareProvider
     /**
      * Register Container Middleware Groups
      *
-     * @var  array
+     * @var array
      */
     protected $middlewareGroups = [
         'web' => [
@@ -39,10 +39,9 @@ class MiddlewareServiceProvider extends MiddlewareProvider
     /**
      * Register Route Middleware's
      *
-     * @var  array
+     * @var array
      */
     protected $routeMiddleware = [
         // ..
     ];
-
 }

@@ -12,7 +12,7 @@ use Tartan\IranianSms\SmsServiceProvider;
 /**
  * Class ShipProvider
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class ShipProvider extends MainProvider
 {
@@ -32,7 +32,7 @@ class ShipProvider extends MainProvider
     /**
      * Register any Alias on the Ship layer (including third party packages).
      *
-     * @var  array
+     * @var array
      */
     protected $aliases = [
         'Gravatar' => \Creativeorange\Gravatar\Facades\Gravatar::class,
@@ -67,10 +67,13 @@ class ShipProvider extends MainProvider
             URL::forceScheme('https');
         }
 
-        Validator::extend('integer', function ($attribute, $value, $parameters, $validator) {
-            $value = $value + 1 - 1;
-            return is_int($value);
-        });
+        Validator::extend(
+            'integer',
+            function ($attribute, $value, $parameters, $validator) {
+                $value = $value + 1 - 1;
+                return is_int($value);
+            }
+        );
 
         Validator::extend('strength', 'Tartan\Validators\CustomValidator@validateStrength');
         Validator::extend('iran_billing_id', 'Tartan\Validators\CustomValidator@validateIranBillingId');
@@ -88,11 +91,11 @@ class ShipProvider extends MainProvider
         /**
          * Load the ide-helper service provider only in non production environments.
          */
-        if ($this->app->environment() !== 'production' && class_exists('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider')) {
+        if ($this->app->environment() !== 'production' &&
+            class_exists('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider')) {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
 
         parent::register();
     }
-
 }

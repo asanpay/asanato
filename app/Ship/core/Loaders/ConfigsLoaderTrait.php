@@ -7,7 +7,7 @@ use File;
 /**
  * Class ConfigsLoaderTrait.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait ConfigsLoaderTrait
 {
@@ -38,7 +38,6 @@ trait ConfigsLoaderTrait
     private function loadConfigs($directory)
     {
         if (File::isDirectory($directory)) {
-
             $files = File::allFiles($directory);
 
             foreach ($files as $file) {
@@ -50,5 +49,4 @@ trait ConfigsLoaderTrait
             }
         }
     }
-
 }

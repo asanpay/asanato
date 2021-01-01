@@ -10,7 +10,7 @@ use App\Ship\Parents\Requests\Request;
 class SetUserGoogleAuthRequest extends Request
 {
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {

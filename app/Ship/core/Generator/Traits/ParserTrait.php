@@ -5,7 +5,7 @@ namespace Apiato\Core\Generator\Traits;
 /**
  * Trait ParserTrait
  *
- * @author  Johannes Schobel    <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel    <johannes.schobel@googlemail.com>
  */
 trait ParserTrait
 {
@@ -35,7 +35,12 @@ trait ParserTrait
      */
     public function parseFileStructure($filename, $data)
     {
-        $filename = str_replace(array_map([$this, 'maskFileVariables'], array_keys($data)), array_values($data), $filename);
+        $filename = str_replace(
+            array_map([$this, 'maskFileVariables'], array_keys($data)),
+            array_values($data),
+            $filename
+        );
+
         return $filename;
     }
 
@@ -50,18 +55,22 @@ trait ParserTrait
     public function parseStubContent($stub, $data)
     {
         $stub = str_replace(array_map([$this, 'maskStubVariables'], array_keys($data)), array_values($data), $stub);
+
         return $stub;
     }
 
-    private function maskPathVariables($key) {
+    private function maskPathVariables($key)
+    {
         return '{' . $key . '}';
     }
 
-    private function maskFileVariables($key) {
+    private function maskFileVariables($key)
+    {
         return '{' . $key . '}';
     }
 
-    private function maskStubVariables($key) {
+    private function maskStubVariables($key)
+    {
         return '{{' . $key . '}}';
     }
 }

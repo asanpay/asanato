@@ -13,7 +13,7 @@ class UserRegisteredNotification extends Notification implements ShouldQueue
     use Queueable;
 
     /**
-     * @var  \App\Containers\User\Models\User
+     * @var \App\Containers\User\Models\User
      */
     protected $user;
 
@@ -28,7 +28,7 @@ class UserRegisteredNotification extends Notification implements ShouldQueue
     }
 
     /**
-     * @param  mixed $notifiable
+     * @param mixed $notifiable
      *
      * @return array
      */
@@ -38,5 +38,4 @@ class UserRegisteredNotification extends Notification implements ShouldQueue
             // ... do you own customization
         ];
     }
-
 }

@@ -8,61 +8,65 @@ class CreateTransactionTables extends Migration
 
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
-            // transaction IDs
-            $table->bigIncrements('id');
-            $table->string('flag', 4)->index('uniq_flag');
+        Schema::create(
+            'transactions', function (Blueprint $table) {
+                // transaction IDs
+                $table->bigIncrements('id');
+                $table->string('flag', 4)->index('uniq_flag');
 
-            $table->unsignedSmallInteger('type')->default(\App\Containers\Transaction\Enum\TransactionType::MERCHANT);
+                $table->unsignedSmallInteger('type')->default(\App\Containers\Transaction\Enum\TransactionType::MERCHANT);
 
-            // transaction owner
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('merchant_id')->nullable()->comment('uses for merchant transaction');
-            $table->unsignedBigInteger('wallet_id')->nullable()->comment('uses for wallet top-up transaction');
+                // transaction owner
+                $table->unsignedBigInteger('user_id')->nullable();
+                $table->unsignedBigInteger('merchant_id')->nullable()->comment('uses for merchant transaction');
+                $table->unsignedBigInteger('wallet_id')->nullable()->comment('uses for wallet top-up transaction');
 
-            //request parameters
-            $table->unsignedBigInteger('amount')->comment('amount that merchant requested to gateway');
-            $table->unsignedBigInteger('payable_amount')->comment('amount that customer should pay on gateway');
-            $table->unsignedBigInteger('merchant_share')->nullable()->comment('amount that should pay to merchant after checkout');
-            $table->jsonb('multiplex')->default('{}')->comment('multiplex info');
+                //request parameters
+                $table->unsignedBigInteger('amount')->comment('amount that merchant requested to gateway');
+                $table->unsignedBigInteger('payable_amount')->comment('amount that customer should pay on gateway');
+                $table->unsignedBigInteger('merchant_share')->nullable()->comment('amount that should pay to merchant after checkout');
+                $table->jsonb('multiplex')->default('{}')->comment('multiplex info');
 
 
-            $table->string('invoice_number', 32)->nullable()->comment('invoice number at merchant side');
-            $table->string('callback_url', 255);
-            $table->string('description',255)->nullable();
-            $table->string('authorized_card',16)->nullable();
+                $table->string('invoice_number', 32)->nullable()->comment('invoice number at merchant side');
+                $table->string('callback_url', 255);
+                $table->string('description', 255)->nullable();
+                $table->string('authorized_card', 16)->nullable();
 
-            // payer information
-            $table->jsonb('payer')->nullable()->comment('payer info');
+                // payer information
+                $table->jsonb('payer')->nullable()->comment('payer info');
 
-            // gateway parameters
-            $table->unsignedInteger('psp_id')->unsigned()->nullable();
-            $table->unsignedInteger('gateway_id')->unsigned()->nullable();
-            $table->unsignedBigInteger('gateway_order_id')->nullable();
-            $table->string('gateway_token', 40)->nullable();  // before gotogate
-            $table->string('gateway_ref_id', 50)->nullable(); // after gotogate
-            $table->jsonb('gateway_callback_params')->default('{}');
+                // gateway parameters
+                $table->unsignedInteger('psp_id')->unsigned()->nullable();
+                $table->unsignedInteger('gateway_id')->unsigned()->nullable();
+                $table->unsignedBigInteger('gateway_order_id')->nullable();
+                $table->string('gateway_token', 40)->nullable();  // before gotogate
+                $table->string('gateway_ref_id', 50)->nullable(); // after gotogate
+                $table->jsonb('gateway_callback_params')->default('{}');
 
-            // psp gateway actions
-            $table->unsignedBigInteger('j_created_at')->nullable();
-            $table->dateTime('accomplished_at')->nullable();
-            $table->unsignedBigInteger('j_accomplished_at')->nullable();
-            $table->dateTime('refunded_at')->nullable();
+                // psp gateway actions
+                $table->unsignedBigInteger('j_created_at')->nullable();
+                $table->dateTime('accomplished_at')->nullable();
+                $table->unsignedBigInteger('j_accomplished_at')->nullable();
+                $table->dateTime('refunded_at')->nullable();
 
-            $table->unsignedSmallInteger('status')->default(\App\Containers\Transaction\Enum\TransactionStatus::NEW);
-            $table->unsignedSmallInteger('process')->default(\App\Containers\Transaction\Enum\TransactionProcess::NONE);
+                $table->unsignedSmallInteger('status')->default(\App\Containers\Transaction\Enum\TransactionStatus::NEW);
+                $table->unsignedSmallInteger('process')->default(\App\Containers\Transaction\Enum\TransactionProcess::NONE);
 
-            $table->jsonb('meta')->default('{}');
-            $table->string('ip');
+                $table->jsonb('meta')->default('{}');
+                $table->string('ip');
 
-            $table->timestamps();
-        });
+                $table->timestamps();
+            }
+        );
 
-        Schema::table('transactions', function (Blueprint $table) {
-            $table->foreign('user_id', 'transaction_user')->references('id')->on('users');
-            $table->foreign('merchant_id', 'transaction_merchant')->references('id')->on('merchants');
-            $table->foreign('gateway_id', 'transaction_gateway')->references('id')->on('gateways');
-        });
+        Schema::table(
+            'transactions', function (Blueprint $table) {
+                $table->foreign('user_id', 'transaction_user')->references('id')->on('users');
+                $table->foreign('merchant_id', 'transaction_merchant')->references('id')->on('merchants');
+                $table->foreign('gateway_id', 'transaction_gateway')->references('id')->on('gateways');
+            }
+        );
 
         // add GAP between gateway wallets and user wallets
         $query = 'ALTER SEQUENCE transactions_id_seq RESTART WITH 10001111;';
@@ -79,11 +83,13 @@ class CreateTransactionTables extends Migration
      */
     public function down()
     {
-        Schema::table('transactions', function ($table) {
-            $table->dropForeign('transaction_user');
-            $table->dropForeign('transaction_merchant');
-            $table->dropForeign('transaction_gateway');
-        });
+        Schema::table(
+            'transactions', function ($table) {
+                $table->dropForeign('transaction_user');
+                $table->dropForeign('transaction_merchant');
+                $table->dropForeign('transaction_gateway');
+            }
+        );
 
         Schema::dropIfExists('transactions');
     }

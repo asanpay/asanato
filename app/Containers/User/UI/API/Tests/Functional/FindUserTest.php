@@ -10,7 +10,7 @@ use App\Containers\User\Tests\ApiTestCase;
  * @group user
  * @group api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class FindUserTest extends ApiTestCase
 {
@@ -25,7 +25,7 @@ class FindUserTest extends ApiTestCase
     /**
      * @test
      */
-    public function testFindUser_()
+    public function testFindUser()
     {
         $admin = $this->getTestingUser();
 
@@ -43,7 +43,7 @@ class FindUserTest extends ApiTestCase
     /**
      * @test
      */
-    public function testFindFilteredUserResponse_()
+    public function testFindFilteredUserResponse()
     {
         $admin = $this->getTestingUser();
 
@@ -55,9 +55,9 @@ class FindUserTest extends ApiTestCase
 
         $responseContent = $this->getResponseContentObject();
 
-        # todo: to fix
-//        $this->assertEquals($admin->name, $responseContent->data->name);
-//        $this->assertEquals($admin->email, $responseContent->data->email);
+        // todo: to fix
+        //        $this->assertEquals($admin->name, $responseContent->data->name);
+        //        $this->assertEquals($admin->email, $responseContent->data->email);
 
         $this->assertNotContains('id', (array) $responseContent->data);
     }
@@ -65,7 +65,7 @@ class FindUserTest extends ApiTestCase
     /**
      * @test
      */
-    public function testFindUserWithRelation_()
+    public function testFindUserWithRelation()
     {
         $admin = $this->getTestingUser();
 
@@ -81,5 +81,4 @@ class FindUserTest extends ApiTestCase
 
         $this->assertNotNull($responseContent->data->roles);
     }
-
 }

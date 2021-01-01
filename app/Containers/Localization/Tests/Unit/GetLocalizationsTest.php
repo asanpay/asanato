@@ -20,7 +20,7 @@ class GetLocalizationsTest extends TestCase
     /**
      * @test
      */
-    public function test_if_all_supported_languages_are_returned()
+    public function testIfAllSupportedLanguagesAreReturned()
     {
         $class = App::make(GetAllLocalizationsTask::class);
         $localizations = $class->run();
@@ -33,7 +33,7 @@ class GetLocalizationsTest extends TestCase
         // now we check all localizations in particular
     }
 
-    public function test_if_specific_locale_is_returned()
+    public function testIfSpecificLocaleIsReturned()
     {
         $class = App::make(GetAllLocalizationsTask::class);
         $localizations = $class->run();
@@ -43,7 +43,7 @@ class GetLocalizationsTest extends TestCase
         $this->assertContainsEquals($unsupportedLocale, $localizations);
     }
 
-    public function test_if_specific_locale_with_regions_is_returned()
+    public function testIfSpecificLocaleWithRegionsIsReturned()
     {
         $class = App::make(GetAllLocalizationsTask::class);
         $localizations = $class->run();
@@ -53,7 +53,7 @@ class GetLocalizationsTest extends TestCase
         $this->assertContainsEquals($unsupportedLocale, $localizations);
     }
 
-    public function test_if_wrong_locale_is_not_returned()
+    public function testIfWrongLocaleIsNotReturned()
     {
         $class = App::make(GetAllLocalizationsTask::class);
         $localizations = $class->run();

@@ -13,7 +13,7 @@ use App\Containers\User\Models\User;
  * @group authorization
  * @group api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class SyncUserRolesTest extends ApiTestCase
 {
@@ -60,5 +60,4 @@ class SyncUserRolesTest extends ApiTestCase
 
         $this->assertContains($data['roles_ids'][1], $roleIds);
     }
-
 }

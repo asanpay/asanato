@@ -9,7 +9,7 @@ use App\Ship\Transporters\DataTransporter;
 /**
  * Class GenerateSwaggerCommand
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class GenerateSwaggerCommand extends ConsoleCommand
 {
@@ -45,5 +45,4 @@ class GenerateSwaggerCommand extends ConsoleCommand
 
         Apiato::call('Documentation@GenerateSwaggerAction', [$transporter]);
     }
-
 }

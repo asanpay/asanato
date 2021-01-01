@@ -9,10 +9,10 @@ use App\Containers\Authorization\Tests\ApiTestCase;
 /**
  * Class SyncPermissionsOnRoleTest.
  *
- * @group authorization
- * @group api
+ * @group  authorization
+ * @group  api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class SyncPermissionsOnRoleTest extends ApiTestCase
 {
@@ -27,7 +27,7 @@ class SyncPermissionsOnRoleTest extends ApiTestCase
     /**
      * @test
      */
-    public function testSyncDuplicatedPermissionsToRole_()
+    public function testSyncDuplicatedPermissionsToRole()
     {
         $permissionA = factory(Permission::class)->create(['display_name' => 'AAA']);
         $permissionB = factory(Permission::class)->create(['display_name' => 'BBB']);
@@ -37,7 +37,7 @@ class SyncPermissionsOnRoleTest extends ApiTestCase
 
         $data = [
             'role_id'         => $roleA->getHashedKey(),
-            'permissions_ids' => [$permissionA->getHashedKey(), $permissionB->getHashedKey()]
+            'permissions_ids' => [$permissionA->getHashedKey(), $permissionB->getHashedKey()],
         ];
 
         // send the HTTP request
@@ -46,12 +46,13 @@ class SyncPermissionsOnRoleTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas('role_has_permissions', [
-            'permission_id' => $permissionA->id,
-            'permission_id' => $permissionB->id,
-            'role_id'       => $roleA->id
-        ]);
-
+        $this->assertDatabaseHas(
+            'role_has_permissions',
+            [
+                'permission_id' => $permissionA->id,
+                'permission_id' => $permissionB->id,
+                'role_id'       => $roleA->id,
+            ]
+        );
     }
-
 }

@@ -9,7 +9,7 @@ use Apiato\Core\Abstracts\Providers\RoutesProvider as AbstractRoutesProvider;
  *
  * A.K.A app/Providers/RouteServiceProvider.php
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class RoutesProvider extends AbstractRoutesProvider
 {
@@ -21,5 +21,4 @@ class RoutesProvider extends AbstractRoutesProvider
     {
         parent::boot();
     }
-
 }

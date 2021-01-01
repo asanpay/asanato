@@ -1,9 +1,6 @@
 @setup
-require __DIR__.'/vendor/autoload.php';
-(new \Dotenv\Dotenv(__DIR__, '.env'))->load();
-
 $repository = "asanpay/asanato";
-$baseDir = "~/{$server}";
+$baseDir = "~/www/asanpay";
 $releasesDir = "{$baseDir}/releases";
 $persistentDir = "{$baseDir}/persistent";
 $currentDir = "{$baseDir}/current";
@@ -17,7 +14,7 @@ return "echo '\033[32m" .$message. "\033[0m';\n";
 }
 @endsetup
 
-@servers(['local' => '127.0.0.1', 'staging  => 'gitlab-runner@168.119.187.107', 'remote' => 'gitlab-runner@159.69.140.83'])
+@servers(['local' => '127.0.0.1', 'staging'  => 'gitlab-runner@168.119.187.107', 'remote' => 'gitlab-runner@159.69.140.83'])
 
 @story('deploy')
 startDeployment
@@ -47,6 +44,7 @@ git pull origin master
 
 @task('cloneRepository', ['on' => 'remote'])
 {{ logMessage("🌀  Cloning repository...") }}
+[ -d {{ $baseDir }} ] || mkdir -p {{ $baseDir }};
 [ -d {{ $releasesDir }} ] || mkdir {{ $releasesDir }};
 [ -d {{ $persistentDir }} ] || mkdir {{ $persistentDir }};
 [ -d {{ $persistentDir }}/media ] || mkdir {{ $persistentDir }}/media;

@@ -22,7 +22,7 @@ class CreateMerchantRequest extends Request
     /**
      * Define which Roles and/or Permissions has access to this request.
      *
-     * @var  array
+     * @var array
      */
     protected $access = [
         'permissions' => '',
@@ -32,7 +32,7 @@ class CreateMerchantRequest extends Request
     /**
      * Id's that needs decoding before applying the validation rules.
      *
-     * @var  array
+     * @var array
      */
     protected $decode = [
          'sharing.*.wallet',
@@ -42,14 +42,14 @@ class CreateMerchantRequest extends Request
      * Defining the URL parameters (e.g, `/user/{id}`) allows applying
      * validation rules on them and allows accessing them like request data.
      *
-     * @var  array
+     * @var array
      */
     protected $urlParameters = [
         // 'id',
     ];
 
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {
@@ -59,10 +59,12 @@ class CreateMerchantRequest extends Request
             'domain'            => [
                 'required',
                 new Domain,
-                Rule::unique('merchants')->where(function ($query) use ($domain) {
-                    return $query->where('domain', $domain)
-                        ->where('status', 'true');
-                })],
+                Rule::unique('merchants')->where(
+                    function ($query) use ($domain) {
+                        return $query->where('domain', $domain)
+                            ->where('status', 'true');
+                    }
+                )],
             'ip_access'      => 'required|array|min:1',
             "ip_access.*"    => "required|ip|distinct",
             'multiplex_support' => 'required|boolean',
@@ -73,12 +75,14 @@ class CreateMerchantRequest extends Request
     }
 
     /**
-     * @return  bool
+     * @return bool
      */
     public function authorize()
     {
-        return $this->check([
+        return $this->check(
+            [
             'hasAccess',
-        ]);
+            ]
+        );
     }
 }

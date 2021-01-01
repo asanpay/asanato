@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Config;
 /**
  * Class GetAllLocalizationsTask
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class GetAllLocalizationsTask extends Task
 {
 
     /**
-     * @return  \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection
      */
     public function run(): Collection
     {

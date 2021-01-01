@@ -22,7 +22,6 @@ class SendOtpAction extends Action
         try {
             switch ($data->reason) {
                 case OtpReason::SIGN_UP:
-                {
                     // normalize phone number
                     $data->to = mobilify($data->to);
 
@@ -32,9 +31,8 @@ class SendOtpAction extends Action
                         return [null, __('auth.signup.dup_conf_mobile')];
                     }
                     break;
-                }
                 case OtpReason::RESET_PASS:
-                case OtpReason::TRANSFER_MONEY: {
+                case OtpReason::TRANSFER_MONEY:
                     $data->to = mobilify($data->mobile);
 
                     $existUser = Apiato::call('User@FindUserByMobileTask', [$data->to]);
@@ -42,8 +40,7 @@ class SendOtpAction extends Action
                         throw new UserNotFoundException();
                     }
                     break;
-                }
-                case OtpReason::EMAIL_VERIFY: {
+                case OtpReason::EMAIL_VERIFY:
                     $data->to = strtolower($data->email);
 
                     $existUser = Apiato::call('User@FindUserByEmailTask', [$data->to]);
@@ -56,11 +53,9 @@ class SendOtpAction extends Action
                     }
 
                     break;
-                }
                 default:
-                {
                     return [null, "could not detect OTP reason: {$data->reason}"];
-                }
+                    break;
             }
 
             // send otp
@@ -69,6 +64,7 @@ class SendOtpAction extends Action
             if ($this->weAreOnApiDebug()) {
                 throw $e;
             }
+
             return [null, __('auth.otp.opt_send_err')];
         }
     }

@@ -14,14 +14,16 @@ class CreateWithdrawalAction extends Action
 {
     public function run(Request $request)
     {
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             'amount',
             'wallet_id',
             'bank_account_id',
             'description',
             'payment_id',
             'institution_id',
-        ]);
+            ]
+        );
 
         $data['user_id']    = $request->user()->id;
         $data['uid']        = (string)Str::orderedUuid();

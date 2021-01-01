@@ -13,7 +13,7 @@ class TicketPriority
     const HIGH   = '4';
 
 
-    function translations()
+    public function translations()
     {
         return [
             self::LOW    => 'کم',

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Ship\Exceptions\Codes;
+
 use App\Ship\Exceptions\InternalErrorException;
 use Exception;
 use ReflectionClass;
@@ -8,7 +9,7 @@ use ReflectionClass;
 /**
  * Class ErrorCodeManager
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class ErrorCodeManager
 {
@@ -46,8 +47,8 @@ class ErrorCodeManager
      * Returns the value for a given key in the array or a default value
      *
      * @param array $error
-     * @param       $key
-     * @param       $default
+     * @param $key
+     * @param $default
      *
      * @return mixed
      */
@@ -83,14 +84,13 @@ class ErrorCodeManager
     {
         try {
             $class = new $codeTable;
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             throw new InternalErrorException();
         }
 
         // now we need to get all errors (i.e., constants) from this class!
         $reflectionClass = new ReflectionClass($class);
-        $constants = $reflectionClass->getConstants();
+        $constants       = $reflectionClass->getConstants();
 
         return $constants;
     }

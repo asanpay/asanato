@@ -5,7 +5,6 @@ namespace App\Containers\Otp\Tasks;
 use App\Containers\Otp\Data\Repositories\OtpTokenRepository;
 use App\Ship\Parents\Tasks\Task;
 
-
 class IsIpEligibleToRequestOtpTask extends Task
 {
     protected $repository;

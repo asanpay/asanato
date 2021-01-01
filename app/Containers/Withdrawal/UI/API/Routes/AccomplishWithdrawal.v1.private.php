@@ -1,19 +1,19 @@
 <?php
 
 /**
- * @apiGroup           Withdrawal
- * @apiName            accomplishWithdrawal
+ * @apiGroup Withdrawal
+ * @apiName  accomplishWithdrawal
  *
- * @api                {PATCH} /v1/withdrawals-accomplish/:id Accomplish withdrawal
- * @apiDescription     mark a withdraw request as accomplished (by system operator)
+ * @api            {PATCH} /v1/withdrawals-accomplish/:id Accomplish withdrawal
+ * @apiDescription mark a withdraw request as accomplished (by system operator)
  *
- * @apiVersion         1.0.0
- * @apiPermission      update-withdrawals
+ * @apiVersion    1.0.0
+ * @apiPermission update-withdrawals
  *
- * @apiParam           {String}  tracking_id
- * @apiParam           {String}  processed_at
+ * @apiParam {String}  tracking_id
+ * @apiParam {String}  processed_at
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 200 OK
 {
     "data": {
@@ -38,11 +38,16 @@
 }
  */
 
-/** @var Route $router */
-$router->patch('withdrawals-accomplish/{id}', [
-    'as' => 'api_withdrawal_accomplish_withdrawal',
-    'uses'  => 'Controller@accomplishWithdrawal',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+/**
+ * @var Route $router
+ */
+$router->patch(
+    'withdrawals-accomplish/{id}',
+    [
+        'as' => 'api_withdrawal_accomplish_withdrawal',
+        'uses'  => 'Controller@accomplishWithdrawal',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);

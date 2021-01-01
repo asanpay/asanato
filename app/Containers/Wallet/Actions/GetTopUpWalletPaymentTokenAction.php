@@ -17,14 +17,16 @@ class GetTopUpWalletPaymentTokenAction extends Action
      */
     public function run(Request $request): array
     {
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             'wallet_id',
             'amount',
             'description',
             'client_ip',
             'callback_url',
             'is_mobile_app',
-        ]);
+            ]
+        );
 
 
         //$wallet = Apiato::call('Wallet@FindWalletByIdTask', [$data['wallet_id']]);

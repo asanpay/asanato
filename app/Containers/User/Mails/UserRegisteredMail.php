@@ -12,7 +12,7 @@ class UserRegisteredMail extends Mail implements ShouldQueue
     use Queueable;
 
     /**
-     * @var  \App\Containers\User\Models\User
+     * @var \App\Containers\User\Models\User
      */
     protected $user;
 
@@ -35,8 +35,10 @@ class UserRegisteredMail extends Mail implements ShouldQueue
     {
         return $this->view('user::user-registered')
             ->to($this->user->email, $this->user->name)
-            ->with([
+            ->with(
+                [
                 'name' => $this->user->name,
-            ]);
+                ]
+            );
     }
 }

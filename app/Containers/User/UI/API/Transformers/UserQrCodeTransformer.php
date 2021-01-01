@@ -24,10 +24,13 @@ class UserQrCodeTransformer extends Transformer
             'qr_code'      => $user->getInlineQrCode(),
         ];
 
-        $response = $this->ifAdmin([
-            'real_id'    => $user->id,
-            'deleted_at' => $user->deleted_at,
-        ], $response);
+        $response = $this->ifAdmin(
+            [
+                'real_id'    => $user->id,
+                'deleted_at' => $user->deleted_at,
+            ],
+            $response
+        );
 
         return $response;
     }

@@ -18,8 +18,8 @@ class DeleteWithdrawalAction extends Action
         $withdrawal = Apiato::call('Withdrawal@FindWithdrawalByIdTask', [$request->id]);
 
         if ($withdrawal->status < WithdrawalStatus::PROCESSING &&
-            (time() - strtotime($withdrawal->created_at)) < Config::get('withdrawal-container.cancellation_deadline')) {
-
+            (time() - strtotime($withdrawal->created_at)) < Config::get('withdrawal-container.cancellation_deadline')
+        ) {
             $this->createWithdrawCorrectionTransaction($withdrawal, $request->ip());
 
             return Apiato::call('Withdrawal@DeleteWithdrawalTask', [$withdrawal, $request->user()->id, $request->ip()]);

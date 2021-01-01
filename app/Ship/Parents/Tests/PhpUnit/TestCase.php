@@ -9,7 +9,7 @@ use Illuminate\Contracts\Console\Kernel as ApiatoConsoleKernel;
 /**
  * Class TestCase
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 abstract class TestCase extends AbstractTestCase
 {
@@ -44,7 +44,7 @@ abstract class TestCase extends AbstractTestCase
         // override the default subDomain of the base URL when subDomain property is declared inside a test
         $this->overrideSubDomain();
 
-        $app = require __DIR__ . '/../../../../../bootstrap/app.php';
+        $app = include __DIR__ . '/../../../../../bootstrap/app.php';
 
         $app->make(ApiatoConsoleKernel::class)->bootstrap();
 
@@ -53,5 +53,4 @@ abstract class TestCase extends AbstractTestCase
 
         return $app;
     }
-
 }

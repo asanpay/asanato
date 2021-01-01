@@ -26,7 +26,7 @@ class CheckLocalizationMiddlewareTest extends ApiTestCase
     /**
      * @test
      */
-    public function test_if_middleware_sets_default_app_language()
+    public function testIfMiddlewareSetsDefaultSppLanguage()
     {
         $data = [];
         $requestHeaders = [];
@@ -43,7 +43,7 @@ class CheckLocalizationMiddlewareTest extends ApiTestCase
         $response->assertHeader('content-language', $defaultLanguage);
     }
 
-    public function test_if_middleware_sets_custom_language()
+    public function testIfMiddlewareSetsCustomLanguage()
     {
         $language = 'fa';
 
@@ -62,7 +62,7 @@ class CheckLocalizationMiddlewareTest extends ApiTestCase
         $response->assertHeader('content-language', $language);
     }
 
-    public function test_if_middleware_throws_error_on_wrong_language()
+    public function testIfMiddlewareThrowsErrorOnWrongLanguage()
     {
         $language = 'xxx';
 
@@ -78,5 +78,4 @@ class CheckLocalizationMiddlewareTest extends ApiTestCase
         $response->assertStatus(200);
         $response->assertHeader('content-language', 'fa');
     }
-
 }

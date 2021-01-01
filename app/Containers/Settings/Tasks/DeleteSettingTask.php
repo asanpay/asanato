@@ -28,8 +28,7 @@ class DeleteSettingTask extends Task
     {
         try {
             return $this->repository->delete($setting->id);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             throw new DeleteResourceFailedException();
         }
     }

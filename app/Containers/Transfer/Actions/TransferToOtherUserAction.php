@@ -12,7 +12,8 @@ use App\Containers\Tx\Enum\TxType;
 use App\Containers\Tx\Models\Tx;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Requests\Request;
-use Apiato\Core\Foundation\Facades\Apiato;;
+use Apiato\Core\Foundation\Facades\Apiato;
+
 use Illuminate\Support\Facades\DB;
 use Tartan\Log\Facades\XLog;
 
@@ -22,19 +23,24 @@ class TransferToOtherUserAction extends Action
     {
         $userId = $request->user()->id;
 
-        $data = $request->sanitizeInput([
-            'src_wallet_id',
-            'dst_user_id',
-            'amount',
-            'description',
-            'client_ip',
-            'token',
-        ]);
+        $data = $request->sanitizeInput(
+            [
+                'src_wallet_id',
+                'dst_user_id',
+                'amount',
+                'description',
+                'client_ip',
+                'token',
+            ]
+        );
 
         try {
             DB::beginTransaction();
 
-            $otpValidity = Apiato::call('Otp@VerifyOtpAction', [$request->user(), $request->token, OtpReason::TRANSFER_MONEY]);
+            $otpValidity = Apiato::call(
+                'Otp@VerifyOtpAction',
+                [$request->user(), $request->token, OtpReason::TRANSFER_MONEY]
+            );
 
             if ($otpValidity !== true) {
                 throw new InvalidOtpException();
@@ -65,24 +71,24 @@ class TransferToOtherUserAction extends Action
             $dstWallet = Apiato::call('Wallet@FindUserDefaultWalletTask', [$data['dst_user_id']]);
 
             // create both debtor/creditor transactions
-            $tx = Apiato::call('Transfer@WalletToWalletTransferTask', [
-                $srcWallet->id,
-                $dstWallet->id,
-                $data['amount'],
-                TxType::TRANSFER,
-                $request->getClientIp(),
-                // TX meta
+            $tx = Apiato::call(
+                'Transfer@WalletToWalletTransferTask',
                 [
-                    'description' => $data['description'],
-                ],
-            ]);
-
+                    $srcWallet->id,
+                    $dstWallet->id,
+                    $data['amount'],
+                    TxType::TRANSFER,
+                    $request->getClientIp(),
+                    // TX meta
+                    [
+                        'description' => $data['description'],
+                    ],
+                ]
+            );
 
             DB::commit();
 
             return $tx;
-
-
         } catch (\Exception $e) {
             DB::rollBack();
             XLog::exception($e);

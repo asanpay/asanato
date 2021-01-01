@@ -7,7 +7,7 @@ use Apiato\Core\Abstracts\Repositories\Repository as AbstractRepository;
 /**
  * Class Repository.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class Repository extends AbstractRepository
 {
@@ -19,5 +19,4 @@ abstract class Repository extends AbstractRepository
     {
         parent::boot();
     }
-
 }

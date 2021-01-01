@@ -11,11 +11,13 @@ class CreateBankAccountAction extends Action
 {
     public function run(Request $request): BankAccount
     {
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             'iban',
             'bank_id',
             'default',
-        ]);
+            ]
+        );
         $data['ip'] = $request->getClientIp();
 
         if ($request->user()->can('create-bank-accounts') && $request->has('user_id')) {
@@ -26,12 +28,17 @@ class CreateBankAccountAction extends Action
             $data['user_id'] = $request->user()->id;
         }
 
-        if (Apiato::call('BankAccount@GetBankAccountsTask', [], [
+        if (Apiato::call(
+            'BankAccount@GetBankAccountsTask',
+            [],
+            [
             'addRequestCriteria',
             [
                 'pushCurrentUserCriteria' => [Apiato::call('User@FindUserByIdTask', [$data['user_id']])],
             ],
-        ])->count() == 0) {
+            ]
+        )->count() == 0
+        ) {
             // This is the first user's bank account
             $data['default'] = true;
         }

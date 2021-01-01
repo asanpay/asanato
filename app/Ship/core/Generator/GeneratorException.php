@@ -5,7 +5,7 @@ namespace Apiato\Core\Generator;
 /**
  * Class GeneratorException
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class GeneratorException extends \Exception
 {
@@ -16,5 +16,4 @@ class GeneratorException extends \Exception
      * @var string
      */
     protected $message = 'Could not determine what you are trying to do. Sorry! Check your migration name.';
-
 }

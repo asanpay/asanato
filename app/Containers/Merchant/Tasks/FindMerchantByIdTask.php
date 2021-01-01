@@ -21,8 +21,7 @@ class FindMerchantByIdTask extends Task
     {
         try {
             return $this->repository->find($id);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             throw new NotFoundException();
         }
     }

@@ -8,14 +8,14 @@ use App\Ship\Parents\Transformers\Transformer;
 class HelpdeskTransformer extends Transformer
 {
     /**
-     * @var  array
+     * @var array
      */
     protected $defaultIncludes = [
 
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $availableIncludes = [
 
@@ -33,13 +33,15 @@ class HelpdeskTransformer extends Transformer
             'id' => $entity->getHashedKey(),
             'created_at' => $entity->created_at,
             'updated_at' => $entity->updated_at,
-
         ];
 
-        $response = $this->ifAdmin([
-            'real_id'    => $entity->id,
-            // 'deleted_at' => $entity->deleted_at,
-        ], $response);
+        $response = $this->ifAdmin(
+            [
+                'real_id'    => $entity->id,
+                // 'deleted_at' => $entity->deleted_at,
+            ],
+            $response
+        );
 
         return $response;
     }

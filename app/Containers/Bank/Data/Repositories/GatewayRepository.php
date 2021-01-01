@@ -19,16 +19,16 @@ class GatewayRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return Gateway::class;
     }
 
     /**
-     * @param bool $direct
+     * @param bool      $direct
      * @param bool|null $refundSupport
-     * @param bool $active
-     * @param array $patches
+     * @param bool      $active
+     * @param array     $patches
      *
      * @return Collection
      */
@@ -41,20 +41,23 @@ class GatewayRepository extends Repository
         // @todo cache the result
         $gates = DB::table($this->getTableName() . ' as g')
             ->select(['g.id', 'g.properties', 'g.psp_id', 'psps.slug as psp'])
-            ->join('psps', function ($join) use ($direct, $refundSupport) {
-                $join->on('g.psp_id', '=', 'psps.id');
+            ->join(
+                'psps',
+                function ($join) use ($direct, $refundSupport) {
+                    $join->on('g.psp_id', '=', 'psps.id');
 
-                // include /exclude app gateway
-                if ($direct == true) {
-                    $join->where('psps.app_gate', false);
-                } else {
-                    $join->where('psps.app_gate', true);
+                    // include /exclude app gateway
+                    if ($direct == true) {
+                        $join->where('psps.app_gate', false);
+                    } else {
+                        $join->where('psps.app_gate', true);
+                    }
+                    // only gateways that support refund
+                    if ($refundSupport == true) {
+                        $join->where('psps.refund_support', true);
+                    }
                 }
-                // only gateways that support refund
-                if ($refundSupport == true) {
-                    $join->where('psps.refund_support', true);
-                }
-            });
+            );
 
         // only active gateways
         if ($active === true) {
@@ -63,11 +66,13 @@ class GatewayRepository extends Repository
 
         $gates = $gates->get();
 
-        $gates = $gates->map(function ($item) use($patches){
-            $item->properties = array_merge($patches, json_decode($item->properties, true));
+        $gates = $gates->map(
+            function ($item) use ($patches) {
+                $item->properties = array_merge($patches, json_decode($item->properties, true));
 
-            return $item;
-        });
+                return $item;
+            }
+        );
 
         return  $gates;
     }

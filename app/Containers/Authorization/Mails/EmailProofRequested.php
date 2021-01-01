@@ -33,8 +33,10 @@ class EmailProofRequested extends Mailable
     {
         return $this->view('authorization::authz-emailproof-requested')
             ->to($this->otpToken->to)
-            ->with([
+            ->with(
+                [
                 'token' => $this->otpToken->token,
-            ]);
+                ]
+            );
     }
 }

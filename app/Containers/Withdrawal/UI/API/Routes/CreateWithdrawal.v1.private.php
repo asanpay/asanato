@@ -1,29 +1,34 @@
 <?php
 
 /**
- * @apiGroup           Withdrawal
- * @apiName            createWithdrawal
+ * @apiGroup Withdrawal
+ * @apiName  createWithdrawal
  *
- * @api                {POST} /v1/withdrawals Create Withdrawal
- * @apiDescription     Endpoint description here..
+ * @api            {POST} /v1/withdrawals Create Withdrawal
+ * @apiDescription Endpoint description here..
  *
- * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiVersion    1.0.0
+ * @apiPermission none
  *
- * @apiParam           {String}  parameters here..
+ * @apiParam {String}  parameters here..
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
+ {
+     // Insert the response of the request here...
 }
  */
 
-/** @var Route $router */
-$router->post('withdrawals', [
-    'as' => 'api_withdrawal_create_withdrawal',
-    'uses'  => 'Controller@createWithdrawal',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+/**
+ * @var Route $router
+ */
+$router->post(
+    'withdrawals',
+    [
+        'as' => 'api_withdrawal_create_withdrawal',
+        'uses'  => 'Controller@createWithdrawal',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);

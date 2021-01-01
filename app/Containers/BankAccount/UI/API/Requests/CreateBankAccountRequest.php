@@ -14,7 +14,7 @@ class CreateBankAccountRequest extends Request
     /**
      * Define which Roles and/or Permissions has access to this request.
      *
-     * @var  array
+     * @var array
      */
     protected $access = [
         'permissions' => '',
@@ -27,7 +27,7 @@ class CreateBankAccountRequest extends Request
     ];
 
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {
@@ -35,10 +35,12 @@ class CreateBankAccountRequest extends Request
             'iban'    => [
                 'required',
                 'digits:24',
-                Rule::unique('bank_accounts')->where(function ($query) {
-                    return $query->where('status', BankAccountStatus::APPROVED)
-                        ->whereNull('deleted_at');
-                }),
+                Rule::unique('bank_accounts')->where(
+                    function ($query) {
+                        return $query->where('status', BankAccountStatus::APPROVED)
+                            ->whereNull('deleted_at');
+                    }
+                ),
             ],
             'default' => 'nullable|boolean',
             'user_id' => 'nullable|exists:users,id',
@@ -57,12 +59,14 @@ class CreateBankAccountRequest extends Request
     }
 
     /**
-     * @return  bool
+     * @return bool
      */
     public function authorize()
     {
-        return $this->check([
+        return $this->check(
+            [
             'hasAccess',
-        ]);
+            ]
+        );
     }
 }

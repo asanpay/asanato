@@ -10,9 +10,11 @@ class UpdateTransactionAction extends Action
 {
     public function run(Request $request)
     {
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             // add your request data here
-        ]);
+            ]
+        );
 
         $transaction = Apiato::call('Transaction@UpdateTransactionTask', [$request->id, $data]);
 

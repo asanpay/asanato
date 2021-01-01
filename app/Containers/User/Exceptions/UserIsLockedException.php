@@ -13,7 +13,8 @@ class UserIsLockedException extends Exception
 
     public $message = 'User is locked!';
 
-    public function addCustomData() {
+    public function addCustomData()
+    {
         return [
             'message' => __('auth.user_is_locked'),
         ];

@@ -8,13 +8,13 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 /**
  * Class OrderByNameCriteria.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class OrderByNameCriteria extends Criteria
 {
 
     /**
-     * @param                                                   $model
+     * @param $model
      * @param \Prettus\Repository\Contracts\RepositoryInterface $repository
      *
      * @return mixed
@@ -23,5 +23,4 @@ class OrderByNameCriteria extends Criteria
     {
         return $model->orderBy('name', 'asc');
     }
-
 }

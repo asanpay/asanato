@@ -12,7 +12,7 @@ use Apiato\Core\Abstracts\Providers\AuthProvider as AbstractAuthProvider;
  *
  * A.K.A App\Providers\AuthServiceProvider.php
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class AuthProvider extends AbstractAuthProvider
 {
@@ -33,5 +33,4 @@ class AuthProvider extends AbstractAuthProvider
     {
         parent::boot();
     }
-
 }

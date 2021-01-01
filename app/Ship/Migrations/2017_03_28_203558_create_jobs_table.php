@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Class CreateJobsTable
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
+// @codingStandardsIgnoreLine
 class CreateJobsTable extends Migration
 {
 
@@ -20,18 +21,21 @@ class CreateJobsTable extends Migration
      */
     public function up()
     {
-        if(Config::get('queue.default') == 'database'){
-            Schema::create('jobs', function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->string('queue');
-                $table->longText('payload');
-                $table->tinyInteger('attempts')->unsigned();
-                $table->unsignedInteger('reserved_at')->nullable();
-                $table->unsignedInteger('available_at');
-                $table->unsignedInteger('created_at');
+        if (Config::get('queue.default') == 'database') {
+            Schema::create(
+                'jobs',
+                function (Blueprint $table) {
+                    $table->bigIncrements('id');
+                    $table->string('queue');
+                    $table->longText('payload');
+                    $table->tinyInteger('attempts')->unsigned();
+                    $table->unsignedInteger('reserved_at')->nullable();
+                    $table->unsignedInteger('available_at');
+                    $table->unsignedInteger('created_at');
 
-                $table->index(['queue', 'reserved_at']);
-            });
+                    $table->index(['queue', 'reserved_at']);
+                }
+            );
         }
     }
 
@@ -44,5 +48,4 @@ class CreateJobsTable extends Migration
     {
         Schema::dropIfExists('jobs');
     }
-
 }

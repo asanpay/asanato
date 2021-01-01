@@ -37,13 +37,16 @@ class TransactionHasDoubleSpendingTask extends Task
 
             if (!empty($doubleTransaction)) {
                 // double spending detected
-                Xlog::emergency('referenceId double spending detected', [
-                    'ref'      => $referenceId,
-                    'order_id' => $transaction->gateway_order_id,
-                    'ips'      => $request->ips(),
-                    'gate'     => $request->psp,
-                    $transaction->tagify(),
-                ]);
+                Xlog::emergency(
+                    'referenceId double spending detected',
+                    [
+                        'ref'      => $referenceId,
+                        'order_id' => $transaction->gateway_order_id,
+                        'ips'      => $request->ips(),
+                        'gate'     => $request->psp,
+                        $transaction->tagify(),
+                    ]
+                );
 
                 // mark transaction as double spending
                 $transaction->addToJsonb('double_spending', true, false);

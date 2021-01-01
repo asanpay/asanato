@@ -16,12 +16,14 @@ class ExceptionBuilder
     /**
      * @param \Exception $e
      *
-     * @return  \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public static function make(Throwable $e)
     {
-        return new JsonResponse([
+        return new JsonResponse(
+            [
             'status' => 'error',
-        ]);
+            ]
+        );
     }
 }

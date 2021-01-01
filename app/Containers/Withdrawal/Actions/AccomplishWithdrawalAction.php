@@ -24,11 +24,14 @@ class AccomplishWithdrawalAction extends Action
         // create outgoing wallet tx
         Apiato::call('Tx@CreateOutgoingTxFromWithdrawSubAction', [$withdrawal]);
 
-        return Apiato::call('Withdrawal@AccomplishWithdrawalTask', [
-            $withdrawal,
-            $request->user()->id,
-            $request->ip(),
-            $request->input('tracking_id')
-        ]);
+        return Apiato::call(
+            'Withdrawal@AccomplishWithdrawalTask',
+            [
+                $withdrawal,
+                $request->user()->id,
+                $request->ip(),
+                $request->input('tracking_id')
+            ]
+        );
     }
 }

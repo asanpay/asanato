@@ -24,15 +24,20 @@ use App\Ship\Transporters\DataTransporter;
 class Controller extends ApiController
 {
     /**
-     * @param CreateOtpRequest $request
+     * @param  CreateOtpRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function createOtp(CreateOtpRequest $request)
     {
-        $t = new CreateOtpTokenTransporter(array_merge($request->all(), [
-            'ip' => $request->ip(),
-            'to' => $request->has('mobile') ? $request->input('mobile') : $request->input('email'),
-        ]));
+        $t = new CreateOtpTokenTransporter(
+            array_merge(
+                $request->all(),
+                [
+                    'ip' => $request->ip(),
+                    'to' => $request->has('mobile') ? $request->input('mobile') : $request->input('email'),
+                ]
+            )
+        );
 
         list ($message, $err) = Apiato::call('Otp@SendOtpAction', [$t]);
 
@@ -44,7 +49,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param VerifyGuestOtpRequest $request
+     * @param  VerifyGuestOtpRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function verifyGuestOtpToken(VerifyGuestOtpRequest $request)
@@ -59,7 +64,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param VerifyOtpRequest $request
+     * @param  VerifyOtpRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function verifyOtpToken(VerifyOtpRequest $request)

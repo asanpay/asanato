@@ -13,7 +13,7 @@ class DeleteBankAccountRequest extends Request
     /**
      * Define which Roles and/or Permissions has access to this request.
      *
-     * @var  array
+     * @var array
      */
     protected $access = [
         'permissions' => 'delete-bank-accounts',
@@ -21,7 +21,7 @@ class DeleteBankAccountRequest extends Request
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $decode = [
         'id',
@@ -29,7 +29,7 @@ class DeleteBankAccountRequest extends Request
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $urlParameters = [
         'id',
@@ -37,7 +37,7 @@ class DeleteBankAccountRequest extends Request
     ];
 
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {
@@ -48,17 +48,22 @@ class DeleteBankAccountRequest extends Request
     }
 
     /**
-     * @return  bool
+     * @return bool
      */
     public function authorize()
     {
-        return $this->check([
+        return $this->check(
+            [
             'hasAccess|isOwner',
-        ]);
+            ]
+        );
     }
 
     public function isOwner()
     {
-      return ($this->id && Apiato::call('BankAccount@FindBankAccountByIdTask', [$this->id])->user_id == $this->user_id);
+        return ($this->id && Apiato::call(
+            'BankAccount@FindBankAccountByIdTask',
+            [$this->id]
+        )->user_id == $this->user_id);
     }
 }

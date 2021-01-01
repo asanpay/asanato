@@ -20,11 +20,13 @@ class GetSystemWalletTask extends Task
     public function run(string $type): Wallet
     {
         try {
-            $wallet = $this->repository->findWhere([
+            $wallet = $this->repository->findWhere(
+                [
                 'type'           => $type,
                 'user_id'        => config('settings.app_user_id'),
                 'belongs_to_app' => true,
-            ]);
+                ]
+            );
             if (empty($wallet)) {
                 throw new NotFoundException();
             }

@@ -17,15 +17,17 @@ class GatewayPageAction extends Action
     public function run(string $token, IpgGatewayPageRequest $request)
     {
         try {
-
             // validate token
-            $validator = Validator::make(['token' => $token], [
-                'token' => [
-                    'required',
-                    'alpha_dash',
-                    'regex:' . config('regex.token_regex'),
-                ],
-            ]);
+            $validator = Validator::make(
+                ['token' => $token],
+                [
+                    'token' => [
+                        'required',
+                        'alpha_dash',
+                        'regex:' . config('regex.token_regex'),
+                    ],
+                ]
+            );
 
             if ($validator->fails()) {
                 return view('ipg::gate')->withErrors([__('ipg.transaction_not_found')]);
@@ -47,12 +49,15 @@ class GatewayPageAction extends Action
             $meta = $transaction->getJsonb();
 
             // Start to verify the transaction \\
-            $availableGateways = Apiato::call('Bank@GetAvailableGatewaysTask', [
-                $meta->direct ?? true,
-                $meta->refund ?? false,
-                true,
-                ['mode' => config('shaparak.mode')] // patch shaparak mode into gateway properties
-            ]);
+            $availableGateways = Apiato::call(
+                'Bank@GetAvailableGatewaysTask',
+                [
+                    $meta->direct ?? true,
+                    $meta->refund ?? false,
+                    true,
+                    ['mode' => config('shaparak.mode')] // patch shaparak mode into gateway properties
+                ]
+            );
 
             if ($availableGateways->count() < 1) {
                 return view('ipg::gate')->withErrors([__('ipg.no_active_gate_found')]);
@@ -72,7 +77,6 @@ class GatewayPageAction extends Action
                     $transaction->updatePspInfo($paymentGateway->psp_id, $paymentGateway->id);
 
                     break; // PSP defined
-
                 } catch (\Exception $e) {
                     // could not generate goto gate form
                     XLog::debug('request token throws EXCEPTION');
@@ -90,15 +94,21 @@ class GatewayPageAction extends Action
 
             return view('ipg::gate')->withErrors([$e->getMessage()]);
         }
-        $form = $form ?? '<a href="?shetab" class="btn btn-info btn-sm btn-block mx-3"><i class="fa fa-credit-card"></i> '.__('ipg.shetab_payment').'</a>';
+        $form = $form ??
+            '<a href="?shetab" class="btn btn-info btn-sm btn-block mx-3"><i class="fa fa-credit-card"></i> ' .
+            __('ipg.shetab_payment') .
+            '</a>';
 
 
         // view goto gate view
-        return view('ipg::gate', [
-            'transaction' => $transaction,
-            'gateway'     => $paymentGateway,
-            'merchant'    => $transaction->merchant,
-            'form'        => $form,
-        ]);
+        return view(
+            'ipg::gate',
+            [
+                'transaction' => $transaction,
+                'gateway'     => $paymentGateway,
+                'merchant'    => $transaction->merchant,
+                'form'        => $form,
+            ]
+        );
     }
 }

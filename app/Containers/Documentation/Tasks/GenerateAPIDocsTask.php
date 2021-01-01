@@ -20,7 +20,7 @@ class GenerateAPIDocsTask extends Task
      * @param $type
      * @param $console
      *
-     * @return  mixed
+     * @return mixed
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      * @throws \Symfony\Component\Process\Exception\LogicException
      * @throws \Symfony\Component\Process\Exception\ProcessFailedException
@@ -52,11 +52,10 @@ class GenerateAPIDocsTask extends Task
         }
 
         // echo the output
-        $console->info('[' . $type . '] ' . implode (' ', $command));
+        $console->info('[' . $type . '] ' . implode(' ', $command));
         $console->info('Output: ' . $process->getOutput());
 
         // return the past to that generated documentation
         return $this->getFullApiUrl($type);
     }
-
 }

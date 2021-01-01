@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
  * account of the user delete
  *
  * Class MakeAnotherBankAccountDefaultTask
+ *
  * @package App\Containers\BankAccount\Tasks
  */
 class MakeAnotherBankAccountDefaultTask extends Task

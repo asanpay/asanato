@@ -16,6 +16,7 @@ class VerifyOtpAction extends Action
      * @param User $user
      * @param int $token
      * @param string $reason
+     *
      * @return bool
      */
     public function run(User $user, string $token, string $reason): bool
@@ -35,16 +36,14 @@ class VerifyOtpAction extends Action
             }
         }
 
-        XLog::debug("VerifyOtpAction result:".boolval($status));
+        XLog::debug("VerifyOtpAction result:" . boolval($status));
 
         //@todo move this block to a TASK
         if ($status === true) {
             switch ($reason) {
                 case OtpReason::EMAIL_VERIFY:
-                {
                     $user->verify(IdPoofType::EMAIL);
                     break;
-                }
             }
         }
 

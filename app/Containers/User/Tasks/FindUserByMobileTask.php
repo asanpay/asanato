@@ -11,7 +11,7 @@ use Exception;
 /**
  * Class FindUserByMobileTask
  *
- * @author  Aboozar Ghaffari
+ * @author Aboozar Ghaffari
  */
 class FindUserByMobileTask extends Task
 {

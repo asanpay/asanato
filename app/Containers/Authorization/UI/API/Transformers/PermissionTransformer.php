@@ -36,5 +36,4 @@ class PermissionTransformer extends Transformer
             'display_name' => $permission->display_name,
         ];
     }
-
 }

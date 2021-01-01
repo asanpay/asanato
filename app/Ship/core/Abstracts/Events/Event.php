@@ -7,7 +7,7 @@ use Apiato\Core\Abstracts\Events\Traits\JobProperties;
 /**
  * Class Event
  *
- * @author  Arthur Devious
+ * @author Arthur Devious
  */
 abstract class Event
 {

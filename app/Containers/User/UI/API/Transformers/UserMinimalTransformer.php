@@ -13,14 +13,14 @@ class UserMinimalTransformer extends Transformer
 {
 
     /**
-     * @var  array
+     * @var array
      */
     protected $availableIncludes = [
         'roles',
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $defaultIncludes = [
 

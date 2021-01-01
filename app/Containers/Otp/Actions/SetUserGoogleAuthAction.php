@@ -2,7 +2,6 @@
 
 namespace App\Containers\Otp\Actions;
 
-
 use App\Containers\Otp\Exceptions\GoogleAuthSetBeforeException;
 use App\Containers\IdentityProof\Exceptions\UserMobileNotProvedException;
 use App\Containers\Otp\Exceptions\InvalidOtpException;
@@ -20,8 +19,8 @@ class SetUserGoogleAuthAction extends Action
 {
 
     /**
-     * @param User $user
-     * @param string $token
+     * @param  User   $user
+     * @param  string $token
      * @return bool
      */
     public function run(User $user, string $token): bool

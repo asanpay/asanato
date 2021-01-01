@@ -5,9 +5,10 @@ namespace App\Ship\Traits;
 trait CustomEnums
 {
 
-    private $consts = [], $attributes   = [];
-    protected             $translations = [];
-    protected static      $singleton    = [];
+    private $consts = [];
+    private $attributes = [];
+    protected $translations = [];
+    protected static $singleton = [];
 
     public static function singelton()
     {
@@ -37,6 +38,7 @@ trait CustomEnums
 
     /**
      * Gets All list
+     *
      * @return array
      */
     public static function all()
@@ -62,7 +64,6 @@ trait CustomEnums
                     'value' => $val,
                     'text'  => self::singelton()->translate($val),
                 ];
-
             } else {
                 $list[$val] = self::singelton()->translate($val);
             }
@@ -73,6 +74,7 @@ trait CustomEnums
 
     /**
      * Gets All list
+     *
      * @return array
      */
     public static function toArray()
@@ -95,6 +97,7 @@ trait CustomEnums
 
     /**
      * Gets only variables
+     *
      * @return array
      */
     public static function values()
@@ -114,7 +117,7 @@ trait CustomEnums
                 return $val;
             }
         }
-        throw new \Exception("enum value for `{$constant}` not found at ". substr(strrchr(__CLASS__, "\\"), 1));
+        throw new \Exception("enum value for `{$constant}` not found at " . substr(strrchr(__CLASS__, "\\"), 1));
     }
 
     /**
@@ -144,7 +147,7 @@ trait CustomEnums
     /**
      * Gets label list
      *
-     * @param array $except
+     * @param array      $except
      * @param bool|false $html
      *
      * @return array
@@ -172,7 +175,7 @@ trait CustomEnums
     /**
      * Gets label list Exceptional
      *
-     * @param array $except
+     * @param array      $except
      * @param bool|false $html
      *
      * @return array
@@ -185,7 +188,7 @@ trait CustomEnums
     /**
      * Gets the constatns list mentioned in first parameter
      *
-     * @param array $only
+     * @param array      $only
      * @param bool|false $style
      *
      * @return array
@@ -197,6 +200,7 @@ trait CustomEnums
 
     /**
      * Gets constants list
+     *
      * @return array
      */
     public static function getConstants()
@@ -218,6 +222,7 @@ trait CustomEnums
 
     /**
      * Gets constans slug list
+     *
      * @return array
      */
     public static function getSlugs()

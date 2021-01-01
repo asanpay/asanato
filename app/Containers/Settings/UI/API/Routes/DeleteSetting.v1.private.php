@@ -1,27 +1,30 @@
 <?php
 
 /**
- * @apiGroup           Settings
- * @apiName            deleteSetting
+ * @apiGroup Settings
+ * @apiName  deleteSetting
  *
- * @api                {DELETE} /v1/settings/:id Delete Setting
- * @apiDescription     Deletes a setting entry
+ * @api            {DELETE} /v1/settings/:id Delete Setting
+ * @apiDescription Deletes a setting entry
  *
- * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiVersion    1.0.0
+ * @apiPermission none
  *
- * @apiParam           {String}  parameters here..
+ * @apiParam {String}  parameters here..
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 204 OK
-{
+ {
 }
  */
 
-$router->delete('settings/{id}', [
-    'as' => 'api_settings_delete_setting',
-    'uses'  => 'Controller@deleteSetting',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+$router->delete(
+    'settings/{id}',
+    [
+        'as' => 'api_settings_delete_setting',
+        'uses'  => 'Controller@deleteSetting',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);

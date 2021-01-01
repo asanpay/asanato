@@ -10,12 +10,16 @@ class GetUserWalletsAction extends Action
 {
     public function run(int $userId)
     {
-        $wallets = Apiato::call('Wallet@GetAllWalletsTask', [], [
-            'addRequestCriteria',
+        $wallets = Apiato::call(
+            'Wallet@GetAllWalletsTask',
+            [],
             [
-                'pushCurrentUserCriteria' => [Apiato::call('User@FindUserByIdTask', [$userId])],
-            ],
-        ]);
+                'addRequestCriteria',
+                [
+                    'pushCurrentUserCriteria' => [Apiato::call('User@FindUserByIdTask', [$userId])],
+                ],
+            ]
+        );
 
         return $wallets;
     }

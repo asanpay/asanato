@@ -23,8 +23,7 @@ class RejectWithdrawalTask extends Task
             $withdrawal->save();
 
             return $withdrawal;
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             XLog::exception($exception);
             throw new UpdateResourceFailedException();
         }

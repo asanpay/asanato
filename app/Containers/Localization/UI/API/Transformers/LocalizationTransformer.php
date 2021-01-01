@@ -8,20 +8,20 @@ use App\Ship\Parents\Transformers\Transformer;
 /**
  * Class LocalizationTransformer
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class LocalizationTransformer extends Transformer
 {
 
     /**
-     * @var  array
+     * @var array
      */
     protected $defaultIncludes = [
 
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $availableIncludes = [
 
@@ -58,13 +58,19 @@ class LocalizationTransformer extends Transformer
         }
 
         // now add the regions
-        $response = array_merge($response, [
-            'regions' => $regions,
-        ]);
+        $response = array_merge(
+            $response,
+            [
+                'regions' => $regions,
+            ]
+        );
 
-        $response = $this->ifAdmin([
+        $response = $this->ifAdmin(
+            [
 
-        ], $response);
+            ],
+            $response
+        );
 
         return $response;
     }

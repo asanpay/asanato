@@ -9,7 +9,7 @@ use App\Ship\Transporters\DataTransporter;
 /**
  * Class GenerateApiDocsCommand
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class GenerateApiDocsCommand extends ConsoleCommand
 {
@@ -45,5 +45,4 @@ class GenerateApiDocsCommand extends ConsoleCommand
 
         Apiato::call('Documentation@GenerateDocumentationAction', [$transporter]);
     }
-
 }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
+// @codingStandardsIgnoreLine
 class AddTriggerToHandleWalletLock extends Migration
 {
 

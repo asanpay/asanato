@@ -7,7 +7,7 @@ use App\Ship\Parents\Transporters\Transporter;
 /**
  * Class ProxyApiLoginTransporter
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class ProxyApiLoginTransporter extends Transporter
 {

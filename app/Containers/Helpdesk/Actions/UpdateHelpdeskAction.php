@@ -10,9 +10,11 @@ class UpdateHelpdeskAction extends Action
 {
     public function run(Request $request)
     {
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             // add your request data here
-        ]);
+            ]
+        );
 
         $helpdesk = Apiato::call('Helpdesk@UpdateHelpdeskTask', [$request->id, $data]);
 

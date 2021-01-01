@@ -20,5 +20,4 @@ class BankAccountRepository extends Repository
         'status' => '=',
         'default' => '=',
     ];
-
 }

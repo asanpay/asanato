@@ -16,11 +16,10 @@ use Illuminate\Routing\Controller as LaravelBaseController;
  *
  * Should not extend from this class, instead use the ApiController or the WebController.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class Controller extends LaravelBaseController
 {
 
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, HashIdTrait, CallableTrait;
-
 }

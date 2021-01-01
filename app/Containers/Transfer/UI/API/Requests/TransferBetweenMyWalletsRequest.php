@@ -12,7 +12,7 @@ class TransferBetweenMyWalletsRequest extends Request
     /**
      * Id's that needs decoding before applying the validation rules.
      *
-     * @var  array
+     * @var array
      */
     protected $decode = [
         'src_wallet_id',
@@ -20,7 +20,7 @@ class TransferBetweenMyWalletsRequest extends Request
     ];
 
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {

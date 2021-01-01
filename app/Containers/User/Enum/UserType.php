@@ -12,7 +12,7 @@ class UserType
     const PERSONAL = 'PERSONAL';
     const LEGAL    = 'LEGAL';
 
-    function translations()
+    public function translations()
     {
         return [
             self::PERSONAL => __('user.type.personal'),

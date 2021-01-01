@@ -24,7 +24,7 @@ class MainServiceProvider extends MainProvider
     /**
      * Container Aliases
      *
-     * @var  array
+     * @var array
      */
     public $aliases = [
         // 'Foo' => Bar::class,

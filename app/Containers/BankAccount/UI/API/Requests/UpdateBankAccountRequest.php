@@ -23,7 +23,7 @@ class UpdateBankAccountRequest extends Request
     /**
      * Define which Roles and/or Permissions has access to this request.
      *
-     * @var  array
+     * @var array
      */
     protected $access = [
         'permissions' => 'update-bank-accounts',
@@ -33,7 +33,7 @@ class UpdateBankAccountRequest extends Request
     /**
      * Id's that needs decoding before applying the validation rules.
      *
-     * @var  array
+     * @var array
      */
     protected $decode = [
         'id',
@@ -45,7 +45,7 @@ class UpdateBankAccountRequest extends Request
      * Defining the URL parameters (e.g, `/user/{id}`) allows applying
      * validation rules on them and allows accessing them like request data.
      *
-     * @var  array
+     * @var array
      */
     protected $urlParameters = [
         'id',
@@ -53,7 +53,7 @@ class UpdateBankAccountRequest extends Request
     ];
 
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {
@@ -62,10 +62,12 @@ class UpdateBankAccountRequest extends Request
             'iban'    => [
                 'nullable',
                 'digits:24',
-                Rule::unique('bank_accounts')->where(function ($query) {
-                    return $query->where('status', BankAccountStatus::APPROVED)
-                        ->whereNull('deleted_at');
-                }),
+                Rule::unique('bank_accounts')->where(
+                    function ($query) {
+                        return $query->where('status', BankAccountStatus::APPROVED)
+                            ->whereNull('deleted_at');
+                    }
+                ),
             ],
             'user_id' => 'required|exists:users,id',
             'bank_id' => 'required|exists:banks,id',
@@ -84,17 +86,22 @@ class UpdateBankAccountRequest extends Request
     }
 
     /**
-     * @return  bool
+     * @return bool
      */
     public function authorize()
     {
-        return $this->check([
+        return $this->check(
+            [
             'hasAccess|isOwner',
-        ]);
+            ]
+        );
     }
 
     public function isOwner()
     {
-        return ($this->id && Apiato::call('BankAccount@FindBankAccountByIdTask', [$this->id])->user_id == $this->user_id);
+        return ($this->id && Apiato::call(
+            'BankAccount@FindBankAccountByIdTask',
+            [$this->id]
+        )->user_id == $this->user_id);
     }
 }

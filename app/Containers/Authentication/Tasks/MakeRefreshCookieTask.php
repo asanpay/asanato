@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Config;
 /**
  * Class MakeRefreshCookieTask
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class MakeRefreshCookieTask extends Task
 {
@@ -16,7 +16,7 @@ class MakeRefreshCookieTask extends Task
     /**
      * @param $refreshToken
      *
-     * @return  \Symfony\Component\HttpFoundation\Cookie
+     * @return \Symfony\Component\HttpFoundation\Cookie
      */
     public function run($refreshToken)
     {

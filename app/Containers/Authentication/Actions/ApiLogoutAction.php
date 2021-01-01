@@ -19,7 +19,7 @@ class ApiLogoutAction extends Action
     /**
      * @param \App\Ship\Transporters\DataTransporter $data
      *
-     * @return  bool
+     * @return bool
      */
     public function run(DataTransporter $data): bool
     {

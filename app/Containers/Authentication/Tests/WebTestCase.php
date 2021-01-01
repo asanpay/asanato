@@ -9,7 +9,7 @@ use App\Containers\Authentication\Tests\TestCase as BaseTestCase;
  *
  * Container Web TestCase class. Use this class to put your Web container specific tests helper functions.
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class WebTestCase extends BaseTestCase
 {

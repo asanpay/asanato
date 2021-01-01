@@ -10,12 +10,14 @@ class UpdateBankAccountAction extends Action
 {
     public function run(Request $request)
     {
-        $data = $request->sanitizeInput([
+        $data = $request->sanitizeInput(
+            [
             'iban',
             'default',
             'status',
             'user_id',
-        ]);
+            ]
+        );
 
         $bankAccount = Apiato::call('BankAccount@FindBankAccountByIdTask', [$request->id]);
 

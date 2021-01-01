@@ -1,20 +1,20 @@
 <?php
 
 /**
- * @apiGroup           Wallet
- * @apiName            UpdateWallet
+ * @apiGroup Wallet
+ * @apiName  UpdateWallet
  *
- * @api                {PATCH} /v1/users/{user_id}/wallets/:id UpdateWallet
- * @apiDescription     Update wallet data
+ * @api            {PATCH} /v1/users/{user_id}/wallets/:id UpdateWallet
+ * @apiDescription Update wallet data
  *
- * @apiVersion         1.0.0
- * @apiPermission      update-wallets
+ * @apiVersion    1.0.0
+ * @apiPermission update-wallets
  *
- * @apiParam           {String} id  hashed wallet id
- * @apiParam           {String} name  wallet name
- * @apiParam           {Boolean} default  make wallet the default wallet
+ * @apiParam {String} id  hashed wallet id
+ * @apiParam {String} name  wallet name
+ * @apiParam {Boolean} default  make wallet the default wallet
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 200 OK
 {
     "data": {
@@ -41,11 +41,16 @@
  */
 
 
-/** @var Route $router */
-$router->patch('users/{user_id}/wallets/{id}', [
-    'as' => 'api_wallet_update_wallet',
-    'uses'  => 'Controller@updateWallet',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+/**
+ * @var Route $router
+ */
+$router->patch(
+    'users/{user_id}/wallets/{id}',
+    [
+        'as' => 'api_wallet_update_wallet',
+        'uses'  => 'Controller@updateWallet',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);

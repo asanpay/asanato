@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider as LaravelAppServiceProvider;
 /**
  * Class MainProvider
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 abstract class MainProvider extends LaravelAppServiceProvider
 {
@@ -31,7 +31,5 @@ abstract class MainProvider extends LaravelAppServiceProvider
      */
     public function register()
     {
-
     }
-
 }

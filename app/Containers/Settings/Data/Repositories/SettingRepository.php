@@ -8,7 +8,7 @@ use App\Ship\Parents\Repositories\Repository;
 /**
  * Class SettingsRepository
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class SettingRepository extends Repository
 {
@@ -27,7 +27,7 @@ class SettingRepository extends Repository
     }
 
     /**
-     * @return  mixed
+     * @return mixed
      */
     public function model()
     {

@@ -18,7 +18,6 @@ trait JobProperties
 
     public $jobDelay;
 
-
     /**
      * If ShouldHandle interface is implemented this variable
      * sets the name of the queue to push the job on

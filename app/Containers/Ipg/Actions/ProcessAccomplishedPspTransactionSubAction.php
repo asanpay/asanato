@@ -36,15 +36,16 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
                 // create transaction related Txes
 
                 XLog::info('creating top-up wallet txes', [$transaction->tagify()]);
-                DB::transaction(function () use (&$transaction) {
-                    // incoming money wallet
-                    // create incoming wallet Tx
-                    Apiato::call('Tx@CreateIncomeTxFromTransactionSubAction', [$transaction]);
+                DB::transaction(
+                    function () use (&$transaction) {
+                        // incoming money wallet
+                        // create incoming wallet Tx
+                        Apiato::call('Tx@CreateIncomeTxFromTransactionSubAction', [$transaction]);
 
-                    // destination wallet
-                    XLog::debug('create destination wallet tx');
-                    $dstWallet   = Apiato::call('Wallet@FindWalletByIdTask', [$transaction->wallet_id]);
-                    $dstWalletTx = [
+                        // destination wallet
+                        XLog::debug('create destination wallet tx');
+                        $dstWallet   = Apiato::call('Wallet@FindWalletByIdTask', [$transaction->wallet_id]);
+                        $dstWalletTx = [
                         'type'           => TxType::TOP_UP,
                         'wallet_id'      => $dstWallet->id,
                         'user_id'        => $dstWallet->user_id,
@@ -54,28 +55,30 @@ class ProcessAccomplishedPspTransactionSubAction extends Action
                         'meta'           => [
                             'raw_amount'     => $transaction->payable_amount,
                         ]
-                    ];
-                    // add transaction description to TX of destination wallet
-                    if (isset($transaction->meta['description'])) {
-                        $dstWalletTx['meta']['description'] = $transaction->meta['description'];
-                    }
-                    Apiato::call('Tx@CreateTxTask', [$dstWalletTx]);
+                        ];
+                        // add transaction description to TX of destination wallet
+                        if (isset($transaction->meta['description'])) {
+                            $dstWalletTx['meta']['description'] = $transaction->meta['description'];
+                        }
+                        Apiato::call('Tx@CreateTxTask', [$dstWalletTx]);
 
-                    // in case of the transaction has benefit for system
-                    if ($transaction->profit > 0) {
-                        XLog::debug('create profit tx');
-                        $profitWallet = Apiato::call('Wallet@GetSystemWalletTask', [WalletType::PROFIT]);
-                        $profitTx     = [
+                        // in case of the transaction has benefit for system
+                        if ($transaction->profit > 0) {
+                            XLog::debug('create profit tx');
+                            $profitWallet = Apiato::call('Wallet@GetSystemWalletTask', [WalletType::PROFIT]);
+                            $profitTx     = [
                             'type'           => TxType::PROFIT,
                             'wallet_id'      => $profitWallet->id,
                             'user_id'        => config('settings.app_user_id'),
                             'transaction_id' => $transaction->id,
                             'creditor'       => $transaction->profit,
                             'ip'     => $transaction->ip,
-                        ];
-                        Apiato::call('Tx@CreateTxTask', [$profitTx]);
-                    }
-                }, 3);
+                            ];
+                            Apiato::call('Tx@CreateTxTask', [$profitTx]);
+                        }
+                    },
+                    3
+                );
             }
         } else {
             throw new Exception('The wallet top-up transaction is not ready for accomplishment process!');

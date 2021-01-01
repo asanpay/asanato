@@ -98,26 +98,18 @@ class Merchant extends Model implements HasMedia
 
         switch ($this->fee_policy) {
             case FeePolicy::TURNOVER:
-            {
                 $extra = 0;
                 break;
-            }
             case FeePolicy::PERMANENT:
-            {
                 $extra = min($this->fee_value, $this->fee_max);
                 break;
-            }
             case FeePolicy::PERCENT:
-            {
                 $extra = round($amount * $this->fee_value / 100);
                 $extra = min($extra, $this->fee_max);
                 break;
-            }
             default:
-            {
                 throw new Exception('Fee policy not defined');
                 break;
-            }
         }
         $r->fee = $extra;
 

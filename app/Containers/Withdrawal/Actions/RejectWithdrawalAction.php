@@ -22,12 +22,15 @@ class RejectWithdrawalAction extends Action
 
         $this->createWithdrawCorrectionTransaction($withdrawal, $request->ip());
 
-        return Apiato::call('Withdrawal@RejetWithdrawalTask', [
-            $withdrawal,
-            $request->user()->id,
-            $request->ip(),
-            $request->input('reject_reason')
-        ]);
+        return Apiato::call(
+            'Withdrawal@RejetWithdrawalTask',
+            [
+                $withdrawal,
+                $request->user()->id,
+                $request->ip(),
+                $request->input('reject_reason')
+            ]
+        );
     }
 
     private function createWithdrawCorrectionTransaction(Withdrawal $withdrawal, string $ip)

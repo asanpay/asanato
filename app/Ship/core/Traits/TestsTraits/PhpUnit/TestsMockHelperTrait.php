@@ -10,7 +10,7 @@ use Mockery;
  *
  * Tests helper for mocking objects and services.
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 trait TestsMockHelperTrait
 {
@@ -20,7 +20,7 @@ trait TestsMockHelperTrait
      *
      * @param $class
      *
-     * @return  \Mockery\MockInterface
+     * @return \Mockery\MockInterface
      */
     public function mockIt($class)
     {
@@ -29,5 +29,4 @@ trait TestsMockHelperTrait
 
         return $mock;
     }
-
 }

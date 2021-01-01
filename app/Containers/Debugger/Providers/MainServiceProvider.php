@@ -12,7 +12,7 @@ use Jenssegers\Agent\Facades\Agent;
  *
  * The Main Service Provider of this container, it will be automatically registered in the framework.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class MainServiceProvider extends MainProvider
 {
@@ -30,7 +30,7 @@ class MainServiceProvider extends MainProvider
     /**
      * Container Aliases
      *
-     * @var  array
+     * @var array
      */
     public $aliases = [
         'Agent' => Agent::class,

@@ -9,7 +9,7 @@ use App\Ship\Parents\Commands\ConsoleCommand;
 /**
  * Class GiveAllPermissionsToRoleCommand
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class GiveAllPermissionsToRoleCommand extends ConsoleCommand
 {
@@ -35,7 +35,11 @@ class GiveAllPermissionsToRoleCommand extends ConsoleCommand
 
         $role->syncPermissions($allPermissionsNames = $allPermissions->pluck('name')->toArray());
 
-        $this->info('Gave the Role (' . $roleName . ') the following Permissions: ' . implode(' - ',
-                $allPermissionsNames) . '.');
+        $this->info(
+            'Gave the Role (' . $roleName . ') the following Permissions: ' . implode(
+                ' - ',
+                $allPermissionsNames
+            ) . '.'
+        );
     }
 }

@@ -14,6 +14,7 @@ use Tartan\Log\Facades\XLog;
 
 /**
  * Class CreateUserByCredentialsTask
+ *
  * @package App\Containers\User\Tasks
  */
 class CreateUserByCredentialsTask extends Task
@@ -34,9 +35,9 @@ class CreateUserByCredentialsTask extends Task
     public function run(UserSignUpTransporter $t): User
     {
         try {
-
             // create new user
-            $user = $this->repository->create([
+            $user = $this->repository->create(
+                [
                 'password'     => Hash::make($t->password),
                 'mobile'       => $t->mobile,
                 'first_name'   => $t->first_name,
@@ -45,7 +46,8 @@ class CreateUserByCredentialsTask extends Task
                 'register_via' => $t->device,
                 'referrer'     => $t->referrer,
                 'api_key'      => hash('sha256', uniqid()),
-            ]);
+                ]
+            );
 
             if ($t->should_verify_mobile == true) {
                 $user->verify(IdPoofType::MOBILE);
@@ -57,5 +59,4 @@ class CreateUserByCredentialsTask extends Task
 
         return $user;
     }
-
 }

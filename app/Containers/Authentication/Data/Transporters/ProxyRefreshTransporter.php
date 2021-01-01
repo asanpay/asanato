@@ -7,7 +7,7 @@ use App\Ship\Parents\Transporters\Transporter;
 /**
  * Class ProxyRefreshTransporter
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class ProxyRefreshTransporter extends Transporter
 {

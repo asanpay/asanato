@@ -27,7 +27,7 @@ use Vinkla\Hashids\HashidsServiceProvider;
  * Does not have to extend from the Ship parent MainProvider since it's on the Core
  * it directly extends from the Abstract MainProvider.
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class ApiatoProvider extends AbstractMainProvider
 {
@@ -60,7 +60,7 @@ class ApiatoProvider extends AbstractMainProvider
     /**
      * Register any Alias on the Ship layer (including third party packages).
      *
-     * @var  array
+     * @var array
      */
     protected $aliases = [
         'Hashids' => Hashids::class,
@@ -106,12 +106,11 @@ class ApiatoProvider extends AbstractMainProvider
     /**
      * Register Overided Base providers
      *
-     * @see \Illuminate\Foundation\Application::registerBaseServiceProviders
+     * @see    \Illuminate\Foundation\Application::registerBaseServiceProviders
      * @return void
      */
     private function overrideLaravelBaseProviders()
     {
         App::register(EventServiceProvider::class); //The custom apiato eventserviceprovider
     }
-
 }

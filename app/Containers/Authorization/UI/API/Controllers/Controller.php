@@ -29,7 +29,6 @@ use App\Ship\Transporters\DataTransporter;
 
 /**
  * Class Controller.
- *
  */
 class Controller extends ApiController
 {
@@ -37,7 +36,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\GetAllPermissionsRequest $request
      *
-     * @return  mixed
+     * @return mixed
      */
     public function getAllPermissions(GetAllPermissionsRequest $request)
     {
@@ -49,7 +48,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\FindPermissionRequest $request
      *
-     * @return  mixed
+     * @return mixed
      */
     public function findPermission(FindPermissionRequest $request)
     {
@@ -61,7 +60,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\GetAllRolesRequest $request
      *
-     * @return  mixed
+     * @return mixed
      */
     public function getAllRoles(GetAllRolesRequest $request)
     {
@@ -73,7 +72,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\FindRoleRequest $request
      *
-     * @return  mixed
+     * @return mixed
      */
     public function findRole(FindRoleRequest $request)
     {
@@ -85,7 +84,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\AssignUserToRoleRequest $request
      *
-     * @return  mixed
+     * @return mixed
      */
     public function assignUserToRole(AssignUserToRoleRequest $request)
     {
@@ -97,7 +96,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\SyncUserRolesRequest $request
      *
-     * @return  mixed
+     * @return mixed
      */
     public function syncUserRoles(SyncUserRolesRequest $request)
     {
@@ -109,7 +108,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\DeleteRoleRequest $request
      *
-     * @return  \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function deleteRole(DeleteRoleRequest $request)
     {
@@ -121,7 +120,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\RevokeUserFromRoleRequest $request
      *
-     * @return  mixed
+     * @return mixed
      */
     public function revokeRoleFromUser(RevokeUserFromRoleRequest $request)
     {
@@ -133,7 +132,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\AttachPermissionToRoleRequest $request
      *
-     * @return  mixed
+     * @return mixed
      */
     public function attachPermissionToRole(AttachPermissionToRoleRequest $request)
     {
@@ -145,7 +144,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\SyncPermissionsOnRoleRequest $request
      *
-     * @return  mixed
+     * @return mixed
      */
     public function syncPermissionOnRole(SyncPermissionsOnRoleRequest $request)
     {
@@ -157,7 +156,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\DetachPermissionToRoleRequest $request
      *
-     * @return  mixed
+     * @return mixed
      */
     public function detachPermissionFromRole(DetachPermissionToRoleRequest $request)
     {
@@ -169,7 +168,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authorization\UI\API\Requests\CreateRoleRequest $request
      *
-     * @return  mixed
+     * @return mixed
      */
     public function createRole(CreateRoleRequest $request)
     {

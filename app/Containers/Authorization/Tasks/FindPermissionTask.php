@@ -24,7 +24,7 @@ class FindPermissionTask extends Task
     /**
      * @param $permissionNameOrId
      *
-     * @return  Permission
+     * @return Permission
      */
     public function run($permissionNameOrId): Permission
     {
@@ -34,5 +34,4 @@ class FindPermissionTask extends Task
 
         return $permission;
     }
-
 }

@@ -17,5 +17,4 @@ class BankRepository extends Repository
         'id' => '=',
         // ...
     ];
-
 }

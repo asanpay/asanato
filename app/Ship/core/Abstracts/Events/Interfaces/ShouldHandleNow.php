@@ -5,7 +5,7 @@ namespace Apiato\Core\Abstracts\Events\Interfaces;
 /**
  * Interface  ShouldHandleNow
  *
- * @author  Arthur Devious
+ * @author Arthur Devious
  */
 interface ShouldHandleNow
 {

@@ -11,7 +11,7 @@ use App\Containers\User\Tests\ApiTestCase;
  * @group user
  * @group api
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 class GetAllAdminsTest extends ApiTestCase
 {
@@ -26,7 +26,7 @@ class GetAllAdminsTest extends ApiTestCase
     /**
      * @test
      */
-    public function testGetAllAdmins_()
+    public function testGetAllAdmins()
     {
         // create some non-admin users
         $users = factory(User::class, 2)->create();
@@ -44,14 +44,16 @@ class GetAllAdminsTest extends ApiTestCase
         $responseContent = $this->getResponseContentObject();
 
         // assert the returned data size is correct
-        $this->assertCount(1,
-            $responseContent->data); // 2 (fake in this test) + 1 (that is logged in) + 1 (seeded super admin)
+        $this->assertCount(
+            1,
+            $responseContent->data
+        ); // 2 (fake in this test) + 1 (that is logged in) + 1 (seeded super admin)
     }
 
     /**
      * @test
      */
-    public function testGetAllAdminsByNonAdmin_()
+    public function testGetAllAdminsByNonAdmin()
     {
         $this->getTestingUserWithoutAccess();
 
@@ -64,10 +66,11 @@ class GetAllAdminsTest extends ApiTestCase
         // assert response status is correct
         $response->assertStatus(403);
 
-        $this->assertResponseContainKeyValue([
-            'errors' => 'You have no access to this resource!',
-            'message' => 'This action is unauthorized.',
-        ]);
+        $this->assertResponseContainKeyValue(
+            [
+                'errors' => 'You have no access to this resource!',
+                'message' => 'This action is unauthorized.',
+            ]
+        );
     }
-
 }

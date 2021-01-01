@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * Class TestFunctionalTestGenerator
  *
- * @author  Johannes Schobel <johannes.schobel@googlemail.com>
+ * @author Johannes Schobel <johannes.schobel@googlemail.com>
  */
 class TestFunctionalTestGenerator extends GeneratorCommand implements ComponentsGenerator
 {
@@ -39,21 +39,21 @@ class TestFunctionalTestGenerator extends GeneratorCommand implements Components
     /**
      * The structure of the file path.
      *
-     * @var  string
+     * @var string
      */
     protected $pathStructure = '{container-name}/UI/{user-interface}/Tests/Functional/*';
 
     /**
      * The structure of the file name.
      *
-     * @var  string
+     * @var string
      */
     protected $nameStructure = '{file-name}';
 
     /**
      * The name of the stub file.
      *
-     * @var  string
+     * @var string
      */
     protected $stubName = 'tests/functional/general.stub';
 
@@ -61,7 +61,7 @@ class TestFunctionalTestGenerator extends GeneratorCommand implements Components
      * User required/optional inputs expected to be passed while calling the command.
      * This is a replacement of the `getArguments` function "which reads whenever it's called".
      *
-     * @var  array
+     * @var array
      */
     public $inputs = [
         ['ui', null, InputOption::VALUE_OPTIONAL, 'The user-interface to generate the Test for.'],
@@ -72,17 +72,25 @@ class TestFunctionalTestGenerator extends GeneratorCommand implements Components
      */
     public function getUserInputs()
     {
-        $ui = Str::lower($this->checkParameterOrChoice('ui', 'Select the UI for the Test', ['API', 'WEB', 'CLI'], 0));
+        $ui = Str::lower($this->checkParameterOrChoice(
+            'ui',
+            'Select the UI for the Test',
+            ['API', 'WEB', 'CLI'],
+            0
+        ));
 
         // set the stub file accordingly
         $this->stubName = 'tests/functional/' . $ui . '.stub';
 
         // we need to generate the TestCase class before
-        $this->call('apiato:generate:test:testcase', [
-            '--container' => $this->containerName,
-            '--file' => 'TestCase',
-            '--ui' => $ui,
-        ]);
+        $this->call(
+            'apiato:generate:test:testcase',
+            [
+                '--container' => $this->containerName,
+                '--file'      => 'TestCase',
+                '--ui'        => $ui,
+            ]
+        );
 
         return [
             'path-parameters' => [
@@ -104,6 +112,4 @@ class TestFunctionalTestGenerator extends GeneratorCommand implements Components
     {
         return 'DefaultFunctionalTest';
     }
-
 }
-

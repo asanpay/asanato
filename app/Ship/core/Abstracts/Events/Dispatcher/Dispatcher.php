@@ -18,7 +18,6 @@ class Dispatcher extends EventDispatcher
     {
         /* Handle the event Async when the ShouldHandle Interface is implemented */
         if ($event instanceof ShouldHandle) {
-
             /* Initialize delay & queue variables */
             $delay = $event->jobDelay;
             $queue = $event->jobQueue;
@@ -30,9 +29,8 @@ class Dispatcher extends EventDispatcher
             /* Check if the delay is set and if it has the correct type */
             if (isset($delay)
                 && (is_numeric($delay)
-                    || $delay instanceof \DateTimeInterface
-                    || $delay instanceof \DateInterval
-                )
+                || $delay instanceof \DateTimeInterface
+                || $delay instanceof \DateInterval)
             ) {
                 $dispatcher->delay($delay);
             }
@@ -40,7 +38,6 @@ class Dispatcher extends EventDispatcher
             if (isset($queue) && is_string($queue)) {
                 $dispatcher->onQueue($queue);
             }
-
         } else {
             if ($event instanceof ShouldHandleNow) {
                 $event->handle();

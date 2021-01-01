@@ -8,7 +8,7 @@ use App\Ship\Parents\Commands\ConsoleCommand;
 /**
  * Class GetApiatoVersionCommand
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class GetApiatoVersionCommand extends ConsoleCommand
 {
@@ -32,7 +32,7 @@ class GetApiatoVersionCommand extends ConsoleCommand
      */
     public function __construct()
     {
-      parent::__construct();
+        parent::__construct();
     }
 
     /**
@@ -40,7 +40,6 @@ class GetApiatoVersionCommand extends ConsoleCommand
      */
     public function handle()
     {
-      $this->info(Apiato::VERSION);
+        $this->info(Apiato::VERSION);
     }
-
 }

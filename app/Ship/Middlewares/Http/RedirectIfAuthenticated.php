@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
  *
  * A.K.A app/Http/Middleware/RedirectIfAuthenticated.php
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class RedirectIfAuthenticated
 {
@@ -18,9 +18,9 @@ class RedirectIfAuthenticated
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure                 $next
+     * @param  string|null              $guard
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
@@ -31,5 +31,4 @@ class RedirectIfAuthenticated
 
         return $next($request);
     }
-
 }

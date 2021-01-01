@@ -17,7 +17,7 @@ use Illuminate\Foundation\Testing\TestCase as LaravelTestCase;
 /**
  * Class TestCase
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 abstract class TestCase extends LaravelTestCase
 {
@@ -85,7 +85,6 @@ abstract class TestCase extends LaravelTestCase
     protected function refreshTestDatabase()
     {
         if (! RefreshDatabaseState::$migrated) {
-
             $this->artisan('migrate:fresh');
             $this->seed();
             $this->setupPassportOAuth2();
@@ -97,5 +96,4 @@ abstract class TestCase extends LaravelTestCase
 
         $this->beginDatabaseTransaction();
     }
-
 }

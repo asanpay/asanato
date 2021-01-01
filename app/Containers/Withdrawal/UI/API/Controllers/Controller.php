@@ -21,7 +21,7 @@ use Apiato\Core\Foundation\Facades\Apiato;
 class Controller extends ApiController
 {
     /**
-     * @param CreateWithdrawalRequest $request
+     * @param  CreateWithdrawalRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function createWithdrawal(CreateWithdrawalRequest $request)
@@ -32,7 +32,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param FindWithdrawalByIdRequest $request
+     * @param  FindWithdrawalByIdRequest $request
      * @return array
      */
     public function findWithdrawalById(FindWithdrawalByIdRequest $request)
@@ -43,7 +43,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param GetAllWithdrawalsRequest $request
+     * @param  GetAllWithdrawalsRequest $request
      * @return array
      */
     public function getAllWithdrawals(GetAllWithdrawalsRequest $request)
@@ -54,7 +54,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param UpdateWithdrawalRequest $request
+     * @param  UpdateWithdrawalRequest $request
      * @return array
      */
     public function updateWithdrawal(UpdateWithdrawalRequest $request)
@@ -65,7 +65,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param RejectWithdrawalRequest $request
+     * @param  RejectWithdrawalRequest $request
      * @return array
      */
     public function rejectWithdrawal(RejectWithdrawalRequest $request)
@@ -76,7 +76,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param AccomplishWithdrawalRequest $request
+     * @param  AccomplishWithdrawalRequest $request
      * @return array
      */
     public function accomplishWithdrawal(AccomplishWithdrawalRequest $request)
@@ -87,7 +87,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param DeleteWithdrawalRequest $request
+     * @param  DeleteWithdrawalRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function deleteWithdrawal(DeleteWithdrawalRequest $request)

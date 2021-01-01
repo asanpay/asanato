@@ -18,7 +18,7 @@ use Route;
  *
  * A.K.A App\Providers\AuthServiceProvider.php
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class AuthProvider extends ParentAuthProvider
 {
@@ -80,14 +80,19 @@ class AuthProvider extends ParentAuthProvider
         $prefix = Config::get('apiato.api.prefix');
         $routeGroupArray = $this->getRouteGroup("/{$prefix}v1");
 
-        Route::group($routeGroupArray, function () {
-            Passport::routes(function (RouteRegistrar $router) {
-                $router->forAccessTokens();
-                $router->forTransientTokens();
-                $router->forClients();
-                $router->forPersonalAccessTokens();
-            });
-        });
+        Route::group(
+            $routeGroupArray,
+            function () {
+                Passport::routes(
+                    function (RouteRegistrar $router) {
+                        $router->forAccessTokens();
+                        $router->forTransientTokens();
+                        $router->forClients();
+                        $router->forPersonalAccessTokens();
+                    }
+                );
+            }
+        );
     }
 
     /**
@@ -97,8 +102,10 @@ class AuthProvider extends ParentAuthProvider
      */
     private function registerPassportWebRoutes()
     {
-        Passport::routes(function (RouteRegistrar $router) {
-            $router->forAuthorization();
-        });
+        Passport::routes(
+            function (RouteRegistrar $router) {
+                $router->forAuthorization();
+            }
+        );
     }
 }

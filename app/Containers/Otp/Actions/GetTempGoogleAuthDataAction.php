@@ -16,7 +16,7 @@ class GetTempGoogleAuthDataAction extends Action
 {
 
     /**
-     * @return  array
+     * @return array
      */
     public function run(User $user): array
     {

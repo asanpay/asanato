@@ -15,14 +15,14 @@ class UserPrivateProfileTransformer extends Transformer
 {
 
     /**
-     * @var  array
+     * @var array
      */
     protected $availableIncludes = [
         'roles',
     ];
 
     /**
-     * @var  array
+     * @var array
      */
     protected $defaultIncludes = [
 
@@ -66,10 +66,13 @@ class UserPrivateProfileTransformer extends Transformer
             'readable_updated_at' => $user->updated_at->diffForHumans(),
         ];
 
-        $response = $this->ifAdmin([
-            'real_id'    => $user->id,
-            'deleted_at' => $user->deleted_at,
-        ], $response);
+        $response = $this->ifAdmin(
+            [
+                'real_id'    => $user->id,
+                'deleted_at' => $user->deleted_at,
+            ],
+            $response
+        );
 
         return $response;
     }

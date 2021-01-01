@@ -7,7 +7,7 @@ use Apiato\Core\Abstracts\Providers\MainProvider as AbstractMainProvider;
 /**
  * Class MainProvider.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 abstract class MainProvider extends AbstractMainProvider
 {
@@ -27,5 +27,4 @@ abstract class MainProvider extends AbstractMainProvider
     {
         parent::register();
     }
-
 }

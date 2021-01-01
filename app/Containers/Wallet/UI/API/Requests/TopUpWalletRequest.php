@@ -12,14 +12,14 @@ class TopUpWalletRequest extends Request
     /**
      * Id's that needs decoding before applying the validation rules.
      *
-     * @var  array
+     * @var array
      */
     protected $decode = [
         'wallet_id',
     ];
 
     /**
-     * @return  array
+     * @return array
      */
     public function rules()
     {

@@ -19,7 +19,7 @@ use Apiato\Core\Foundation\Facades\Apiato;
 class Controller extends ApiController
 {
     /**
-     * @param CreateBankRequest $request
+     * @param  CreateBankRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function createBank(CreateBankRequest $request)
@@ -30,7 +30,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param FindBankByIdRequest $request
+     * @param  FindBankByIdRequest $request
      * @return array
      */
     public function findBankById(FindBankByIdRequest $request)
@@ -41,7 +41,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param GetAllBanksRequest $request
+     * @param  GetAllBanksRequest $request
      * @return array
      */
     public function getAllBanks(GetAllBanksRequest $request)
@@ -52,7 +52,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param UpdateBankRequest $request
+     * @param  UpdateBankRequest $request
      * @return array
      */
     public function updateBank(UpdateBankRequest $request)
@@ -63,7 +63,7 @@ class Controller extends ApiController
     }
 
     /**
-     * @param DeleteBankRequest $request
+     * @param  DeleteBankRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function deleteBank(DeleteBankRequest $request)

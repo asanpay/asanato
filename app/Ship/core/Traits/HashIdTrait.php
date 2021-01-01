@@ -12,17 +12,18 @@ use function strtolower;
 /**
  * Class HashIdTrait.
  *
- * @author  Mahmoud Zalt <mahmoud@zalt.me>
+ * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
 trait HashIdTrait
 {
 
     /**
      * endpoint to be skipped from decoding their ID's (example for external ID's)
-     * @var  array
+     *
+     * @var array
      */
     private $skippedEndpoints = [
-//        'orders/{id}/external',
+        //        'orders/{id}/external',
     ];
 
     /**
@@ -32,7 +33,7 @@ trait HashIdTrait
      *
      * @param null $field The field of the model to be hashed
      *
-     * @return  mixed
+     * @return mixed
      */
     public function getHashedKey($field = null)
     {
@@ -45,6 +46,7 @@ trait HashIdTrait
         if (Config::get('apiato.hash-id')) {
             // we need to get the VALUE for this KEY (model field)
             $value = $this->getAttribute($field);
+
             return $this->encoder($value);
         }
 
@@ -57,9 +59,9 @@ trait HashIdTrait
      *
      * @param array $requestData
      *
-     * @return  array
+     * @return array
      */
-    protected function decodeHashedIdsBeforeValidation(Array $requestData)
+    protected function decodeHashedIdsBeforeValidation(array $requestData)
     {
 
         // the hash ID feature must be enabled to use this decoder feature.
@@ -79,7 +81,7 @@ trait HashIdTrait
      * @param $requestData
      * @param $key
      *
-     * @return  mixed
+     * @return mixed
      */
     private function locateAndDecodeIds($requestData, $key)
     {
@@ -96,6 +98,7 @@ trait HashIdTrait
      *
      * @param $data
      * @param $keysTodo
+     *
      * @return array
      */
     private function processField($data, $keysTodo)
@@ -104,6 +107,7 @@ trait HashIdTrait
         if (empty($keysTodo)) {
             // there are no more keys left - so basically we need to decode this entry
             $decodedId = $this->decode($data);
+
             return $decodedId;
         }
 
@@ -120,8 +124,8 @@ trait HashIdTrait
             foreach ($fields as $key => $value) {
                 $data[$key] = $this->processField($value, $keysTodo);
             }
-            return $data;
 
+            return $data;
         } else {
             // check if the key we are looking for does, in fact, really exist
             if (!array_key_exists($field, $data)) {
@@ -129,8 +133,9 @@ trait HashIdTrait
             }
 
             // go down one level
-            $value = $data[$field];
+            $value        = $data[$field];
             $data[$field] = $this->processField($value, $keysTodo);
+
             return $data;
         }
     }
@@ -140,7 +145,7 @@ trait HashIdTrait
      * @param $findKey
      * @param $callback
      *
-     * @return  array
+     * @return array
      */
     public function findKeyAndReturnValue(&$subject, $findKey, $callback)
     {
@@ -150,7 +155,6 @@ trait HashIdTrait
         }
 
         foreach ($subject as $key => $value) {
-
             if ($key == $findKey && isset($subject[$findKey])) {
                 $subject[$key] = $callback($subject[$findKey]);
                 break;
@@ -164,7 +168,7 @@ trait HashIdTrait
     /**
      * @param array $ids
      *
-     * @return  array
+     * @return array
      */
     public function decodeArray(array $ids)
     {
@@ -177,7 +181,7 @@ trait HashIdTrait
     }
 
     /**
-     * @param      $id
+     * @param $id
      * @param null $parameter
      *
      * @return array
@@ -192,7 +196,10 @@ trait HashIdTrait
 
         // check if is a number, to throw exception, since hashed ID should not be a number
         if (is_numeric($id)) {
-            throw new IncorrectIdException('Only Hashed ID\'s allowed' . (!is_null($parameter) ? " ($parameter)." : '.'));
+            throw new IncorrectIdException(
+                'Only Hashed ID\'s allowed' .
+                (!is_null($parameter) ? " ($parameter)." : '.')
+            );
         }
 
         // do the decoding if the ID looks like a hashed one
@@ -202,7 +209,7 @@ trait HashIdTrait
     /**
      * @param $id
      *
-     * @return  mixed
+     * @return mixed
      */
     public function encode($id)
     {
@@ -212,7 +219,7 @@ trait HashIdTrait
     /**
      * @param $id
      *
-     * @return  mixed
+     * @return mixed
      */
     private function decoder($id)
     {
@@ -222,7 +229,7 @@ trait HashIdTrait
     /**
      * @param $id
      *
-     * @return  mixed
+     * @return mixed
      */
     public function encoder($id)
     {
@@ -241,13 +248,14 @@ trait HashIdTrait
             Route::bind('id', function ($id, $route) {
                 // skip decoding some endpoints
                 if (!in_array($route->uri(), $this->skippedEndpoints)) {
-
                     // decode the ID in the URL
                     $decoded = $this->decoder($id);
 
                     if (empty($decoded)) {
-                        throw new IncorrectIdException('ID (' . $id . ') is incorrect, consider using the hashed ID
-                        instead of the numeric ID.');
+                        throw new IncorrectIdException(
+                            'ID (' . $id . ') is incorrect, consider using the hashed ID
+                        instead of the numeric ID.'
+                        );
                     }
 
                     return $decoded[0];
@@ -255,5 +263,4 @@ trait HashIdTrait
             });
         }
     }
-
 }

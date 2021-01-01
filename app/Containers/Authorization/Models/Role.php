@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role as SpatieRole;
 /**
  * Class Role
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 class Role extends SpatieRole
 {

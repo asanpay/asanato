@@ -16,7 +16,7 @@ class IdPoofType
     const IDENTITY  = 16;
     const COMPANY   = 32;
 
-    function translations()
+    public function translations()
     {
         return [
             self::EMAIL       => trans('auth.proof.type.' . self::EMAIL),

@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Config;
  *
  * A.K.A (app/Http/Requests/Request.php)
  *
- * @author  Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Mahmoud Zalt  <mahmoud@zalt.me>
  */
 abstract class Request extends LaravelRequest
 {
@@ -41,7 +41,7 @@ abstract class Request extends LaravelRequest
      *
      * @param null $keys
      *
-     * @return  array
+     * @return array
      */
     public function all($keys = null)
     {
@@ -61,12 +61,12 @@ abstract class Request extends LaravelRequest
      *
      * @param \App\Containers\User\Models\User|null $user
      *
-     * @return  bool
+     * @return bool
      */
     public function hasAccess(User $user = null)
     {
         // if not in parameters, take from the request object {$this}
-        $user = $user ? : $this->user();
+        $user = $user ?: $this->user();
 
         if ($user) {
             $autoAccessRoles = Config::get('apiato.requests.allow-roles-to-access-all-routes');
@@ -93,7 +93,7 @@ abstract class Request extends LaravelRequest
      * Check if the submitted ID (mainly URL ID's) is the same as
      * the authenticated user ID (based on the user Token).
      *
-     * @return  bool
+     * @return bool
      */
     public function isOwner()
     {
@@ -103,13 +103,13 @@ abstract class Request extends LaravelRequest
     /**
      * To be used mainly from unit tests.
      *
-     * @param array                                 $parameters
+     * @param array $parameters
      * @param \App\Containers\User\Models\User|null $user
-     * @param array                                 $cookies
-     * @param array                                 $files
-     * @param array                                 $server
+     * @param array $cookies
+     * @param array $files
+     * @param array $server
      *
-     * @return  static
+     * @return static
      */
     public static function injectData($parameters = [], User $user = null, $cookies = [], $files = [], $server = [])
     {
@@ -123,9 +123,11 @@ abstract class Request extends LaravelRequest
         // For now doesn't matter which URI or Method is used.
         $request = parent::create('/', 'GET', $parameters, $cookies, $files, $server);
 
-        $request->setUserResolver(function () use ($user) {
-            return $user;
-        });
+        $request->setUserResolver(
+            function () use ($user) {
+                return $user;
+            }
+        );
 
         return $request;
     }
@@ -134,8 +136,9 @@ abstract class Request extends LaravelRequest
     /**
      * Maps Keys in the Request.
      *
-     * For example, ['data.attributes.name' => 'firstname'] would map the field [data][attributes][name] to [firstname].
-     * Note that the old value (data.attributes.name) is removed the original request - this method manipulates the request!
+     * For example, ['data.attributes.name' => 'firstname'] would map the field [data][attributes][name] to [firstname]
+     * Note that the old value (data.attributes.name) is removed the original request -
+     * this method manipulates the request!
      * Be sure you know what you do!
      *
      * @param array $fields
@@ -166,16 +169,15 @@ abstract class Request extends LaravelRequest
      *
      * @param array $functions
      *
-     * @return  bool
+     * @return bool
      */
     protected function check(array $functions)
     {
         $orIndicator = '|';
-        $returns = [];
+        $returns     = [];
 
         // iterate all functions in the array
         foreach ($functions as $function) {
-
             // in case the value doesn't contains a separator (single function per key)
             if (!strpos($function, $orIndicator)) {
                 // simply call the single function and store the response.
@@ -190,7 +192,8 @@ abstract class Request extends LaravelRequest
                     $orReturns[] = $this->{$orFunction}();
                 }
 
-                // if in_array returned `true` means at least one function returned `true` thus return `true` to allow access.
+                // if in_array returned `true` means at least one
+                //     function returned `true` thus return `true` to allow access.
                 // if in_array returned `false` means no function returned `true` thus return `false` to prevent access.
                 // return single boolean for all the functions found inside the same key.
                 $returns[] = in_array(true, $orReturns) ? true : false;
@@ -211,9 +214,9 @@ abstract class Request extends LaravelRequest
      *
      * @param array $requestData
      *
-     * @return  array
+     * @return array
      */
-    private function mergeUrlParametersWithRequestData(Array $requestData)
+    private function mergeUrlParametersWithRequestData(array $requestData)
     {
         if (isset($this->urlParameters) && !empty($this->urlParameters)) {
             foreach ($this->urlParameters as $param) {
@@ -227,7 +230,7 @@ abstract class Request extends LaravelRequest
     /**
      * @param $user
      *
-     * @return  array
+     * @return array
      */
     private function hasAnyPermissionAccess($user)
     {
@@ -238,10 +241,13 @@ abstract class Request extends LaravelRequest
         $permissions = is_array($this->access['permissions']) ? $this->access['permissions'] :
             explode('|', $this->access['permissions']);
 
-        $hasAccess = array_map(function ($permission) use ($user) {
-            // Note: internal return
-            return $user->hasPermissionTo($permission);
-        }, $permissions);
+        $hasAccess = array_map(
+            function ($permission) use ($user) {
+                // Note: internal return
+                return $user->hasPermissionTo($permission);
+            },
+            $permissions
+        );
 
         return $hasAccess;
     }
@@ -249,7 +255,7 @@ abstract class Request extends LaravelRequest
     /**
      * @param $user
      *
-     * @return  array
+     * @return array
      */
     private function hasAnyRoleAccess($user)
     {
@@ -260,10 +266,13 @@ abstract class Request extends LaravelRequest
         $roles = is_array($this->access['roles']) ? $this->access['roles'] :
             explode('|', $this->access['roles']);
 
-        $hasAccess = array_map(function ($role) use ($user) {
-            // Note: internal return
-            return $user->hasRole($role);
-        }, $roles);
+        $hasAccess = array_map(
+            function ($role) use ($user) {
+                // Note: internal return
+                return $user->hasRole($role);
+            },
+            $roles
+        );
 
         return $hasAccess;
     }
@@ -305,11 +314,12 @@ abstract class Request extends LaravelRequest
     {
         $transporterClass = $this->getTransporter();
 
-        /** @var Transporter $transporter */
+        /**
+         * @var Transporter $transporter
+         */
         $transporter = new $transporterClass($this);
         $transporter->setInstance('request', $this);
 
         return $transporter;
     }
-
 }

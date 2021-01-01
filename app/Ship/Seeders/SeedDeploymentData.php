@@ -36,10 +36,9 @@ class SeedDeploymentData extends Seeder
         $this->call(AuthorizationPermissionsSeeder_1::class);
         $this->call(AuthorizationRolesSeeder_2::class);
 
-        $this->call( UsersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
 
         $this->call(WalletsTableSeeder::class);
         $this->call(GatewaysTableSeeder::class);
     }
-
 }

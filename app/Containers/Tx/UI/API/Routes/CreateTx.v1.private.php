@@ -1,29 +1,34 @@
 <?php
 
 /**
- * @apiGroup           Tx
- * @apiName            createTx
+ * @apiGroup Tx
+ * @apiName  createTx
  *
- * @api                {POST} /v1/tx Create Tx
- * @apiDescription     Endpoint description here..
+ * @api            {POST} /v1/tx Create Tx
+ * @apiDescription Endpoint description here..
  *
- * @apiVersion         1.0.0
- * @apiPermission      create-txes
+ * @apiVersion    1.0.0
+ * @apiPermission create-txes
  *
- * @apiParam           {String}  parameters here..
+ * @apiParam {String}  parameters here..
  *
- * @apiSuccessExample  {json}  Success-Response:
+ * @apiSuccessExample {json}  Success-Response:
  * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
+ {
+     // Insert the response of the request here...
 }
  */
 
-/** @var Route $router */
-$router->post('tx', [
-    'as' => 'api_tx_create_tx',
-    'uses'  => 'Controller@createTx',
-    'middleware' => [
-      'auth:api',
-    ],
-]);
+/**
+ * @var Route $router
+ */
+$router->post(
+    'tx',
+    [
+        'as' => 'api_tx_create_tx',
+        'uses'  => 'Controller@createTx',
+        'middleware' => [
+            'auth:api',
+        ],
+    ]
+);
