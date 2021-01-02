@@ -54,6 +54,11 @@ yarn:
             - public/css/
             - public/js/
 
+syntax-check:
+    stage: test
+    script:
+        - find ./app -type f -name '*.php' -exec php -l {} \; | grep -v --color 'No syntax errors'
+
 codestyle:
     stage: test
     dependencies: []
