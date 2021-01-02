@@ -62,7 +62,6 @@ class GetAllUsersTest extends ApiTestCase
 
         $this->assertResponseContainKeyValue(
             [
-                'errors' => 'You have no access to this resource!',
                 'message' => 'This action is unauthorized.',
             ]
         );

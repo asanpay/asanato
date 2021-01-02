@@ -81,7 +81,7 @@ class UpdateUserTest extends ApiTestCase
 
         $this->assertResponseContainKeyValue(
             [
-                'status' => 'error',
+                'message' => 'The given data was invalid.',
             ]
         );
     }

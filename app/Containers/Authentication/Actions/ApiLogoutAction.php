@@ -6,7 +6,7 @@ use App\Ship\Parents\Actions\Action;
 use App\Ship\Transporters\DataTransporter;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
-use Lcobucci\JWT\Parser;
+use Lcobucci\JWT\Token\Parser;
 
 /**
  * Class ApiLogoutAction.
