@@ -2,8 +2,8 @@
 
 namespace App\Ship\Seeders;
 
-use App\Containers\Authorization\Data\Seeders\AuthorizationPermissionsSeeder_1;
-use App\Containers\Authorization\Data\Seeders\AuthorizationRolesSeeder_2;
+use App\Containers\Authorization\Data\Seeders\AuthorizationPermissionsSeeder;
+use App\Containers\Authorization\Data\Seeders\AuthorizationRolesSeeder;
 use App\Containers\Bank\Data\Seeders\BanksTableSeeder;
 use App\Containers\Bank\Data\Seeders\GatewaysTableSeeder;
 use App\Containers\Bank\Data\Seeders\PspsTableSeeder;
@@ -33,8 +33,8 @@ class SeedDeploymentData extends Seeder
         $this->call(BanksTableSeeder::class);
         $this->call(PspsTableSeeder::class);
 
-        $this->call(AuthorizationPermissionsSeeder_1::class);
-        $this->call(AuthorizationRolesSeeder_2::class);
+        $this->call(AuthorizationPermissionsSeeder::class);
+        $this->call(AuthorizationRolesSeeder::class);
 
         $this->call(UsersTableSeeder::class);
 
