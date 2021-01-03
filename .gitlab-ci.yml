@@ -40,9 +40,9 @@ syntax-check:
         - find ./app -type f -name '*.php' -exec php -l {} \; | grep -v --color 'No syntax errors'
 
 codestyle:
+    image: aboozar/laravel-docker:apiato-9
     stage: preparation
     script:
-        - composer global require "squizlabs/php_codesniffer=*"
         - phpcs
 
 composer:
