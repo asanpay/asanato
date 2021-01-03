@@ -34,23 +34,13 @@ image: edbizarro/gitlab-ci-pipeline-php:7.4
 cache:
     key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
 
-syntax-check:
-    stage: preparation
-    script:
-        - find ./app -type f -name '*.php' -exec php -l {} \; | grep -v --color 'No syntax errors'
-
-codestyle:
-    stage: preparation
-    script:
-        - php vendor/bin/phpcs
-
 composer:
     stage: preparation
     script:
         - php -v
         - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
         - cp .env.example .env
-        - php artisan key:generate
+        - php artisan key:generate --no-interaction --quiet
     artifacts:
         paths:
             - vendor/
@@ -75,6 +65,20 @@ yarn:
         paths:
             - node_modules/
     when: always
+
+syntax-check:
+    stage: preparation
+    dependencies:
+        - composer
+    script:
+        - find ./app -type f -name '*.php' -exec php -l {} \; | grep -v --color 'No syntax errors'
+
+codestyle:
+    stage: preparation
+    dependencies:
+        - composer
+    script:
+        - php vendor/bin/phpcs
 
 build-assets:
     stage: building
