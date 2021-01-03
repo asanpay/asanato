@@ -1,9 +1,17 @@
 stages:
-    - build
-    - test
+    - preparation
+    - building
+    - testing
+    - security
     - deploy
 
-image: aboozar/laravel-docker:apiato-9
+# Variables
+variables:
+    POSTGRES_PASSWORD: nxRN5q8AJxadtGvX
+    POSTGRES_USER: asanato
+    POSTGRES_DB: asanato_test
+
+image: edbizarro/gitlab-ci-pipeline-php:7.4
 
 .init_ssh: &init_ssh |
     eval $(ssh-agent -s)
@@ -12,65 +20,129 @@ image: aboozar/laravel-docker:apiato-9
     chmod 700 ~/.ssh
     [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
-  # Replace the last line with the following lines if you'd rather
-  # leave StrictHostKeyChecking enabled (replace yourdomain.com):
-  #
-  #  ssh-keyscan yourdomain.com >> ~/.ssh/known_hosts
-  #  chmod 644 ~/.ssh/known_hosts
+    # Replace the last line with the following lines if you'd rather
+    # leave StrictHostKeyChecking enabled (replace yourdomain.com):
+    #
+    #  ssh-keyscan yourdomain.com >> ~/.ssh/known_hosts
+    #  chmod 644 ~/.ssh/known_hosts
 
 .change_file_permissions: &change_file_permissions |
     find . -type f -not -path "./vendor/*" -exec chmod 664 {} \;
     find . -type d -not -path "./vendor/*" -exec chmod 775 {} \;
 
-composer:
-    stage: build
-    cache:
-        key: ${CI_COMMIT_REF_SLUG}-composer
-        paths:
-            - vendor/
-    script:
-        - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
-        - cp .env.example .env
-        - php artisan key:generate --no-interaction --quiet --force
-    artifacts:
-        expire_in: 1 month
-        paths:
-            - vendor/
-            - .env
 
-yarn:
-    stage: build
-    cache:
-        key: ${CI_COMMIT_REF_SLUG}-yarn
-        paths:
-            - node_modules/
-    script:
-        - yarn install
-        - yarn run production
-    artifacts:
-        expire_in: 1 month
-        paths:
-            - node_modules/
-            - public/css/
-            - public/js/
+cache:
+    key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
 
 syntax-check:
-    stage: test
+    stage: preparation
     script:
         - find ./app -type f -name '*.php' -exec php -l {} \; | grep -v --color 'No syntax errors'
 
 codestyle:
-    stage: test
-    dependencies: []
+    stage: preparation
     script:
         - phpcs
 
+composer:
+    stage: preparation
+    script:
+        - php -v
+        - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+        - cp .env.example .env
+        - php artisan key:generate
+    artifacts:
+        paths:
+            - vendor/
+            - .env
+        expire_in: 1 days
+    cache:
+        paths:
+            - vendor/
+    when: always
+
+
+yarn:
+    stage: preparation
+    script:
+        - yarn --version
+        - yarn install --pure-lockfile
+    artifacts:
+        paths:
+            - node_modules/
+        expire_in: 1 days
+    cache:
+        paths:
+            - node_modules/
+    when: always
+
+build-assets:
+    stage: building
+    # Download the artifacts for these jobs
+    dependencies:
+        - composer
+        - yarn
+    script:
+        - yarn --version
+        - yarn run production --progress false
+    artifacts:
+        paths:
+            - public/css/
+            - public/js/
+            - public/fonts/
+            - public/mix-manifest.json
+        expire_in: 1 days
+    when: always
+
+db-seeding:
+    stage: building
+    services:
+        - postgres:13
+    # Download the artifacts for these jobs
+    dependencies:
+        - composer
+        - yarn
+    script:
+        - php artisan migrate:fresh
+        - php artisan apiato:seed-deploy
+        - php artisan apiato:seed-test
+    artifacts:
+        paths:
+            - ./storage/logs # for debugging
+        expire_in: 1 days
+    when: always
+
 phpunit:
-    stage: test
+    stage: testing
     dependencies:
         - composer
     script:
         - php vendor/bin/phpunit --coverage-text --colors=never
+    when: always
+
+phpcpd:
+    stage: testing
+    script:
+        - test -f phpcpd.phar || curl -L https://phar.phpunit.de/phpcpd.phar -o phpcpd.phar
+        - php phpcpd.phar
+    cache:
+        paths:
+            - phpcpd.phar
+    when: always
+
+sensiolabs:
+    stage: security
+    script:
+        - test -d security-checker || git clone https://github.com/sensiolabs/security-checker.git
+        - cd security-checker
+        - composer install
+        - php security-checker security:check ../composer.lock
+    dependencies:
+        - composer
+    cache:
+        paths:
+            - security-checker/
+    when: always
 
 staging:
     stage: deploy
@@ -82,7 +154,8 @@ staging:
         name: staging
         url: https://api.asanato.ir
     only:
-        - master
+        - staging
+    when: manual
 
 production:
     stage: deploy
@@ -96,3 +169,4 @@ production:
     when: manual
     only:
         - master
+        - production
