@@ -10,6 +10,7 @@ variables:
     POSTGRES_PASSWORD: nxRN5q8AJxadtGvX
     POSTGRES_USER: asanato
     POSTGRES_DB: asanato_test
+    DB_HOST: postgres
 
 image: edbizarro/gitlab-ci-pipeline-php:7.4
 

@@ -28,17 +28,17 @@
         </whitelist>
     </filter>
     <php>
-      <env name="API_FULL_URL" value="http://api.asanpay.yhn"/>
+      <env name="API_FULL_URL" value="https://api.asanato.ir"/>
       <server name="APP_ENV" value="testing"/>
       <server name="OTP_IP_CHECK" value="false"/>
       <server name="BCRYPT_ROUNDS" value="4"/>
       <server name="CACHE_DRIVER" value="array"/>
       <server name="DB_CONNECTION" value="pgsql"/>
-      <server name="DB_HOST" value="localhost"/>
+      <server name="DB_HOST" value="postgres"/>
       <server name="DB_PORT" value="5432"/>
-      <server name="DB_DATABASE" value="asanpay_test"/>
-      <server name="DB_USERNAME" value="postgres"/>
-      <server name="DB_PASSWORD" value="1234"/>
+      <server name="DB_DATABASE" value="asanato_test"/>
+      <server name="DB_USERNAME" value="asanato"/>
+      <server name="DB_PASSWORD" value="nxRN5q8AJxadtGvX"/>
       <server name="MAIL_DRIVER" value="array"/>
       <server name="QUEUE_CONNECTION" value="sync"/>
       <server name="SESSION_DRIVER" value="array"/>
