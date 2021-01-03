@@ -51,7 +51,6 @@ composer:
             - vendor/
     when: always
 
-
 yarn:
     stage: preparation
     script:
@@ -65,20 +64,6 @@ yarn:
         paths:
             - node_modules/
     when: always
-
-syntax-check:
-    stage: preparation
-    dependencies:
-        - composer
-    script:
-        - find ./app -type f -name '*.php' -exec php -l {} \; | grep -v --color 'No syntax errors'
-
-codestyle:
-    stage: preparation
-    dependencies:
-        - composer
-    script:
-        - php vendor/bin/phpcs
 
 build-assets:
     stage: building
@@ -115,6 +100,20 @@ db-seeding:
             - ./storage/logs # for debugging
         expire_in: 1 days
     when: always
+
+syntax-check:
+    stage: testing
+    dependencies:
+        - composer
+    script:
+        - find ./app -type f -name '*.php' -exec php -l {} \; | grep -v --color 'No syntax errors'
+
+codestyle:
+    stage: testing
+    dependencies:
+        - composer
+    script:
+        - php vendor/bin/phpcs
 
 phpunit:
     stage: testing
