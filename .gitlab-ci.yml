@@ -42,6 +42,7 @@ syntax-check:
 codestyle:
     stage: preparation
     script:
+        - composer global require "squizlabs/php_codesniffer=*"
         - phpcs
 
 composer:
