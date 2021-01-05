@@ -7,9 +7,13 @@
 /public/css/*.css
 /storage/*.key
 /vendor
+/build
+/builds
+/cache
 .env
 .env.backup
 .phpunit.result.cache
+.phplint-cache
 Homestead.json
 Homestead.yaml
 npm-debug.log

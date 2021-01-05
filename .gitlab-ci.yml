@@ -41,6 +41,7 @@ composer:
         - php -v
         - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
         - cp .env.example .env
+        - php artisan key:generate
     artifacts:
         paths:
             - vendor/
@@ -106,7 +107,7 @@ syntax-check:
     dependencies:
         - composer
     script:
-        - find ./app -type f -name '*.php' -exec php -l {} \; | grep -v --color 'No syntax errors'
+        - php vendor/bin/phplint
 
 codestyle:
     stage: testing
@@ -120,7 +121,6 @@ phpunit:
     dependencies:
         - composer
     script:
-        - php artisan key:generate
         - php vendor/bin/phpunit --coverage-text --colors=never
     when: always
 
