@@ -41,6 +41,7 @@ composer:
         - php -v
         - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
         - cp .env.example .env
+        - sleep 1
         - php artisan key:generate
         - php artisan apiato
     artifacts:
