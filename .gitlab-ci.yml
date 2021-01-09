@@ -94,7 +94,7 @@ db-seeding:
         - composer
         - yarn
     script:
-        - php artisan migrate:fresh
+        - php artisan migrate:fresh --no-interaction --env=testing
         - php artisan apiato:seed-deploy
         - php artisan apiato:seed-test
     artifacts:
