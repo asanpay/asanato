@@ -129,7 +129,7 @@ phpcpd:
     stage: testing
     script:
         - test -f phpcpd.phar || curl -L https://phar.phpunit.de/phpcpd.phar -o phpcpd.phar
-        - php phpcpd.phar
+        - php phpcpd.phar app
     cache:
         paths:
             - phpcpd.phar
