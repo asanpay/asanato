@@ -16,6 +16,8 @@ variables:
 
 image: edbizarro/gitlab-ci-pipeline-php:7.4
 pull_policy: if-not-present
+extra_hosts:
+    - "api.asanpay.local:127.0.0.1"
 
 .init_ssh: &init_ssh |
     eval $(ssh-agent -s)
@@ -110,8 +112,6 @@ phpunit:
     dependencies:
         - composer
     allow_failure: true
-    extra_hosts:
-        - "api.asanpay.local:127.0.0.1"
     script:
         - php artisan migrate:fresh --no-interaction --env=testing
         - php artisan apiato:seed-deploy --no-interaction --env=testing
