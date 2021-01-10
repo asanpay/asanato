@@ -10,7 +10,7 @@ variables:
     POSTGRES_DB: asanato_test
     POSTGRES_USER: asanato
     POSTGRES_PASSWORD: nxRN5q8AJxadtGvX
-    POSTGRES_HOST_AUTH_METHOD=trust
+    POSTGRES_HOST_AUTH_METHOD: trust
     DB_HOST: postgres
 
 image: edbizarro/gitlab-ci-pipeline-php:7.4
