@@ -13,8 +13,10 @@ variables:
     POSTGRES_HOST_AUTH_METHOD: trust
     POSTGRES_INITDB_ARGS: "--encoding=UTF8 --data-checksums"
     DB_HOST: postgres
+    APP_HOST_NAME: api.asanpay.local
 
 image: edbizarro/gitlab-ci-pipeline-php:7.4
+pull_policy: if-not-present
 
 .init_ssh: &init_ssh |
     eval $(ssh-agent -s)
@@ -113,7 +115,7 @@ phpunit:
         - php artisan migrate:fresh --no-interaction --env=testing
         - php artisan apiato:seed-deploy --no-interaction --env=testing
         - php artisan apiato:seed-test --no-interaction --env=testing
-        - php artisan serve --host=api.asanpay.local --port=80 &
+        - sudo php artisan serve --host=api.asanpay.local --port=80 &
         - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
     artifacts:
         paths:
