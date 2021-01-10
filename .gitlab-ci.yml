@@ -113,6 +113,7 @@ phpunit:
         - php artisan migrate:fresh --no-interaction --env=testing
         - php artisan apiato:seed-deploy --no-interaction --env=testing
         - php artisan apiato:seed-test --no-interaction --env=testing
+        - php artisan serve --host=api.asanpay.local --port=80 &
         - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
     artifacts:
         paths:
