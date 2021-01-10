@@ -7,7 +7,7 @@ use App\Ship\Parents\Models\Model;
 /**
  * Class Setting
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class Setting extends Model
 {

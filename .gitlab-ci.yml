@@ -8,7 +8,7 @@ stages:
 # Variables
 variables:
     POSTGRES_DB: asanato_test
-    POSTGRES_USER: asanato
+    POSTGRES_USER: postgres
     POSTGRES_PASSWORD: nxRN5q8AJxadtGvX
     POSTGRES_HOST_AUTH_METHOD: trust
     POSTGRES_INITDB_ARGS: "--encoding=UTF8 --data-checksums"
@@ -73,7 +73,6 @@ build-assets:
     stage: building
     # Download the artifacts for these jobs
     dependencies:
-        - composer
         - yarn
     script:
         - yarn --version
@@ -84,24 +83,6 @@ build-assets:
             - public/js/
             - public/fonts/
             - public/mix-manifest.json
-        expire_in: 1 days
-    when: always
-
-db-seeding:
-    stage: building
-    services:
-        - name: aboozar/postgres:latest
-          alias: postgres
-    # Download the artifacts for these jobs
-    dependencies:
-        - composer
-    script:
-        - php artisan migrate:fresh --no-interaction --env=testing
-        - php artisan apiato:seed-deploy
-        - php artisan apiato:seed-test
-    artifacts:
-        paths:
-            - ./storage/logs # for debugging
         expire_in: 1 days
     when: always
 
@@ -121,10 +102,20 @@ codestyle:
 
 phpunit:
     stage: testing
+    services:
+        - name: aboozar/postgres:latest
+          alias: postgres
     dependencies:
         - composer
     script:
-        - php vendor/bin/phpunit --coverage-text --colors=never
+        - php artisan migrate:fresh --no-interaction --env=testing
+        - php artisan apiato:seed-deploy --no-interaction --env=testing
+        - php artisan apiato:seed-test --no-interaction --env=testing
+        - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
+    artifacts:
+        paths:
+            - ./storage/logs # for debugging
+        expire_in: 1 days
     when: always
 
 phpcpd:

@@ -9,7 +9,7 @@ use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterfa
 /**
  * Class CountCriteria
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class CountCriteria extends Criteria
 {

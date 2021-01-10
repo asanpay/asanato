@@ -9,7 +9,7 @@ use Apiato\Core\Exceptions\Handlers\ExceptionsHandler as CoreExceptionsHandler;
  *
  * A.K.A (app/Exceptions/Handler.php)
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class ExceptionsHandler extends CoreExceptionsHandler
 {

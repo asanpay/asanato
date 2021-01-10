@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class Output
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class Output extends Value
 {

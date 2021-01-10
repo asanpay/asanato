@@ -9,7 +9,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies as Middleware;
  *
  * A.K.A app/Http/Middleware/EncryptCookies.php
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class EncryptCookies extends Middleware
 {

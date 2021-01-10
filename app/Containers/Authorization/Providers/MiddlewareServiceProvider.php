@@ -7,7 +7,7 @@ use App\Ship\Parents\Providers\MiddlewareProvider;
 /**
  * Class MiddlewareServiceProvider
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class MiddlewareServiceProvider extends MiddlewareProvider
 {

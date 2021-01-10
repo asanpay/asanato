@@ -5,7 +5,7 @@ namespace Apiato\Core\Traits;
 /**
  * Class StateKeeperTrait
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 trait StateKeeperTrait
 {

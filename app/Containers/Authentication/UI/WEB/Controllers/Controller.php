@@ -13,7 +13,7 @@ use Exception;
 /**
  * Class Controller
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class Controller extends WebController
 {

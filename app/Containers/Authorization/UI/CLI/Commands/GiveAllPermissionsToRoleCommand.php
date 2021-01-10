@@ -9,7 +9,7 @@ use App\Ship\Parents\Commands\ConsoleCommand;
 /**
  * Class GiveAllPermissionsToRoleCommand
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class GiveAllPermissionsToRoleCommand extends ConsoleCommand
 {

@@ -9,7 +9,7 @@ use Locale;
 /**
  * Class Localization
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class Localization extends Value
 {

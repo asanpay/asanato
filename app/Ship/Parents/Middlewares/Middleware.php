@@ -7,7 +7,7 @@ use Apiato\Core\Abstracts\Middlewares\Middleware as AbstractMiddleware;
 /**
  * Class Middleware
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class Middleware extends AbstractMiddleware
 {

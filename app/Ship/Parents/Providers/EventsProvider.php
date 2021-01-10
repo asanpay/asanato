@@ -9,7 +9,7 @@ use Apiato\Core\Abstracts\Providers\EventsProvider as AbstractEventsProvider;
  *
  * A.K.A app/Providers/EventsServiceProvider.php
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class EventsProvider extends AbstractEventsProvider
 {

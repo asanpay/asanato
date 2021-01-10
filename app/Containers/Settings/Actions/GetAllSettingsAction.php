@@ -8,7 +8,7 @@ use App\Ship\Parents\Actions\Action;
 /**
  * Class GetAllSettingsAction
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class GetAllSettingsAction extends Action
 {

@@ -5,7 +5,7 @@ namespace Apiato\Core\Generator\Interfaces;
 /**
  * Class ComponentsGenerator
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 interface ComponentsGenerator
 {

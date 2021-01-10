@@ -29,10 +29,10 @@ class GetAllAdminsTest extends ApiTestCase
     public function testGetAllAdmins()
     {
         // create some non-admin users
-        $users = factory(User::class, 2)->create();
+        User::factory()->count(2)->make();
 
         // should not be returned
-        factory(User::class)->create();
+        User::factory()->create();
 
         // send the HTTP request
         $response = $this->makeCall();
@@ -58,7 +58,7 @@ class GetAllAdminsTest extends ApiTestCase
         $this->getTestingUserWithoutAccess();
 
         // create some fake users
-        factory(User::class, 2)->create();
+        User::factory()->count(2)->make();
 
         // send the HTTP request
         $response = $this->makeCall();

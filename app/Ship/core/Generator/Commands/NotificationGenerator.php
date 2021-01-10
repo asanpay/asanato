@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 /**
  * Class NotificationGenerator
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class NotificationGenerator extends GeneratorCommand implements ComponentsGenerator
 {

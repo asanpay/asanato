@@ -8,7 +8,7 @@ use App\Ship\Parents\Commands\ConsoleCommand;
 /**
  * Class GetApiatoVersionCommand
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class GetApiatoVersionCommand extends ConsoleCommand
 {

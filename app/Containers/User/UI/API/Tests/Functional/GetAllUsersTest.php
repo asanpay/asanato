@@ -29,7 +29,7 @@ class GetAllUsersTest extends ApiTestCase
     public function testGetAllUsersByAdmin()
     {
         // create some non-admin users who are clients
-        factory(User::class, 2)->create();
+        User::factory()->count(2)->make();
 
         // send the HTTP request
         $response = $this->makeCall();
@@ -52,7 +52,7 @@ class GetAllUsersTest extends ApiTestCase
         $this->getTestingUserWithoutAccess();
 
         // create some fake users
-        factory(User::class, 2)->create();
+        User::factory()->count(2)->make();
 
         // send the HTTP request
         $response = $this->makeCall();
@@ -80,7 +80,7 @@ class GetAllUsersTest extends ApiTestCase
         );
 
         // 3 random users
-        factory(User::class, 3)->create();
+        User::factory()->count(3)->make();
 
         // send the HTTP request
         $response = $this->endpoint($this->endpoint. '?search=first_name:abooozar')->makeCall();

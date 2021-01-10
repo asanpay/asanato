@@ -11,7 +11,7 @@ use Exception;
 /**
  * Class DeleteUserTask
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class DeleteUserTask extends Task
 {

@@ -9,7 +9,7 @@ use Illuminate\Http\UploadedFile;
  *
  * * Tests helper for uploading files.
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 trait TestsUploadHelperTrait
 {

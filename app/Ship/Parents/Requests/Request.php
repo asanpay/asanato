@@ -8,7 +8,7 @@ use App\Ship\Transporters\DataTransporter;
 /**
  * Class Request
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class Request extends AbstractRequest
 {

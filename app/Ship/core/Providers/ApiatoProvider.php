@@ -27,7 +27,7 @@ use Vinkla\Hashids\HashidsServiceProvider;
  * Does not have to extend from the Ship parent MainProvider since it's on the Core
  * it directly extends from the Abstract MainProvider.
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class ApiatoProvider extends AbstractMainProvider
 {

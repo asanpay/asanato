@@ -9,7 +9,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
  *
  * A.K.A app/Http/Middleware/VerifyCsrfToken.php
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class VerifyCsrfToken extends Middleware
 {

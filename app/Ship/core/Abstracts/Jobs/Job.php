@@ -7,7 +7,7 @@ namespace Apiato\Core\Abstracts\Jobs;
  *
  * A.K.A (app/Jobs/Job.php)
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class Job
 {

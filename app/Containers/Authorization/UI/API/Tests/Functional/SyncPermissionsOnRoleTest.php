@@ -29,10 +29,10 @@ class SyncPermissionsOnRoleTest extends ApiTestCase
      */
     public function testSyncDuplicatedPermissionsToRole()
     {
-        $permissionA = factory(Permission::class)->create(['display_name' => 'AAA']);
-        $permissionB = factory(Permission::class)->create(['display_name' => 'BBB']);
+        $permissionA = Permission::factory()->create(['display_name' => 'AAA']);
+        $permissionB = Permission::factory()->create(['display_name' => 'BBB']);
 
-        $roleA = factory(Role::class)->create();
+        $roleA = Role::factory()->create();
         $roleA->givePermissionTo($permissionA);
 
         $data = [

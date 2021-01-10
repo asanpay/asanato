@@ -13,7 +13,7 @@ use Illuminate\Foundation\Http\Kernel as LaravelHttpKernel;
  *
  * A.K.A (app/Http/Kernel.php)
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class HttpKernel extends LaravelHttpKernel
 {

@@ -7,7 +7,7 @@ use Apiato\Core\Abstracts\Commands\ConsoleCommand as AbstractConsoleCommand;
 /**
  * Class ConsoleCommand
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class ConsoleCommand extends AbstractConsoleCommand
 {

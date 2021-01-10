@@ -7,7 +7,7 @@ use App\Ship\Parents\Seeders\Seeder;
 /**
  * Class SettingsDefaultSettingsSeeder
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class SettingsDefaultSettingsSeeder extends Seeder
 {

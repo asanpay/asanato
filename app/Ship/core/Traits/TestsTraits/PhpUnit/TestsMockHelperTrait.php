@@ -10,7 +10,7 @@ use Mockery;
  *
  * Tests helper for mocking objects and services.
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 trait TestsMockHelperTrait
 {

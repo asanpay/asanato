@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 /**
  * Class ValueGenerator
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class ValueGenerator extends GeneratorCommand implements ComponentsGenerator
 {

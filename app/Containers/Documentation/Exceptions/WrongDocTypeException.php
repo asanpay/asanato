@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class WrongDocTypeException
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class WrongDocTypeException extends Exception
 {

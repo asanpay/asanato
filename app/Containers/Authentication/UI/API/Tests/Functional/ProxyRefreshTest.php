@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
  * @group authorization
  * @group api
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class ProxyRefreshTest extends ApiTestCase
 {

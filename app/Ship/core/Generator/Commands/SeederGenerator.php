@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 /**
  * Class ActionGenerator
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class SeederGenerator extends GeneratorCommand implements ComponentsGenerator
 {

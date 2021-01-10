@@ -37,7 +37,7 @@
       <server name="DB_HOST" value="postgres"/>
       <server name="DB_PORT" value="5432"/>
       <server name="DB_DATABASE" value="asanato_test"/>
-      <server name="DB_USERNAME" value="asanato"/>
+      <server name="DB_USERNAME" value="postgres"/>
       <server name="DB_PASSWORD" value="nxRN5q8AJxadtGvX"/>
       <server name="MAIL_DRIVER" value="array"/>
       <server name="QUEUE_CONNECTION" value="sync"/>

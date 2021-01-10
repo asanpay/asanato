@@ -28,7 +28,7 @@ class FindRoleTest extends ApiTestCase
      */
     public function testFindRoleById()
     {
-        $roleA = factory(Role::class)->create();
+        $roleA = Role::factory()->create();
 
         // send the HTTP request
         $response = $this->injectId($roleA->id)->makeCall();

@@ -9,7 +9,7 @@ use App\Ship\Transporters\DataTransporter;
 /**
  * Class UpdateSettingAction
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class UpdateSettingAction extends Action
 {

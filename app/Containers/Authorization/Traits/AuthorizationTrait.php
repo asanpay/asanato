@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 /**
  * Class AuthorizationTrait
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 trait AuthorizationTrait
 {

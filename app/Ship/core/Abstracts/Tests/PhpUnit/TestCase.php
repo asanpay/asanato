@@ -17,7 +17,7 @@ use Illuminate\Foundation\Testing\TestCase as LaravelTestCase;
 /**
  * Class TestCase
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class TestCase extends LaravelTestCase
 {

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Config;
 /**
  * Class ValidateJsonContent
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class ValidateJsonContent extends Middleware
 {

@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
  * Class Transporter
  *
  * @author Johannes Schobel <johannes.schobel@googlemail.com>
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class Transporter extends Dto
 {

@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider as LaravelBroadcastServiceProvider;
 /**
  * Class BroadcastsProvider
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class BroadcastsProvider extends LaravelBroadcastServiceProvider
 {

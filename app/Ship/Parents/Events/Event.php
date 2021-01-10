@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Class Event
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class Event extends AbstractEvent
 {

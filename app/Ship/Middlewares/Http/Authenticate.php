@@ -9,7 +9,7 @@ use Illuminate\Auth\Middleware\Authenticate as LaravelAuthenticate;
 /**
  * Class Authenticate
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class Authenticate extends LaravelAuthenticate
 {

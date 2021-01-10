@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Config;
 /**
  * Class ProfilerMiddleware
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class ProfilerMiddleware extends Middleware
 {

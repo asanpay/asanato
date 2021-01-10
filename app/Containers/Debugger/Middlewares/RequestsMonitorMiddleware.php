@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 /**
  * Class RequestsMonitorMiddleware
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class RequestsMonitorMiddleware extends Middleware
 {

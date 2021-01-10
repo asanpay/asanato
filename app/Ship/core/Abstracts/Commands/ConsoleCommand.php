@@ -7,7 +7,7 @@ use Illuminate\Console\Command as LaravelCommand;
 /**
  * Class ConsoleCommand
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class ConsoleCommand extends LaravelCommand
 {

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Config;
 /**
  * Class CallOAuthServerTask
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class CallOAuthServerTask extends Task
 {

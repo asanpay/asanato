@@ -9,7 +9,7 @@ use Illuminate\Contracts\Console\Kernel as ApiatoConsoleKernel;
 /**
  * Class TestCase
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class TestCase extends AbstractTestCase
 {

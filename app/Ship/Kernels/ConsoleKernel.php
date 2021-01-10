@@ -10,7 +10,7 @@ use Illuminate\Foundation\Console\Kernel as LaravelConsoleKernel;
  *
  * A.K.A (app/Console/Kernel.php)
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class ConsoleKernel extends LaravelConsoleKernel
 {

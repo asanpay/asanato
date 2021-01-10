@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 /**
  * Class WrongEndpointFormatException
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class WrongEndpointFormatException extends Exception
 {

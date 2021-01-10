@@ -11,7 +11,7 @@ use Exception;
 /**
  * Class CreatePermissionTask
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class CreatePermissionTask extends Task
 {

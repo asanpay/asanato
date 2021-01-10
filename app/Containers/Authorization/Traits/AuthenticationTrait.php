@@ -5,7 +5,7 @@ namespace App\Containers\Authorization\Traits;
 /**
  * Class AuthenticationTrait
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 trait AuthenticationTrait
 {

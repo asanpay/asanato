@@ -7,7 +7,7 @@ use Apiato\Core\Loaders\MiddlewaresLoaderTrait;
 /**
  * Class MiddlewareProvider
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class MiddlewareProvider extends MainProvider
 {

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Config;
 /**
  * Class MakeRefreshCookieTask
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class MakeRefreshCookieTask extends Task
 {

@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * Class GeneratorCommand
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class GeneratorCommand extends Command
 {

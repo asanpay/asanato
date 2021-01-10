@@ -12,7 +12,7 @@ use Tartan\IranianSms\SmsServiceProvider;
 /**
  * Class ShipProvider
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class ShipProvider extends MainProvider
 {

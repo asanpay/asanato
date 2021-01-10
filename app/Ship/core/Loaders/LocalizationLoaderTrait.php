@@ -8,7 +8,7 @@ use File;
 /**
  * Class LocalizationLoaderTrait
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 trait LocalizationLoaderTrait
 {

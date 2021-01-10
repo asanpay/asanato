@@ -9,9 +9,11 @@ use App\Containers\IdentityProof\Enum\IdProofStatus;
 use App\Containers\IdentityProof\Models\IdentityProof;
 use App\Containers\Merchant\Models\Merchant;
 use App\Containers\Transaction\Models\Transaction;
+use App\Containers\User\Data\Factories\UserFactory;
 use App\Containers\Wallet\Models\Wallet;
 use App\Ship\Parents\Models\UserModel;
 use Creativeorange\Gravatar\Facades\Gravatar;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Tartan\Zaman\Facades\Zaman;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -29,6 +31,7 @@ class User extends UserModel implements HasMedia
     use AuthenticationTrait;
     use Notifiable;
     use InteractsWithMedia;
+    use HasFactory;
 
     /**
      * The database table used by the model.
@@ -325,5 +328,15 @@ class User extends UserModel implements HasMedia
     public function getGoogleAuthSecret(): string
     {
         return strval($this->{config('google2fa.otp_secret_column')});
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return UserFactory::new();
     }
 }

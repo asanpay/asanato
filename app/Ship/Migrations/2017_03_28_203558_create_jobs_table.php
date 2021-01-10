@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Class CreateJobsTable
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 // @codingStandardsIgnoreLine
 class CreateJobsTable extends Migration

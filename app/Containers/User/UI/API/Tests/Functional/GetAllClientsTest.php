@@ -29,10 +29,10 @@ class GetAllClientsTest extends ApiTestCase
     public function testGetAllClientsByAdmin()
     {
         // should be returned
-        factory(User::class, 3)->create();
+        User::factory()->count(3)->make();
 
         // should not be returned
-        factory(User::class)->create();
+        User::factory()->create();
 
         // send the HTTP request
         $response = $this->makeCall();

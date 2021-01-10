@@ -11,7 +11,7 @@ use Illuminate\Support\Str as LaravelStr;
  *
  * Tests helper for making formatting and asserting http responses.
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 trait TestsResponseHelperTrait
 {

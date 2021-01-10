@@ -9,7 +9,7 @@ use App\Ship\Transporters\DataTransporter;
 /**
  * Class GenerateSwaggerCommand
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class GenerateSwaggerCommand extends ConsoleCommand
 {

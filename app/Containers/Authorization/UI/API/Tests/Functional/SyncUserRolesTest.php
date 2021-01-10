@@ -30,10 +30,10 @@ class SyncUserRolesTest extends ApiTestCase
      */
     public function testSyncMultipleRolesOnUser()
     {
-        $role1 = factory(Role::class)->create(['display_name' => '111']);
-        $role2 = factory(Role::class)->create(['display_name' => '222']);
+        $role1 = Role::factory()->create(['display_name' => '111']);
+        $role2 = Role::factory()->create(['display_name' => '222']);
 
-        $randomUser = factory(User::class)->create();
+        $randomUser = User::factory()->create();
         $randomUser->assignRole($role1);
 
 

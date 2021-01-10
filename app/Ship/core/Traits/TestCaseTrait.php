@@ -9,7 +9,7 @@ use Laravel\Passport\PersonalAccessClient;
 /**
  * Class TestCaseTrait
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 trait TestCaseTrait
 {

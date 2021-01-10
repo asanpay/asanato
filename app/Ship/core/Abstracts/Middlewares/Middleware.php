@@ -5,7 +5,7 @@ namespace Apiato\Core\Abstracts\Middlewares;
 /**
  * Class Middleware
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class Middleware
 {

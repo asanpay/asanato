@@ -9,7 +9,7 @@ use Illuminate\Foundation\Http\Middleware\TrimStrings as Middleware;
  *
  * A.K.A app/Http/Middleware/TrimStrings.php
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class TrimStrings extends Middleware
 {

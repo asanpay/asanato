@@ -28,7 +28,7 @@ class FindPermissionTest extends ApiTestCase
      */
     public function testFindPermissionById()
     {
-        $permissionA = factory(Permission::class)->create();
+        $permissionA = Permission::factory()->create();
 
         // send the HTTP request
         $response = $this->injectId($permissionA->id)->makeCall();

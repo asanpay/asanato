@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 /**
  * Class SubActionGenerator
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class SubActionGenerator extends GeneratorCommand implements ComponentsGenerator
 {

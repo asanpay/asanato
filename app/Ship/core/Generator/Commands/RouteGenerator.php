@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * Class RouteGenerator
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class RouteGenerator extends GeneratorCommand implements ComponentsGenerator
 {

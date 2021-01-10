@@ -28,7 +28,7 @@ class DeleteRoleTest extends ApiTestCase
      */
     public function testDeleteExistingRole()
     {
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
 
         // send the HTTP request
         $response = $this->injectId($role->id)->makeCall();

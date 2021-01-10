@@ -16,7 +16,7 @@ use Vinkla\Hashids\Facades\Hashids;
  *
  * Tests helper for making HTTP requests.
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 trait TestsRequestHelperTrait
 {

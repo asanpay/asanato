@@ -1,24 +1,39 @@
 <?php
 
+namespace App\Containers\User\Data\Factories;
+
+use App\Containers\User\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Containers\User\Enum\UserGender;
 
-$factory->define(
-    \App\Containers\User\Models\User::class,
-    function (Faker\Generator $faker) {
-        static $password;
+class UserFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = User::class;
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
         return [
-            'first_name'   => $faker->firstName,
-            'last_name'    => $faker->lastName,
+            'first_name'   => $this->faker->firstName,
+            'last_name'    => $this->faker->lastName,
             'group'        => \App\Containers\User\Enum\UserGroup::NORMAL,
             'type'         => \App\Containers\User\Enum\UserType::PERSONAL,
             'register_via' => 'site',
-            'email'        => $faker->unique()->safeEmail,
+            'email'        => $this->faker->unique()->safeEmail,
             'mobile'       => '912' . mt_rand(1111111, 9999999),
-            'gender'       => $faker->randomElement([UserGender::MALE, UserGender::FEMALE]),
+            'gender'       => $this->faker->randomElement([UserGender::MALE, UserGender::FEMALE]),
             'password'     => bcrypt('secret78'),
-            'meta'         => json_encode(['telegram_id' => $faker->word]),
-            'register_ip'  => $faker->ipv4,
+            'meta'         => json_encode(['telegram_id' => $this->faker->word]),
+            'register_ip'  => $this->faker->ipv4,
             'api_key'      => hash('sha256', uniqid()),
             'is_client'    => true,
             config('google2fa.otp_secret_column') => \Google2FA::generateSecretKey(
@@ -27,4 +42,18 @@ $factory->define(
             )
         ];
     }
-);
+
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterMaking(function (User $user) {
+            //
+        })->afterCreating(function (User $user) {
+            $user->assignRole('member');
+        });
+    }
+}

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 /**
  * Class JobGenerator
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class JobGenerator extends GeneratorCommand implements ComponentsGenerator
 {

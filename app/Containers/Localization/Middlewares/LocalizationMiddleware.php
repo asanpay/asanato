@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 /**
  * Class LocalizationMiddleware
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class LocalizationMiddleware extends Middleware
 {

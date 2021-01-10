@@ -12,7 +12,7 @@ use Monolog\Logger;
 /**
  * Class RequestsLogger
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class RequestsLogger extends Value
 {

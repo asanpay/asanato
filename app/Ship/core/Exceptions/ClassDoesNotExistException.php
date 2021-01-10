@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 /**
  * Class ClassDoesNotExistException
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class ClassDoesNotExistException extends Exception
 {

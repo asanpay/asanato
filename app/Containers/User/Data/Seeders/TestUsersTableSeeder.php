@@ -1,6 +1,7 @@
 <?php
 namespace App\Containers\User\Data\Seeders;
 
+use App\Containers\User\Models\User;
 use App\Ship\Parents\Seeders\Seeder;
 
 class TestUsersTableSeeder extends Seeder
@@ -12,10 +13,8 @@ class TestUsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = factory(\App\Containers\User\Models\User::class, 20)->create()->each(
-            function ($u) {
-                $u->assignRole('member');
-            }
-        );
+        User::factory()
+            ->times(20)
+            ->create();
     }
 }

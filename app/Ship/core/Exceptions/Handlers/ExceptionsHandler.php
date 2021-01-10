@@ -7,7 +7,7 @@ use Illuminate\Foundation\Exceptions\Handler as LaravelExceptionHandler;
 /**
  * Class ExceptionsHandler
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class ExceptionsHandler extends LaravelExceptionHandler
 {

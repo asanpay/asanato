@@ -29,8 +29,8 @@ class AttachPermissionsToRoleTest extends ApiTestCase
      */
     public function testAttachSinglePermissionToRole()
     {
-        $roleA       = factory(Role::class)->create();
-        $permissionA = factory(Permission::class)->create();
+        $roleA       = Role::factory()->create();
+        $permissionA = Permission::factory()->create();
 
         $data = [
             'role_id'         => $roleA->getHashedKey(),
@@ -58,10 +58,10 @@ class AttachPermissionsToRoleTest extends ApiTestCase
 
     public function testAttachMultiplePermissionToRole()
     {
-        $roleA = factory(Role::class)->create();
+        $roleA = Role::factory()->create();
 
-        $permissionA = factory(Permission::class)->create();
-        $permissionB = factory(Permission::class)->create();
+        $permissionA = Permission::factory()->create();
+        $permissionB = Permission::factory()->create();
 
         $data = [
             'role_id'         => $roleA->getHashedKey(),

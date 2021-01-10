@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 /**
  * Class ExceptionGenerator
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class ExceptionGenerator extends GeneratorCommand implements ComponentsGenerator
 {

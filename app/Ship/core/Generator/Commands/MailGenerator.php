@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * Class MailGenerator
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class MailGenerator extends GeneratorCommand implements ComponentsGenerator
 {

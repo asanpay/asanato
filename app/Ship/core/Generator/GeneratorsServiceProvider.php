@@ -35,7 +35,7 @@ use Illuminate\Support\ServiceProvider;
 /**
  * Class GeneratorsServiceProvider
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class GeneratorsServiceProvider extends ServiceProvider
 {

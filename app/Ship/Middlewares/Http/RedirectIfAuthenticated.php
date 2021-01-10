@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
  *
  * A.K.A app/Http/Middleware/RedirectIfAuthenticated.php
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class RedirectIfAuthenticated
 {

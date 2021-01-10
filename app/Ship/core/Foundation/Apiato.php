@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\File;
  *
  * Helper Class to serve Apiato (Ship/Containers).
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class Apiato
 {

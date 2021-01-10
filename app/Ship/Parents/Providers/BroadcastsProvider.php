@@ -11,7 +11,7 @@ use function app_path;
  *
  * A.K.A app/Providers/BroadcastServiceProvider.php
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 class BroadcastsProvider extends AbstractBroadcastsProvider
 {

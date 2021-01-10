@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Config;
  *
  * A.K.A (app/Http/Requests/Request.php)
  *
- * @author Mahmoud Zalt  <mahmoud@zalt.me>
+ * @author Aboozar Ghaffari <aboozar.ghf@gmail.com>
  */
 abstract class Request extends LaravelRequest
 {
