@@ -11,6 +11,7 @@ variables:
     POSTGRES_USER: asanato
     POSTGRES_PASSWORD: nxRN5q8AJxadtGvX
     POSTGRES_HOST_AUTH_METHOD: trust
+    POSTGRES_INITDB_ARGS: "--encoding=UTF8 --data-checksums"
     DB_HOST: postgres
 
 image: edbizarro/gitlab-ci-pipeline-php:7.4
@@ -89,11 +90,11 @@ build-assets:
 db-seeding:
     stage: building
     services:
-        - aboozar/postgres:latest
+        - name: aboozar/postgres:latest
+          alias: postgres
     # Download the artifacts for these jobs
     dependencies:
         - composer
-        - yarn
     script:
         - php artisan migrate:fresh --no-interaction --env=testing
         - php artisan apiato:seed-deploy
