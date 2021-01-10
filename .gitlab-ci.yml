@@ -88,7 +88,7 @@ build-assets:
 db-seeding:
     stage: building
     services:
-        - postgres:13
+        - aboozar/postgres:latest
     # Download the artifacts for these jobs
     dependencies:
         - composer
