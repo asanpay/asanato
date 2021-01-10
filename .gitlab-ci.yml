@@ -39,6 +39,7 @@ cache:
 
 composer:
     stage: preparation
+    allow_failure: true
     script:
         - php -v
         - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
@@ -103,10 +104,11 @@ codestyle:
 phpunit:
     stage: testing
     services:
-        - name: aboozar/postgres:latest
-          alias: postgres
+        -   name: aboozar/postgres:latest
+            alias: postgres
     dependencies:
         - composer
+    allow_failure: true
     script:
         - php artisan migrate:fresh --no-interaction --env=testing
         - php artisan apiato:seed-deploy --no-interaction --env=testing
