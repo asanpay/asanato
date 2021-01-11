@@ -93,7 +93,8 @@ phpunit:
         - sudo -- sh -c -e "echo '127.0.0.1 $APP_HOST_NAME' >> /etc/hosts"
         - sudo -- sh -c -e "echo '127.0.0.1 $API_HOST_NAME' >> /etc/hosts"
         - cat /etc/hosts
-        - sudo php artisan serve --host=api.asanpay.local --port=80 &
+        - whoami
+        - sudo php artisan serve --host=api.asanpay.local --port=80
         - curl -v http://api.asanpay.local
         - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
     artifacts:
