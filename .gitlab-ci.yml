@@ -16,7 +16,7 @@ variables:
     API_HOST_NAME: api.asanpay.local
     DB_HOST: postgres
 
-image: aboozar/laravel-docker:test
+image: edbizarro/gitlab-ci-pipeline-php:7.4
 
 .init_ssh: &init_ssh |
     eval $(ssh-agent -s)
@@ -115,6 +115,8 @@ phpunit:
         - php artisan migrate:fresh --no-interaction --env=testing
         - php artisan apiato:seed-deploy --no-interaction --env=testing
         - php artisan apiato:seed-test --no-interaction --env=testing
+        - sudo echo $(grep $(hostname) /etc/hosts | cut -f1) $APP_HOST_NAME >> /etc/hosts
+        - sudo echo $(grep $(hostname) /etc/hosts | cut -f1) $API_HOST_NAME >> /etc/hosts
         - cat /etc/hosts
         - sudo php artisan serve --host=api.asanpay.local --port=80 &
         - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
