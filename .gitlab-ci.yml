@@ -87,8 +87,8 @@ phpunit:
         - php artisan migrate:fresh --no-interaction --env=testing
         - php artisan apiato:seed-deploy --no-interaction --env=testing
         - php artisan apiato:seed-test --no-interaction --env=testing
-        - sudo -- sh -c -e "echo $(grep $(hostname) /etc/hosts | cut -f1) $APP_HOST_NAME >> /etc/hosts"
-        - sudo -- sh -c -e "echo $(grep $(hostname) /etc/hosts | cut -f1) $API_HOST_NAME >> /etc/hosts"
+        - sudo -- sh -c -e "echo '127.0.0.1 $APP_HOST_NAME' >> /etc/hosts"
+        - sudo -- sh -c -e "echo '127.0.0.1 $API_HOST_NAME' >> /etc/hosts"
         - cat /etc/hosts
         - sudo php artisan serve --host=api.asanpay.local --port=80 &
         - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
