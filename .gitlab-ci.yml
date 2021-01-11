@@ -94,8 +94,10 @@ phpunit:
         - sudo -- sh -c -e "echo '127.0.0.1 $API_HOST_NAME' >> /etc/hosts"
         - cat /etc/hosts
         - whoami
-        - sudo php artisan serve --host=api.asanpay.local --port=80
-        - curl -v http://api.asanpay.local
+        - ping -c 2 $API_HOST_NAME
+        - sudo php artisan serve --host=$API_HOST_NAME --port=80 &
+        - sleep 2
+        - curl -v http://$API_HOST_NAME
         - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
     artifacts:
         paths:
@@ -107,6 +109,7 @@ syntax-check:
     stage: checking
     dependencies:
         - composer
+        - phpunit
     script:
         - php vendor/bin/phplint
     when: on_success
@@ -115,6 +118,7 @@ codestyle:
     stage: checking
     dependencies:
         - composer
+        - phpunit
     script:
         - php vendor/bin/phpcs
     when: on_success
@@ -124,6 +128,9 @@ phpcpd:
     script:
         - test -f phpcpd.phar || curl -L https://phar.phpunit.de/phpcpd.phar -o phpcpd.phar
         - php phpcpd.phar app
+    dependencies:
+        - composer
+        - phpunit
     cache:
         paths:
             - phpcpd.phar
