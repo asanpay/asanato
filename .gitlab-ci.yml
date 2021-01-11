@@ -12,12 +12,11 @@ variables:
     POSTGRES_PASSWORD: nxRN5q8AJxadtGvX
     POSTGRES_HOST_AUTH_METHOD: trust
     POSTGRES_INITDB_ARGS: "--encoding=UTF8 --data-checksums"
+    APP_HOST_NAME: asanpay.local
+    API_HOST_NAME: api.asanpay.local
     DB_HOST: postgres
 
-image: edbizarro/gitlab-ci-pipeline-php:7.4
-pull_policy: if-not-present
-extra_hosts:
-    - "api.asanpay.local:127.0.0.1"
+image: aboozar/laravel-docker:test
 
 .init_ssh: &init_ssh |
     eval $(ssh-agent -s)
@@ -116,6 +115,7 @@ phpunit:
         - php artisan migrate:fresh --no-interaction --env=testing
         - php artisan apiato:seed-deploy --no-interaction --env=testing
         - php artisan apiato:seed-test --no-interaction --env=testing
+        - cat /etc/hosts
         - sudo php artisan serve --host=api.asanpay.local --port=80 &
         - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
     artifacts:

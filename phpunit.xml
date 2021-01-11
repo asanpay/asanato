@@ -28,7 +28,7 @@
         </whitelist>
     </filter>
     <php>
-      <env name="API_FULL_URL" value="https://api.asanato.ir"/>
+      <env name="API_FULL_URL" value="https://api.asanpay.local"/>
       <server name="APP_ENV" value="testing"/>
       <server name="OTP_IP_CHECK" value="false"/>
       <server name="BCRYPT_ROUNDS" value="4"/>
