@@ -1,6 +1,5 @@
 stages:
     - preparation
-    - building
     - testing
     - security
     - deploy
@@ -63,29 +62,39 @@ yarn:
     script:
         - yarn --version
         - yarn install --pure-lockfile
+        - yarn run production --progress false
     artifacts:
         paths:
             - node_modules/
         expire_in: 1 days
     cache:
         paths:
-            - node_modules/
-    when: always
-
-build-assets:
-    stage: building
-    # Download the artifacts for these jobs
-    dependencies:
-        - yarn
-    script:
-        - yarn --version
-        - yarn run production --progress false
-    artifacts:
-        paths:
             - public/css/
             - public/js/
             - public/fonts/
             - public/mix-manifest.json
+    when: always
+
+phpunit:
+    stage: testing
+    services:
+        -   name: aboozar/postgres:latest
+            alias: postgres
+    dependencies:
+        - composer
+    allow_failure: true
+    script:
+        - php artisan migrate:fresh --no-interaction --env=testing
+        - php artisan apiato:seed-deploy --no-interaction --env=testing
+        - php artisan apiato:seed-test --no-interaction --env=testing
+        - sudo -- sh -c -e "echo $(grep $(hostname) /etc/hosts | cut -f1) $APP_HOST_NAME >> /etc/hosts"
+        - sudo -- sh -c -e "echo $(grep $(hostname) /etc/hosts | cut -f1) $API_HOST_NAME >> /etc/hosts"
+        - cat /etc/hosts
+        - sudo php artisan serve --host=api.asanpay.local --port=80 &
+        - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
+    artifacts:
+        paths:
+            - ./storage/logs # for debugging
         expire_in: 1 days
     when: always
 
@@ -102,29 +111,6 @@ codestyle:
         - composer
     script:
         - php vendor/bin/phpcs
-
-phpunit:
-    stage: testing
-    services:
-        -   name: aboozar/postgres:latest
-            alias: postgres
-    dependencies:
-        - composer
-    allow_failure: true
-    script:
-        - php artisan migrate:fresh --no-interaction --env=testing
-        - php artisan apiato:seed-deploy --no-interaction --env=testing
-        - php artisan apiato:seed-test --no-interaction --env=testing
-        - sudo echo $(grep $(hostname) /etc/hosts | cut -f1) $APP_HOST_NAME >> /etc/hosts
-        - sudo echo $(grep $(hostname) /etc/hosts | cut -f1) $API_HOST_NAME >> /etc/hosts
-        - cat /etc/hosts
-        - sudo php artisan serve --host=api.asanpay.local --port=80 &
-        - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
-    artifacts:
-        paths:
-            - ./storage/logs # for debugging
-        expire_in: 1 days
-    when: always
 
 phpcpd:
     stage: testing
