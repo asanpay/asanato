@@ -1,7 +1,9 @@
 stages:
     - preparation
     - testing
+    - checking
     - security
+    - javascript
     - deploy
 
 # Variables
@@ -58,7 +60,7 @@ composer:
     when: always
 
 yarn:
-    stage: preparation
+    stage: javascript
     script:
         - yarn --version
         - yarn install --pure-lockfile
@@ -73,7 +75,7 @@ yarn:
             - public/js/
             - public/fonts/
             - public/mix-manifest.json
-    when: always
+    when: on_success
 
 phpunit:
     stage: testing
@@ -87,40 +89,44 @@ phpunit:
         - php artisan migrate:fresh --no-interaction --env=testing
         - php artisan apiato:seed-deploy --no-interaction --env=testing
         - php artisan apiato:seed-test --no-interaction --env=testing
+        - php artisan passport:keys
         - sudo -- sh -c -e "echo '127.0.0.1 $APP_HOST_NAME' >> /etc/hosts"
         - sudo -- sh -c -e "echo '127.0.0.1 $API_HOST_NAME' >> /etc/hosts"
         - cat /etc/hosts
         - sudo php artisan serve --host=api.asanpay.local --port=80 &
+        - curl -v http://api.asanpay.local
         - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
     artifacts:
         paths:
             - ./storage/logs # for debugging
         expire_in: 1 days
-    when: always
+    when: on_success
 
 syntax-check:
-    stage: testing
+    stage: checking
     dependencies:
         - composer
     script:
         - php vendor/bin/phplint
+    when: on_success
 
 codestyle:
-    stage: testing
+    stage: checking
     dependencies:
         - composer
     script:
         - php vendor/bin/phpcs
+    when: on_success
 
 phpcpd:
-    stage: testing
+    stage: checking
     script:
         - test -f phpcpd.phar || curl -L https://phar.phpunit.de/phpcpd.phar -o phpcpd.phar
         - php phpcpd.phar app
     cache:
         paths:
             - phpcpd.phar
-    when: always
+    when: on_success
 
 sensiolabs:
     stage: security
@@ -134,7 +140,7 @@ sensiolabs:
     cache:
         paths:
             - security-checker/
-    when: always
+    when: on_success
 
 staging:
     stage: deploy
