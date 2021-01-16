@@ -53,7 +53,7 @@ class RegisterUserTest extends TestCase
         $transporter = new UserSignUpTransporter($data);
         $action      = App::make(UserSignUpAction::class);
         $login       = $action->run($transporter);
-        var_dump($login);
+
         // asset the returned object is an instance of the User
         $this->assertArrayHasKey('response_content', $login[0]);
         $this->assertArrayHasKey('access_token', $login[0]['response_content']);

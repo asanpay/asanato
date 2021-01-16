@@ -32,6 +32,7 @@ _ide_helper*.php
 .DS_Store
 .AppleDouble
 .LSOverride
+phpcpd.phar
 
 # Icon must end with two \r
 Icon
