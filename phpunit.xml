@@ -6,7 +6,7 @@
     </include>
     <exclude>
       <directory suffix=".php">./app/Containers/*/UI/*/Routes</directory>
-      <directory suffix=".php">./app/Containers/*/Data/Factories</directory>
+      <directory suffix=".php">./builds</directory>
     </exclude>
   </coverage>
   <testsuites>
