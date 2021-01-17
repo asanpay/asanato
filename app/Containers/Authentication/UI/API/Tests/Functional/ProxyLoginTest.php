@@ -26,19 +26,9 @@ class ProxyLoginTest extends ApiTestCase
 
     private $testingFilesCreated = false;
 
-    /**
-     * @test
-     */
-    public function testClientWebAdminProxyLogin()
+    private function prepareWebAdminProxyLogin($data, $request)
     {
         $endpoint = 'post@v1/clients/web/admin/signin';
-
-        // create data to be used for creating the testing user and to be sent with the post request
-        $data = [
-            'email'    => 'testing@mail.com',
-            'mobile'   => '9101234567',
-            'password' => 'testingpass',
-        ];
 
         $user = $this->getTestingUser($data);
         $this->actingAs($user, 'web');
@@ -49,15 +39,15 @@ class ProxyLoginTest extends ApiTestCase
         // create client
         DB::table('oauth_clients')->insert(
             [
-            [
-                'id'                     => $clientId,
-                'secret'                 => $clientSecret,
-                'name'                   => 'Testing',
-                'redirect'               => 'http://localhost',
-                'password_client'        => '1',
-                'personal_access_client' => '0',
-                'revoked'                => '0',
-            ],
+                [
+                    'id'                     => $clientId,
+                    'secret'                 => $clientSecret,
+                    'name'                   => 'Testing',
+                    'redirect'               => 'http://localhost',
+                    'password_client'        => '1',
+                    'personal_access_client' => '0',
+                    'revoked'                => '0',
+                ],
             ]
         );
 
@@ -69,7 +59,30 @@ class ProxyLoginTest extends ApiTestCase
         $publicFilePath  = $this->createTestingKey('oauth-public.key');
         $privateFilePath = $this->createTestingKey('oauth-private.key');
 
-        $response = $this->endpoint($endpoint)->makeCall($data);
+        $response = $this->endpoint($endpoint)->makeCall($request);
+
+        // delete testing keys files if they were created for this test
+        if ($this->testingFilesCreated) {
+            unlink($publicFilePath);
+            unlink($privateFilePath);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @test
+     */
+    public function testClientWebAdminProxyLogin()
+    {
+        // create data to be used for creating the testing user and to be sent with the post request
+        $data = [
+            'email'    => 'testing@mail.com',
+            'mobile'   => '9101234567',
+            'password' => 'testingpass',
+        ];
+
+        $response = $this->prepareWebAdminProxyLogin($data, $data);
 
         $response->assertStatus(200);
 
@@ -82,12 +95,6 @@ class ProxyLoginTest extends ApiTestCase
         );
 
         $this->assertResponseContainKeys(['expires_in', 'access_token']);
-
-        // delete testing keys files if they were created for this test
-        if ($this->testingFilesCreated) {
-            unlink($publicFilePath);
-            unlink($privateFilePath);
-        }
     }
 
     /**
@@ -95,8 +102,6 @@ class ProxyLoginTest extends ApiTestCase
      */
     public function testLoginWithDeviceAttribute()
     {
-        $endpoint = 'post@v1/clients/web/admin/signin';
-
         // create data to be used for creating the testing user and to be sent with the post request
         $data = [
             'mobile'     => '9101234567',
@@ -105,50 +110,15 @@ class ProxyLoginTest extends ApiTestCase
             'first_name' => 'username',
         ];
 
-        $user = $this->getTestingUser($data);
-        $this->actingAs($user, 'web');
-
-        $clientId     = '100';
-        $clientSecret = 'XXp8x4QK7d3J9R7OVRXWrhc19XPRroHTTKIbY8XX';
-
-        // create client
-        DB::table('oauth_clients')->insert(
-            [
-            [
-                'id'                     => $clientId,
-                'secret'                 => $clientSecret,
-                'name'                   => 'Testing',
-                'redirect'               => 'http://localhost',
-                'password_client'        => '1',
-                'personal_access_client' => '0',
-                'revoked'                => '0',
-            ],
-            ]
-        );
-
-        // make the clients credentials available as env variables
-        Config::set('authentication-container.clients.web.admin.id', $clientId);
-        Config::set('authentication-container.clients.web.admin.secret', $clientSecret);
-
-        // create testing oauth keys files
-        $publicFilePath  = $this->createTestingKey('oauth-public.key');
-        $privateFilePath = $this->createTestingKey('oauth-private.key');
-
         $request = [
             'password' => 'testingpass',
             'device'   => 'My Fancy Device',
         ];
 
-        $response = $this->endpoint($endpoint)->makeCall($request);
+        $response = $this->prepareWebAdminProxyLogin($data, $request);
 
         // we test for HTTP 422 because the user is not allowed to login via device attribute
         $response->assertStatus(422);
-
-        // delete testing keys files if they were created for this test
-        if ($this->testingFilesCreated) {
-            unlink($publicFilePath);
-            unlink($privateFilePath);
-        }
     }
 
     /**
@@ -156,8 +126,6 @@ class ProxyLoginTest extends ApiTestCase
      */
     public function testClientWebAdminProxyUnconfirmedLogin()
     {
-        $endpoint = 'post@v1/clients/web/admin/signin';
-
         // create data to be used for creating the testing user and to be sent with the post request
         $data = [
             'mobile'   => '9101234567',
@@ -165,47 +133,12 @@ class ProxyLoginTest extends ApiTestCase
             'password' => 'testingpass',
         ];
 
-        $user = $this->getTestingUser($data);
-        $this->actingAs($user, 'web');
-
-        $clientId     = '100';
-        $clientSecret = 'XXp8x4QK7d3J9R7OVRXWrhc19XPRroHTTKIbY8XX';
-
-        // create client
-        DB::table('oauth_clients')->insert(
-            [
-            [
-                'id'                     => $clientId,
-                'secret'                 => $clientSecret,
-                'name'                   => 'Testing',
-                'redirect'               => 'http://localhost',
-                'password_client'        => '1',
-                'personal_access_client' => '0',
-                'revoked'                => '0',
-            ],
-            ]
-        );
-
-        // make the clients credentials available as env variables
-        Config::set('authentication-container.clients.web.admin.id', $clientId);
-        Config::set('authentication-container.clients.web.admin.secret', $clientSecret);
-
-        // create testing oauth keys files
-        $publicFilePath  = $this->createTestingKey('oauth-public.key');
-        $privateFilePath = $this->createTestingKey('oauth-private.key');
-
-        $response = $this->endpoint($endpoint)->makeCall($data);
+        $response = $this->prepareWebAdminProxyLogin($data, $data);
 
         if (Config::get('authentication-container.require_email_confirmation')) {
             $response->assertStatus(409);
         } else {
             $response->assertStatus(200);
-        }
-
-        // delete testing keys files if they were created for this test
-        if ($this->testingFilesCreated) {
-            unlink($publicFilePath);
-            unlink($privateFilePath);
         }
     }
 

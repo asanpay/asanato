@@ -124,7 +124,7 @@ phpcpd:
     stage: checking
     script:
         - test -f phpcpd.phar || curl -L https://phar.phpunit.de/phpcpd.phar -o phpcpd.phar
-        - php phpcpd.phar app
+        - php phpcpd.phar --exclude app/Ship/core app
     dependencies:
         - composer
         - phpunit
