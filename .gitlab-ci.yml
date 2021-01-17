@@ -94,8 +94,8 @@ phpunit:
         - sudo -- sh -c -e "echo '127.0.0.1 $API_HOST_NAME' >> /etc/hosts"
         - sudo php artisan serve --host=$API_HOST_NAME --port=80 &
         - sleep 2
-        - curl -v http://$API_HOST_NAME ; echo;
-        - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr
+        - curl http://$API_HOST_NAME ; echo;
+        - php vendor/bin/phpunit -v --coverage-text --colors=never --stderr --debug
     artifacts:
         paths:
             - ./storage/logs # for debugging
