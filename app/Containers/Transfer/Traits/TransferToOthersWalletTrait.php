@@ -24,8 +24,8 @@ trait TransferToOthersWalletTrait
         int $amount,
         string $description,
         string $clientIp,
-        string $token): Tx
-    {
+        string $token
+    ): Tx {
         try {
             DB::beginTransaction();
 
